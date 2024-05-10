@@ -53,6 +53,8 @@ public class PlayerController : MonoBehaviour
 
     //}
 
+
+
     void Update()
     {
         state.StateUpdate();
@@ -66,7 +68,9 @@ public class PlayerController : MonoBehaviour
     void Look()
     {
         transform.LookAt(lookAtTransform);
-        transform.rotation = Quaternion.Euler(0, transform.rotation.y, 0);
+        transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
+        
+        
     }
 
     void OnMove(InputValue val)
@@ -81,7 +85,7 @@ public class PlayerController : MonoBehaviour
 
 
 
-    void OnJump(InputValue val) { if (val.isPressed) state.StateOnJump();  }
+    void OnJump(InputValue val) { if (val.isPressed) state.StateOnJump(); }
 
     void OnAttack(InputValue val) { if (val.isPressed) state.StateOnAttack(); /*anim.SetTrigger("Attack");*/ }
 
