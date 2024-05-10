@@ -12,17 +12,22 @@ public class PlayerController : MonoBehaviour
 
     private CharacterController CC;
     PlayerStateMachine state;
+    Animator anim;
+    [SerializeField] Transform lookAtTransform;
 
     #endregion
 
     #region Vector
-    private Vector3 moveDir;
+    public Vector3 MoveDir { get; private set; }
     #endregion
 
     #region float
-    [SerializeField] private float moveSpeed;
-    [SerializeField] private float gravityScale;
-    [SerializeField] private float jumpForce;
+    /*[SerializeField] */
+    public float moveSpeed;
+    /*[SerializeField] */
+    public float gravityScale;
+    /*[SerializeField] */
+    public float jumpForce;
 
 
     #endregion
@@ -30,40 +35,55 @@ public class PlayerController : MonoBehaviour
     #endregion
 
     #region Getter
-    public CharacterController GetCC() {  return CC; }
-    public Vector3 GetMoveDir() { return moveDir; }
+    public CharacterController GetCC() { return CC; }
+    public Animator GetAnimator() { return anim; }
     public float GetMoveSpeed() { return moveSpeed; }
-    public float GetGravityScale() {  return gravityScale; }
-    public float GetJumpForce() {  return jumpForce; }
+    public float GetGravityScale() { return gravityScale; }
+    public float GetJumpForce() { return jumpForce; }
     #endregion
 
     private void Awake()
     {
         CC = GetComponent<CharacterController>();
+        anim = GetComponent<Animator>();
         state = new PlayerStateMachine(this);
-        
     }
-    void Start()
-    {
-        
-    }
+    //void Start()
+    //{
+
+    //}
 
     void Update()
     {
         state.StateUpdate();
+        Look();
+    }
+    //private void FixedUpdate()
+    //{
+    //    state.StateFixedUpdate();
+    //}
+
+    void Look()
+    {
+        transform.LookAt(lookAtTransform);
+        transform.rotation = Quaternion.Euler(0, transform.rotation.y, 0);
     }
 
     void OnMove(InputValue val)
     {
         Vector2 dir = val.Get<Vector2>();
-        moveDir = new Vector3(dir.x, 0, dir.y);
+        MoveDir = new Vector3(dir.x, 0, dir.y);
+        if (MoveDir != Vector3.zero)
+            anim.SetBool("isRun", true);
+        else
+            anim.SetBool("isRun", false);
     }
 
 
 
-    void OnJump(InputValue val) { if (val.isPressed) state.StateOnJump(); }
-    
-    void OnAttack(InputValue val) { if (val.isPressed) state.StateOnAttack(); }
+    void OnJump(InputValue val) { if (val.isPressed) state.StateOnJump();  }
 
-    void OnSkill(InputValue val) { if (val.isPressed) state.StateOnSkill(); }
+    void OnAttack(InputValue val) { if (val.isPressed) state.StateOnAttack(); /*anim.SetTrigger("Attack");*/ }
+
+    void OnSkill(InputValue val) { if (val.isPressed) state.StateOnSkill(); anim.SetTrigger("Throw"); }
 }
