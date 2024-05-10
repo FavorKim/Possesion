@@ -102,7 +102,7 @@ public class NormalState : PlayerState
     }
     public override void Gravity()
     {
-        stateCC.Move(-player.transform.up * gravityScale * 9.81f * Time.deltaTime);
+        stateCC.SimpleMove(-player.transform.up * gravityScale * Time.deltaTime);
     }
     public override void Jump()
     {
@@ -138,7 +138,7 @@ public class NormalState : PlayerState
     {
         stateCC.Move(player.transform.up * jumpForce * Time.deltaTime);
         jumpForce *= 0.99f;
-        if (jumpForce < 0.1f)
+        if (jumpForce < 5)
         {
             jumpForce = orgJumpForce;
             isJumping = false;
