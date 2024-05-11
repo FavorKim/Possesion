@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -56,12 +57,14 @@ public abstract class PlayerState : IState
         moveSpeed = player.moveSpeed;
         gravityScale = player.gravityScale;
         jumpForce = player.jumpForce;
-        //anim = player.GetAnimator();
+        hat = player.GetHat();
+        anim = player.GetAnimator();
     }
 
     protected PlayerController player;
     protected CharacterController stateCC;
-    //protected Animator anim;
+    protected Hat hat;
+    protected Animator anim;
 
     protected Vector3 moveDir => player.MoveDir;
 
@@ -114,7 +117,8 @@ public class NormalState : PlayerState
     }
     public override void Skill()
     {
-
+        //hat.ThrowHat();
+        
     }
     public override void Exit()
     {
