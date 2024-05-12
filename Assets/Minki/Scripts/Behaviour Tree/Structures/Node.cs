@@ -5,26 +5,24 @@ namespace BehaviourTree
     // 노드의 상태를 나타내는 enum
     public enum NodeState
     {
-        RUNNING,
-        SUCCESS,
-        FAILURE,
+        RUNNING, // 실행 중, Sequence에서 행동 및 반복하는 상태
+        SUCCESS, // 성공, Sequence/Selector에서 행동하는 상태
+        FAILURE, // 실패, 행동하지 않는 상태
     }
 
+    // 노드(Node) 클래스
     public class Node
     {
         // 노드의 상태를 나타내는 enum
         protected NodeState state;
-
 
         // 부모 노드
         public Node parent;
         // 자식 노드
         protected List<Node> children = new List<Node>();
 
-
-        // asdf
+        // 공유 데이터
         private Dictionary<string, object> dataContext = new Dictionary<string, object>();
-
 
         // 생성자
         public Node()
@@ -40,7 +38,6 @@ namespace BehaviourTree
             }
         }
 
-
         // 노드를 부착하는 함수
         private void Attach(Node node)
         {
@@ -48,17 +45,14 @@ namespace BehaviourTree
             children.Add(node);
         }
 
-
         // 노드의 상태를 평가하는 함수
         public virtual NodeState Evaluate() => NodeState.FAILURE;
-
 
         // 데이터를 삽입하는 함수
         public void SetData(string key, object value)
         {
             dataContext[key] = value;
         }
-
 
         // 데이터를 가져오는 함수
         public object GetData(string key)
@@ -86,7 +80,6 @@ namespace BehaviourTree
 
             return null;
         }
-
 
         // 데이터를 삭제하는 함수
         public bool RemoveData(string key)
@@ -116,4 +109,3 @@ namespace BehaviourTree
         }
     }
 }
-
