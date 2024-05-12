@@ -24,7 +24,7 @@ public class PlayerStateMachine
     {
         curState.Move();
         curState.Gravity();
-        
+
     }
 
     //public void StateFixedUpdate()
@@ -58,6 +58,7 @@ public abstract class PlayerState : IState
         gravityScale = player.gravityScale;
         jumpForce = player.jumpForce;
         anim = player.GetAnimator();
+        //isGround = player.isGround;
     }
 
     protected PlayerController player;
@@ -69,6 +70,8 @@ public abstract class PlayerState : IState
     protected float moveSpeed;
     protected float gravityScale;
     protected float jumpForce;
+
+    protected bool isGround => player.isGround;
 
     public abstract void Move();
 
@@ -84,7 +87,7 @@ public abstract class PlayerState : IState
 
 public class NormalState : PlayerState
 {
-    
+
     public NormalState(PlayerController controller) : base(controller) { orgJumpForce = jumpForce; }
 
     float orgJumpForce;
@@ -99,7 +102,9 @@ public class NormalState : PlayerState
         stateCC.Move(player.transform.TransformDirection(moveDir) * moveSpeed * Time.deltaTime);
 
         if (isJumping)
+        {
             NormJump();
+        }
     }
     public override void Gravity()
     {
@@ -107,6 +112,7 @@ public class NormalState : PlayerState
     }
     public override void Jump()
     {
+        if (!isGround) return;
         anim.SetTrigger("Jump");
         isJumping = true;
     }
@@ -124,24 +130,13 @@ public class NormalState : PlayerState
 
     }
 
-    //IEnumerator CorJump()
-    //{
-    //    while (true)
-    //    {
-    //        stateCC.Move(player.transform.up * jumpForce * Time.deltaTime);
-    //        jumpForce *= 0.99f;
-    //        if (jumpForce < 0.01f) break;
-    //        yield return null;
-    //    }
-    //    jumpForce = orgJumpForce;
-    //    player.StopCoroutine(CorJump());
-    //}
 
     void NormJump()
     {
+        
         stateCC.Move(player.transform.up * jumpForce * Time.deltaTime);
         jumpForce *= 0.99f;
-        if (jumpForce < 5)
+        if (jumpForce < 7)
         {
             jumpForce = orgJumpForce;
             isJumping = false;
@@ -174,7 +169,7 @@ public class PossessState : PlayerState
     public override void Move()
     {
         // mon.Move();
-        
+
     }
 
     public override void Gravity()
