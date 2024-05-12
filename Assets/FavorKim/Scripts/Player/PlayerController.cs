@@ -22,7 +22,11 @@ public class PlayerController : MonoBehaviour
     [SerializeField] TextMeshProUGUI t_curHP;
 
     [SerializeField] Slider hpBar;
-    
+    [SerializeField] Slider skill1Gauge;
+
+    Skill skill1;
+    Skill skill2;
+
 
     #endregion
 
@@ -44,10 +48,11 @@ public class PlayerController : MonoBehaviour
 
     #endregion
 
-    [SerializeField] public bool isGround { get;  private set; }
+    [SerializeField] public bool isGround { get; private set; }
 
 
     #endregion
+
 
     #region Getter
     public CharacterController GetCC() { return CC; }
@@ -63,6 +68,7 @@ public class PlayerController : MonoBehaviour
         CC = GetComponent<CharacterController>();
         anim = GetComponent<Animator>();
         state = new PlayerStateMachine(this);
+        skill1 = new Skill("test1", 5, () => { Debug.Log("skill1"); }, skill1Gauge);
     }
 
 
@@ -72,6 +78,7 @@ public class PlayerController : MonoBehaviour
         state.StateUpdate();
         Look();
         SetHPUI();
+        skill1.SetCurCD();
     }
 
     private void FixedUpdate()
@@ -125,6 +132,51 @@ public class PlayerController : MonoBehaviour
 
     void OnAttack(InputValue val) { if (val.isPressed) state.StateOnAttack(); /*anim.SetTrigger("Attack");*/ }
 
-    void OnSkill(InputValue val) { if (val.isPressed) state.StateOnSkill(); /*anim.SetTrigger("Throw");*/ }
+    void OnThrowHat(InputValue val) { if (val.isPressed) state.StateOnHat(); /*anim.SetTrigger("Throw");*/ }
+
+    void OnSkill1(InputValue val) 
+    {
+        if (val.isPressed) 
+        {
+            skill1.UseSkill();
+        }
+    }
     #endregion
+}
+
+public class Skill 
+{
+    public Skill(string skillName, float maxCD, Action effect, Slider gauge)
+    {
+        this.effect = effect; 
+        this.skillName = skillName;
+        this.maxCD = maxCD;
+        this.gauge = gauge;
+
+    }
+
+    string skillName;
+
+    public Slider gauge;
+
+    float maxCD;
+    float curCD;
+
+    public bool CanUse() { return curCD > maxCD; }
+
+    Action effect;
+
+    public void UseSkill()
+    {
+        if (!CanUse()) return;
+        effect();
+        SetCurCDto0();
+    }
+
+    void SetCurCDto0()
+    {
+        curCD = 0;
+    }
+
+    public void SetCurCD() { curCD += Time.deltaTime; gauge.value = curCD / maxCD; }
 }

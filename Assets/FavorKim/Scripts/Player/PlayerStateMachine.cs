@@ -14,7 +14,7 @@ public class PlayerStateMachine
 
         OnJump += curState.Jump;
         OnAttack += curState.Attack;
-        OnSkill += curState.Skill;
+        OnThrowHat += curState.Skill;
     }
     private PlayerState curState;
     private Dictionary<string, PlayerState> states = new Dictionary<string, PlayerState>();
@@ -33,11 +33,11 @@ public class PlayerStateMachine
 
     public void StateOnJump() { OnJump(); }
     public void StateOnAttack() { OnAttack(); }
-    public void StateOnSkill() { OnSkill(); }
+    public void StateOnHat() { OnThrowHat(); }
 
     public event Action OnJump;
     public event Action OnAttack;
-    public event Action OnSkill;
+    public event Action OnThrowHat;
 
     public void ChangeState(string nextState)
     {

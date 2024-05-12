@@ -15,7 +15,7 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Skill",
+                    "name": "ThrowHat",
                     "type": "Button",
                     "id": "23338d24-220f-47c4-b04b-ee827652fdf5",
                     "expectedControlType": "Button",
@@ -27,6 +27,24 @@
                     "name": "Jump",
                     "type": "Button",
                     "id": "8f0af3dc-b605-4bd8-ab71-41ca3d458d15",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Skill1",
+                    "type": "Button",
+                    "id": "f6f511c2-e9d2-48fe-9dab-982c0de22437",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Skill2",
+                    "type": "Button",
+                    "id": "380c8478-db53-40d0-b6a6-8cd117fe51c8",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -96,7 +114,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Skill",
+                    "action": "ThrowHat",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -108,6 +126,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "Jump",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "83bb2a1f-e08b-43ce-a7ae-e65687057359",
+                    "path": "<Keyboard>/q",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Skill1",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "94677ac7-72ae-4418-9969-012aec1b8b6e",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Skill2",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

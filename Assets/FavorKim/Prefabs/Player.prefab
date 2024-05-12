@@ -1420,6 +1420,7 @@ MonoBehaviour:
   t_fullHP: {fileID: 0}
   t_curHP: {fileID: 0}
   hpBar: {fileID: 0}
+  skill1Gauge: {fileID: 0}
   moveSpeed: 7
   gravityScale: 1
   jumpForce: 15
