@@ -5,47 +5,31 @@ using UnityEngine;
 
 public class Hat : MonoBehaviour
 {
-    
+    Rigidbody rb;
+    [SerializeField] float power;
+    HatManager hatM;
     DOTweenAnimation dO;
-    [SerializeField]Transform hatParent;
-    [SerializeField] Transform shootPos;
-
-
-    [SerializeField] float speed;
-    float time;
-    void Awake()
+    private void Awake()
     {
-        hatParent = transform.parent;
-        dO = GetComponentInChildren<DOTweenAnimation>();
+        hatM = FindObjectOfType<HatManager>();
+        rb = GetComponent<Rigidbody>();
+        dO = GetComponent<DOTweenAnimation>();
     }
 
-    public void ThrowHat()
+    private void OnEnable()
     {
-        transform.parent = null;
-        transform.rotation = Quaternion.LookRotation(shootPos.position, Vector3.up);
-        shootPos.parent = null;
-        StartCoroutine(CorShoot());
+        rb.velocity = Vector3.zero;
+        rb.AddForce(transform.forward * power, ForceMode.Impulse);
         dO.DORestartAllById("Shoot");
     }
-    public void ReturnAnim()
-    {
-        transform.parent = hatParent;
-        transform.localPosition = Vector3.zero;
-        transform.localRotation = Quaternion.identity;
-    }
-    IEnumerator CorShoot()
-    {
-        while (true)
-        {
-            yield return null;
-            transform.Translate(Time.deltaTime * speed * transform.forward);
-            time += Time.deltaTime;
-            if (time > 1)
-                break;
-        }
-        time = 0;
-        ReturnAnim();
-        StopCoroutine(CorShoot());
-    }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if (!other.CompareTag("Player"))
+        {
+            gameObject.SetActive(false);
+            hatM.GetHatImg().SetActive(true);
+        }
+
+    }
 }

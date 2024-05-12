@@ -14,7 +14,7 @@ public class PlayerController : MonoBehaviour
     PlayerStateMachine state;
     Animator anim;
     [SerializeField] Transform lookAtTransform;
-    [SerializeField] Hat hat;
+    [SerializeField] HatManager hatM;
     
 
     #endregion
@@ -38,7 +38,6 @@ public class PlayerController : MonoBehaviour
 
     #region Getter
     public CharacterController GetCC() { return CC; }
-    public Hat GetHat() { return hat; }
     public Animator GetAnimator() { return anim; }
     public float GetMoveSpeed() { return moveSpeed; }
     public float GetGravityScale() { return gravityScale; }
@@ -92,10 +91,10 @@ public class PlayerController : MonoBehaviour
 
     void OnAttack(InputValue val) { if (val.isPressed) state.StateOnAttack(); /*anim.SetTrigger("Attack");*/ }
 
-    void OnSkill(InputValue val) { if (val.isPressed) state.StateOnSkill(); anim.SetTrigger("Throw"); }
+    void OnSkill(InputValue val) { if (val.isPressed) state.StateOnSkill(); /*anim.SetTrigger("Throw");*/ }
 
     public void ThrowHat()
     {
-        hat.ThrowHat();
+        hatM.ShootHat();
     }
 }

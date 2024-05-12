@@ -57,13 +57,11 @@ public abstract class PlayerState : IState
         moveSpeed = player.moveSpeed;
         gravityScale = player.gravityScale;
         jumpForce = player.jumpForce;
-        hat = player.GetHat();
         anim = player.GetAnimator();
     }
 
     protected PlayerController player;
     protected CharacterController stateCC;
-    protected Hat hat;
     protected Animator anim;
 
     protected Vector3 moveDir => player.MoveDir;
@@ -109,6 +107,7 @@ public class NormalState : PlayerState
     }
     public override void Jump()
     {
+        anim.SetTrigger("Jump");
         isJumping = true;
     }
     public override void Attack()
@@ -118,7 +117,7 @@ public class NormalState : PlayerState
     public override void Skill()
     {
         //hat.ThrowHat();
-        
+        anim.SetTrigger("Throw");
     }
     public override void Exit()
     {
