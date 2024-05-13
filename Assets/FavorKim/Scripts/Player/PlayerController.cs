@@ -24,6 +24,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] Slider hpBar;
     [SerializeField] Slider skill1Gauge;
 
+    [SerializeField] GameObject slimeOF;
+    [SerializeField] GameObject goblinOF;
+    [SerializeField] GameObject playerOF;
+
     Skill skill1;
     Skill skill2;
 
@@ -50,6 +54,7 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] public bool isGround { get; private set; }
 
+    Dictionary<string, GameObject> outFits = new Dictionary<string, GameObject>();
 
     #endregion
 
@@ -69,6 +74,9 @@ public class PlayerController : MonoBehaviour
         anim = GetComponent<Animator>();
         state = new PlayerStateMachine(this);
         skill1 = new Skill("test1", 5, () => { Debug.Log("skill1"); }, skill1Gauge);
+        outFits.Add("Goblin", goblinOF);
+        outFits.Add("Slime", slimeOF);
+        outFits.Add("Player", playerOF);
     }
 
 
@@ -76,6 +84,7 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         state.StateUpdate();
+
         Look();
         SetHPUI();
         skill1.SetCurCD();
@@ -92,6 +101,15 @@ public class PlayerController : MonoBehaviour
     {
         transform.LookAt(lookAtTransform);
         transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
+    }
+
+    void SetOutFit(string name)
+    {
+        outFits["Goblin"].SetActive(false);
+        outFits["Slime"].SetActive(false);
+        outFits["Player"].SetActive(false);
+
+        outFits[name].SetActive(true);
     }
 
 
@@ -115,9 +133,32 @@ public class PlayerController : MonoBehaviour
     {
         hatM.ShootHat();
     }
+
+    public void SetState(string name)
+    {
+        state.ChangeState(name);
+    }
+
+    public void SetState(Monsters mon)
+    {
+        state.ChangeState(mon);
+
+
+        switch (mon)
+        {
+            case Slime:
+                SetOutFit("Slime");
+                break;
+
+            case Goblin:
+                SetOutFit("Goblin");
+                break;
+        }
+    }
     #endregion
 
     #region Event
+
     void OnMove(InputValue val)
     {
         Vector2 dir = val.Get<Vector2>();
@@ -130,7 +171,7 @@ public class PlayerController : MonoBehaviour
 
     void OnJump(InputValue val) { if (val.isPressed) state.StateOnJump(); }
 
-    void OnAttack(InputValue val) { if (val.isPressed) state.StateOnAttack(); /*anim.SetTrigger("Attack");*/ }
+    void OnAttack(InputValue val) { if (val.isPressed) state.StateOnAttack(); }
 
     void OnThrowHat(InputValue val) { if (val.isPressed) state.StateOnHat(); /*anim.SetTrigger("Throw");*/ }
 

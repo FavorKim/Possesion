@@ -9,11 +9,15 @@ public class Hat : MonoBehaviour
     [SerializeField] float power;
     HatManager hatM;
     DOTweenAnimation dO;
+
+    PlayerController player;
+
     private void Awake()
     {
         hatM = FindObjectOfType<HatManager>();
         rb = GetComponent<Rigidbody>();
         dO = GetComponent<DOTweenAnimation>();
+        player = FindAnyObjectByType<PlayerController>().GetComponent<PlayerController>();
     }
 
     private void OnEnable()
@@ -29,6 +33,9 @@ public class Hat : MonoBehaviour
         {
             gameObject.SetActive(false);
             hatM.GetHatImg().SetActive(true);
+
+            if (other.CompareTag("Monster"))
+                player.SetState(other.GetComponent<Monsters>());
         }
 
     }
