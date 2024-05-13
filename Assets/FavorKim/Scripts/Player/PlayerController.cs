@@ -23,14 +23,13 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] Slider hpBar;
     [SerializeField] Slider skill1Gauge;
+    [SerializeField] Slider skill2Gauge;
 
     [SerializeField] GameObject slimeOF;
     [SerializeField] GameObject goblinOF;
     [SerializeField] GameObject playerOF;
 
-    Skill skill1;
-    Skill skill2;
-
+    SkillManager sM;
 
     #endregion
 
@@ -73,7 +72,9 @@ public class PlayerController : MonoBehaviour
         CC = GetComponent<CharacterController>();
         anim = GetComponent<Animator>();
         state = new PlayerStateMachine(this);
-        skill1 = new Skill("test1", 5, () => { Debug.Log("skill1"); }, skill1Gauge);
+        sM = new SkillManager(skill1Gauge, skill2Gauge);
+        //skill1 = new Skill("test1", 5, () => { Debug.Log("skill1"); }, skill1Gauge);
+
         outFits.Add("Goblin", goblinOF);
         outFits.Add("Slime", slimeOF);
         outFits.Add("Player", playerOF);
@@ -87,7 +88,6 @@ public class PlayerController : MonoBehaviour
 
         Look();
         SetHPUI();
-        skill1.SetCurCD();
     }
 
     private void FixedUpdate()
@@ -97,6 +97,8 @@ public class PlayerController : MonoBehaviour
     #endregion
 
     #region Method
+
+
     void Look()
     {
         transform.LookAt(lookAtTransform);
@@ -137,6 +139,7 @@ public class PlayerController : MonoBehaviour
     public void SetState(string name)
     {
         state.ChangeState(name);
+        SetOutFit("Player");
     }
 
     public void SetState(Monsters mon)
@@ -175,25 +178,29 @@ public class PlayerController : MonoBehaviour
 
     void OnThrowHat(InputValue val) { if (val.isPressed) state.StateOnHat(); /*anim.SetTrigger("Throw");*/ }
 
-    void OnSkill1(InputValue val) 
+    void OnSkill1(InputValue val)
     {
-        if (val.isPressed) 
+        if (val.isPressed)
         {
-            skill1.UseSkill();
+            state.StateOnSkill1();
         }
+    }
+
+    void OnSkill2(InputValue val)
+    {
+        if (val.isPressed)
+        { state.StateOnSkill2(); }
     }
     #endregion
 }
 
-public class Skill 
+public class Skill
 {
-    public Skill(string skillName, float maxCD, Action effect, Slider gauge)
+    public Skill(string skillName, float maxCD, Action effect)
     {
-        this.effect = effect; 
+        this.effect = effect;
         this.skillName = skillName;
         this.maxCD = maxCD;
-        this.gauge = gauge;
-
     }
 
     string skillName;
@@ -214,10 +221,38 @@ public class Skill
         SetCurCDto0();
     }
 
-    void SetCurCDto0()
+    public void SetCurCDto0()
     {
         curCD = 0;
     }
 
     public void SetCurCD() { curCD += Time.deltaTime; gauge.value = curCD / maxCD; }
+}
+
+public class SkillManager
+{
+    public SkillManager(Slider socket1, Slider socket2) 
+    {
+        SkillManager.socket1 = socket1;
+        SkillManager.socket2 = socket2;
+    }
+    public static Slider socket1;
+    public static Slider socket2;
+
+    public static void SetSkill(Skill skill, int socket)
+    {
+        socket1.gameObject.SetActive(true);
+        socket2.gameObject.SetActive(true);
+
+        if (socket == 1)
+            skill.gauge = socket1;
+        else if (socket == 2)
+            skill.gauge = socket2;
+        skill.SetCurCDto0();
+    }
+    public static void ResetSkill()
+    {
+        socket1.gameObject.SetActive(false);
+        socket2.gameObject.SetActive(false);
+    }
 }

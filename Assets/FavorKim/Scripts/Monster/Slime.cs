@@ -4,11 +4,17 @@ using UnityEngine;
 
 public class Slime : Monsters
 {
+
+    private void Awake()
+    {
+        skill1 = new Skill("슬라임 스킬1", 5, Skill1);
+        skill2 = new Skill("슬라임 스킬2", 3, Skill2);
+    }
+
     public override void Move()
     {
         Debug.Log("슬라임 이동");
     }
-
 
     public override void Attack()
     {
@@ -24,5 +30,6 @@ public class Slime : Monsters
     {
         Debug.Log("슬라임 스킬 2");
     }
+    
 
 }

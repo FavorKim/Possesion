@@ -15,7 +15,7 @@ public class PlayerStateMachine
 
         //OnJump += curState.Jump;
         //OnAttack += curState.Attack;
-        //OnThrowHat += curState.Skill;
+        //OnThrowHat += curState.Skill1;
     }
     private PlayerState curState; // 노말
 
@@ -29,8 +29,9 @@ public class PlayerStateMachine
     {
         curState.Move();
         // 노말무브
+        
 
-        curState.Gravity();
+        curState.StateUpdate();
 
     }
 
@@ -40,11 +41,10 @@ public class PlayerStateMachine
 
     public void StateOnJump() { curState.Jump(); }
     public void StateOnAttack() { curState.Attack(); }
-    public void StateOnHat() { curState.Skill(); }
+    public void StateOnHat() { curState.Shift(); }
+    public void StateOnSkill1() { curState.Skill1(); }
+    public void StateOnSkill2() { curState.Skill2(); }
 
-    public event Action OnJump;
-    public event Action OnAttack;
-    public event Action OnThrowHat;
 
     public void ChangeState(string nextState)
     {
@@ -90,11 +90,13 @@ public abstract class PlayerState : IState
 
     public abstract void Move();
 
-    public abstract void Gravity();
+    public abstract void StateUpdate();
 
     public abstract void Jump();
     public abstract void Attack();
-    public abstract void Skill();
+    public abstract void Skill1();
+    public abstract void Skill2();
+    public abstract void Shift();
 
     public abstract void Enter();
     public abstract void Exit();
@@ -110,7 +112,7 @@ public class NormalState : PlayerState
 
     public override void Enter()
     {
-
+        SkillManager.ResetSkill();
     }
 
     public override void Move()
@@ -123,7 +125,7 @@ public class NormalState : PlayerState
         }
     }
 
-    public override void Gravity()
+    public override void StateUpdate()
     {
         stateCC.SimpleMove(-player.transform.up * gravityScale * Time.deltaTime);
     }
@@ -140,10 +142,19 @@ public class NormalState : PlayerState
         Debug.Log("atk");
     }
 
-    public override void Skill()
+    public override void Skill1()
     {
-        //hat.ThrowHat();
+    }
+
+    public override void Skill2()
+    {
+        
+    }
+
+    public override void Shift()
+    {
         anim.SetTrigger("Throw");
+
     }
 
     public override void Exit()
@@ -372,7 +383,7 @@ public class PossessState : PlayerState
         애니메이션 호출
 
          */
-        Debug.Log(mon);
+        mon.SetSkill();
     }
 
 
@@ -388,9 +399,11 @@ public class PossessState : PlayerState
         mon.Move();
     }
 
-    public override void Gravity()
+    public override void StateUpdate()
     {
-        // mon.Gravity();
+        // mon.StateUpdate();
+        mon.skill1.SetCurCD();
+        mon.skill2.SetCurCD();
     }
 
     public override void Jump()
@@ -401,14 +414,24 @@ public class PossessState : PlayerState
     {
         mon.Attack();
     }
-    public override void Skill()
+    public override void Skill1()
     {
-        mon.Skill1();
+        
+        mon.skill1.UseSkill();
+    }
+    public override void Skill2()
+    {
+        mon.skill2.UseSkill();
+    }
+
+    public override void Shift()
+    {
+        player.SetState("Normal");
     }
 
     public override void Exit()
     {
-        // mon = null;
+        mon = null;
     }
 }
 
@@ -419,6 +442,8 @@ public interface IState
     void Enter();
     void Exit();
     void Attack();
-    void Skill();
+    void Skill1();
+    void Skill2();
+    void Shift();
 
 }

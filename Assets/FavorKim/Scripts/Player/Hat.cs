@@ -20,6 +20,8 @@ public class Hat : MonoBehaviour
         player = FindAnyObjectByType<PlayerController>().GetComponent<PlayerController>();
     }
 
+
+
     private void OnEnable()
     {
         rb.velocity = Vector3.zero;
@@ -35,7 +37,9 @@ public class Hat : MonoBehaviour
             hatM.GetHatImg().SetActive(true);
 
             if (other.CompareTag("Monster"))
+            {
                 player.SetState(other.GetComponent<Monsters>());
+            }
         }
 
     }
