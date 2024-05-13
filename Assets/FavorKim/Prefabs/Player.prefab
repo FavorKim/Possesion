@@ -2041,6 +2041,7 @@ MonoBehaviour:
   hpBar: {fileID: 0}
   skill1Gauge: {fileID: 0}
   skill2Gauge: {fileID: 0}
+  durationGauge: {fileID: 0}
   slimeOF: {fileID: 4576256106060862219}
   goblinOF: {fileID: 4576256106005444547}
   playerOF: {fileID: 4576256105640882925}
@@ -2050,6 +2051,7 @@ MonoBehaviour:
   rayDist: 0.12
   fullHP: 100
   curHP: 100
+  duration: 3
 --- !u!1 &3818018170578782560
 GameObject:
   m_ObjectHideFlags: 0

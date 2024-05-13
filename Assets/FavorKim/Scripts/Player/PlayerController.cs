@@ -25,6 +25,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] Slider skill1Gauge;
     [SerializeField] Slider skill2Gauge;
 
+    [SerializeField] Slider durationGauge;
+
     [SerializeField] GameObject slimeOF;
     [SerializeField] GameObject goblinOF;
     [SerializeField] GameObject playerOF;
@@ -48,6 +50,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float fullHP;
     [SerializeField] float curHP;
 
+    [SerializeField] float duration;
+
 
     #endregion
 
@@ -61,9 +65,11 @@ public class PlayerController : MonoBehaviour
     #region Getter
     public CharacterController GetCC() { return CC; }
     public Animator GetAnimator() { return anim; }
+    public Slider GetDurationGauge() { return durationGauge; }
     public float GetMoveSpeed() { return moveSpeed; }
     public float GetGravityScale() { return gravityScale; }
     public float GetJumpForce() { return jumpForce; }
+    public float GetDuration() {  return duration; }
     #endregion
 
     #region LifeCycle

@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerStateMachine
 {
@@ -179,8 +180,8 @@ public class NormalState : PlayerState
 
 public class PossessState : PlayerState
 {
-    public PossessState(PlayerController controller) : base(controller) { }
-
+    public PossessState(PlayerController controller) : base(controller) { durationGauge = player.GetDurationGauge(); }
+    Slider durationGauge;
     // MonsterController monCon;
     // MonsterController 다른 몬스터들이 상속을 받아
     // virtual(abstract) Move()
@@ -384,6 +385,9 @@ public class PossessState : PlayerState
 
          */
         mon.SetSkill();
+        durationGauge.gameObject.SetActive(true);
+        durationGauge.value = 1;
+
     }
 
 
@@ -401,9 +405,9 @@ public class PossessState : PlayerState
 
     public override void StateUpdate()
     {
-        // mon.StateUpdate();
         mon.skill1.SetCurCD();
         mon.skill2.SetCurCD();
+        SetDuration();
     }
 
     public override void Jump()
@@ -432,7 +436,16 @@ public class PossessState : PlayerState
     public override void Exit()
     {
         mon = null;
+        durationGauge.gameObject.SetActive(false);
     }
+
+    void SetDuration()
+    {
+        durationGauge.value -= Time.deltaTime / player.GetDuration();
+        if (durationGauge.value <= 0) Shift();
+    }
+
+
 }
 
 public interface IState
