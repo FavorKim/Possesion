@@ -2,43 +2,54 @@ using System.Collections.Generic;
 
 namespace BehaviourTree
 {
-    // Sequence(AND) 클래스
+    /*
+     * Sequence: 자식 노드를 순회하다가,
+     * Failure 상태인 노드를 만날 경우, 평가를 멈춘다.
+     * Running 상태인 노드를 만날 경우, 다음 프레임에도 이 노드를 평가한다.
+     * Success 상태인 노드를 만날 경우, 다음 프레임에는 다음 노드를 평가한다.
+    */
+
     public class Sequence : Node
     {
-        // 생성자
-        public Sequence() : base() { }
-        public Sequence(List<Node> children) : base(children) { }
+        // 자식 노드 목록
+        private List<Node> children;
 
-        // 평가 함수
+        public Sequence(List<Node> children)
+        {
+            this.children = children;
+        }
+
         public override NodeState Evaluate()
         {
-            bool anyChildIsRunning = false;
-
-            foreach (Node node in children)
+            // 만약 자식 노드가 없다면,
+            if (children == null || children.Count == 0)
             {
-                switch (node.Evaluate())
+                // Failure를 반환한다.
+                return NodeState.FAILURE;
+            }
+
+            // 자식 노드를 순회하면서,
+            foreach (Node child in children)
+            {
+                // 상태를 평가한다.
+                switch (child.Evaluate())
                 {
-                    case NodeState.FAILURE: // FAILURE: FAILURE를 반환한다.
-                        state = NodeState.FAILURE;
-                        return state;
+                    // Running일 경우, Running을 반환한다.
+                    case NodeState.RUNNING:
+                        return NodeState.RUNNING;
 
-                    case NodeState.SUCCESS: // SUCCESS: 다음 노드로 이동한다.
+                    // Success일 경우, 다음 노드를 평가한다.
+                    case NodeState.SUCCESS:
                         continue;
 
-                    case NodeState.RUNNING: // RUNNING: 이번 노드를 다시 평가한다.
-                        anyChildIsRunning = true;
-                        continue;
-
-                    default:
-                        state = NodeState.SUCCESS;
-                        return state;
+                    // Failure일 경우, Failure를 반환한다.
+                    case NodeState.FAILURE:
+                        return NodeState.FAILURE;
                 }
             }
 
-            state = anyChildIsRunning ? NodeState.RUNNING : NodeState.SUCCESS;
-            return state;
+            // 전부 순회했을 경우, Success를 반환한다. (전부 실행했다는 뜻)
+            return NodeState.SUCCESS;
         }
     }
-
 }
-

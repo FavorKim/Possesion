@@ -2,39 +2,54 @@ using System.Collections.Generic;
 
 namespace BehaviourTree
 {
-    // Selector(OR) 클래스
+    /*
+     * Selector: 자식 노드를 순회하다가,
+     * Failure 상태인 노드를 만날 경우, 다음 노드를 평가한다.
+     * Success/Running 상태인 노드를 만날 경우, 그 노드까지만 실행하고 멈춘다.
+    */
+
     public class Selector : Node
     {
-        // 생성자
-        public Selector() : base() { }
-        public Selector(List<Node> children) : base(children) { }
+        // 자식 노드 목록
+        private List<Node> children;
 
+        public Selector(List<Node> children)
+        {
+            this.children = children;
+        }
 
         // 평가 함수
         public override NodeState Evaluate()
         {
-            foreach (Node node in children)
+            // 만약 자식 노드가 없다면,
+            if (children == null || children.Count == 0)
             {
-                switch (node.Evaluate())
+                // Failure를 반환한다.
+                return NodeState.FAILURE;
+            }
+
+            // 자식 노드를 순회하면서,
+            foreach (Node child in children)
+            {
+                // 상태를 평가한다.
+                switch (child.Evaluate())
                 {
-                    case NodeState.FAILURE: // FAILURE: 다음 자식 노드로 이동한다.
-                        continue;
+                    // Running일 경우, Running을 반환한다.
+                    case NodeState.RUNNING:
+                        return NodeState.RUNNING;
 
-                    case NodeState.SUCCESS: // SUCCESS: SUCCESS를 반환한다.
-                        state = NodeState.SUCCESS;
-                        return state;
+                    // Success일 경우, Success를 반환한다.
+                    case NodeState.SUCCESS:
+                        return NodeState.SUCCESS;
 
-                    case NodeState.RUNNING: // RUNNING: RUNNING을 반환한다.
-                        state = NodeState.RUNNING;
-                        return state;
-
-                    default:
+                    // Failure일 경우, 다음 노드를 평가한다.
+                    case NodeState.FAILURE:
                         continue;
                 }
             }
 
-            state = NodeState.FAILURE;
-            return state;
+            // 전부 순회했을 경우, Failure를 반환한다. (아무것도 선택하여 실행하지 않았다는 뜻)
+            return NodeState.FAILURE;
         }
     }
 }
