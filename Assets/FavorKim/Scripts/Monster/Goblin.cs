@@ -4,6 +4,13 @@ using UnityEngine;
 
 public class Goblin : Monsters
 {
+    public override void InitSkill()
+    {
+        Debug.Log("고블린 awake");
+        skill1 = new Skill("고블린 스킬1", 7, Skill1);
+        skill2 = new Skill("고블린 스킬2", 10, Skill2);
+    }
+
     public override void Move()
     {
         Debug.Log("고블린 이동");
@@ -22,5 +29,11 @@ public class Goblin : Monsters
     public override void Skill2()
     {
         Debug.Log("고블린 스킬 2");
+    }
+
+    public override void SetSkill()
+    {
+        SkillManager.SetSkill(skill1, 1);
+        SkillManager.SetSkill(skill2, 2);
     }
 }

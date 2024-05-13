@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class Slime : Monsters
 {
-
-    private void Awake()
+    public override void InitSkill()
     {
+        Debug.Log("슬라임 awake");
         skill1 = new Skill("슬라임 스킬1", 5, Skill1);
         skill2 = new Skill("슬라임 스킬2", 3, Skill2);
     }
@@ -30,6 +30,10 @@ public class Slime : Monsters
     {
         Debug.Log("슬라임 스킬 2");
     }
-    
 
+    public override void SetSkill()
+    {
+        SkillManager.SetSkill(skill1, 1);
+        SkillManager.SetSkill(skill2, 2);
+    }
 }

@@ -56,8 +56,8 @@ public class PlayerStateMachine
     public void ChangeState(Monsters mon)
     {
         curState.Exit();
-        curState = possessState;
         possessState.GetMonster(mon);
+        curState = possessState;
     }
 }
 

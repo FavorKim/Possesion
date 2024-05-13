@@ -248,6 +248,7 @@ public class SkillManager
             skill.gauge = socket1;
         else if (socket == 2)
             skill.gauge = socket2;
+
         skill.SetCurCDto0();
     }
     public static void ResetSkill()

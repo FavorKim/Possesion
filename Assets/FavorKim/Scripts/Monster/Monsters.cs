@@ -10,6 +10,11 @@ public abstract class Monsters : MonoBehaviour
 
     // 이펙트, 이동속도, 애니메이터 등등...
 
+    private void Awake()
+    {
+        InitSkill();
+    }
+
     public abstract void Attack();
 
     public abstract void Skill1();
@@ -17,12 +22,10 @@ public abstract class Monsters : MonoBehaviour
 
     public abstract void Move();
 
+    public abstract void InitSkill();
+
     public Skill skill1;
     public Skill skill2;
 
-    public void SetSkill()
-    {
-        SkillManager.SetSkill(skill1, 1);
-        SkillManager.SetSkill(skill2, 2);
-    }
+    public abstract void SetSkill();
 }
