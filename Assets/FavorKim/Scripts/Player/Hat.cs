@@ -33,14 +33,17 @@ public class Hat : MonoBehaviour
     {
         if (!other.CompareTag("Player"))
         {
-            gameObject.SetActive(false);
-            hatM.GetHatImg().SetActive(true);
-
+            ResetHat();
             if (other.CompareTag("Monster"))
             {
                 player.SetState(other.GetComponent<Monsters>());
             }
         }
+    }
 
+    public void ResetHat()
+    {
+        gameObject.SetActive(false);
+        hatM.GetHatImg().SetActive(true);
     }
 }

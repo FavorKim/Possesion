@@ -154,7 +154,7 @@ public class NormalState : PlayerState
 
     public override void Shift()
     {
-        anim.SetTrigger("Throw");
+        anim.SetTrigger("Shift");
 
     }
 

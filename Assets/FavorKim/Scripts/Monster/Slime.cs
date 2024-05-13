@@ -6,7 +6,6 @@ public class Slime : Monsters
 {
     public override void InitSkill()
     {
-        Debug.Log("슬라임 awake");
         skill1 = new Skill("슬라임 스킬1", 5, Skill1);
         skill2 = new Skill("슬라임 스킬2", 3, Skill2);
     }

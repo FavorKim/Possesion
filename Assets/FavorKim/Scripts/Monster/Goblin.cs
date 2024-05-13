@@ -6,7 +6,6 @@ public class Goblin : Monsters
 {
     public override void InitSkill()
     {
-        Debug.Log("고블린 awake");
         skill1 = new Skill("고블린 스킬1", 7, Skill1);
         skill2 = new Skill("고블린 스킬2", 10, Skill2);
     }
