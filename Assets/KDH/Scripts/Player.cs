@@ -51,7 +51,7 @@ public class Player : SceneSingleton<Player>
     {
         //combat.Init(transform, maxHp);
 
-        tpsVCamRoot.transform.parent = null;
+        //tpsVCamRoot.transform.parent = null;
         onPlay = false;
         
     }
@@ -64,7 +64,7 @@ public class Player : SceneSingleton<Player>
         cc = GetComponent<CharacterController>();
         //impulseSource = GetComponent<CinemachineImpulseSource>();
 
-        SetCamType(false);
+        //SetCamType(false);
         senst = 0.5f;
     }
 
@@ -152,17 +152,6 @@ public class Player : SceneSingleton<Player>
         Quaternion rotationBody = Quaternion.LookRotation(direction);
         //rotationBody = Quaternion.Euler(0, rotationBody.eulerAngles.y, 0);
         this.transform.rotation = Quaternion.Slerp(this.transform.rotation, rotationBody, Time.deltaTime * 0.4f);
-    }
-    void SetCamType(bool isFps)
-    {
-        if (isFps)
-        {
-            tpsVCam.Priority = 9;
-        }
-        else
-        {
-            tpsVCam.Priority = 11;
-        }
     }
 
     public void Recoil(float recoli)

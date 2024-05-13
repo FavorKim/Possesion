@@ -278,7 +278,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: b4c6544d9eb780144bf7712d21ec2dbf, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 265.64
+      value: 264.73
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: b4c6544d9eb780144bf7712d21ec2dbf, type: 3}
       propertyPath: m_LocalPosition.z
@@ -990,6 +990,24 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: b4c6544d9eb780144bf7712d21ec2dbf, type: 3}
   m_PrefabInstance: {fileID: 8724143633648866858}
   m_PrefabAsset: {fileID: 0}
+--- !u!143 &1088937650
+CharacterController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8490142609189989243}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Height: 1
+  m_Radius: 0.2
+  m_SlopeLimit: 45
+  m_StepOffset: 0.3
+  m_SkinWidth: 0.08
+  m_MinMoveDistance: 0.001
+  m_Center: {x: 0, y: 0.4, z: 0}
 --- !u!114 &6842610691681681441
 MonoBehaviour:
   m_ObjectHideFlags: 0
