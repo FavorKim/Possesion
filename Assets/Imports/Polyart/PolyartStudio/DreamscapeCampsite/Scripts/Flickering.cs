@@ -88,7 +88,7 @@ public class Flickering : MonoBehaviour
         {
             randomPos = Random.insideUnitSphere/(1/lightPosRandomness);
             randomPos += startPosition;
-            Debug.Log(randomPos);
+            //Debug.Log(randomPos);
             TimeSinceRandomRefresh = 0.0f;
         }
         else
