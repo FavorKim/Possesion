@@ -1,39 +1,19 @@
 using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.Rendering;
-using static UnityEngine.UI.GridLayoutGroup;
 
-public class MonsterPlant : MonoBehaviour
+
+public class MonsterPlant : BaseMonster
 {
     // 플레이어 정보를 받아야 NevMesh를 따라 추적이 가능함.
     [SerializeField] protected Player player;
 
-
-    //State랑 스킬이랑 별개로 분류하고, 
-
-
     [SerializeField] public GameObject projectile;
 
-    public enum MonsterState
-    { 
-        IDLE,
-        TRACE,
-        ATTACK,
-        DEAD
-    }
-    
-    public float traceDistance = 10f;
-    public float skillDistance = 10f;
-    public float attackDistance = 2f;
+    MonsterState state = MonsterState.IDLE;
 
-    public MonsterState state = MonsterState.IDLE;
-    public bool isDie = false;
-
-    public float skill1_totalCooltime = 3f;
-    public float skill1_curCooltime = 0f;
+    float skill1_curCooltime = 0f;
+    float skill2_curCooltime = 0f;
 
     Transform enemyTrf;
     Transform playerTrf;
@@ -42,11 +22,12 @@ public class MonsterPlant : MonoBehaviour
 
     public StateMachine stateMachine;
 
-    private Dictionary<MonsterState, IState> dicState = new Dictionary<MonsterState, IState>();
+    //private Dictionary<MonsterState, IState> dicState = new Dictionary<MonsterState, IState>();
 
     readonly int hashTrace = Animator.StringToHash("IsTrace");
     readonly int hashAttack = Animator.StringToHash("IsAttack");
-
+    readonly int hashSkill2 = Animator.StringToHash("IsSkill2");
+    
     // Start is called before the first frame update
     void Awake()
     {
@@ -60,7 +41,6 @@ public class MonsterPlant : MonoBehaviour
 
         stateMachine.AddState(MonsterState.IDLE, new IdleState(this));
         stateMachine.AddState(MonsterState.TRACE, new TraceState(this));
-        
         stateMachine.AddState(MonsterState.ATTACK, new AttackState(this));
         stateMachine.InitState(MonsterState.IDLE);
 
@@ -91,6 +71,7 @@ public class MonsterPlant : MonoBehaviour
             {
                 stateMachine.ChangeState(MonsterState.ATTACK);
                 state = MonsterState.ATTACK;
+                yield return new WaitForSeconds(1f);
             }
             else if (distance <= traceDistance)
             {
@@ -106,6 +87,20 @@ public class MonsterPlant : MonoBehaviour
         stateMachine.ChangeState(MonsterState.DEAD);
         state = MonsterState.DEAD;
     }
+    private void Update()
+    {
+        if (skill1_curCooltime > 0f)
+        {
+            skill1_curCooltime -= Time.deltaTime;
+        }
+        if (skill2_curCooltime > 0f)
+        {
+            skill2_curCooltime -= Time.deltaTime;
+        }
+        /*enemyTrf
+        animator.SetFloat("FloatX", gameObject.transform.position.z);
+        animator.SetFloat("FloatY", gameObject.transform.position.x);*/
+    }
 
     class BaseEnemyState : BaseState
     {
@@ -114,18 +109,6 @@ public class MonsterPlant : MonoBehaviour
         {
             this.owner = owner;
         }
-    }
-
-    private void Update()
-    {
-        if(skill1_curCooltime > 0f)
-        {
-            skill1_curCooltime -= Time.deltaTime;
-        }
-        
-        /*enemyTrf
-        animator.SetFloat("FloatX", gameObject.transform.position.z);
-        animator.SetFloat("FloatY", gameObject.transform.position.x);*/
     }
 
     class IdleState : BaseEnemyState
@@ -161,21 +144,21 @@ public class MonsterPlant : MonoBehaviour
         public override void Enter()
         {
             owner.agent.isStopped = true;
-
             float distance = Vector3.Distance(owner.playerTrf.position, owner.enemyTrf.position);
             
             //여기까지 왔다면 원/근 파트는 나눠 뒀음.
             if (distance >= owner.attackDistance && owner.skill1_curCooltime <= 0f)
             {
-                Rigidbody rb = Instantiate(owner.projectile, owner.transform.position, Quaternion.identity).GetComponent<Rigidbody>();
-                rb.AddForce(owner.transform.forward * distance * 0.5f, ForceMode.Impulse);
-                rb.AddForce(owner.transform.up * distance * 0.38f, ForceMode.Impulse);
-
-                //여기서 스킬을 발사 해줘야 하거든?
-                owner.skill1_curCooltime = owner.skill1_totalCooltime;
+                owner.Skill1();
             }
-
-            owner.animator.SetBool(owner.hashAttack, true);
+            else if(owner.skill2_curCooltime <= 0f)
+            {
+                owner.Skill2();
+            }
+            else
+            {
+                owner.Attack();
+            }
         }
     }
 
@@ -188,5 +171,30 @@ public class MonsterPlant : MonoBehaviour
             Debug.Log("Dead");
         }
     }
+
+    public override void Attack()
+    {
+        animator.SetBool(hashAttack, true);
+    }
+    public override void Skill1()
+    {
+        float distance = Vector3.Distance(playerTrf.position, enemyTrf.position);
+
+        Rigidbody rb = Instantiate(projectile, transform.position, Quaternion.identity).GetComponent<Rigidbody>();
+        rb.AddForce(transform.forward *(5 + distance * 0.4f), ForceMode.Impulse);
+        rb.AddForce(transform.up * (5 + distance * 0.3f), ForceMode.Impulse);
+
+        //여기서 스킬을 발사 해줘야 하거든?
+        skill1_curCooltime = mstSkill1Cooltime;
+
+        animator.SetBool(hashAttack, true);
+    }
+    public override void Skill2()
+    {
+        animator.SetTrigger(hashSkill2);
+        skill2_curCooltime = mstSkill2Cooltime;
+    }
+
 }
+
 

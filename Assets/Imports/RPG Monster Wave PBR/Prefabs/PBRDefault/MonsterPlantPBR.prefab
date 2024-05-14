@@ -1365,8 +1365,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4700302584741114}
   - component: {fileID: 95661104805808786}
-  - component: {fileID: 5720992622551480665}
   - component: {fileID: 1448436276}
+  - component: {fileID: 5720992622551480665}
   m_Layer: 0
   m_Name: MonsterPlantPBR
   m_TagString: Untagged
@@ -1412,24 +1412,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &5720992622551480665
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1748489546896114}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1e0e26d3323048e4ba46c890fd0241b5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: {fileID: 0}
-  traceDistance: 999
-  attackDistance: 1.5
-  state: 0
-  isDie: 0
-  stateMachine: {fileID: 0}
 --- !u!195 &1448436276
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -1452,6 +1434,28 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &5720992622551480665
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1748489546896114}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e0e26d3323048e4ba46c890fd0241b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mstATK: 10
+  mstSkill1Cooltime: 3
+  mstSkill2Cooltime: 3
+  traceDistance: 999
+  skillDistance: 10
+  attackDistance: 1.5
+  isDie: 0
+  player: {fileID: 0}
+  projectile: {fileID: 0}
+  stateMachine: {fileID: 0}
 --- !u!1 &1781689967026810
 GameObject:
   m_ObjectHideFlags: 0
