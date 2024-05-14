@@ -233,6 +233,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4333204578251230}
   - component: {fileID: 95570523499675550}
+  - component: {fileID: 1723245611}
+  - component: {fileID: 581639284729682368}
   m_Layer: 0
   m_Name: SkeletonPBR
   m_TagString: Untagged
@@ -275,11 +277,61 @@ Animator:
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
-  m_WarningMessage: 
+  m_WarningMessage: "\nBinding warning: Some generic clip(s) animate transforms that
+    are already bound by a Humanoid avatar. These transforms can only be changed
+    by Humanoid clips.\n\tTransform 'Spine01'\n\tTransform 'Body'\n\tTransform 'Spine01'\n\tTransform
+    'Body'\n\tTransform 'Spine01'\n\tTransform 'Body'\n\tFrom animation clip 'Defend'\n\tFrom
+    animation clip 'Attack02'\n\tFrom animation clip 'Attack01'\n\tFrom animation
+    clip 'IdleNormal'\n\tFrom animation clip 'WalkFWD'\n\tFrom animation clip 'WalkBWD'\n\tFrom
+    animation clip 'WalkLeft'\n\tFrom animation clip 'WalkRight'"
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!195 &1723245611
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1088474434442572}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
+--- !u!114 &581639284729682368
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1088474434442572}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5e5d0c487c326b428d7618c8d866abd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mstATK: 10
+  mstSkill1Cooltime: 3
+  mstSkill2Cooltime: 3
+  traceDistance: 10
+  skillDistance: 10
+  attackDistance: 2
+  isDie: 0
+  player: {fileID: 0}
+  state: 0
+  stateMachine: {fileID: 0}
 --- !u!1 &1109665426179172
 GameObject:
   m_ObjectHideFlags: 0

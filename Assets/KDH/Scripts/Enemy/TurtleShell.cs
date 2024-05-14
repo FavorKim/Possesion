@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Skeleton : BaseMonster
+public class TurtleShell : BaseMonster
 {
     // 플레이어 정보를 받아야 NevMesh를 따라 추적이 가능함.
     [SerializeField] protected Player player;
@@ -98,8 +98,8 @@ public class Skeleton : BaseMonster
 
     class BaseEnemyState : BaseState
     {
-        protected Skeleton owner;
-        public BaseEnemyState(Skeleton owner)
+        protected TurtleShell owner;
+        public BaseEnemyState(TurtleShell owner)
         {
             this.owner = owner;
         }
@@ -107,7 +107,7 @@ public class Skeleton : BaseMonster
 
     class IdleState : BaseEnemyState
     {
-        public IdleState(Skeleton owner) : base(owner) { }
+        public IdleState(TurtleShell owner) : base(owner) { }
 
         public override void Enter()
         {
@@ -119,7 +119,7 @@ public class Skeleton : BaseMonster
 
     class TraceState : BaseEnemyState
     {
-        public TraceState(Skeleton owner) : base(owner) { }
+        public TraceState(TurtleShell owner) : base(owner) { }
 
         public override void Enter()
         {
@@ -134,7 +134,7 @@ public class Skeleton : BaseMonster
 
     class AttackState : BaseEnemyState
     {
-        public AttackState(Skeleton owner) : base(owner) { }
+        public AttackState(TurtleShell owner) : base(owner) { }
 
         public override void Enter()
         {
@@ -159,7 +159,7 @@ public class Skeleton : BaseMonster
 
     class DeadState : BaseEnemyState
     {
-        public DeadState(Skeleton owner) : base(owner) { }
+        public DeadState(TurtleShell owner) : base(owner) { }
 
         public override void Enter()
         {
