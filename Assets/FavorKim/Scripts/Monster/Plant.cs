@@ -32,6 +32,10 @@ public class Plant : Monsters
         Debug.Log("슬라임 스킬 2");
     }
 
+    /*
+        빙의됐을 때 AI만 꺼지면 OK
+    */
+
     public override void SetSkill()
     {
         SkillManager.SetSkill(skill1, 1);

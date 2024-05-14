@@ -399,12 +399,15 @@ public class PossessState : PlayerState
     }
 
 
-    public void GetMonster(Monsters mon)
+    public void GetMonster(Monsters _mon)
     {
-        this.mon = mon;
-        mon.transform.parent = player.transform;
-        mon.transform.localPosition = Vector3.zero;
-        mon.transform.localEulerAngles = Vector3.zero;
+        mon = _mon;
+        
+        player.GetCC().Move(mon.transform.position - player.transform.position);
+
+        _mon.transform.parent = player.transform;
+        _mon.transform.localPosition = Vector3.zero;
+        _mon.transform.localEulerAngles = Vector3.zero;
         
         Enter();
     }
@@ -448,8 +451,8 @@ public class PossessState : PlayerState
 
     public override void Exit()
     {
-        mon = null;
         mon.transform.parent = null;
+        
 
         durationGauge.gameObject.SetActive(false);
     }
