@@ -15,6 +15,8 @@ public class PlayerController : MonoBehaviour
     private CharacterController CC;
     PlayerStateMachine state;
     Animator anim;
+    Animator monAnim;
+
     [SerializeField] Transform lookAtTransform;
     [SerializeField] HatManager hatM;
 
@@ -27,7 +29,7 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] Slider durationGauge;
 
-    [SerializeField] GameObject slimeOF;
+    [SerializeField] GameObject plantOF;
     [SerializeField] GameObject goblinOF;
     [SerializeField] GameObject playerOF;
 
@@ -84,14 +86,17 @@ public class PlayerController : MonoBehaviour
     {
         CC = GetComponent<CharacterController>();
         anim = GetComponent<Animator>();
+        
         state = new PlayerStateMachine(this);
         sM = new SkillManager(skill1Gauge, skill2Gauge);
+
         //skill1 = new Skill("test1", 5, () => { Debug.Log("skill1"); }, skill1Gauge);
 
         outFits.Add("Goblin", goblinOF);
-        outFits.Add("Slime", slimeOF);
+        outFits.Add("Plant", plantOF);
         outFits.Add("Player", playerOF);
         OnDead += DeadCheck;
+
 
         t_fullHP.text = fullHP.ToString();
     }
@@ -125,10 +130,13 @@ public class PlayerController : MonoBehaviour
     void SetOutFit(string name)
     {
         outFits["Goblin"].SetActive(false);
-        outFits["Slime"].SetActive(false);
+        outFits["Plant"].SetActive(false);
         outFits["Player"].SetActive(false);
 
         outFits[name].SetActive(true);
+
+        monAnim = outFits[name].GetComponent<Animator>();
+        //Debug.Log(monAnim.ToString());
     }
 
 
@@ -156,24 +164,13 @@ public class PlayerController : MonoBehaviour
     public void SetState(string name)
     {
         state.ChangeState(name);
-        SetOutFit("Player");
+        playerOF.SetActive(true);
     }
 
     public void SetState(Monsters mon)
     {
         state.ChangeState(mon);
-
-        switch (mon)
-        {
-            case Slime:
-                SetOutFit("Slime");
-                break;
-
-            case Goblin:
-                SetOutFit("Goblin");
-                break;
-        }
-        transform.position = mon.transform.position;
+        playerOF.SetActive(false);
     }
 
     public void GetDamage(int dmg)

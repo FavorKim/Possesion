@@ -35,6 +35,7 @@ public class Hat : MonoBehaviour
         {
             if (other.CompareTag("Monster"))
             {
+
                 player.SetState(other.GetComponent<Monsters>());
                 
             }

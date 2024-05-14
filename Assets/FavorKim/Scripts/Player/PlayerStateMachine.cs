@@ -2,6 +2,7 @@ using DG.Tweening;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -31,10 +32,8 @@ public class PlayerStateMachine
     {
         // 노말무브
         curState.Move();
-
-
+        
         curState.StateUpdate();
-
     }
 
     //public void StateFixedUpdate()
@@ -61,7 +60,8 @@ public class PlayerStateMachine
         curState.Exit();
         curState = possessState;
         possessState.GetMonster(mon);
-        player.transform.position = mon.transform.position;
+
+        //player.transform.position = mon.transform.position;
     }
 }
 
@@ -92,7 +92,10 @@ public abstract class PlayerState : IState
 
     protected bool isGround => player.isGround;
 
-    public abstract void Move();
+    public virtual void Move() 
+    {
+        stateCC.Move(player.transform.TransformDirection(moveDir) * moveSpeed * Time.deltaTime);
+    }
 
     public abstract void StateUpdate();
 
@@ -108,7 +111,6 @@ public abstract class PlayerState : IState
 
 public class NormalState : PlayerState
 {
-
     public NormalState(PlayerController controller) : base(controller) { orgJumpForce = jumpForce; }
     private float speed;
 
@@ -121,10 +123,7 @@ public class NormalState : PlayerState
 
     public override void Move()
     {
-        Debug.Log("normMove");
-
-        stateCC.Move(player.transform.TransformDirection(moveDir) * moveSpeed * Time.deltaTime);
-
+        base.Move();
         if (isJumping)
         {
             NormJump();
@@ -133,7 +132,6 @@ public class NormalState : PlayerState
 
     public override void StateUpdate()
     {
-        Debug.Log("normUp");
         stateCC.SimpleMove(-player.transform.up * gravityScale * Time.deltaTime);
     }
 
@@ -172,8 +170,8 @@ public class NormalState : PlayerState
     {
 
         stateCC.Move(player.transform.up * jumpForce * Time.deltaTime);
-        jumpForce *= 0.99f;
-        if (jumpForce < 7)
+        jumpForce -= Time.deltaTime * jumpForce;
+        if (jumpForce < 10)
         {
             jumpForce = orgJumpForce;
             isJumping = false;
@@ -185,8 +183,12 @@ public class NormalState : PlayerState
 
 public class PossessState : PlayerState
 {
-    public PossessState(PlayerController controller) : base(controller) { durationGauge = player.GetDurationGauge(); }
+    public PossessState(PlayerController controller) : base(controller) 
+    {
+        durationGauge = player.GetDurationGauge(); 
+    }
     Slider durationGauge;
+
     // MonsterController monCon;
     // MonsterController 다른 몬스터들이 상속을 받아
     // virtual(abstract) Move()
@@ -394,21 +396,24 @@ public class PossessState : PlayerState
         mon.SetSkill();
         durationGauge.gameObject.SetActive(true);
         durationGauge.value = 1;
-        player.transform.position = mon.transform.position;
-
     }
 
 
     public void GetMonster(Monsters mon)
     {
         this.mon = mon;
+        mon.transform.parent = player.transform;
+        mon.transform.localPosition = Vector3.zero;
+        mon.transform.localEulerAngles = Vector3.zero;
+        
         Enter();
     }
 
 
     public override void Move()
     {
-        mon.Move();
+        //mon.Move();
+        base.Move();
     }
 
     public override void StateUpdate()
@@ -444,6 +449,8 @@ public class PossessState : PlayerState
     public override void Exit()
     {
         mon = null;
+        mon.transform.parent = null;
+
         durationGauge.gameObject.SetActive(false);
     }
 

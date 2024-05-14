@@ -2,12 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Slime : Monsters
+public class Plant : Monsters
 {
     public override void InitSkill()
     {
         skill1 = new Skill("슬라임 스킬1", 5, Skill1);
         skill2 = new Skill("슬라임 스킬2", 3, Skill2);
+        anim = GetComponent<Animator>();
     }
 
     public override void Move()
@@ -17,7 +18,8 @@ public class Slime : Monsters
 
     public override void Attack()
     {
-        Debug.Log("슬라임 공격");
+        // Debug.Log("슬라임 공격");
+        anim.SetTrigger("Attack");
     }
 
     public override void Skill1()

@@ -7,8 +7,8 @@ public abstract class Monsters : MonoBehaviour
     protected float moveSpeed;
     protected GameObject VFXPrefab;
     protected Animator anim;
-
-    // 이펙트, 이동속도, 애니메이터 등등...
+    
+    // 이펙트, 이동속도, 애니메이터 등등... 
 
     private void Awake()
     {
@@ -28,4 +28,9 @@ public abstract class Monsters : MonoBehaviour
     public Skill skill2;
 
     public abstract void SetSkill();
+
+    public void InitAnim(Animator anim)
+    {
+        this.anim = anim;
+    }
 }
