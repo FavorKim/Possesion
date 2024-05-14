@@ -218,7 +218,7 @@ public class PlayerController : MonoBehaviour
 
     void OnJump(InputValue val) { if (val.isPressed) state.StateOnJump(); }
 
-    void OnAttack(InputValue val) { if (val.isPressed) state.StateOnAttack(); GetDamage(10); }
+    void OnAttack(InputValue val) { if (val.isPressed) state.StateOnAttack(); }
 
     void OnThrowHat(InputValue val)
     {
