@@ -42,6 +42,12 @@ public class PlayerController : MonoBehaviour
     #region float
     [SerializeField]
     private float moveSpeed;
+    //[SerializeField]
+    //private float maxSpeed;
+    //[SerializeField]
+    //private float minSpeed;
+
+
     [SerializeField]
     private float gravityScale;
     [SerializeField]
@@ -51,7 +57,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float curHP;
 
     [SerializeField] float duration;
-
 
     #endregion
 
@@ -87,6 +92,8 @@ public class PlayerController : MonoBehaviour
         outFits.Add("Slime", slimeOF);
         outFits.Add("Player", playerOF);
         OnDead += DeadCheck;
+
+        t_fullHP.text = fullHP.ToString();
     }
 
 
@@ -97,6 +104,7 @@ public class PlayerController : MonoBehaviour
         state.StateUpdate();
         Look();
         SetHPUI();
+
     }
 
     private void FixedUpdate()
@@ -165,6 +173,7 @@ public class PlayerController : MonoBehaviour
                 SetOutFit("Goblin");
                 break;
         }
+        transform.position = mon.transform.position;
     }
 
     public void GetDamage(int dmg)
@@ -191,12 +200,23 @@ public class PlayerController : MonoBehaviour
 
     void OnMove(InputValue val)
     {
+        
         Vector2 dir = val.Get<Vector2>();
         MoveDir = new Vector3(dir.x, 0, dir.y);
+
         if (MoveDir != Vector3.zero)
+        {
             anim.SetBool("isRun", true);
+        }
         else
+        {
             anim.SetBool("isRun", false);
+        }
+
+
+        anim.SetFloat("vecX",  dir.x);
+        anim.SetFloat("vecY",  dir.y);
+
     }
 
     void OnJump(InputValue val) { if (val.isPressed) state.StateOnJump(); }
@@ -205,9 +225,9 @@ public class PlayerController : MonoBehaviour
 
     void OnThrowHat(InputValue val)
     {
-        if (val.isPressed) 
+        if (val.isPressed)
         {
-            state.StateOnHat(); 
+            state.StateOnHat();
         }
     }
 

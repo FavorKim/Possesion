@@ -33,11 +33,12 @@ public class Hat : MonoBehaviour
     {
         if (!other.CompareTag("Player"))
         {
-            ResetHat();
             if (other.CompareTag("Monster"))
             {
                 player.SetState(other.GetComponent<Monsters>());
+                
             }
+            ResetHat();
         }
     }
 

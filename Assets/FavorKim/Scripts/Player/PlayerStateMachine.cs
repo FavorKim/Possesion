@@ -9,8 +9,9 @@ public class PlayerStateMachine
 {
     public PlayerStateMachine(PlayerController controller)
     {
-        possessState = new PossessState(controller);
-        states.Add("Normal", new NormalState(controller));
+        player = controller;
+        possessState = new PossessState(player);
+        states.Add("Normal", new NormalState(player));
         states.Add("Possess", possessState);
         curState = states["Normal"];
 
@@ -19,7 +20,7 @@ public class PlayerStateMachine
         //OnThrowHat += curState.Skill1;
     }
     private PlayerState curState; // 노말
-
+    private PlayerController player;
     private Dictionary<string, PlayerState> states = new Dictionary<string, PlayerState>();
 
 
@@ -28,9 +29,9 @@ public class PlayerStateMachine
 
     public void StateUpdate()
     {
-        curState.Move();
         // 노말무브
-        
+        curState.Move();
+
 
         curState.StateUpdate();
 
@@ -38,6 +39,7 @@ public class PlayerStateMachine
 
     //public void StateFixedUpdate()
     //{
+
     //}
 
     public void StateOnJump() { curState.Jump(); }
@@ -57,8 +59,9 @@ public class PlayerStateMachine
     public void ChangeState(Monsters mon)
     {
         curState.Exit();
-        possessState.GetMonster(mon);
         curState = possessState;
+        possessState.GetMonster(mon);
+        player.transform.position = mon.transform.position;
     }
 }
 
@@ -69,10 +72,10 @@ public abstract class PlayerState : IState
     {
         this.player = player;
         stateCC = player.GetCC();
-        moveSpeed = player.GetMoveSpeed() ;
+        moveSpeed = player.GetMoveSpeed();
         gravityScale = player.GetGravityScale();
         jumpForce = player.GetJumpForce();
-        anim = player.GetAnimator();
+        anim = player.GetComponent<Animator>();
         //isGround = player.isGround;
     }
 
@@ -107,10 +110,10 @@ public class NormalState : PlayerState
 {
 
     public NormalState(PlayerController controller) : base(controller) { orgJumpForce = jumpForce; }
+    private float speed;
 
     float orgJumpForce;
     bool isJumping = false;
-
     public override void Enter()
     {
         SkillManager.ResetSkill();
@@ -118,6 +121,8 @@ public class NormalState : PlayerState
 
     public override void Move()
     {
+        Debug.Log("normMove");
+
         stateCC.Move(player.transform.TransformDirection(moveDir) * moveSpeed * Time.deltaTime);
 
         if (isJumping)
@@ -128,6 +133,7 @@ public class NormalState : PlayerState
 
     public override void StateUpdate()
     {
+        Debug.Log("normUp");
         stateCC.SimpleMove(-player.transform.up * gravityScale * Time.deltaTime);
     }
 
@@ -149,7 +155,7 @@ public class NormalState : PlayerState
 
     public override void Skill2()
     {
-        
+
     }
 
     public override void Shift()
@@ -164,7 +170,7 @@ public class NormalState : PlayerState
 
     void NormJump()
     {
-        
+
         stateCC.Move(player.transform.up * jumpForce * Time.deltaTime);
         jumpForce *= 0.99f;
         if (jumpForce < 7)
@@ -383,11 +389,12 @@ public class PossessState : PlayerState
         애니메이션 호출
 
          */
-        
+
 
         mon.SetSkill();
         durationGauge.gameObject.SetActive(true);
         durationGauge.value = 1;
+        player.transform.position = mon.transform.position;
 
     }
 
@@ -397,7 +404,7 @@ public class PossessState : PlayerState
         this.mon = mon;
         Enter();
     }
-    
+
 
     public override void Move()
     {
@@ -421,7 +428,7 @@ public class PossessState : PlayerState
     }
     public override void Skill1()
     {
-        
+
         mon.skill1.UseSkill();
     }
     public override void Skill2()
