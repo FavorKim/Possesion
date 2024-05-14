@@ -11,15 +11,17 @@ public class MonsterPlant : MonoBehaviour
     // 플레이어 정보를 받아야 NevMesh를 따라 추적이 가능함.
     [SerializeField] protected Player player;
 
+
     //State랑 스킬이랑 별개로 분류하고, 
+
+
+    [SerializeField] public GameObject projectile;
 
     public enum MonsterState
     { 
         IDLE,
         TRACE,
         ATTACK,
-        SKILL1,
-        SKILL2,
         DEAD
     }
     
@@ -58,7 +60,6 @@ public class MonsterPlant : MonoBehaviour
 
         stateMachine.AddState(MonsterState.IDLE, new IdleState(this));
         stateMachine.AddState(MonsterState.TRACE, new TraceState(this));
-        stateMachine.AddState(MonsterState.SKILL1, new Skill1State(this));
         
         stateMachine.AddState(MonsterState.ATTACK, new AttackState(this));
         stateMachine.InitState(MonsterState.IDLE);
@@ -84,12 +85,9 @@ public class MonsterPlant : MonoBehaviour
 
             float distance = Vector3.Distance(playerTrf.position, enemyTrf.position);
 
-            if (distance <= skillDistance && skill1_curCooltime <= 0f)
-            {
-                stateMachine.ChangeState(MonsterState.SKILL1);
-                state = MonsterState.SKILL1;
-            }
-            else if (distance <= attackDistance)
+            //원거리 공격가능 상태
+            bool is_pjtAtk = skillDistance < distance && skill1_curCooltime <= 0f;
+            if (distance <= attackDistance || is_pjtAtk)
             {
                 stateMachine.ChangeState(MonsterState.ATTACK);
                 state = MonsterState.ATTACK;
@@ -138,6 +136,7 @@ public class MonsterPlant : MonoBehaviour
         {
             owner.agent.isStopped = true;
             owner.animator.SetBool(owner.hashTrace, false);
+            owner.animator.SetBool(owner.hashAttack, false);
         }
     }
 
@@ -155,19 +154,6 @@ public class MonsterPlant : MonoBehaviour
         }
     }
 
-    class Skill1State : BaseEnemyState
-    {
-        public Skill1State(MonsterPlant owner) : base(owner) { }
-
-        public override void Enter()
-        {
-            owner.agent.isStopped = true;
-            owner.animator.SetBool(owner.hashAttack, true);
-
-            owner.skill1_curCooltime = owner.skill1_totalCooltime;
-        }
-
-    }
     class AttackState : BaseEnemyState
     {
         public AttackState(MonsterPlant owner) : base(owner) { }
@@ -175,6 +161,20 @@ public class MonsterPlant : MonoBehaviour
         public override void Enter()
         {
             owner.agent.isStopped = true;
+
+            float distance = Vector3.Distance(owner.playerTrf.position, owner.enemyTrf.position);
+            
+            //여기까지 왔다면 원/근 파트는 나눠 뒀음.
+            if (distance >= owner.attackDistance && owner.skill1_curCooltime <= 0f)
+            {
+                Rigidbody rb = Instantiate(owner.projectile, owner.transform.position, Quaternion.identity).GetComponent<Rigidbody>();
+                rb.AddForce(owner.transform.forward * distance * 0.5f, ForceMode.Impulse);
+                rb.AddForce(owner.transform.up * distance * 0.38f, ForceMode.Impulse);
+
+                //여기서 스킬을 발사 해줘야 하거든?
+                owner.skill1_curCooltime = owner.skill1_totalCooltime;
+            }
+
             owner.animator.SetBool(owner.hashAttack, true);
         }
     }
