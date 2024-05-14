@@ -69,9 +69,9 @@ public abstract class PlayerState : IState
     {
         this.player = player;
         stateCC = player.GetCC();
-        moveSpeed = player.moveSpeed;
-        gravityScale = player.gravityScale;
-        jumpForce = player.jumpForce;
+        moveSpeed = player.GetMoveSpeed() ;
+        gravityScale = player.GetGravityScale();
+        jumpForce = player.GetJumpForce();
         anim = player.GetAnimator();
         //isGround = player.isGround;
     }
@@ -155,7 +155,6 @@ public class NormalState : PlayerState
     public override void Shift()
     {
         anim.SetTrigger("Shift");
-
     }
 
     public override void Exit()
@@ -384,6 +383,8 @@ public class PossessState : PlayerState
         애니메이션 호출
 
          */
+        
+
         mon.SetSkill();
         durationGauge.gameObject.SetActive(true);
         durationGauge.value = 1;
@@ -460,3 +461,41 @@ public interface IState
     void Shift();
 
 }
+
+
+
+/*
+몬스터의 자율 행동 패턴
+
+
+캐릭터가 없음 - Patrol 
+
+캐릭터를 찾음 - Trace 
+
+공격범위 내 - Attack 
+
+몬스터가 필드 안에서 공격을 할 때 하나 만 쓴다? 
+플레이어 입장에서 몬스터로 변신했을 때 어떤 스킬을 쓸 수 있는지 모름 << 
+플레이어가 몬스터랑 싸우면서
+
+
+아 얘는 이런이런 스킬을 쓰는구나 그러면? 이럴때 얘로 변신하면 이렇게 싸울 수 있겠구나.
+
+투사체를 발사하려면 프리팹이 있어야지. 
+투사체 관리자를 만든다.
+몬스터도 투사체 관리자한테서 프리팹을 얻고
+플레이어도 투사체 관리자한테서 프리팹을 얻고
+
+ bullet Manager
+투사체 관리자는 여러 몬스터의 투사체를 갖고있고
+그걸 받아온다.
+
+몬스터 별로 달라지는 공격 조건 몬스터 마다 다를 수 있고
+필요하다면 넣는게 맞는데
+굳이 싶으면 안 넣어도.
+ 
+
+ 보스가 소환패턴이 있다 그러면
+보스가 거는 기믹을 소환패턴에서 나오는 몬스터들로 수행이 가능해야.
+
+ */

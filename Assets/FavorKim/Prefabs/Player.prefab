@@ -2051,7 +2051,7 @@ MonoBehaviour:
   rayDist: 0.12
   fullHP: 100
   curHP: 100
-  duration: 3
+  duration: 20
 --- !u!1 &3818018170578782560
 GameObject:
   m_ObjectHideFlags: 0

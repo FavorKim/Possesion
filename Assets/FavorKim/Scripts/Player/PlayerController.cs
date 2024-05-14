@@ -40,12 +40,12 @@ public class PlayerController : MonoBehaviour
     #endregion
 
     #region float
-    /*[SerializeField] */
-    public float moveSpeed;
-    /*[SerializeField] */
-    public float gravityScale;
-    /*[SerializeField] */
-    public float jumpForce;
+    [SerializeField]
+    private float moveSpeed;
+    [SerializeField]
+    private float gravityScale;
+    [SerializeField]
+    private float jumpForce;
     [SerializeField] float rayDist;
     [SerializeField] float fullHP;
     [SerializeField] float curHP;
@@ -69,7 +69,7 @@ public class PlayerController : MonoBehaviour
     public float GetMoveSpeed() { return moveSpeed; }
     public float GetGravityScale() { return gravityScale; }
     public float GetJumpForce() { return jumpForce; }
-    public float GetDuration() {  return duration; }
+    public float GetDuration() { return duration; }
     #endregion
 
     #region LifeCycle
@@ -152,7 +152,6 @@ public class PlayerController : MonoBehaviour
     {
         state.ChangeState(mon);
 
-
         switch (mon)
         {
             case Slime:
@@ -164,6 +163,19 @@ public class PlayerController : MonoBehaviour
                 break;
         }
     }
+
+    public void GetDamage(int dmg)
+    {
+        curHP -= dmg;
+        anim.SetTrigger("Hit");
+        OnDead();
+    }
+
+    void DeadCheck()
+    {
+        //if (curHP <= 0)
+    }
+
     #endregion
 
     #region Event
@@ -180,9 +192,15 @@ public class PlayerController : MonoBehaviour
 
     void OnJump(InputValue val) { if (val.isPressed) state.StateOnJump(); }
 
-    void OnAttack(InputValue val) { if (val.isPressed) state.StateOnAttack(); }
+    void OnAttack(InputValue val) { if (val.isPressed) state.StateOnAttack(); GetDamage(10); }
 
-    void OnThrowHat(InputValue val) { if (val.isPressed) state.StateOnHat(); /*anim.SetTrigger("Throw");*/ }
+    void OnThrowHat(InputValue val)
+    {
+        if (val.isPressed) 
+        {
+            state.StateOnHat(); 
+        }
+    }
 
     void OnSkill1(InputValue val)
     {
@@ -197,6 +215,9 @@ public class PlayerController : MonoBehaviour
         if (val.isPressed)
         { state.StateOnSkill2(); }
     }
+
+    event Action OnDead;
+
     #endregion
 }
 
@@ -237,7 +258,7 @@ public class Skill
 
 public class SkillManager
 {
-    public SkillManager(Slider socket1, Slider socket2) 
+    public SkillManager(Slider socket1, Slider socket2)
     {
         SkillManager.socket1 = socket1;
         SkillManager.socket2 = socket2;

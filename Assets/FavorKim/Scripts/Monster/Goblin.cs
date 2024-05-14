@@ -12,7 +12,7 @@ public class Goblin : Monsters
 
     public override void Move()
     {
-        Debug.Log("고블린 이동");
+        //Debug.Log("고블린 이동");
     }
 
     public override void Attack()

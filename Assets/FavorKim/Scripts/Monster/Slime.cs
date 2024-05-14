@@ -12,7 +12,7 @@ public class Slime : Monsters
 
     public override void Move()
     {
-        Debug.Log("슬라임 이동");
+        //Debug.Log("슬라임 이동");
     }
 
     public override void Attack()
