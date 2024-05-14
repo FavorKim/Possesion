@@ -452,7 +452,12 @@ public class PossessState : PlayerState
     public override void Exit()
     {
         mon.transform.parent = null;
-        
+
+        // 임시로 오브젝트를 비활성화했지만, 몬스터가 죽었을 때의 행동을 호출할 것임
+        mon.gameObject.SetActive(false);
+
+        // 빙의 해제 시 무조건 죽이지는 말자.
+        mon.Dead();
 
         durationGauge.gameObject.SetActive(false);
     }

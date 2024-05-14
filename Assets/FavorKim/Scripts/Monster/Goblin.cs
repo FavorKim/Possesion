@@ -30,6 +30,11 @@ public class Goblin : Monsters
         Debug.Log("고블린 스킬 2");
     }
 
+    public override void Dead()
+    {
+        Debug.Log("고블린 사망");
+    }
+
     public override void SetSkill()
     {
         SkillManager.SetSkill(skill1, 1);

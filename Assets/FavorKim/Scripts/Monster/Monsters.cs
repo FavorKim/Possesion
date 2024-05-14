@@ -22,6 +22,8 @@ public abstract class Monsters : MonoBehaviour
 
     public abstract void Move();
 
+    public abstract void Dead();
+
     public abstract void InitSkill();
 
     public Skill skill1;
