@@ -55,7 +55,9 @@ public class PlayerController : MonoBehaviour
 
     #endregion
 
+
     [SerializeField] public bool isGround { get; private set; }
+    bool isDead = false;
 
     Dictionary<string, GameObject> outFits = new Dictionary<string, GameObject>();
 
@@ -84,14 +86,15 @@ public class PlayerController : MonoBehaviour
         outFits.Add("Goblin", goblinOF);
         outFits.Add("Slime", slimeOF);
         outFits.Add("Player", playerOF);
+        OnDead += DeadCheck;
     }
 
 
 
     void Update()
     {
+        if (isDead) return;
         state.StateUpdate();
-
         Look();
         SetHPUI();
     }
@@ -173,7 +176,13 @@ public class PlayerController : MonoBehaviour
 
     void DeadCheck()
     {
-        //if (curHP <= 0)
+        if (curHP <= 0)
+        {
+            curHP = 0;
+            isDead = true;
+            anim.SetBool("isDead", true);
+            anim.SetTrigger("Dead");
+        }
     }
 
     #endregion
