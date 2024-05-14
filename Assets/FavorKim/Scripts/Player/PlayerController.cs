@@ -124,6 +124,7 @@ public class PlayerController : MonoBehaviour
     void Look()
     {
         transform.LookAt(lookAtTransform);
+
         transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
     }
 
