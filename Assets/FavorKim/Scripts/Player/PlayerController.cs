@@ -159,6 +159,7 @@ public class PlayerController : MonoBehaviour
     public void GetDamage(int dmg)
     {
         if (isInvincible) return;
+        Debug.Log("Hit");
         curHP -= dmg;
         anim.SetTrigger("Hit");
         StartCoroutine(CorInvincible());

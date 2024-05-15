@@ -5,7 +5,7 @@ using UnityEngine;
 public class Obstacles : MonoBehaviour
 {
     [SerializeField] int damage;
-    
+
     private void OnParticleTrigger()
     {
         GameManager.Instance.Player.GetDamage(damage);

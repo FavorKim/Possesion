@@ -48,3 +48,4 @@ MonoBehaviour:
   hatTransform: {fileID: 0}
   hatImg: {fileID: 0}
   hitParticlePref: {fileID: 1641374423578230, guid: 85a34242f60ecd24387ad312ed05470d, type: 3}
+  sfx: {fileID: 0}

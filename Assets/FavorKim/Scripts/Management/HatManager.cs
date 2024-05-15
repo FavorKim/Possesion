@@ -11,6 +11,7 @@ public class HatManager : MonoBehaviour
     [SerializeField] GameObject hitParticlePref;
     //GameObject hitParticle;
     ParticleSystem hitParticle;
+    [SerializeField]AudioSource sfx;
 
     public GameObject GetHatImg() { return hatImg; }
 
@@ -20,6 +21,7 @@ public class HatManager : MonoBehaviour
         hat = Instantiate(hatPref);
         hat.SetActive(false);
         hitParticle = Instantiate(hitParticlePref).GetComponent<ParticleSystem>();
+        sfx = hitParticle.gameObject.GetComponent<AudioSource>();
         hitParticle.Stop();
     }
 
@@ -36,6 +38,7 @@ public class HatManager : MonoBehaviour
     public void SetHitParticle(Vector3 pos)
     {
         hitParticle.transform.position = pos;
+        sfx.Play();
         hitParticle.Play();
     }
 }

@@ -7,13 +7,19 @@ public class FXController : MonoBehaviour
     ParticleSystem pS;
     [SerializeField] float duration;
     [SerializeField] float coolTime;
+    AudioSource sfx;
     float playTime;
     float targetDur;
 
+
+    private void Awake()
+    {
+        sfx = GetComponent<AudioSource>();
+        pS = GetComponent<ParticleSystem>();
+        targetDur = duration;
+    }
     void Start()
     {
-        targetDur = duration;
-        pS = GetComponent<ParticleSystem>();
         pS.Stop();
     }
 
@@ -24,6 +30,7 @@ public class FXController : MonoBehaviour
         if (playTime > duration)
         {
             pS.Stop();
+            sfx.Stop();
             playTime = 0;
             duration = float.MaxValue;
         }
@@ -31,6 +38,7 @@ public class FXController : MonoBehaviour
         if (playTime > coolTime && !pS.isPlaying)
         {
             pS.Play();
+            sfx.Play();
             playTime = 0;
             duration = targetDur;
         }
