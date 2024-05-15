@@ -62,6 +62,8 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] float sensitivity;
 
+    [SerializeField] float invincibleTime;
+
     #endregion
 
 
@@ -103,15 +105,11 @@ public class PlayerController : MonoBehaviour
         t_fullHP.text = fullHP.ToString();
     }
 
-
-
     void Update()
     {
         if (isDead) return;
         state.StateUpdate();
-        //Look();
         SetHPUI();
-
     }
 
     private void FixedUpdate()
@@ -122,25 +120,6 @@ public class PlayerController : MonoBehaviour
 
     #region Method
 
-
-    void Look()
-    {
-        transform.LookAt(lookAtTransform);
-
-        transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
-    }
-
-    void SetOutFit(string name)
-    {
-        outFits["Goblin"].SetActive(false);
-        outFits["Plant"].SetActive(false);
-        outFits["Player"].SetActive(false);
-
-        outFits[name].SetActive(true);
-
-        monAnim = outFits[name].GetComponent<Animator>();
-        //Debug.Log(monAnim.ToString());
-    }
 
 
     void SetHPUI()
@@ -256,6 +235,12 @@ public class PlayerController : MonoBehaviour
     event Action OnDead;
 
     #endregion
+
+
+    IEnumerator CorInvincible()
+    {
+
+    }
 }
 
 public class Skill
