@@ -22,7 +22,7 @@ public class Skeleton : BaseMonster
     readonly int hashTrace = Animator.StringToHash("IsTrace");
     readonly int hashAttack = Animator.StringToHash("IsAttack");
     readonly int hashSkill1 = Animator.StringToHash("IsSkill1");
-    readonly int hashDefend = Animator.StringToHash("IsDefend");
+    readonly int hashSkill2 = Animator.StringToHash("IsSkill2");
 
     void Awake()
     {
@@ -95,7 +95,6 @@ public class Skeleton : BaseMonster
         }
     }
 
-
     class BaseEnemyState : BaseState
     {
         protected Skeleton owner;
@@ -147,7 +146,6 @@ public class Skeleton : BaseMonster
             }
             else if (owner.skill2_curCooltime <= 0f)
             {
-                
                 owner.Skill2();
             }
             else
@@ -176,9 +174,9 @@ public class Skeleton : BaseMonster
         float distance = Vector3.Distance(playerTrf.position, enemyTrf.position);
         skill1_curCooltime = mstSkill1Cooltime;
         
-        StartCoroutine(RollingAttack());
+        StartCoroutine(SlashAttack());
 
-        IEnumerator RollingAttack()
+        IEnumerator SlashAttack()
         {
             agent.isStopped = true;
             animator.SetBool(hashSkill1, true);
@@ -189,13 +187,13 @@ public class Skeleton : BaseMonster
     public override void Skill2()
     {
         skill2_curCooltime = mstSkill2Cooltime;
-        StartCoroutine(Defend());
+        StartCoroutine(StingAttack());
 
-        IEnumerator Defend()
+        IEnumerator StingAttack()
         {
-            animator.SetBool(hashDefend, true);
+            animator.SetBool(hashSkill2, true);
             yield return new WaitForSeconds(1.5f);
-            animator.SetBool(hashDefend, false);
+            animator.SetBool(hashSkill2, false);
         }
     }
 }
