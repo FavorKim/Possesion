@@ -32725,6 +32725,7 @@ MonoBehaviour:
   curHP: 100
   duration: 5
   sensitivity: 5
+  invincibleTime: 1
 --- !u!1 &5877377467282599655
 GameObject:
   m_ObjectHideFlags: 0

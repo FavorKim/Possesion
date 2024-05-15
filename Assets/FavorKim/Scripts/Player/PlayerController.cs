@@ -69,6 +69,7 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] public bool isGround { get; private set; }
     bool isDead = false;
+    bool isInvincible = false;
 
     Dictionary<string, GameObject> outFits = new Dictionary<string, GameObject>();
 
@@ -157,8 +158,10 @@ public class PlayerController : MonoBehaviour
 
     public void GetDamage(int dmg)
     {
+        if (isInvincible) return;
         curHP -= dmg;
         anim.SetTrigger("Hit");
+        StartCoroutine(CorInvincible());
         OnDead();
     }
 
@@ -239,7 +242,20 @@ public class PlayerController : MonoBehaviour
 
     IEnumerator CorInvincible()
     {
-
+        isInvincible = true;
+        float org = invincibleTime;
+        while (true)
+        {
+            yield return null;
+            invincibleTime -= Time.deltaTime;
+            if(invincibleTime < 0)
+            {
+                isInvincible = false;
+                invincibleTime = org;
+                StopCoroutine(CorInvincible());
+                break;
+            }
+        }
     }
 }
 
