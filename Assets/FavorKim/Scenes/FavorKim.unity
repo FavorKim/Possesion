@@ -190,6 +190,7 @@ GameObject:
   m_Component:
   - component: {fileID: 42435791}
   - component: {fileID: 42435790}
+  - component: {fileID: 42435792}
   m_Layer: 0
   m_Name: Cameras
   m_TagString: Untagged
@@ -251,6 +252,31 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &42435792
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 42435789}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bcdf6c616326c4aaeb610b335fbb67fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  useDefaultBackgroundColor: 0
+  backgroundColor:
+    serializedVersion: 2
+    rgba: 4278190080
+  useDefaultTextColor: 0
+  textColor:
+    serializedVersion: 2
+    rgba: 4294967295
+  font: {fileID: 0}
+  fontSize: 12
+  fontStyle: 1
+  alignment: 3
+  textDropShadow: 0
 --- !u!1 &82639470
 GameObject:
   m_ObjectHideFlags: 0
@@ -409,6 +435,7 @@ GameObject:
   - component: {fileID: 283636528}
   - component: {fileID: 283636527}
   - component: {fileID: 283636531}
+  - component: {fileID: 283636532}
   m_Layer: 0
   m_Name: GoblinObj
   m_TagString: Monster
@@ -506,6 +533,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3433430246d22e945b7a850032df5aa2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &283636532
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 283636526}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bcdf6c616326c4aaeb610b335fbb67fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  useDefaultBackgroundColor: 0
+  backgroundColor:
+    serializedVersion: 2
+    rgba: 4278190080
+  useDefaultTextColor: 0
+  textColor:
+    serializedVersion: 2
+    rgba: 4281597782
+  font: {fileID: 0}
+  fontSize: 12
+  fontStyle: 1
+  alignment: 3
+  textDropShadow: 0
 --- !u!1 &341561134
 GameObject:
   m_ObjectHideFlags: 3
@@ -698,7 +750,7 @@ RectTransform:
   - {fileID: 244963874}
   - {fileID: 4236601150854528174}
   m_Father: {fileID: 0}
-  m_RootOrder: 19
+  m_RootOrder: 17
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -781,7 +833,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 18
+  m_RootOrder: 19
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &500159124
 GameObject:
@@ -928,6 +980,36 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &551509972 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8960169798255725289, guid: 7325e28d42a58374aaad969ceb5b0291, type: 3}
+  m_PrefabInstance: {fileID: 1150394729}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &551509977
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 551509972}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bcdf6c616326c4aaeb610b335fbb67fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  useDefaultBackgroundColor: 0
+  backgroundColor:
+    serializedVersion: 2
+    rgba: 4278190080
+  useDefaultTextColor: 0
+  textColor:
+    serializedVersion: 2
+    rgba: 4281597782
+  font: {fileID: 0}
+  fontSize: 12
+  fontStyle: 1
+  alignment: 3
+  textDropShadow: 0
 --- !u!1 &615154260
 GameObject:
   m_ObjectHideFlags: 0
@@ -1137,7 +1219,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 17
+  m_RootOrder: 18
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &750705516
 GameObject:
@@ -1188,6 +1270,7 @@ GameObject:
   - component: {fileID: 798881432}
   - component: {fileID: 798881431}
   - component: {fileID: 798881434}
+  - component: {fileID: 798881435}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1253,7 +1336,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 798881430}
-  m_LocalRotation: {x: 0.102259845, y: -0.000000004279045, z: 4.3988044e-10, w: 0.9947577}
+  m_LocalRotation: {x: 0.102259845, y: 0.000000004279045, z: -4.3988044e-10, w: 0.9947577}
   m_LocalPosition: {x: 7.41, y: 2.537, z: 984.65}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1295,6 +1378,31 @@ MonoBehaviour:
   m_CameraActivatedEvent:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &798881435
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 798881430}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bcdf6c616326c4aaeb610b335fbb67fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  useDefaultBackgroundColor: 0
+  backgroundColor:
+    serializedVersion: 2
+    rgba: 4278190080
+  useDefaultTextColor: 0
+  textColor:
+    serializedVersion: 2
+    rgba: 4294967295
+  font: {fileID: 0}
+  fontSize: 12
+  fontStyle: 1
+  alignment: 3
+  textDropShadow: 0
 --- !u!1 &879570711
 GameObject:
   m_ObjectHideFlags: 0
@@ -2019,6 +2127,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1567330003}
   - component: {fileID: 1567330004}
+  - component: {fileID: 1567330005}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -2053,6 +2162,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6cf5f2e4779b3c7429db81a7e2cb2db5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1567330005
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1567330002}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bcdf6c616326c4aaeb610b335fbb67fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  useDefaultBackgroundColor: 0
+  backgroundColor:
+    serializedVersion: 2
+    rgba: 4278190080
+  useDefaultTextColor: 0
+  textColor:
+    serializedVersion: 2
+    rgba: 4294966393
+  font: {fileID: 0}
+  fontSize: 12
+  fontStyle: 1
+  alignment: 3
+  textDropShadow: 0
 --- !u!1 &1756163860
 GameObject:
   m_ObjectHideFlags: 0
@@ -2063,6 +2197,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1756163862}
   - component: {fileID: 1756163861}
+  - component: {fileID: 1756163863}
   m_Layer: 0
   m_Name: Directional Light
   m_TagString: Untagged
@@ -2147,6 +2282,31 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!114 &1756163863
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1756163860}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bcdf6c616326c4aaeb610b335fbb67fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  useDefaultBackgroundColor: 0
+  backgroundColor:
+    serializedVersion: 2
+    rgba: 4278190080
+  useDefaultTextColor: 0
+  textColor:
+    serializedVersion: 2
+    rgba: 4294967295
+  font: {fileID: 0}
+  fontSize: 12
+  fontStyle: 1
+  alignment: 3
+  textDropShadow: 0
 --- !u!1 &1821387468
 GameObject:
   m_ObjectHideFlags: 0
@@ -2242,7 +2402,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5402505063793841587, guid: 584dfe0fae2051941aa51f6b5b4d3a1d, type: 3}
   m_PrefabInstance: {fileID: 5402505062989032225}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1926680129}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 96da4dacaa7b3d748b272e601bf8577d, type: 3}
@@ -2324,6 +2484,36 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1892635888}
   m_CullTransparentMesh: 1
+--- !u!1 &1926680129 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5402505063793841585, guid: 584dfe0fae2051941aa51f6b5b4d3a1d, type: 3}
+  m_PrefabInstance: {fileID: 5402505062989032225}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1926680131
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1926680129}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bcdf6c616326c4aaeb610b335fbb67fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  useDefaultBackgroundColor: 0
+  backgroundColor:
+    serializedVersion: 2
+    rgba: 4278190080
+  useDefaultTextColor: 0
+  textColor:
+    serializedVersion: 2
+    rgba: 4294966393
+  font: {fileID: 0}
+  fontSize: 12
+  fontStyle: 1
+  alignment: 3
+  textDropShadow: 0
 --- !u!1 &2013303134
 GameObject:
   m_ObjectHideFlags: 0
@@ -2380,6 +2570,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2032420147}
   - component: {fileID: 2032420146}
+  - component: {fileID: 2032420148}
   m_Layer: 0
   m_Name: FXManager
   m_TagString: Untagged
@@ -2415,6 +2606,31 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2032420148
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2032420145}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bcdf6c616326c4aaeb610b335fbb67fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  useDefaultBackgroundColor: 0
+  backgroundColor:
+    serializedVersion: 2
+    rgba: 4278190080
+  useDefaultTextColor: 0
+  textColor:
+    serializedVersion: 2
+    rgba: 4294966393
+  font: {fileID: 0}
+  fontSize: 12
+  fontStyle: 1
+  alignment: 3
+  textDropShadow: 0
 --- !u!1 &2107286817
 GameObject:
   m_ObjectHideFlags: 0
@@ -2478,7 +2694,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2107286817}
-  m_LocalRotation: {x: 0.102259845, y: -0.000000004279045, z: 4.3988044e-10, w: 0.9947577}
+  m_LocalRotation: {x: 0.102259845, y: 0.000000004279045, z: -4.3988044e-10, w: 0.9947577}
   m_LocalPosition: {x: -35.6, y: -27.8, z: -53.319946}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -3384,6 +3600,7 @@ GameObject:
   - component: {fileID: 95661106358314928}
   - component: {fileID: 5720992623129580668}
   - component: {fileID: 5720992623129580669}
+  - component: {fileID: 5720992623129580670}
   m_Layer: 0
   m_Name: Plant
   m_TagString: Monster
@@ -5087,6 +5304,7 @@ GameObject:
   - component: {fileID: 5866666020182247841}
   - component: {fileID: 5866666020182247842}
   - component: {fileID: 5866666020182247843}
+  - component: {fileID: 5866666020182247844}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -6698,6 +6916,7 @@ GameObject:
   - component: {fileID: 2380028607542929126}
   - component: {fileID: 2380028607542929127}
   - component: {fileID: 2380028607542929128}
+  - component: {fileID: 2380028607542929129}
   m_Layer: 0
   m_Name: FlameThrower
   m_TagString: Untagged
@@ -30506,6 +30725,31 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &2380028607542929129
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2380028607527347796}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bcdf6c616326c4aaeb610b335fbb67fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  useDefaultBackgroundColor: 0
+  backgroundColor:
+    serializedVersion: 2
+    rgba: 4278190080
+  useDefaultTextColor: 0
+  textColor:
+    serializedVersion: 2
+    rgba: 4281597782
+  font: {fileID: 0}
+  fontSize: 12
+  fontStyle: 1
+  alignment: 3
+  textDropShadow: 0
 --- !u!199 &2380028607542940788
 ParticleSystemRenderer:
   serializedVersion: 6
@@ -33104,6 +33348,31 @@ CapsuleCollider:
   m_Height: 1.7618605
   m_Direction: 1
   m_Center: {x: 0, y: 0.7931933, z: 0}
+--- !u!114 &5720992623129580670
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1748488163262416}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bcdf6c616326c4aaeb610b335fbb67fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  useDefaultBackgroundColor: 0
+  backgroundColor:
+    serializedVersion: 2
+    rgba: 4278190080
+  useDefaultTextColor: 0
+  textColor:
+    serializedVersion: 2
+    rgba: 4281597782
+  font: {fileID: 0}
+  fontSize: 12
+  fontStyle: 1
+  alignment: 3
+  textDropShadow: 0
 --- !u!1 &5765538991269394966
 GameObject:
   m_ObjectHideFlags: 0
@@ -33267,6 +33536,31 @@ MonoBehaviour:
   duration: 20
   sensitivity: 5
   invincibleTime: 1
+--- !u!114 &5866666020182247844
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 919132147663292768}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bcdf6c616326c4aaeb610b335fbb67fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  useDefaultBackgroundColor: 0
+  backgroundColor:
+    serializedVersion: 2
+    rgba: 4278190080
+  useDefaultTextColor: 0
+  textColor:
+    serializedVersion: 2
+    rgba: 4281597782
+  font: {fileID: 0}
+  fontSize: 12
+  fontStyle: 1
+  alignment: 3
+  textDropShadow: 0
 --- !u!1 &5877377467282599655
 GameObject:
   m_ObjectHideFlags: 0
