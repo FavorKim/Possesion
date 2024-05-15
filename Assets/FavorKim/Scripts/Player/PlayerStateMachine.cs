@@ -47,14 +47,12 @@ public class PlayerStateMachine
     public void StateOnSkill1() { curState.Skill1(); }
     public void StateOnSkill2() { curState.Skill2(); }
 
-
     public void ChangeState(string nextState)
     {
         curState.Exit();
         states[nextState].Enter();
         curState = states[nextState];
     }
-
     public void ChangeState(Monsters mon)
     {
         curState.Exit();
@@ -63,6 +61,8 @@ public class PlayerStateMachine
 
         //player.transform.position = mon.transform.position;
     }
+
+    public bool IsPossessing() { return curState == possessState; }
 }
 
 
@@ -459,6 +459,7 @@ public class PossessState : PlayerState
         // 빙의 해제 시 무조건 죽이지는 말자.
         mon.Dead();
 
+        FXManager.Instance.PlayFX("PoExit", player.transform.position);
         durationGauge.gameObject.SetActive(false);
     }
 

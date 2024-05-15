@@ -35,4 +35,11 @@ public abstract class Monsters : MonoBehaviour
     {
         this.anim = anim;
     }
+
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.collider.CompareTag("Obstacles"))
+            GameManager.Instance.Player.SetState("Normal");
+    }
 }

@@ -1,0 +1,12 @@
+fileFormatVersion: 2
+guid: 9ae885ea40404614b942a800e4d2387e
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - PoExitFX: {fileID: 8960169798270707043, guid: 7325e28d42a58374aaad969ceb5b0291, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

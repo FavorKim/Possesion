@@ -91,7 +91,7 @@ public class PlayerController : MonoBehaviour
     {
         CC = GetComponent<CharacterController>();
         anim = GetComponent<Animator>();
-        
+
         state = new PlayerStateMachine(this);
         sM = new SkillManager(skill1Gauge, skill2Gauge);
 
@@ -159,7 +159,13 @@ public class PlayerController : MonoBehaviour
     public void GetDamage(int dmg)
     {
         if (isInvincible) return;
-        Debug.Log("Hit");
+
+        if (state.IsPossessing()) 
+        {
+            SetState("Normal");  
+            return; 
+        }
+
         curHP -= dmg;
         anim.SetTrigger("Hit");
         StartCoroutine(CorInvincible());
