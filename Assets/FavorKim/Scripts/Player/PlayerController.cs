@@ -60,6 +60,8 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] float duration;
 
+    [SerializeField] float sensitivity;
+
     #endregion
 
 
@@ -107,7 +109,7 @@ public class PlayerController : MonoBehaviour
     {
         if (isDead) return;
         state.StateUpdate();
-        Look();
+        //Look();
         SetHPUI();
 
     }
@@ -242,6 +244,14 @@ public class PlayerController : MonoBehaviour
         if (val.isPressed)
         { state.StateOnSkill2(); }
     }
+
+    void OnCursor(InputValue val)
+    {
+        float delta = val.Get<Vector2>().x;
+
+        transform.Rotate(new Vector3(0, delta, 0) * sensitivity*Time.deltaTime);
+    }
+
 
     event Action OnDead;
 
