@@ -3,9 +3,16 @@ using UnityEngine;
 using UnityEngine.AI;
 
 
-public class MonsterPlant : BaseMonster
+public class MonsterPlant : Monsters
 {
-    // 플레이어 정보를 받아야 NevMesh를 따라 추적이 가능함.
+    public enum MonsterState
+    {
+        IDLE,
+        TRACE,
+        ATTACK,
+        DEAD
+    }
+
     [SerializeField] PlayerController player;
 
     [SerializeField] public GameObject projectile;
@@ -29,7 +36,21 @@ public class MonsterPlant : BaseMonster
     readonly int hashTrace = Animator.StringToHash("IsTrace");
     readonly int hashAttack = Animator.StringToHash("IsAttack");
     readonly int hashSkill2 = Animator.StringToHash("IsSkill2");
-    
+
+    #region 스킬 등등
+    [SerializeField]
+    float mstATK = 10.0f;
+    float mstSPD = 10.0f;
+    public float mstSkill1Cooltime = 3.0f;
+    public float mstSkill2Cooltime = 3.0f;
+
+    public float traceDistance = 10f;
+    public float skillDistance = 10f;
+    public float attackDistance = 2f;
+
+    public bool isDie = false;
+    #endregion
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -50,7 +71,12 @@ public class MonsterPlant : BaseMonster
     }
     protected virtual void Start()
     {
-        StartCoroutine(CheckEnemyState());
+        if(gameObject.transform.parent == null)
+            StartCoroutine(CheckEnemyState());
+        else
+        {
+
+        }
     }
 
     protected virtual IEnumerator CheckEnemyState()
@@ -198,6 +224,25 @@ public class MonsterPlant : BaseMonster
         skill2_curCooltime = mstSkill2Cooltime;
     }
 
+    public override void Move()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public override void Dead()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public override void InitSkill()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public override void SetSkill()
+    {
+        throw new System.NotImplementedException();
+    }
 }
 
 
