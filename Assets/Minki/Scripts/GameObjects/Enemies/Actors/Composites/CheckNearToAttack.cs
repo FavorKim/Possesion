@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace Enemy
 {
+    // 플레이어가 공격 범위 내에 있는지를 판별하는 클래스
     public class CheckNearToAttack : Node
     {
         // 적(Enemy) 클래스

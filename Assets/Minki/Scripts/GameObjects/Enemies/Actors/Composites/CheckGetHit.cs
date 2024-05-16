@@ -2,21 +2,23 @@ using BehaviourTree;
 
 namespace Enemy
 {
-    // 플레이어에게 공격을 받았는지를 판별하는 클래스
+    // 적이 플레이어에게 피격했는지를 판별하는 클래스
     public class CheckGetHit : Node
     {
-        // 필드(Field)
-        private bool _getHit;
+        // 적(Enemy) 클래스
+        private Enemy _enemy;
 
         // 생성자
         public CheckGetHit(Enemy enemy)
         {
-            _getHit = enemy._getHit;
+            _enemy = enemy;
         }
 
+        // 평가 함수
         public override NodeState Evaluate()
         {
-            state = (_getHit) ? NodeState.SUCCESS : NodeState.FAILURE;
+            // 피격 상태일 경우 성공 상태를, 아닐 경우 실패 상태를 반환한다.
+            state = (_enemy.IsGetHit) ? NodeState.SUCCESS : NodeState.FAILURE;
             return state;
         }
     }

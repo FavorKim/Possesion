@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace Enemy
 {
+    // 플레이어가 추적 범위 내에 있는지를 판별하는 클래스
     public class CheckNearToChase : Node
     {
         // 적(Enemy) 클래스

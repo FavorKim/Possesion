@@ -1,3 +1,5 @@
+using DG.Tweening;
+using TMPro;
 using UnityEngine;
 
 namespace Enemy
@@ -5,8 +7,13 @@ namespace Enemy
     // 드래곤 클래스
     public class Dragon : Enemy
     {
+        // 필드(Fields)
+        [SerializeField] private ParticleSystem _particleSystem; // 공격 모션 중 불을 뿜는 공격을 구현하기 위한 파티클 시스템
+
         protected override void Awake()
         {
+            // _particleSystem = GetComponentInChildren<ParticleSystem>();
+
             // 스탯을 초기화한다.
             InitializeStats();
 
@@ -34,6 +41,8 @@ namespace Enemy
         {
             base.Patrol();
 
+            _particleSystem.Stop();
+
             Debug.Log("Dragon's Patrol!");
             Debug.Log("Dragon's AttackRange = " + AttackRange);
         }
@@ -41,6 +50,8 @@ namespace Enemy
         public override void Chase()
         {
             base.Chase();
+
+            _particleSystem.Stop();
 
             Debug.Log("Dragon's Chase!");
         }
@@ -50,6 +61,19 @@ namespace Enemy
             base.Attack();
 
             Debug.Log("Dragon's Attack!");
+        }
+
+        private void OnPlayFire()
+        {
+            if (!_particleSystem.isPlaying)
+            {
+                _particleSystem.Play();
+            }
+        }
+
+        private void OnStopFire()
+        {
+            _particleSystem.Stop();
         }
     }
 }

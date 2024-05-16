@@ -2,6 +2,7 @@ using BehaviourTree;
 
 namespace Enemy
 {
+    // 적의 죽음을 구현하는 클래스
     public class Die : Node
     {
         // 적(Enemy) 클래스
@@ -16,14 +17,17 @@ namespace Enemy
         // 평가 함수
         public override NodeState Evaluate()
         {
-            state = NodeState.SUCCESS;
-            return state;
+            // 죽는다.
+            DoDie();
+
+            // 성공 상태를 반환한다.
+            return NodeState.SUCCESS;
         }
 
-        // 피격을 담당하는 함수
+        // 죽음을 담당하는 함수
         private void DoDie()
         {
-            // 피격 함수를 실행한다.
+            // 죽음 함수를 실행한다.
             _enemy.Die();
         }
     }
