@@ -49,11 +49,13 @@ public class MonsterPlant : Monsters
     public float attackDistance = 2f;
 
     public bool isDie = false;
+    public bool isPlayer = false;
     #endregion
 
     // Start is called before the first frame update
     void Awake()
     {
+        isPlayer = gameObject.transform.parent != null;
         player = FindObjectOfType<PlayerController>();
         playerTrf = player.transform;
         enemyTrf = GetComponent<Transform>();
@@ -71,13 +73,13 @@ public class MonsterPlant : Monsters
     }
     protected virtual void Start()
     {
-        if(gameObject.transform.parent == null)
+        if(!isPlayer)
             StartCoroutine(CheckEnemyState());
     }
 
     protected virtual IEnumerator CheckEnemyState()
     {
-        while (!isDie && gameObject.transform.parent == null)
+        while (!isDie && !isPlayer)
         {
             yield return new WaitForSeconds(0.3f);
 
@@ -203,10 +205,17 @@ public class MonsterPlant : Monsters
     {
         animator.SetBool(hashAttack, true);
     }
-    public void Skill1()
+    public override void Skill1()
     {
-        //if()
-        float distance = Vector3.Distance(playerTrf.position, enemyTrf.position);
+        float distance;
+        if (!isPlayer)
+        {
+            distance = Vector3.Distance(playerTrf.position, enemyTrf.position);
+        }
+        else
+        {
+            distance = 3.0f;
+        }
 
         GameObject pd = Instantiate(projectile, spawnPosition.position, Quaternion.identity) as GameObject;
         pd.transform.LookAt(playerTrf.localPosition);
@@ -217,6 +226,7 @@ public class MonsterPlant : Monsters
         skill1_curCooltime = mstSkill1Cooltime;
 
         animator.SetBool(hashAttack, true);
+
     }
     public void Skill2()
     {

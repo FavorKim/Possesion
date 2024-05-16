@@ -1,4 +1,6 @@
+using ObjectPool;
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -13,7 +15,10 @@ public class Skeleton : Monsters
     }
     // 플레이어 정보를 받아야 NevMesh를 따라 추적이 가능함.
     [SerializeField] PlayerController player;
+    [SerializeField] public GameObject projectile;
+    [SerializeField] public float shootSpeed = 800.0f;
 
+    public Transform spawnPosition;
     public MonsterState state = MonsterState.IDLE;
 
     float skill1_curCooltime = 0f;
@@ -43,10 +48,12 @@ public class Skeleton : Monsters
     public float attackDistance = 2f;
 
     public bool isDie = false;
+    public bool isPlayer = false;
     #endregion
 
     void Awake()
     {
+        isPlayer = gameObject.transform.parent != null;
         player = FindObjectOfType<PlayerController>();
         playerTrf = player.transform;
         enemyTrf = GetComponent<Transform>();
@@ -64,12 +71,13 @@ public class Skeleton : Monsters
     }
     protected virtual void Start()
     {
-        StartCoroutine(CheckEnemyState());
+        if (!isPlayer)
+            StartCoroutine(CheckEnemyState());
     }
 
     protected virtual IEnumerator CheckEnemyState()
     {
-        while (!isDie)
+        while (!isDie && !isPlayer)
         {
             yield return new WaitForSeconds(0.3f);
 
@@ -189,7 +197,7 @@ public class Skeleton : Monsters
     {
         animator.SetBool(hashAttack, true);
     }
-    public void Skill1()
+    public override void Skill1()
     {
         float distance = Vector3.Distance(playerTrf.position, enemyTrf.position);
         skill1_curCooltime = mstSkill1Cooltime;
@@ -200,6 +208,10 @@ public class Skeleton : Monsters
         {
             agent.isStopped = true;
             animator.SetBool(hashSkill1, true);
+            GameObject pd = Instantiate(projectile, spawnPosition.position, Quaternion.identity) as GameObject;
+            pd.transform.LookAt(playerTrf.localPosition);
+            pd.GetComponent<Rigidbody>().AddForce(pd.transform.forward * shootSpeed);
+           
             yield return new WaitForSeconds(1.5f);
             animator.SetBool(hashSkill1, false);
         }

@@ -517,6 +517,7 @@ GameObject:
   - component: {fileID: 95706204029656638}
   - component: {fileID: 984090259}
   - component: {fileID: 8334643518506634372}
+  - component: {fileID: 2837302226418138425}
   m_Layer: 0
   m_Name: TurtleShellPBR
   m_TagString: Monster
@@ -596,6 +597,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92886955cd99f2e42a346bc9fbfc1aeb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 0}
+  state: 0
+  stateMachine: {fileID: 0}
   mstATK: 10
   mstSkill1Cooltime: 3
   mstSkill2Cooltime: 3
@@ -603,9 +607,20 @@ MonoBehaviour:
   skillDistance: 10
   attackDistance: 2
   isDie: 0
-  player: {fileID: 0}
-  state: 0
-  stateMachine: {fileID: 0}
+--- !u!136 &2837302226418138425
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1524411113276028}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.6
+  m_Height: 1
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.5, z: 0}
 --- !u!1 &1532652994627396
 GameObject:
   m_ObjectHideFlags: 0

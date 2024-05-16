@@ -9624,6 +9624,7 @@ GameObject:
   - component: {fileID: 19993800}
   - component: {fileID: 8235924}
   - component: {fileID: 11467424}
+  - component: {fileID: 3422302756607631608}
   m_Layer: 0
   m_Name: LiquidExplosionAcid
   m_TagString: Untagged
@@ -14530,6 +14531,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   randomPercent: 15
+--- !u!114 &3422302756607631608
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 183846}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2910bd8bcd3b3c541b9e725423d9aebf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 10
 --- !u!1 &1875362493653784
 GameObject:
   m_ObjectHideFlags: 0
@@ -14541,6 +14555,7 @@ GameObject:
   - component: {fileID: 4983019768654516}
   - component: {fileID: 198591784343114920}
   - component: {fileID: 199419432770259676}
+  - component: {fileID: 8938176218952596588}
   m_Layer: 0
   m_Name: Smoke
   m_TagString: Untagged
@@ -19322,3 +19337,16 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!114 &8938176218952596588
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1875362493653784}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2910bd8bcd3b3c541b9e725423d9aebf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 10

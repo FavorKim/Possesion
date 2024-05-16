@@ -1448,6 +1448,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e0e26d3323048e4ba46c890fd0241b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 0}
+  projectile: {fileID: 128572, guid: c03d0f63116deaa449465c9de4c1d138, type: 3}
+  spawnPosition: {fileID: 3625261320191301173}
+  state: 0
+  shootSpeed: 800
+  stateMachine: {fileID: 0}
   mstATK: 10
   mstSkill1Cooltime: 3
   mstSkill2Cooltime: 3
@@ -1455,11 +1461,7 @@ MonoBehaviour:
   skillDistance: 10
   attackDistance: 4
   isDie: 0
-  player: {fileID: 0}
-  projectile: {fileID: 128572, guid: 32670fb8a3244c14998e3c1e480f6822, type: 3}
-  spawnPosition: {fileID: 3625261320191301173}
-  shootSpeed: 800
-  stateMachine: {fileID: 0}
+  isPlayer: 0
 --- !u!136 &356123124
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1471,9 +1473,9 @@ CapsuleCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.5
-  m_Height: 1
+  m_Height: 2
   m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!1 &1781689967026810
 GameObject:
   m_ObjectHideFlags: 0

@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 13576440}
   - component: {fileID: 5479992}
   - component: {fileID: 7810909953558681801}
-  - component: {fileID: 5463810363502668589}
   m_Layer: 0
   m_Name: LiquidAcidOBJ_KDH
   m_TagString: Missile
@@ -81,16 +80,3 @@ MonoBehaviour:
   muzzleParticle: {fileID: 176998, guid: 92500adf3eb2a124cb348edef6bae34a, type: 3}
   colliderRadius: 1
   collideOffset: 0.15
---- !u!114 &5463810363502668589
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 128572}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2910bd8bcd3b3c541b9e725423d9aebf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damage: 0
