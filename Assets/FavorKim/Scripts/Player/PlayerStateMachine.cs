@@ -200,11 +200,10 @@ public class PossessState : PlayerState
     {
         /*
         애니메이션 호출
-
          */
 
 
-        //mon.SetSkill();
+        mon.SetSkill();
         durationGauge.gameObject.SetActive(true);
         durationGauge.value = 1;
     }
@@ -232,9 +231,11 @@ public class PossessState : PlayerState
 
     public override void StateUpdate()
     {
-        //mon.skill1.SetCurCD();
-        //mon.skill2.SetCurCD();
-        //SetDuration();
+        if (mon.skill1 == null) return;
+        mon.skill1.SetCurCD();
+        if (mon.skill2 == null) return;
+        mon.skill2.SetCurCD();
+        SetDuration();
     }
 
     public override void Jump()
@@ -247,12 +248,12 @@ public class PossessState : PlayerState
     }
     public override void Skill1()
     {
-
-        //mon.skill1.UseSkill();
+        mon.skill1.UseSkill();
     }
     public override void Skill2()
     {
-        //mon.skill2.UseSkill();
+        
+        mon.skill2.UseSkill();
     }
 
     public override void Shift()

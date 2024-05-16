@@ -233,7 +233,6 @@ public class PlayerController : MonoBehaviour
 
         MoveDir = heading * dir.y * Time.deltaTime * moveSpeed;
         MoveDir += Quaternion.Euler(0, 90, 0) * heading * dir.x * Time.deltaTime * moveSpeed;
-        Debug.Log(MoveDir);
     }
 
     void OnJump(InputValue val) { if (val.isPressed) state.StateOnJump(); }
@@ -297,14 +296,11 @@ public class PlayerController : MonoBehaviour
 
 public class Skill
 {
-    public Skill(string skillName, float maxCD, Action effect)
+    public Skill( float maxCD, Action effect)
     {
         this.effect = effect;
-        this.skillName = skillName;
         this.maxCD = maxCD;
     }
-
-    string skillName;
 
     public Slider gauge;
 

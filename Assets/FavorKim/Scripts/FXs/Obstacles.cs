@@ -14,6 +14,8 @@ public class Obstacles : MonoBehaviour
 
         triggerModule.enabled = true;
         triggerModule.SetCollider(0, FindAnyObjectByType<PlayerController>());
+
+        triggerModule.enter = ParticleSystemOverlapAction.Callback;
     }
 
     private void OnParticleTrigger()
