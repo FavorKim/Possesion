@@ -15,6 +15,8 @@ public class PlayerController : MonoBehaviour
     private CharacterController CC;
     PlayerStateMachine state;
     Animator anim;
+    Animator monAnim;
+
     [SerializeField] Transform lookAtTransform;
     [SerializeField] HatManager hatM;
 
@@ -27,7 +29,7 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] Slider durationGauge;
 
-    [SerializeField] GameObject slimeOF;
+    [SerializeField] GameObject plantOF;
     [SerializeField] GameObject goblinOF;
     [SerializeField] GameObject playerOF;
 
@@ -40,22 +42,34 @@ public class PlayerController : MonoBehaviour
     #endregion
 
     #region float
-    /*[SerializeField] */
-    public float moveSpeed;
-    /*[SerializeField] */
-    public float gravityScale;
-    /*[SerializeField] */
-    public float jumpForce;
+    [SerializeField]
+    private float moveSpeed;
+    //[SerializeField]
+    //private float maxSpeed;
+    //[SerializeField]
+    //private float minSpeed;
+
+
+    [SerializeField]
+    private float gravityScale;
+    [SerializeField]
+    private float jumpForce;
     [SerializeField] float rayDist;
     [SerializeField] float fullHP;
     [SerializeField] float curHP;
 
     [SerializeField] float duration;
 
+    [SerializeField] float sensitivity;
+
+    [SerializeField] float invincibleTime;
 
     #endregion
 
+
     [SerializeField] public bool isGround { get; private set; }
+    bool isDead = false;
+    bool isInvincible = false;
 
     Dictionary<string, GameObject> outFits = new Dictionary<string, GameObject>();
 
@@ -69,7 +83,7 @@ public class PlayerController : MonoBehaviour
     public float GetMoveSpeed() { return moveSpeed; }
     public float GetGravityScale() { return gravityScale; }
     public float GetJumpForce() { return jumpForce; }
-    public float GetDuration() {  return duration; }
+    public float GetDuration() { return duration; }
     #endregion
 
     #region LifeCycle
@@ -77,22 +91,25 @@ public class PlayerController : MonoBehaviour
     {
         CC = GetComponent<CharacterController>();
         anim = GetComponent<Animator>();
+
         state = new PlayerStateMachine(this);
         sM = new SkillManager(skill1Gauge, skill2Gauge);
+
         //skill1 = new Skill("test1", 5, () => { Debug.Log("skill1"); }, skill1Gauge);
 
         outFits.Add("Goblin", goblinOF);
-        outFits.Add("Slime", slimeOF);
+        outFits.Add("Plant", plantOF);
         outFits.Add("Player", playerOF);
+        OnDead += DeadCheck;
+
+
+        t_fullHP.text = fullHP.ToString();
     }
-
-
 
     void Update()
     {
+        if (isDead) return;
         state.StateUpdate();
-
-        Look();
         SetHPUI();
     }
 
@@ -104,21 +121,6 @@ public class PlayerController : MonoBehaviour
 
     #region Method
 
-
-    void Look()
-    {
-        transform.LookAt(lookAtTransform);
-        transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
-    }
-
-    void SetOutFit(string name)
-    {
-        outFits["Goblin"].SetActive(false);
-        outFits["Slime"].SetActive(false);
-        outFits["Player"].SetActive(false);
-
-        outFits[name].SetActive(true);
-    }
 
 
     void SetHPUI()
@@ -145,44 +147,108 @@ public class PlayerController : MonoBehaviour
     public void SetState(string name)
     {
         state.ChangeState(name);
-        SetOutFit("Player");
+        playerOF.SetActive(true);
     }
 
     public void SetState(Monsters mon)
     {
         state.ChangeState(mon);
+        playerOF.SetActive(false);
+    }
 
+    public void GetDamage(int dmg)
+    {
+        if (isInvincible) return;
 
-        switch (mon)
+        if (state.IsPossessing()) 
         {
-            case Slime:
-                SetOutFit("Slime");
-                break;
+            SetState("Normal");  
+            return; 
+        }
 
-            case Goblin:
-                SetOutFit("Goblin");
-                break;
+        curHP -= dmg;
+        anim.SetTrigger("Hit");
+        StartCoroutine(CorInvincible());
+        OnDead();
+    }
+
+    void DeadCheck()
+    {
+        if (curHP <= 0)
+        {
+            curHP = 0;
+            isDead = true;
+            anim.SetBool("isDead", true);
+            anim.SetTrigger("Dead");
         }
     }
+    
+
     #endregion
 
     #region Event
 
+
+    /*
+     0,1 = 0
+
+    -1,0 = -90
+    1,0 = 90
+
+    0,-1 = -180
+
+     
+    1,1 = 45
+    -1, 1 = -45
+
+    -1,-1 = -135
+    1,-1 = 135
+
+     */
+
     void OnMove(InputValue val)
     {
+        
         Vector2 dir = val.Get<Vector2>();
         MoveDir = new Vector3(dir.x, 0, dir.y);
+        Vector3 heading = Camera.main.transform.localRotation * Vector3.forward;
+        heading.y = 0;
+        heading = heading.normalized;
+        //Debug.Log(heading);
+
+        
+        
+        
         if (MoveDir != Vector3.zero)
+        {
             anim.SetBool("isRun", true);
+        }
         else
+        {
             anim.SetBool("isRun", false);
+        }
+
+       
+
+        anim.SetFloat("vecX",  dir.x);
+        anim.SetFloat("vecY",  dir.y);
+
+        MoveDir = heading * dir.y * Time.deltaTime * moveSpeed;
+        MoveDir += Quaternion.Euler(0, 90, 0) * heading * dir.x * Time.deltaTime * moveSpeed;
+        Debug.Log(MoveDir);
     }
 
     void OnJump(InputValue val) { if (val.isPressed) state.StateOnJump(); }
 
     void OnAttack(InputValue val) { if (val.isPressed) state.StateOnAttack(); }
 
-    void OnThrowHat(InputValue val) { if (val.isPressed) state.StateOnHat(); /*anim.SetTrigger("Throw");*/ }
+    void OnThrowHat(InputValue val)
+    {
+        if (val.isPressed)
+        {
+            state.StateOnHat();
+        }
+    }
 
     void OnSkill1(InputValue val)
     {
@@ -197,7 +263,38 @@ public class PlayerController : MonoBehaviour
         if (val.isPressed)
         { state.StateOnSkill2(); }
     }
+
+    void OnCursor(InputValue val)
+    {
+        float delta = val.Get<Vector2>().x;
+
+        if (Input.GetMouseButton(1))
+            transform.Rotate(new Vector3(0, delta, 0) * sensitivity * Time.deltaTime);
+    }
+
+
+    event Action OnDead;
+
     #endregion
+
+
+    IEnumerator CorInvincible()
+    {
+        isInvincible = true;
+        float org = invincibleTime;
+        while (true)
+        {
+            yield return null;
+            invincibleTime -= Time.deltaTime;
+            if(invincibleTime < 0)
+            {
+                isInvincible = false;
+                invincibleTime = org;
+                StopCoroutine(CorInvincible());
+                break;
+            }
+        }
+    }
 }
 
 public class Skill
@@ -237,7 +334,7 @@ public class Skill
 
 public class SkillManager
 {
-    public SkillManager(Slider socket1, Slider socket2) 
+    public SkillManager(Slider socket1, Slider socket2)
     {
         SkillManager.socket1 = socket1;
         SkillManager.socket2 = socket2;

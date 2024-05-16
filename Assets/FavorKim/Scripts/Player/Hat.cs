@@ -31,13 +31,14 @@ public class Hat : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (!other.CompareTag("Player"))
+        if (!other.CompareTag("Player")&&!other.CompareTag("Camera"))
         {
-            ResetHat();
             if (other.CompareTag("Monster"))
             {
+                hatM.SetHitParticle(transform.position);
                 player.SetState(other.GetComponent<Monsters>());
             }
+            ResetHat();
         }
     }
 

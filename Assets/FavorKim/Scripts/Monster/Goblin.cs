@@ -12,7 +12,7 @@ public class Goblin : Monsters
 
     public override void Move()
     {
-        Debug.Log("고블린 이동");
+        //Debug.Log("고블린 이동");
     }
 
     public override void Attack()
@@ -28,6 +28,11 @@ public class Goblin : Monsters
     public override void Skill2()
     {
         Debug.Log("고블린 스킬 2");
+    }
+
+    public override void Dead()
+    {
+        Debug.Log("고블린 사망");
     }
 
     public override void SetSkill()
