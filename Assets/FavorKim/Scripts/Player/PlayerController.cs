@@ -29,8 +29,6 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] Slider durationGauge;
 
-    [SerializeField] GameObject plantOF;
-    [SerializeField] GameObject goblinOF;
     [SerializeField] GameObject playerOF;
 
     SkillManager sM;
@@ -71,7 +69,7 @@ public class PlayerController : MonoBehaviour
     bool isDead = false;
     bool isInvincible = false;
 
-    Dictionary<string, GameObject> outFits = new Dictionary<string, GameObject>();
+    //Dictionary<string, GameObject> outFits = new Dictionary<string, GameObject>();
 
     #endregion
 
@@ -97,9 +95,9 @@ public class PlayerController : MonoBehaviour
 
         //skill1 = new Skill("test1", 5, () => { Debug.Log("skill1"); }, skill1Gauge);
 
-        outFits.Add("Goblin", goblinOF);
-        outFits.Add("Plant", plantOF);
-        outFits.Add("Player", playerOF);
+        //outFits.Add("Goblin", goblinOF);
+        //outFits.Add("Plant", plantOF);
+        //outFits.Add("Player", playerOF);
         OnDead += DeadCheck;
 
 
