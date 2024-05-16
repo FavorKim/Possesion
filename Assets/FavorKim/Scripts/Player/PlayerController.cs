@@ -182,17 +182,37 @@ public class PlayerController : MonoBehaviour
             anim.SetTrigger("Dead");
         }
     }
+    
 
     #endregion
 
     #region Event
+
+
+    /*
+     0,1 = 0
+
+    -1,0 = -90
+    1,0 = 90
+
+    0,-1 = -180
+
+     
+    1,1 = 45
+    -1, 1 = -45
+
+    -1,-1 = -135
+    1,-1 = 135
+
+     */
 
     void OnMove(InputValue val)
     {
         
         Vector2 dir = val.Get<Vector2>();
         MoveDir = new Vector3(dir.x, 0, dir.y);
-
+        
+        
         if (MoveDir != Vector3.zero)
         {
             anim.SetBool("isRun", true);
@@ -202,9 +222,11 @@ public class PlayerController : MonoBehaviour
             anim.SetBool("isRun", false);
         }
 
+       
 
         anim.SetFloat("vecX",  dir.x);
         anim.SetFloat("vecY",  dir.y);
+
 
     }
 
@@ -238,7 +260,8 @@ public class PlayerController : MonoBehaviour
     {
         float delta = val.Get<Vector2>().x;
 
-        transform.Rotate(new Vector3(0, delta, 0) * sensitivity*Time.deltaTime);
+        //if (Input.GetMouseButton(1))
+            transform.Rotate(new Vector3(0, delta, 0) * sensitivity * Time.deltaTime);
     }
 
 

@@ -92,9 +92,16 @@ public abstract class PlayerState : IState
 
     protected bool isGround => player.isGround;
 
+
     public virtual void Move() 
     {
-        stateCC.Move(player.transform.TransformDirection(moveDir) * moveSpeed * Time.deltaTime);
+        //Vector3 dir = player.transform.position + player.transform.TransformDirection(moveDir);
+        //player.transform.rotation = Quaternion.FromToRotation(player.transform.position, player.transform.TransformDirection(moveDir) * Time.deltaTime);
+        player.transform.rotation = Quaternion.FromToRotation(player.transform.position, moveDir * Time.deltaTime);
+
+        //stateCC.Move(player.transform.TransformDirection(moveDir) * moveSpeed * Time.deltaTime);
+        if (moveDir != Vector3.zero)
+            stateCC.Move(player.transform.forward * moveSpeed * Time.deltaTime);
     }
 
     public abstract void StateUpdate();
@@ -188,203 +195,7 @@ public class PossessState : PlayerState
         durationGauge = player.GetDurationGauge(); 
     }
     Slider durationGauge;
-
-    // MonsterController monCon;
-    // MonsterController 다른 몬스터들이 상속을 받아
-    // virtual(abstract) Move()
-    // 좀비컨트롤러 : 몬스터컨트롤러
-    // override move(){};
-
-
-    // 행동 패턴 메서드를 대리자로 선언해서 
-
-
-    // 몬스터는 Input으로 움직이지 않는다.
-    // 플레이어는 Input으로 움직인다.
-
-
-    /*
-    이동에 필요한게 벡터.
-
-    - 이동
-    플레이어 : 벡터를 플레이어는 인풋으로 설정을 하고 이동
-
-    몬스터 : 플레이어와 본인의 위치를 기준으로 계산을 해서 설정.
     
-    Ai처리 후 / 행동(계산된 값)
-    행동 메서드가 계산된 값을 매개로 받아(이동이라면, 벡터)
-
-    Move(vector3 dir);
-
-    계산 + 이동;
-    
-    MonsterAIMove() <- 빙의 되기 전
-    {
-        MonsterMove(calcul());
-    }
-
-    몬스터는 빙의 되고 나서 할 게 없음 <- 없어짐
-
-    몬스터는 빙의가 된지 안된지 어케 암?
-    -> 플레이어가 모자를 몬스터에 맞추면 몬스터 오브젝트를 비활성화
-      -> 이러면 몬스터는 어케 이동 함수를 줌?
-
-    인풋은 어쨌든 플레이어 내부에서 벡터로 바뀌긴 함.
-
-    vector3 calcul(); -> 여기서 방향을 산출
-
-    void MonsterMove(Vector3 dir) -> 매개로 전달받은 벡터값을 향해서 이동
-    
-    
-    몬스터 -> AI -> 행동
-
-
-    void Attack(); <<< 
-
-    플레이어는 검사를 안 해도 되지?
-    검사 대신이 Input
-    플레이어는 공격키를 누르면 애니메이션 켜준다.
-    
-    저 Attack에 필요한 변수들. 얘는 어떻게 넘기느냐?
-    animator << 
-
-    몬스터가 자기거니까 자기껄 주는
-    플레이어가 몬스터한테서 받으려면 몬스터의 변수가 퍼블릭이어야함.
-    
-    몬스터 변수는 프라이빗이고, 넘겨주는 함수만 퍼블릭이면
-    
-    플레이어는 불가능한데 몬스터는 가능한 거 (AI에 따른 이동)
-     
-
-    플레이어가 몬스터에 대한 정보를 다 갖고있다면, << 몬스터 매니저(몬스터에 대한 정보를 다 가지고있는 녀석)
-    플레이어와 몬스터의 행동 패턴이 같다.
-    플레이어가 조작하는 오브젝트의 대상만 바꿔서 행동을 한다.
-
-    
-                  PlayerInputManager
-    플레이어는 플레이어의 행동을 인풋을기반으로 행동을 하고
-    몬스터는 몬스터의 행동을 인풋을 기반으로 행동시키면 됨.
-    
-    박쥐는 침 뱉음
-    오우거는 몽둥이를 휘두른다.
-
-
-    플레이어가 박쥐로 빙의하면 플레이어는 공격버튼을 누르면 침을 뱉는다.
-    오우거면 몽둥이를 휘두른다.
-
-    플레이어가 됐을 때 호출할 공격 ex)가래침뱉기 식으로 강화해서 플레이어에게 넘겨줄 수도.
-
-    몬스터는 사실 플레이어가 극복하지 못하는 플랫폼을 언제든 극복할 수 있어
-    다만 얘가 그러려고 하지 않을 뿐.
-    그래서? 의지가 있는 플레이어가
-    그렇게 하는 것.
-
-
-    맨 처음 생각으로 돌아가자면
-
-    정해야할 것은.
-    플레이어가 몬스터로 변했을 때
-    무엇을 사용할 것인가.
-
-    플레이어 : 공격, 스킬1, 스킬2, 점프, 이동, 모자 던지기(빙의 스킬 버튼<- 빙의 됐을 때 제한시간이 다 되지않더라도 빙의를 끝내기)
-    몬스터 : 얘네를 다 할 것인지. 일부만 할 것인지 (이동은 그냥 플레이어 이동대로 해)
-
-    플레이어가 빙의했을 때. 플레이어가 사용할 몬스터의 기능은?
-
-    공격, 스킬1, 스킬2
-
-    나머지 행동 패턴은 플레이어가 알아서
-
-    커비
-    자동차가 되면 제동, 부스터?
-    계단 돌리기, 눕기
-
-    몬스터 틀. 공격, 스킬1, 스킬2 (추상화)
-    몬스터 1이 추상화된 위에 것들을 (구체화)
-    
-    근데 매개가 몬스터 틀
-    플레이어는 몬스터에 참조를 걸어서 그 기능들을 쓰는거죠
-    
-    
-
-
-
-
-
-
-    
-    같은몬스턴데 다른 스크립트
-    필드 몬스터는 필드 몬스터 스크립트
-    빙의 몬스터는 빙의 몬스터 변수
-
-    
-
-
-
-     */
-
-    /*
-    1. 몬스터에게서 빙의에 필요한 정보만 가져온다.
-    플레이어가 몬스터가 된다.
-    
-    ㅇ -> X
-    모자 X
-
-    움직일 때 모자 몬스터가 움직임.
-    플레이어가 외형을 바꾼다. <- 이것도 한 번 생각해 봄
-    플레이어가 외형을 여러가지고 있다.
-
-    몬스터를 컨트롤 <- 나도 이걸 처음 생각했어 이걸 하고싶었으나? 답이 안 나옴
-    근데? 막막함.
-
-    플레이어가 몬스터가 된다. 
-     */
-
-
-
-    /*
-    위에 거 너무 머리 아픔 나중에 개인으로 해야지...
-    일부만 수정하는거? <- 일단 난 못 함...
-    모자만 붙이는거? <- 나도 함
-    위에 거 하려면 시간 더 있어야지.
-
-    위처럼 모자를 씌웠을 때
-
-    플레이어는 몬스터의 어떤 것을 흡수할까요?
-
-    ex) 공격, 이동
-
-    공격하는 방식도 몬스터마다 다른데 <- 흠
-    
-    몬스터 매니저 <- 이걸 쓰는 것도 좋을 것 같은데
-    몬스터 매니저가 모든 몬스터의 정보를 가지고 있어서
-    플레이어 -> 몬스터 매니저
-    플레이어 : 나 ㅇㅇ몬스터 맞췄어요
-    몬스터 매니저 : 그래 그러면 ㅇㅇ몬스터의 (스킬, 이동, 공격 ...) 줄게 이거 갖고 잘 써먹으렴
-
-    플레이어 내부 (빙의 상호작용을 책임지는 녀석)
-     - 플레이어 (프리팹) 온
-     - 몬스터 1 (프리팹 몬스터1의 행동을 담은 스크립) 오프<스크립트 x 외형 정보 + 애니메이터
-    
-
-    몬스터 1은 필드에 돌아다니는 몬스터 1에 모자만 씌운 프리팹 <- 얘는 AI대로 움직임.
-
-    그러면 몬스터 1에 플레이어가 이동하는 것 처럼 이동하는 스크립트와 <- 이건 이미 플레이어에 구현되어있는데?
-    AI로 이동하는 스크립트를 둘 다 따로 만들어줘야하나?
-
-     - 몬스터 2 (프리팹 몬스터2의 행동을 담은 스크립) 오프
-     - 
-
-    몬스터 1은 Input으로 안 움직임.
-
-    빙의 했을 때 
-
-
-
-    
-
-    */
-
     public override void Enter()
     {
         /*
