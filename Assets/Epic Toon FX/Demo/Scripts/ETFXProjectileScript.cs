@@ -1,16 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
-using UnityEngine.Rendering;
 
 namespace EpicToonFX
 {
     public class ETFXProjectileScript : MonoBehaviour
     {
-        
-        ObjectPool<GameObject> impactPoolOBJ;
-        ObjectPool<GameObject> projectilePoolOBJ;
-        ObjectPool<GameObject> muzzlePoolOBJ;
-
         public GameObject impactParticle; // Effect spawned when projectile hits a collider
         public GameObject projectileParticle; // Effect attached to the gameobject as child
         public GameObject muzzleParticle; // Effect instantly spawned when gameobject is spawned
@@ -21,18 +15,11 @@ namespace EpicToonFX
 
         void Start()
         {
-            for(int i = 0; i < 5; i++)
-            {
-                projectileParticle = Instantiate(projectileParticle, transform.position, transform.rotation) as GameObject;
-                projectileParticle.transform.parent = transform;
-                projectilePoolOBJ.Release(projectileParticle);
-
-            }
-            
+            projectileParticle = Instantiate(projectileParticle, transform.position, transform.rotation) as GameObject;
+            projectileParticle.transform.parent = transform;
             if (muzzleParticle)
             {
                 muzzleParticle = Instantiate(muzzleParticle, transform.position, transform.rotation) as GameObject;
-                //Invoke("Get", 1.5f);
                 Destroy(muzzleParticle, 1.5f); // 2nd parameter is lifetime of effect in seconds
             }
         }
@@ -63,11 +50,7 @@ namespace EpicToonFX
             {
                 transform.position = hit.point + (hit.normal * collideOffset); // Move projectile to point of collision
 
-                //hit 당시에 position을 체크해서 Instantiate함. ObjectPool하려면 Set상황에 pos를 변경시켜주면 해결 됨.
-                impactPoolOBJ.Get(out GameObject impactP);
-                impactP.transform.position = transform.position;
-                impactP.SetActive(true);
-                //이전 코드 : GameObject impactP = Instantiate(impactParticle, transform.position, Quaternion.FromToRotation(Vector3.up, hit.normal)) as GameObject; // Spawns impact effect
+                GameObject impactP = Instantiate(impactParticle, transform.position, Quaternion.FromToRotation(Vector3.up, hit.normal)) as GameObject; // Spawns impact effect
 
                 ParticleSystem[] trails = GetComponentsInChildren<ParticleSystem>(); // Gets a list of particle systems, as we need to detach the trails
                 //Component at [0] is that of the parent i.e. this object (if there is any)
