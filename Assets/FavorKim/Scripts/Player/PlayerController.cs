@@ -185,24 +185,7 @@ public class PlayerController : MonoBehaviour
     #endregion
 
     #region Event
-
-
-    /*
-     0,1 = 0
-
-    -1,0 = -90
-    1,0 = 90
-
-    0,-1 = -180
-
-     
-    1,1 = 45
-    -1, 1 = -45
-
-    -1,-1 = -135
-    1,-1 = 135
-
-     */
+    
 
     void OnMove(InputValue val)
     {

@@ -231,10 +231,11 @@ public class PossessState : PlayerState
 
     public override void StateUpdate()
     {
-        if (mon.skill1 == null) return;
-        mon.skill1.SetCurCD();
-        if (mon.skill2 == null) return;
-        mon.skill2.SetCurCD();
+
+        if (mon.skill1 != null)
+            mon.skill1.SetCurCD();
+        if (mon.skill2 != null)
+            mon.skill2.SetCurCD();
         SetDuration();
     }
 
@@ -252,7 +253,7 @@ public class PossessState : PlayerState
     }
     public override void Skill2()
     {
-        
+
         mon.skill2.UseSkill();
     }
 
