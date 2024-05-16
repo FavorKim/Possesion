@@ -2,8 +2,16 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class TurtleShell : BaseMonster
+public class TurtleShell : Monsters
 {
+    public enum MonsterState
+    {
+        IDLE,
+        TRACE,
+        ATTACK,
+        DEAD
+    }
+
     // 플레이어 정보를 받아야 NevMesh를 따라 추적이 가능함.
     [SerializeField] PlayerController player;
 
@@ -23,6 +31,21 @@ public class TurtleShell : BaseMonster
     readonly int hashAttack = Animator.StringToHash("IsAttack");
     readonly int hashSkill1 = Animator.StringToHash("IsSkill1");
     readonly int hashDefend = Animator.StringToHash("IsDefend");
+
+    #region 스킬 등등
+    [SerializeField]
+    float mstATK = 10.0f;
+    float mstSPD = 10.0f;
+    public float mstSkill1Cooltime = 3.0f;
+    public float mstSkill2Cooltime = 3.0f;
+
+    public float traceDistance = 10f;
+    public float skillDistance = 10f;
+    public float attackDistance = 2f;
+
+    public bool isDie = false;
+
+    #endregion
 
     void Awake()
     {
@@ -171,7 +194,7 @@ public class TurtleShell : BaseMonster
     {
         animator.SetBool(hashAttack, true);
     }
-    public override void Skill1()
+    public void Skill1()
     {
         float distance = Vector3.Distance(playerTrf.position, enemyTrf.position);
         skill1_curCooltime = mstSkill1Cooltime;
@@ -186,7 +209,7 @@ public class TurtleShell : BaseMonster
             animator.SetBool(hashSkill1, false);
         }
     }
-    public override void Skill2()
+    public void Skill2()
     {
         skill2_curCooltime = mstSkill2Cooltime;
         StartCoroutine(Defend());
