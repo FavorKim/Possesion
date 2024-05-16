@@ -194,7 +194,7 @@ public class TurtleShell : Monsters
     {
         animator.SetBool(hashAttack, true);
     }
-    public override void Skill1()
+    public void Skill1()
     {
         float distance = Vector3.Distance(playerTrf.position, enemyTrf.position);
         skill1_curCooltime = mstSkill1Cooltime;
@@ -209,7 +209,7 @@ public class TurtleShell : Monsters
             animator.SetBool(hashSkill1, false);
         }
     }
-    public override void Skill2()
+    public void Skill2()
     {
         skill2_curCooltime = mstSkill2Cooltime;
         StartCoroutine(Defend());
@@ -220,24 +220,5 @@ public class TurtleShell : Monsters
             yield return new WaitForSeconds(1.5f);
             animator.SetBool(hashDefend, false);
         }
-    }
-    public override void Move()
-    {
-        throw new System.NotImplementedException();
-    }
-
-    public override void Dead()
-    {
-        throw new System.NotImplementedException();
-    }
-
-    public override void InitSkill()
-    {
-        throw new System.NotImplementedException();
-    }
-
-    public override void SetSkill()
-    {
-        throw new System.NotImplementedException();
     }
 }

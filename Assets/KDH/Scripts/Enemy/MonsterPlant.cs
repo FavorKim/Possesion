@@ -17,7 +17,7 @@ public class MonsterPlant : Monsters
 
     [SerializeField] public GameObject projectile;
     public Transform spawnPosition;
-    MonsterState state = MonsterState.IDLE;
+    public MonsterState state = MonsterState.IDLE;
 
     [SerializeField] public float shootSpeed = 800.0f;
 
@@ -73,15 +73,11 @@ public class MonsterPlant : Monsters
     {
         if(gameObject.transform.parent == null)
             StartCoroutine(CheckEnemyState());
-        else
-        {
-
-        }
     }
 
     protected virtual IEnumerator CheckEnemyState()
     {
-        while (!isDie)
+        while (!isDie && gameObject.transform.parent == null)
         {
             yield return new WaitForSeconds(0.3f);
 
@@ -112,8 +108,11 @@ public class MonsterPlant : Monsters
                 state = MonsterState.IDLE;
             }
         }
-        stateMachine.ChangeState(MonsterState.DEAD);
-        state = MonsterState.DEAD;
+        if(isDie)
+        {
+            stateMachine.ChangeState(MonsterState.DEAD);
+            state = MonsterState.DEAD;
+        }
     }
     private void Update()
     {
@@ -204,8 +203,9 @@ public class MonsterPlant : Monsters
     {
         animator.SetBool(hashAttack, true);
     }
-    public override void Skill1()
+    public void Skill1()
     {
+        //if()
         float distance = Vector3.Distance(playerTrf.position, enemyTrf.position);
 
         GameObject pd = Instantiate(projectile, spawnPosition.position, Quaternion.identity) as GameObject;
@@ -218,30 +218,10 @@ public class MonsterPlant : Monsters
 
         animator.SetBool(hashAttack, true);
     }
-    public override void Skill2()
+    public void Skill2()
     {
         animator.SetTrigger(hashSkill2);
         skill2_curCooltime = mstSkill2Cooltime;
-    }
-
-    public override void Move()
-    {
-        throw new System.NotImplementedException();
-    }
-
-    public override void Dead()
-    {
-        throw new System.NotImplementedException();
-    }
-
-    public override void InitSkill()
-    {
-        throw new System.NotImplementedException();
-    }
-
-    public override void SetSkill()
-    {
-        throw new System.NotImplementedException();
     }
 }
 
