@@ -204,7 +204,7 @@ public class PossessState : PlayerState
          */
 
 
-        mon.SetSkill();
+        //mon.SetSkill();
         durationGauge.gameObject.SetActive(true);
         durationGauge.value = 1;
     }
@@ -232,9 +232,9 @@ public class PossessState : PlayerState
 
     public override void StateUpdate()
     {
-        mon.skill1.SetCurCD();
-        mon.skill2.SetCurCD();
-        SetDuration();
+        //mon.skill1.SetCurCD();
+        //mon.skill2.SetCurCD();
+        //SetDuration();
     }
 
     public override void Jump()
@@ -248,11 +248,11 @@ public class PossessState : PlayerState
     public override void Skill1()
     {
 
-        mon.skill1.UseSkill();
+        //mon.skill1.UseSkill();
     }
     public override void Skill2()
     {
-        mon.skill2.UseSkill();
+        //mon.skill2.UseSkill();
     }
 
     public override void Shift()
@@ -268,7 +268,7 @@ public class PossessState : PlayerState
         mon.gameObject.SetActive(false);
 
         // 빙의 해제 시 무조건 죽이지는 말자.
-        mon.Dead();
+        //mon.Dead();
 
         FXManager.Instance.PlayFX("PoExit", player.transform.position);
         durationGauge.gameObject.SetActive(false);
