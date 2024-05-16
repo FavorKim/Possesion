@@ -96,11 +96,12 @@ public abstract class PlayerState : IState
 
     public virtual void Move()
     {
-        if (!Input.GetMouseButton(1) && moveDir != Vector3.zero)
-            player.transform.rotation = Quaternion.FromToRotation(player.transform.position, moveDir * Time.deltaTime);
+        //if (!Input.GetMouseButton(1) && moveDir != Vector3.zero)
+        //    player.transform.rotation = Quaternion.FromToRotation(player.transform.position, moveDir * Time.deltaTime);
 
-        if (moveDir != Vector3.zero)
-            stateCC.Move(player.transform.forward * moveSpeed * Time.deltaTime);
+        //if (moveDir != Vector3.zero)
+        //      stateCC.Move(player.transform.forward * moveSpeed * Time.deltaTime);
+        stateCC.Move(moveDir);
     }
 
     public abstract void StateUpdate();

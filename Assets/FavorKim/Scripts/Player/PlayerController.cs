@@ -211,6 +211,12 @@ public class PlayerController : MonoBehaviour
         
         Vector2 dir = val.Get<Vector2>();
         MoveDir = new Vector3(dir.x, 0, dir.y);
+        Vector3 heading = Camera.main.transform.localRotation * Vector3.forward;
+        heading.y = 0;
+        heading = heading.normalized;
+        //Debug.Log(heading);
+
+        
         
         
         if (MoveDir != Vector3.zero)
@@ -227,7 +233,9 @@ public class PlayerController : MonoBehaviour
         anim.SetFloat("vecX",  dir.x);
         anim.SetFloat("vecY",  dir.y);
 
-
+        MoveDir = heading * dir.y * Time.deltaTime * moveSpeed;
+        MoveDir += Quaternion.Euler(0, 90, 0) * heading * dir.x * Time.deltaTime * moveSpeed;
+        Debug.Log(MoveDir);
     }
 
     void OnJump(InputValue val) { if (val.isPressed) state.StateOnJump(); }
