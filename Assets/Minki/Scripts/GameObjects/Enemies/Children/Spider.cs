@@ -2,8 +2,8 @@ using UnityEngine;
 
 namespace Enemy
 {
-    // 슬라임 클래스
-    public class Slime : Enemy
+    // 거미 클래스
+    public class Spider : Enemy
     {
         protected override void Awake()
         {
@@ -16,7 +16,7 @@ namespace Enemy
         // 적(Enemy)의 기본 스탯을 초기화하는 함수
         protected override void InitializeStats()
         {
-            Name = "Slime";
+            Name = "Spider";
             HealthPoint = 100;
             MagicPoint = 100;
             MoveSpeed = 100;
@@ -34,22 +34,22 @@ namespace Enemy
         {
             base.Patrol();
 
-            Debug.Log("Smile's Patrol!");
-            Debug.Log("Smile's AttackRange = " + AttackRange);
+            Debug.Log("Spider's Patrol!");
+            Debug.Log("Spider's AttackRange = " + AttackRange);
         }
 
         public override void Chase()
         {
             base.Chase();
 
-            Debug.Log("Smile's Chase!");
+            Debug.Log("Spider's Chase!");
         }
 
         public override void Attack()
         {
             base.Attack();
 
-            Debug.Log("Smile's Attack!");
+            Debug.Log("Spider's Attack!");
         }
     }
 }

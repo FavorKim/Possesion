@@ -1,20 +1,15 @@
 using BehaviourTree;
-using UnityEngine;
 
 namespace Enemy
 {
     public class CheckIsPossessed : Node
     {
-        // 적(Enemy) 클래스
-        private Enemy _enemy;
-
         // 필드(Field)
         private bool _isPossessed; // 빙의 상태 여부를 판별하는 변수
 
         // 생성자
         public CheckIsPossessed(Enemy enemy)
         {
-            _enemy = enemy;
             _isPossessed = enemy.IsPossessed;
         }
 
