@@ -196,10 +196,6 @@ public class PlayerController : MonoBehaviour
         heading.y = 0;
         heading = heading.normalized;
         //Debug.Log(heading);
-
-        
-        
-        
         if (MoveDir != Vector3.zero)
         {
             anim.SetBool("isRun", true);
