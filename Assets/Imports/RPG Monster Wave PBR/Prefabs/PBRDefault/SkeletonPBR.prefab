@@ -277,13 +277,7 @@ Animator:
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
-  m_WarningMessage: "\nBinding warning: Some generic clip(s) animate transforms that
-    are already bound by a Humanoid avatar. These transforms can only be changed
-    by Humanoid clips.\n\tTransform 'Spine01'\n\tTransform 'Body'\n\tTransform 'Spine01'\n\tTransform
-    'Body'\n\tTransform 'Spine01'\n\tTransform 'Body'\n\tFrom animation clip 'Defend'\n\tFrom
-    animation clip 'Attack02'\n\tFrom animation clip 'Attack01'\n\tFrom animation
-    clip 'IdleNormal'\n\tFrom animation clip 'WalkFWD'\n\tFrom animation clip 'WalkBWD'\n\tFrom
-    animation clip 'WalkLeft'\n\tFrom animation clip 'WalkRight'"
+  m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
@@ -325,9 +319,9 @@ MonoBehaviour:
   mstATK: 10
   mstSkill1Cooltime: 3
   mstSkill2Cooltime: 3
-  traceDistance: 10
+  traceDistance: 30
   skillDistance: 10
-  attackDistance: 2
+  attackDistance: 3
   isDie: 0
   player: {fileID: 0}
   state: 0

@@ -5,7 +5,7 @@ using UnityEngine.AI;
 public class Skeleton : BaseMonster
 {
     // 플레이어 정보를 받아야 NevMesh를 따라 추적이 가능함.
-    [SerializeField] protected Player player;
+    [SerializeField] PlayerController player;
 
     public MonsterState state = MonsterState.IDLE;
 
@@ -26,7 +26,7 @@ public class Skeleton : BaseMonster
 
     void Awake()
     {
-        player = Player.Instance;
+        player = FindObjectOfType<PlayerController>();
         playerTrf = player.transform;
         enemyTrf = GetComponent<Transform>();
         agent = GetComponent<NavMeshAgent>();
@@ -127,7 +127,6 @@ public class Skeleton : BaseMonster
             owner.agent.isStopped = false;
             owner.animator.SetBool(owner.hashTrace, true);
             owner.animator.SetBool(owner.hashAttack, false);
-            
         }
     }
 

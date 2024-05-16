@@ -6,11 +6,13 @@ using UnityEngine.AI;
 public class MonsterPlant : BaseMonster
 {
     // 플레이어 정보를 받아야 NevMesh를 따라 추적이 가능함.
-    [SerializeField] protected Player player;
+    [SerializeField] PlayerController player;
 
     [SerializeField] public GameObject projectile;
-
+    public Transform spawnPosition;
     MonsterState state = MonsterState.IDLE;
+
+    [SerializeField] public float shootSpeed = 800.0f;
 
     float skill1_curCooltime = 0f;
     float skill2_curCooltime = 0f;
@@ -31,7 +33,7 @@ public class MonsterPlant : BaseMonster
     // Start is called before the first frame update
     void Awake()
     {
-        player = Player.Instance;
+        player = FindObjectOfType<PlayerController>();
         playerTrf = player.transform;
         enemyTrf = GetComponent<Transform>();
         agent = GetComponent<NavMeshAgent>();
@@ -180,9 +182,10 @@ public class MonsterPlant : BaseMonster
     {
         float distance = Vector3.Distance(playerTrf.position, enemyTrf.position);
 
-        Rigidbody rb = Instantiate(projectile, transform.position, Quaternion.identity).GetComponent<Rigidbody>();
-        rb.AddForce(transform.forward *(5 + distance * 0.4f), ForceMode.Impulse);
-        rb.AddForce(transform.up * (5 + distance * 0.3f), ForceMode.Impulse);
+        GameObject pd = Instantiate(projectile, spawnPosition.position, Quaternion.identity) as GameObject;
+        pd.transform.LookAt(playerTrf.localPosition);
+        pd.GetComponent<Rigidbody>().AddForce(pd.transform.forward * shootSpeed);
+        pd.GetComponent<Rigidbody>().AddForce(pd.transform.up * distance * 15.5f);
 
         //여기서 스킬을 발사 해줘야 하거든?
         skill1_curCooltime = mstSkill1Cooltime;
