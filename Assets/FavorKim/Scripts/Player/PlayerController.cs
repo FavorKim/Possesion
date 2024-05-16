@@ -260,7 +260,7 @@ public class PlayerController : MonoBehaviour
     {
         float delta = val.Get<Vector2>().x;
 
-        //if (Input.GetMouseButton(1))
+        if (Input.GetMouseButton(1))
             transform.Rotate(new Vector3(0, delta, 0) * sensitivity * Time.deltaTime);
     }
 

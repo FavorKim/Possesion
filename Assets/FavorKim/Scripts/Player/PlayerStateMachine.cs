@@ -32,7 +32,7 @@ public class PlayerStateMachine
     {
         // 노말무브
         curState.Move();
-        
+
         curState.StateUpdate();
     }
 
@@ -93,13 +93,12 @@ public abstract class PlayerState : IState
     protected bool isGround => player.isGround;
 
 
-    public virtual void Move() 
-    {
-        //Vector3 dir = player.transform.position + player.transform.TransformDirection(moveDir);
-        //player.transform.rotation = Quaternion.FromToRotation(player.transform.position, player.transform.TransformDirection(moveDir) * Time.deltaTime);
-        player.transform.rotation = Quaternion.FromToRotation(player.transform.position, moveDir * Time.deltaTime);
 
-        //stateCC.Move(player.transform.TransformDirection(moveDir) * moveSpeed * Time.deltaTime);
+    public virtual void Move()
+    {
+        if (!Input.GetMouseButton(1) && moveDir != Vector3.zero)
+            player.transform.rotation = Quaternion.FromToRotation(player.transform.position, moveDir * Time.deltaTime);
+
         if (moveDir != Vector3.zero)
             stateCC.Move(player.transform.forward * moveSpeed * Time.deltaTime);
     }
@@ -190,12 +189,12 @@ public class NormalState : PlayerState
 
 public class PossessState : PlayerState
 {
-    public PossessState(PlayerController controller) : base(controller) 
+    public PossessState(PlayerController controller) : base(controller)
     {
-        durationGauge = player.GetDurationGauge(); 
+        durationGauge = player.GetDurationGauge();
     }
     Slider durationGauge;
-    
+
     public override void Enter()
     {
         /*
@@ -213,13 +212,13 @@ public class PossessState : PlayerState
     public void GetMonster(Monsters _mon)
     {
         mon = _mon;
-        
+
         player.GetCC().Move(mon.transform.position - player.transform.position);
 
         _mon.transform.parent = player.transform;
         _mon.transform.localPosition = Vector3.zero;
         _mon.transform.localEulerAngles = Vector3.zero;
-        
+
         Enter();
     }
 
