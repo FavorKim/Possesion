@@ -1,8 +1,10 @@
 using ObjectPool;
 using System.Collections;
+using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
+using static UnityEngine.UI.GridLayoutGroup;
 
 public class Skeleton : Monsters
 {
@@ -13,6 +15,7 @@ public class Skeleton : Monsters
         ATTACK,
         DEAD
     }
+
     // 플레이어 정보를 받아야 NevMesh를 따라 추적이 가능함.
     [SerializeField] PlayerController player;
     [SerializeField] public GameObject projectile;
@@ -61,6 +64,7 @@ public class Skeleton : Monsters
         enemyTrf = GetComponent<Transform>();
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
+        rb = GetComponent<Rigidbody>();
 
         stateMachine = gameObject.AddComponent<StateMachine>();
 
@@ -124,6 +128,8 @@ public class Skeleton : Monsters
         {
             skill2_curCooltime -= Time.deltaTime;
         }
+        animator.SetFloat("FloatX", rb.velocity.x * 100f);
+        animator.SetFloat("FloatY", rb.velocity.z * 100f);
     }
 
     class BaseEnemyState : BaseState
@@ -233,8 +239,9 @@ public class Skeleton : Monsters
         agent.isStopped = true;
 
         ParticleSystem ps = Instantiate(stabAttack, this.transform);
-        ps.transform.LookAt(playerTrf.localPosition);
-        rb.AddRelativeForce(Vector3.forward * 10f, ForceMode.VelocityChange);
+        //ps.transform.LookAt(gameObject.transform.localPosition + Vector3.forward);
+        ps.transform.position = spawnPosition.position;
+        rb.AddRelativeForce(Vector3.forward * 20f, ForceMode.VelocityChange);
         yield return new WaitForSeconds(0.4f);
 
         rb.velocity = Vector3.zero;
@@ -242,6 +249,5 @@ public class Skeleton : Monsters
         skill2_curCooltime = mstSkill2Cooltime;
         Destroy(ps);
         animator.SetBool(hashSkill2, false);
-
     }
 }

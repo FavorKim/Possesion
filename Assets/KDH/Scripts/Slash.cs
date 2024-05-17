@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Slash : MonoBehaviour
 {
-
     public GameObject slash;
     Rigidbody rb;
 
@@ -24,7 +23,5 @@ public class Slash : MonoBehaviour
         yield return new WaitForSeconds(0.1f);
         slash.SetActive(false);
     }
-    // Start is called before the first frame update
-    
 }
 

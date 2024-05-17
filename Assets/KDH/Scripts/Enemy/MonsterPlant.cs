@@ -1,4 +1,6 @@
+using System;
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -21,6 +23,7 @@ public class MonsterPlant : Monsters
 
     [SerializeField] public float shootSpeed = 800.0f;
 
+    float attack_curCooltime = 0f;
     float skill1_curCooltime = 0f;
     float skill2_curCooltime = 0f;
 
@@ -39,8 +42,11 @@ public class MonsterPlant : Monsters
 
     #region 스킬 등등
     [SerializeField]
+
+    Rigidbody rb;
     float mstATK = 10.0f;
     float mstSPD = 10.0f;
+    public float mstAttackCooltime = 2.0f;
     public float mstSkill1Cooltime = 3.0f;
     public float mstSkill2Cooltime = 3.0f;
 
@@ -61,6 +67,7 @@ public class MonsterPlant : Monsters
         enemyTrf = GetComponent<Transform>();
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
+        rb = GetComponent<Rigidbody>();
 
         stateMachine = gameObject.AddComponent<StateMachine>();
 
@@ -73,7 +80,7 @@ public class MonsterPlant : Monsters
     }
     protected virtual void Start()
     {
-        if(!isPlayer)
+        if (!isPlayer)
             StartCoroutine(CheckEnemyState());
     }
 
@@ -81,11 +88,12 @@ public class MonsterPlant : Monsters
     {
         while (!isDie && !isPlayer)
         {
+            isPlayer = gameObject.transform.parent != null;
             yield return new WaitForSeconds(0.3f);
 
            if (state == MonsterState.DEAD)
             {
-                stateMachine.ChangeState(MonsterState.DEAD);
+                stateMachine.ChangeState(state);
                 yield break;
             }
 
@@ -126,9 +134,14 @@ public class MonsterPlant : Monsters
         {
             skill2_curCooltime -= Time.deltaTime;
         }
-        /*enemyTrf
-        animator.SetFloat("FloatX", gameObject.transform.position.z);
-        animator.SetFloat("FloatY", gameObject.transform.position.x);*/
+        if (attack_curCooltime> 0f)
+        {
+            attack_curCooltime -= Time.deltaTime;
+        }
+        stateMachine.ChangeState(state);
+
+        animator.SetFloat("FloatX", rb.velocity.x * 100f);
+        animator.SetFloat("FloatY", rb.velocity.z * 100f);
     }
 
     class BaseEnemyState : BaseState
@@ -184,7 +197,7 @@ public class MonsterPlant : Monsters
             {
                 owner.Skill2();
             }
-            else
+            else if(owner.attack_curCooltime <= 0f)
             {
                 owner.Attack();
             }
@@ -204,6 +217,7 @@ public class MonsterPlant : Monsters
     public override void Attack()
     {
         animator.SetBool(hashAttack, true);
+        attack_curCooltime = mstAttackCooltime;
     }
     public override void Skill1()
     {
@@ -233,5 +247,6 @@ public class MonsterPlant : Monsters
         skill2_curCooltime = mstSkill2Cooltime;
     }
 }
+
 
 
