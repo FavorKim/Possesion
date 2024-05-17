@@ -5,13 +5,13 @@ using UnityEngine;
 public class LeafObs : Obstacles
 {
     [SerializeField] GameObject fire;
-    [SerializeField] ParticleSystem cutter;
+    [SerializeField] GameObject cutter;
 
 
     private void Awake()
     {
         fire.SetActive(false);
-        //cutter.Stop();
+        cutter.SetActive(false);
         type = Type.LEAF;
     }
 
@@ -20,7 +20,7 @@ public class LeafObs : Obstacles
         switch (attackedType)
         {
             case Type.CUTTER:
-                //cutter.Play();
+                cutter.SetActive(true);
                 break;
 
             case Type.FIRE:
@@ -30,7 +30,7 @@ public class LeafObs : Obstacles
     }
 
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
         if (other.CompareTag("Player"))
             GameManager.Instance.GetDamage(this, other.gameObject);
