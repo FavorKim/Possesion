@@ -1,19 +1,29 @@
+using System;
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
 
-public class MonsterPlant : BaseMonster
+public class MonsterPlant : Monsters
 {
-    // 플레이어 정보를 받아야 NevMesh를 따라 추적이 가능함.
+    public enum MonsterState
+    {
+        IDLE,
+        TRACE,
+        ATTACK,
+        DEAD
+    }
+
     [SerializeField] PlayerController player;
 
     [SerializeField] public GameObject projectile;
     public Transform spawnPosition;
-    MonsterState state = MonsterState.IDLE;
+    public MonsterState state = MonsterState.IDLE;
 
     [SerializeField] public float shootSpeed = 800.0f;
 
+    float attack_curCooltime = 0f;
     float skill1_curCooltime = 0f;
     float skill2_curCooltime = 0f;
 
@@ -29,15 +39,35 @@ public class MonsterPlant : BaseMonster
     readonly int hashTrace = Animator.StringToHash("IsTrace");
     readonly int hashAttack = Animator.StringToHash("IsAttack");
     readonly int hashSkill2 = Animator.StringToHash("IsSkill2");
-    
+
+    #region 스킬 등등
+    [SerializeField]
+
+    Rigidbody rb;
+    float mstATK = 10.0f;
+    float mstSPD = 10.0f;
+    public float mstAttackCooltime = 2.0f;
+    public float mstSkill1Cooltime = 3.0f;
+    public float mstSkill2Cooltime = 3.0f;
+
+    public float traceDistance = 10f;
+    public float skillDistance = 10f;
+    public float attackDistance = 2f;
+
+    public bool isDie = false;
+    public bool isPlayer = false;
+    #endregion
+
     // Start is called before the first frame update
     void Awake()
     {
+        isPlayer = gameObject.transform.parent != null;
         player = FindObjectOfType<PlayerController>();
         playerTrf = player.transform;
         enemyTrf = GetComponent<Transform>();
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
+        rb = GetComponent<Rigidbody>();
 
         stateMachine = gameObject.AddComponent<StateMachine>();
 
@@ -50,18 +80,20 @@ public class MonsterPlant : BaseMonster
     }
     protected virtual void Start()
     {
-        StartCoroutine(CheckEnemyState());
+        if (!isPlayer)
+            StartCoroutine(CheckEnemyState());
     }
 
     protected virtual IEnumerator CheckEnemyState()
     {
-        while (!isDie)
+        while (!isDie && !isPlayer)
         {
+            isPlayer = gameObject.transform.parent != null;
             yield return new WaitForSeconds(0.3f);
 
            if (state == MonsterState.DEAD)
             {
-                stateMachine.ChangeState(MonsterState.DEAD);
+                stateMachine.ChangeState(state);
                 yield break;
             }
 
@@ -86,8 +118,11 @@ public class MonsterPlant : BaseMonster
                 state = MonsterState.IDLE;
             }
         }
-        stateMachine.ChangeState(MonsterState.DEAD);
-        state = MonsterState.DEAD;
+        if(isDie)
+        {
+            stateMachine.ChangeState(MonsterState.DEAD);
+            state = MonsterState.DEAD;
+        }
     }
     private void Update()
     {
@@ -99,9 +134,14 @@ public class MonsterPlant : BaseMonster
         {
             skill2_curCooltime -= Time.deltaTime;
         }
-        /*enemyTrf
-        animator.SetFloat("FloatX", gameObject.transform.position.z);
-        animator.SetFloat("FloatY", gameObject.transform.position.x);*/
+        if (attack_curCooltime> 0f)
+        {
+            attack_curCooltime -= Time.deltaTime;
+        }
+        stateMachine.ChangeState(state);
+
+        animator.SetFloat("FloatX", rb.velocity.x * 100f);
+        animator.SetFloat("FloatY", rb.velocity.z * 100f);
     }
 
     class BaseEnemyState : BaseState
@@ -157,7 +197,7 @@ public class MonsterPlant : BaseMonster
             {
                 owner.Skill2();
             }
-            else
+            else if(owner.attack_curCooltime <= 0f)
             {
                 owner.Attack();
             }
@@ -177,10 +217,19 @@ public class MonsterPlant : BaseMonster
     public override void Attack()
     {
         animator.SetBool(hashAttack, true);
+        attack_curCooltime = mstAttackCooltime;
     }
     public override void Skill1()
     {
-        float distance = Vector3.Distance(playerTrf.position, enemyTrf.position);
+        float distance;
+        if (!isPlayer)
+        {
+            distance = Vector3.Distance(playerTrf.position, enemyTrf.position);
+        }
+        else
+        {
+            distance = 3.0f;
+        }
 
         GameObject pd = Instantiate(projectile, spawnPosition.position, Quaternion.identity) as GameObject;
         pd.transform.LookAt(playerTrf.localPosition);
@@ -192,12 +241,12 @@ public class MonsterPlant : BaseMonster
 
         animator.SetBool(hashAttack, true);
     }
-    public override void Skill2()
+    public void Skill2()
     {
         animator.SetTrigger(hashSkill2);
         skill2_curCooltime = mstSkill2Cooltime;
     }
-
 }
+
 
 

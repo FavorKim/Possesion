@@ -1,9 +1,18 @@
+using ObjectPool;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class TurtleShell : BaseMonster
+public class TurtleShell : Monsters
 {
+    public enum MonsterState
+    {
+        IDLE,
+        TRACE,
+        ATTACK,
+        DEAD
+    }
+
     // 플레이어 정보를 받아야 NevMesh를 따라 추적이 가능함.
     [SerializeField] PlayerController player;
 
@@ -17,12 +26,29 @@ public class TurtleShell : BaseMonster
     NavMeshAgent agent;
     Animator animator;
 
+    public ParticleSystem rollAttack;
     public StateMachine stateMachine;
 
     readonly int hashTrace = Animator.StringToHash("IsTrace");
     readonly int hashAttack = Animator.StringToHash("IsAttack");
     readonly int hashSkill1 = Animator.StringToHash("IsSkill1");
     readonly int hashDefend = Animator.StringToHash("IsDefend");
+
+    Rigidbody rb;
+    #region 스킬 등등
+    [SerializeField]
+    float mstATK = 10.0f;
+    float mstSPD = 10.0f;
+    public float mstSkill1Cooltime = 3.0f;
+    public float mstSkill2Cooltime = 3.0f;
+
+    public float traceDistance = 10f;
+    public float skillDistance = 10f;
+    public float attackDistance = 2f;
+
+    public bool isDie = false;
+
+    #endregion
 
     void Awake()
     {
@@ -32,6 +58,7 @@ public class TurtleShell : BaseMonster
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
 
+        rb = GetComponent<Rigidbody>();
         stateMachine = gameObject.AddComponent<StateMachine>();
 
         stateMachine.AddState(MonsterState.IDLE, new IdleState(this));
@@ -66,7 +93,6 @@ public class TurtleShell : BaseMonster
             {
                 stateMachine.ChangeState(MonsterState.ATTACK);
                 state = MonsterState.ATTACK;
-                yield return new WaitForSeconds(0.5f);
             }
             else if (distance <= traceDistance)
             {
@@ -94,7 +120,6 @@ public class TurtleShell : BaseMonster
             skill2_curCooltime -= Time.deltaTime;
         }
     }
-
 
     class BaseEnemyState : BaseState
     {
@@ -124,7 +149,7 @@ public class TurtleShell : BaseMonster
         public override void Enter()
         {
             owner.agent.SetDestination(owner.playerTrf.position);
-
+            
             owner.agent.isStopped = false;
             owner.animator.SetBool(owner.hashTrace, true);
             owner.animator.SetBool(owner.hashAttack, false);
@@ -173,20 +198,30 @@ public class TurtleShell : BaseMonster
     }
     public override void Skill1()
     {
+        //기왕이면 다 돌아가고 나서 스킬 발동?
         float distance = Vector3.Distance(playerTrf.position, enemyTrf.position);
-        skill1_curCooltime = mstSkill1Cooltime;
-        
-        StartCoroutine(RollingAttack());
-
-        IEnumerator RollingAttack()
-        {
-            agent.isStopped = true;
-            animator.SetBool(hashSkill1, true);
-            yield return new WaitForSeconds(1.5f);
-            animator.SetBool(hashSkill1, false);
-        }
+        animator.SetBool(hashSkill1, true);
     }
-    public override void Skill2()
+
+    void RAttack()
+    {
+        StartCoroutine(RollingAttack());
+    }
+    IEnumerator RollingAttack()
+    {
+        agent.isStopped = true;
+        ParticleSystem ps = Instantiate(rollAttack, this.transform); //, Quaternion.identity
+        rb.AddRelativeForce(Vector3.forward * 20f, ForceMode.VelocityChange);
+        yield return new WaitForSeconds(0.8f);
+
+        rb.velocity = Vector3.zero;
+        rb.angularVelocity = Vector3.zero;
+        skill1_curCooltime = mstSkill1Cooltime;
+        Destroy(ps);
+        animator.SetBool(hashSkill1, false);
+    }
+
+    public void Skill2()
     {
         skill2_curCooltime = mstSkill2Cooltime;
         StartCoroutine(Defend());

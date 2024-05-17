@@ -240,15 +240,15 @@ ModelImporter:
       name: Attack02
       takeName: Take 001
       internalID: 0
-      firstFrame: 0
-      lastFrame: 25
+      firstFrame: 5
+      lastFrame: 20
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 0
+      loopTime: 1
       loopBlend: 0
       loopBlendOrientation: 0
       loopBlendPositionY: 0
@@ -260,7 +260,14 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events: []
+      events:
+      - time: 0.0031948916
+        functionName: RAttack
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: 92886955cd99f2e42a346bc9fbfc1aeb, type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask:
       - path: 
         weight: 1

@@ -1,12 +1,27 @@
+using ObjectPool;
 using System.Collections;
+using Unity.Mathematics;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
+using static UnityEngine.UI.GridLayoutGroup;
 
-public class Skeleton : BaseMonster
+public class Skeleton : Monsters
 {
+    public enum MonsterState
+    {
+        IDLE,
+        TRACE,
+        ATTACK,
+        DEAD
+    }
+
     // 플레이어 정보를 받아야 NevMesh를 따라 추적이 가능함.
     [SerializeField] PlayerController player;
+    [SerializeField] public GameObject projectile;
+    [SerializeField] public float shootSpeed = 800.0f;
 
+    public Transform spawnPosition;
     public MonsterState state = MonsterState.IDLE;
 
     float skill1_curCooltime = 0f;
@@ -17,6 +32,7 @@ public class Skeleton : BaseMonster
     NavMeshAgent agent;
     Animator animator;
 
+    public ParticleSystem stabAttack;
     public StateMachine stateMachine;
 
     readonly int hashTrace = Animator.StringToHash("IsTrace");
@@ -24,13 +40,31 @@ public class Skeleton : BaseMonster
     readonly int hashSkill1 = Animator.StringToHash("IsSkill1");
     readonly int hashSkill2 = Animator.StringToHash("IsSkill2");
 
+    Rigidbody rb;
+    #region 스킬 등등
+    [SerializeField]
+    float mstATK = 10.0f;
+    float mstSPD = 10.0f;
+    public float mstSkill1Cooltime = 3.0f;
+    public float mstSkill2Cooltime = 3.0f;
+
+    public float traceDistance = 10f;
+    public float skillDistance = 10f;
+    public float attackDistance = 2f;
+
+    public bool isDie = false;
+    public bool isPlayer = false;
+    #endregion
+
     void Awake()
     {
+        isPlayer = gameObject.transform.parent != null;
         player = FindObjectOfType<PlayerController>();
         playerTrf = player.transform;
         enemyTrf = GetComponent<Transform>();
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
+        rb = GetComponent<Rigidbody>();
 
         stateMachine = gameObject.AddComponent<StateMachine>();
 
@@ -43,12 +77,13 @@ public class Skeleton : BaseMonster
     }
     protected virtual void Start()
     {
-        StartCoroutine(CheckEnemyState());
+        if (!isPlayer)
+            StartCoroutine(CheckEnemyState());
     }
 
     protected virtual IEnumerator CheckEnemyState()
     {
-        while (!isDie)
+        while (!isDie && !isPlayer)
         {
             yield return new WaitForSeconds(0.3f);
 
@@ -93,6 +128,8 @@ public class Skeleton : BaseMonster
         {
             skill2_curCooltime -= Time.deltaTime;
         }
+        animator.SetFloat("FloatX", rb.velocity.x * 100f);
+        animator.SetFloat("FloatY", rb.velocity.z * 100f);
     }
 
     class BaseEnemyState : BaseState
@@ -179,20 +216,38 @@ public class Skeleton : BaseMonster
         {
             agent.isStopped = true;
             animator.SetBool(hashSkill1, true);
+            GameObject pd = Instantiate(projectile, spawnPosition.position, Quaternion.identity) as GameObject;
+            pd.transform.LookAt(playerTrf.localPosition);
+            pd.GetComponent<Rigidbody>().AddForce(pd.transform.forward * shootSpeed);
+           
             yield return new WaitForSeconds(1.5f);
             animator.SetBool(hashSkill1, false);
         }
     }
-    public override void Skill2()
-    {
-        skill2_curCooltime = mstSkill2Cooltime;
-        StartCoroutine(StingAttack());
 
-        IEnumerator StingAttack()
-        {
-            animator.SetBool(hashSkill2, true);
-            yield return new WaitForSeconds(1.5f);
-            animator.SetBool(hashSkill2, false);
-        }
+    void SAttack()
+    {
+        StartCoroutine(StabAttack());
+    }
+    public void Skill2()
+    {
+        animator.SetBool(hashSkill2, true);
+    }
+
+    IEnumerator StabAttack()
+    {
+        agent.isStopped = true;
+
+        ParticleSystem ps = Instantiate(stabAttack, this.transform);
+        //ps.transform.LookAt(gameObject.transform.localPosition + Vector3.forward);
+        ps.transform.position = spawnPosition.position;
+        rb.AddRelativeForce(Vector3.forward * 20f, ForceMode.VelocityChange);
+        yield return new WaitForSeconds(0.4f);
+
+        rb.velocity = Vector3.zero;
+        rb.angularVelocity = Vector3.zero;
+        skill2_curCooltime = mstSkill2Cooltime;
+        Destroy(ps);
+        animator.SetBool(hashSkill2, false);
     }
 }
