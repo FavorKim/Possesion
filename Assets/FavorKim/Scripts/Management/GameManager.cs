@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get { return instance; } }
 
     PlayerController player;
-    public PlayerController Player { get { return player; } }
+    //public PlayerController Player { get { return player; } }
 
 
 
@@ -46,9 +46,16 @@ public class GameManager : MonoBehaviour
     public void SetTypeAttack(Obstacles from, Obstacles to)
     {
         if ((int)from.GetObsType() > (int)to.GetObsType())
-            to.gameObject.SetActive(false);
+        {
+            // 공격자가 공격대상 속성보다 우세일 경우 실행할 내용
+            to.OnTypeAttacked(from.GetObsType());
+            //to.gameObject.SetActive(false);
+        }
         else
+        {
+            // 공격자가 공격대상 속성보다 열세일 경우 실행할 내용
             return;
+        }
     }
 
 

@@ -21,7 +21,7 @@ public class Obstacles : MonoBehaviour
 
     ParticleSystem ps;
     [SerializeField] private int damage;
-    [SerializeField] Type type;
+    [SerializeField] protected Type type;
     public int Damage { get { return damage; } }
     public Type GetObsType() { return type; }
 
@@ -39,4 +39,7 @@ public class Obstacles : MonoBehaviour
     {
         GameManager.Instance.GetDamage(this, other);
     }
+
+    public virtual void OnTypeAttacked(Type attackedType) { }
+
 }
