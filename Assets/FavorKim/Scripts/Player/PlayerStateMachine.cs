@@ -249,12 +249,11 @@ public class PossessState : PlayerState
     }
     public override void Skill1()
     {
-        mon.skill1.UseSkill();
+        mon.skill1?.UseSkill();
     }
     public override void Skill2()
     {
-
-        mon.skill2.UseSkill();
+        mon.skill2?.UseSkill();
     }
 
     public override void Shift()

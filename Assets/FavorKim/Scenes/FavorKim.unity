@@ -191,7 +191,7 @@ GameObject:
   - component: {fileID: 42435791}
   - component: {fileID: 42435790}
   - component: {fileID: 42435792}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cameras
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -901,7 +901,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 283636526}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3433430246d22e945b7a850032df5aa2, type: 3}
+  m_Script: {fileID: 11500000, guid: 7aa76c6921fff234383ac941471c45f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &283636532
@@ -1145,7 +1145,7 @@ GameObject:
   - component: {fileID: 341561135}
   - component: {fileID: 341561138}
   - component: {fileID: 341561139}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: cm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1439,7 +1439,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 21
+  m_RootOrder: 28
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &500159124
 GameObject:
@@ -1794,7 +1794,6 @@ GameObject:
   - component: {fileID: 604892176}
   - component: {fileID: 604892179}
   - component: {fileID: 604892178}
-  - component: {fileID: 604892177}
   m_Layer: 0
   m_Name: Smoke
   m_TagString: Obstacles
@@ -1817,20 +1816,6 @@ Transform:
   m_Father: {fileID: 1509231655}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &604892177
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 604892175}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2910bd8bcd3b3c541b9e725423d9aebf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damage: 10
-  type: 20
 --- !u!199 &604892178
 ParticleSystemRenderer:
   serializedVersion: 6
@@ -6674,7 +6659,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 20
+  m_RootOrder: 27
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &677604383
 PrefabInstance:
@@ -7029,8 +7014,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 798881430}
-  m_LocalRotation: {x: 0.047148734, y: 0.8832224, z: -0.09099902, w: 0.45761827}
-  m_LocalPosition: {x: 34.46934, y: 2.53, z: 979.9044}
+  m_LocalRotation: {x: 0.047148734, y: 0.88322234, z: -0.09099901, w: 0.4576183}
+  m_LocalPosition: {x: 3.3693395, y: 2.53, z: 994.99445}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -7416,7 +7401,7 @@ GameObject:
   - component: {fileID: 991044931}
   - component: {fileID: 991044932}
   - component: {fileID: 991044933}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: CM vcam2
   m_TagString: Camera
   m_Icon: {fileID: 0}
@@ -7571,7 +7556,7 @@ Transform:
   - {fileID: 777616016}
   - {fileID: 1904765464}
   m_Father: {fileID: 0}
-  m_RootOrder: 24
+  m_RootOrder: 22
   m_LocalEulerAnglesHint: {x: 0, y: -95.093, z: 0}
 --- !u!114 &1021474842
 MonoBehaviour:
@@ -7653,7 +7638,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 28
+  m_RootOrder: 26
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1080702486
 GameObject:
@@ -17814,7 +17799,7 @@ Transform:
   - {fileID: 824500337}
   - {fileID: 1614361263}
   m_Father: {fileID: 0}
-  m_RootOrder: 25
+  m_RootOrder: 23
   m_LocalEulerAnglesHint: {x: 0, y: -128.324, z: 0}
 --- !u!1 &1432909995
 GameObject:
@@ -22670,6 +22655,7 @@ GameObject:
   - component: {fileID: 1509231652}
   - component: {fileID: 1509231651}
   - component: {fileID: 1509231650}
+  - component: {fileID: 1509231656}
   m_Layer: 0
   m_Name: FlameThrower (1)
   m_TagString: Obstacles
@@ -27598,8 +27584,22 @@ Transform:
   - {fileID: 1306815547}
   - {fileID: 1598643156}
   m_Father: {fileID: 0}
-  m_RootOrder: 27
+  m_RootOrder: 25
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+--- !u!114 &1509231656
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1509231649}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2910bd8bcd3b3c541b9e725423d9aebf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 10
+  type: 21
 --- !u!1 &1567330002
 GameObject:
   m_ObjectHideFlags: 0
@@ -27889,7 +27889,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 22
+  m_RootOrder: 20
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1731524380
 GameObject:
@@ -28471,7 +28471,7 @@ GameObject:
   - component: {fileID: 2107286819}
   - component: {fileID: 2107286818}
   - component: {fileID: 2107286820}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: PlayerTPS
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -28523,8 +28523,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2107286817}
-  m_LocalRotation: {x: 0.047148734, y: 0.8832224, z: -0.09099902, w: 0.45761827}
-  m_LocalPosition: {x: -8.540657, y: -27.807, z: -58.06555}
+  m_LocalRotation: {x: 0.047148734, y: 0.88322234, z: -0.09099901, w: 0.4576183}
+  m_LocalPosition: {x: -39.64066, y: -27.807, z: -42.975525}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -28644,7 +28644,7 @@ GameObject:
   - component: {fileID: 2138490676}
   - component: {fileID: 2138490677}
   - component: {fileID: 2138490678}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: cm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -30448,7 +30448,7 @@ Transform:
   - {fileID: 4079002664818482}
   - {fileID: 4495726775397592}
   m_Father: {fileID: 0}
-  m_RootOrder: 26
+  m_RootOrder: 24
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!4 &4823230815085078
 Transform:
@@ -49934,13 +49934,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 1841985978355124139, guid: c4ed94547e74136478aa71a28ffe83be, type: 3}
+      propertyPath: aimLayer.m_Bits
+      value: 55
+      objectReference: {fileID: 0}
     - target: {fileID: 2169245189954053637, guid: c4ed94547e74136478aa71a28ffe83be, type: 3}
       propertyPath: m_RootOrder
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2169245189954053637, guid: c4ed94547e74136478aa71a28ffe83be, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 40
+      value: 8.9
       objectReference: {fileID: 0}
     - target: {fileID: 2169245189954053637, guid: c4ed94547e74136478aa71a28ffe83be, type: 3}
       propertyPath: m_LocalPosition.y
@@ -49948,7 +49952,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2169245189954053637, guid: c4ed94547e74136478aa71a28ffe83be, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 976
+      value: 991.09
       objectReference: {fileID: 0}
     - target: {fileID: 2169245189954053637, guid: c4ed94547e74136478aa71a28ffe83be, type: 3}
       propertyPath: m_LocalRotation.w
@@ -50227,7 +50231,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2380028607527347796}
   m_LocalRotation: {x: -0, y: 0.8263803, z: -0, w: 0.5631124}
-  m_LocalPosition: {x: 6.28, y: 0.87, z: 996.12}
+  m_LocalPosition: {x: 6.28, y: 0.87, z: 994.08}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -50237,7 +50241,7 @@ Transform:
   - {fileID: 2380028607527025560}
   - {fileID: 2380028607527019950}
   m_Father: {fileID: 0}
-  m_RootOrder: 23
+  m_RootOrder: 21
   m_LocalEulerAnglesHint: {x: 0, y: 111.457, z: 0}
 --- !u!1 &2380028607527162258
 GameObject:
@@ -50268,7 +50272,6 @@ GameObject:
   - component: {fileID: 2380028607527070170}
   - component: {fileID: 2380028607541155148}
   - component: {fileID: 2380028607541194430}
-  - component: {fileID: 2380028607541194431}
   m_Layer: 0
   m_Name: Smoke
   m_TagString: Obstacles
@@ -50308,6 +50311,7 @@ GameObject:
   - component: {fileID: 2380028607542929127}
   - component: {fileID: 2380028607542929128}
   - component: {fileID: 2380028607542929129}
+  - component: {fileID: 2380028607542929130}
   m_Layer: 0
   m_Name: FlameThrower
   m_TagString: Obstacles
@@ -59756,20 +59760,6 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
---- !u!114 &2380028607541194431
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2380028607527166886}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2910bd8bcd3b3c541b9e725423d9aebf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damage: 10
-  type: 20
 --- !u!199 &2380028607541194712
 ParticleSystemRenderer:
   serializedVersion: 6
@@ -74142,6 +74132,20 @@ MonoBehaviour:
   fontStyle: 1
   alignment: 3
   textDropShadow: 0
+--- !u!114 &2380028607542929130
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2380028607527347796}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2910bd8bcd3b3c541b9e725423d9aebf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 10
+  type: 20
 --- !u!199 &2380028607542940788
 ParticleSystemRenderer:
   serializedVersion: 6

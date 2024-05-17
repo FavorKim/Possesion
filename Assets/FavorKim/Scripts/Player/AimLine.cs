@@ -7,6 +7,7 @@ public class AimLine : MonoBehaviour
     LineRenderer lR;
     [SerializeField] GameObject point;
     [SerializeField] float length;
+    [SerializeField] LayerMask aimLayer;
     float orgLength;
     RaycastHit hit;
 
@@ -44,7 +45,7 @@ public class AimLine : MonoBehaviour
         {
             lR.enabled = true;
 
-            if (Physics.Raycast(transform.position, transform.forward, out hit, length))
+            if (Physics.Raycast(transform.position, transform.forward, out hit, length,aimLayer))
             {
                 length = hit.distance;
                 point.SetActive(true);

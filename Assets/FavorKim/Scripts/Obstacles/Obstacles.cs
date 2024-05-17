@@ -32,6 +32,7 @@ public class Obstacles : MonoBehaviour
         ParticleSystem.CollisionModule col = ps.collision;
         col.enabled = true;
         col.type = ParticleSystemCollisionType.World;
+        col.sendCollisionMessages = true;
     }
 
     
