@@ -59,7 +59,7 @@ public class MonsterPlant : Monsters
     #endregion
 
     // Start is called before the first frame update
-    void Awake()
+    public override void Awake()
     {
         isPlayer = gameObject.transform.parent != null;
         player = FindObjectOfType<PlayerController>();

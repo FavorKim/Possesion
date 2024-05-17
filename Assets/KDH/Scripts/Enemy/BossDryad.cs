@@ -13,9 +13,6 @@ public class BossDryad : Monsters
         DEAD
     }
 
-
-    
-
     // 플레이어 정보를 받아야 NevMesh를 따라 추적이 가능함.
     [SerializeField] PlayerController player;
 
@@ -51,7 +48,7 @@ public class BossDryad : Monsters
 
     #endregion
 
-    void Awake()
+    public override void Awake()
     {
         player = FindObjectOfType<PlayerController>();
         playerTrf = player.transform;

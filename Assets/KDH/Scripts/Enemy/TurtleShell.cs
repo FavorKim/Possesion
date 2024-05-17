@@ -50,7 +50,7 @@ public class TurtleShell : Monsters
 
     #endregion
 
-    void Awake()
+    public override void Awake()
     {
         player = FindObjectOfType<PlayerController>();
         playerTrf = player.transform;

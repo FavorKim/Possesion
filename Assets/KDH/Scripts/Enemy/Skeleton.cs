@@ -56,7 +56,7 @@ public class Skeleton : Monsters
     public bool isPlayer = false;
     #endregion
 
-    void Awake()
+    public override void Awake()
     {
         isPlayer = gameObject.transform.parent != null;
         player = FindObjectOfType<PlayerController>();
