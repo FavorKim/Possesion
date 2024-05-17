@@ -42,6 +42,11 @@ public class GameManager : MonoBehaviour
         else
             return;
     }
+    public void GetDamage(int dmg)
+    {
+        player.GetDamage(dmg);
+    }
+
 
     public void SetTypeAttack(Obstacles from, Obstacles to)
     {

@@ -8,7 +8,7 @@ public class NormalAttack : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            GameManager.Instance.Player.GetDamage(10);
+            GameManager.Instance.GetDamage(10);
         }
     }
 }
