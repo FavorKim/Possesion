@@ -17,17 +17,18 @@ namespace Enemy
         // 평가 함수
         public override NodeState Evaluate()
         {
-            // 플레이어의 입력을 받는다.
-            DoGetPlayerInput();
+            // 빙의 상태가 된다.
+            DoBeingPossessed();
 
             // 성공 상태를 반환한다.
             return NodeState.SUCCESS;
         }
 
-        // 플레이어의 입력을 받는 함수
-        public void DoGetPlayerInput()
+        // 빙의 상태를 담당하는 함수
+        public void DoBeingPossessed()
         {
-            // _enemy.GetPlayerInput();
+            // 빙의 함수를 실행한다.
+            _enemy.BeingPossessed();
         }
     }
 }

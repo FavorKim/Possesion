@@ -17,8 +17,11 @@ namespace Enemy
         // 평가 함수
         public override NodeState Evaluate()
         {
-            state = NodeState.SUCCESS;
-            return state;
+            // 피격한다.
+            DoGetHit();
+
+            // 성공 상태를 반환한다.
+            return NodeState.SUCCESS;
         }
 
         // 피격을 담당하는 함수

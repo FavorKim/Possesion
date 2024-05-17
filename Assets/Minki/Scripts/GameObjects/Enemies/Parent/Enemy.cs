@@ -1,5 +1,8 @@
+using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Events;
 
 namespace Enemy
 {
@@ -8,17 +11,31 @@ namespace Enemy
     {
         // 적의 공통된 정보를 부모 클래스에서 우선 정의한다.
 
-        // 컴포넌트
+        #region Components
+
+        // 컴포넌트(Components)
         private Animator _animator; // 적 자신의 애니메이터
-        private NavMeshAgent _navMeshAgent; // AI 추적 기능을 위한 NavMesh
-        [SerializeField] private Transform _playerTransform; // 플레이어의 위치 값 
-        public Transform _enemyTransform { get; private set; }
+        private NavMeshAgent _navMeshAgent; // 플레이어를 추적하기 위한 네비게이션(NavMesh)
+
+        public Transform _playerTransform { get; private set; } // 플레이어의 위치(Transform)
+
+        #endregion Components
+
+        #region Fields
 
         // 필드(Fields)
-        public bool _getHit { get; private set; } // 피격을 판별하는 변수
-        public bool _isDead { get; private set; } // 죽음을 판별하는 변수
+
+        // 애니메이터를 AI용, 빙의용으로 2개 생성하여 교환할 수 있도록 수정할 것.
+
+        private Action _attackAction;
+
+        protected int _attackSkillCount; // 공격 기술 개수
+        public bool IsPossessed { get; private set; } // 빙의 상태를 판별하는 변수
+        public bool IsGetHit { get; private set; } // 피격을 판별하는 변수
+        public bool IsDead { get; private set; } // 죽음을 판별하는 변수
 
         #region Enemy Stats
+
         // 필드(변수); 적의 스탯 정보
         public string Name { get; protected set; } // Name; 이름
         public int HealthPoint { get; protected set; } // HP; 체력
@@ -28,57 +45,121 @@ namespace Enemy
         public int AttackDamage { get; protected set; } // ATK; 기본 공격력
         public int Skiil1Damage { get; protected set; } // SK1; 스킬1 공격력
         public int Skill2Damage { get; protected set; } // SK2; 스킬2 공격력
+        public int Skill3Damage {  get; protected set; } // SK3; 스킬3 공격력 (없는 적도 있음)
         public float SkillCoolTime { get; protected set; } // CT; 스킬 재사용 대기시간
         public float AttackRange { get; protected set; } // ATK_Range; 공격 범위
         public float DetectRange { get; protected set; } // DTC_Range; 플레이어 탐지 범위
 
-        public bool IsPossessed { get; set; } // IsPoss; 빙의 여부
         #endregion Enemy Stats
 
-        // Get 함수 목록
-        public Transform GetPlayerTransform() { return _playerTransform; }
+        #endregion Fields
+
+        #region Delegates
+
+        // 대리자 (코루틴용)
+        private delegate void CorDelegate(); // 대리자
+        private bool isCorRunning = false; // 코루틴의 중복 실행을 방지하기 위한 변수
+        
+        UnityAction _unityAction;
+
+
+        #endregion Delegates
+
+        #region Awake()
 
         protected virtual void Awake()
         {
-            // Root를 생성한다.
+            // 행동 트리의 뿌리(Root)를 생성한다.
             gameObject.AddComponent<EnemyBT>();
 
             // 필요한 컴포넌트들을 초기화한다.
             _animator = GetComponent<Animator>();
             _navMeshAgent = GetComponent<NavMeshAgent>();
 
-            _enemyTransform = GetComponent<Transform>();
+            // 현재 Scene에서 "PlayerController" 스크립트를 가진 게임 오브젝트(= 플레이어)를 찾는다.
+            _playerTransform = FindObjectOfType<PlayerController>().GetComponent<Transform>();
         }
+
+        #endregion Awake()
+
+        #region Collision Events
 
         // 플레이어에게 피격(충돌) 시의 처리 함수
         private void OnCollisionEnter(Collision collision)
         {
-            if (collision.collider.CompareTag("Player"))
+            // 플레이어의 모자와 충돌했을 경우,
+            if (collision.collider.CompareTag("Hat"))
             {
-                _getHit = true;
+                // 빙의 상태가 된다.
+                IsPossessed = true;
             }
         }
 
-        private void OnCollisionExit(Collision collision)
+        #endregion Collision Events
+
+        #region Coroutines
+
+        // 일부 함수에 대해, 대기 시간을 포함한 함수를 호출하기 위한 코루틴 함수
+        private IEnumerator SetDelay(float time, UnityAction unityAction, bool isCallFirst)
         {
-            if (collision.collider.CompareTag("Player"))
+            // 코루틴을 시작한다.
+            isCorRunning = true;
+
+            // 함수를 먼저 호출할 경우,
+            if (isCallFirst)
             {
-                _getHit = false;
+                // 전달받은 대리자(UnityAction)를 호출한다.
+                unityAction.Invoke();
+
+                // 받은 시간만큼 대기한다.
+                yield return new WaitForSeconds(time);
             }
+            // 대기 시간을 먼저 취할 경우,
+            else
+            {
+                // 받은 시간만큼 대기한다.
+                yield return new WaitForSeconds(time);
+
+                // 전달받은 대리자를 호출한다.
+                unityAction.Invoke();
+            }
+
+            // 코루틴을 종료한다.
+            isCorRunning = false;
         }
+
+        #endregion Coroutines
+
+        #region Abstract Methods
 
         // 스탯을 초기화하는 함수, 각 자식 클래스에서 알맞게 수치를 조정하여 초기화한다.
         protected abstract void InitializeStats();
 
+        #endregion Abstract Methods
+
         #region Action Methods
+
         // 적의 행동을 다루는 함수들, 부모 클래스에서 공통된 속성을 지정하고, 자식 클래스에서 각 특성에 맞게 추가한다.
+
+        // 빙의를 담당하는 함수
+        public virtual void BeingPossessed()
+        {
+            // 모든 애니메이션을 초기화한다.
+            _animator.SetBool("Patrol", false);
+            _animator.SetBool("LookAround", false);
+            _animator.SetBool("Chase", false);
+            _animator.SetInteger("AttackIndex", 0);
+
+            Debug.Log("Enemy's BeingPossessed() is Called.");
+        }
 
         // 피격을 담당하는 함수
         public virtual void GetHit()
         {
             // 피격 애니메이션을 재생한다.
-            if (_getHit)
-                _animator.SetTrigger("GetHit");
+            _animator.SetTrigger("GetHit");
+
+            Debug.Log("Enemy's GetHit() is Called.");
         }
 
         // 죽음을 담당하는 함수
@@ -87,19 +168,19 @@ namespace Enemy
             // 죽음 애니메이션을 재생한다.
             _animator.SetTrigger("Die");
 
-            // 게임 오브젝트를 비활성화한다.
-            gameObject.SetActive(false);
+            // 게임 오브젝트를 비활성화한다. 단, 죽음 애니메이션이 끝난 후 호출해야 하므로 일정 시간 여유를 둔다.
+            StartCoroutine(SetDelay(3.0f, () => gameObject.SetActive(false), false)); // 약 3.0초 후 호출한다.
+
+            Debug.Log("Enemy's Die() is Called.");
         }
 
         // 순찰을 구현하는 함수
         public virtual void Patrol()
         {
+            // 순찰 애니메이션을 재생한다.
             _animator.SetBool("Patrol", true);
             // _animator.SetBool("LookAround", false);
             _animator.SetBool("Chase", false);
-
-            // 이동 방향을 바라보게 한다.
-            // transform.LookAt(transform.TransformDirection(transform.forward));
 
             Debug.Log("Enemy's Patrol() is Called.");
         }
@@ -107,15 +188,11 @@ namespace Enemy
         // 추적을 구현하는 함수
         public virtual void Chase()
         {
+            // 추적 애니메이션을 재생한다.
             _animator.SetBool("Chase", true);
             _animator.SetInteger("AttackIndex", 0);
 
-            // 플레이어를 바라보며 다가간다.
-            //transform.LookAt(_playerTransform.position);
-            //transform.position = Vector3.MoveTowards(_enemyTransform.position, _playerTransform.position, 0.01f);
-
             // → NavMesh로 재구현할 것.
-            // if (!_animator.GetCurrentAnimatorStateInfo(0).IsName("Attack01") || !_animator.GetCurrentAnimatorStateInfo(0).IsName("Attack02"))
             _navMeshAgent.SetDestination(_playerTransform.position);
 
             Debug.Log("Enemy's Chase() is Called.");
@@ -124,11 +201,55 @@ namespace Enemy
         // 공격을 구현하는 함수
         public virtual void Attack()
         {
-            // 공격 애니메이션을 여러 개 준비하여, 무작위로 적용시킨다. (애니메이션 블렌드 사용?)
-            _animator.SetInteger("AttackIndex", Random.Range(1, 3)); // 1, 2
+            // 공격 스킬을 바꿀 주기
+            float changeTime = 3.0f;
+
+            // 소지한 공격 스킬 중 무작위로 하나를 고른다.
+            int curAttackIndex = UnityEngine.Random.Range(1, _attackSkillCount + 1);
+
+            switch (curAttackIndex)
+            {
+                case 0:
+                    _unityAction = null;
+                    break;
+                case 1:
+                    _unityAction = Attack01;
+                    break;
+                case 2:
+                    _unityAction = Attack02;
+                    break;
+                case 3:
+                    _unityAction = Attack03;
+                    break;
+                default:
+                    _unityAction = null;
+                    break;
+            }
+
+            // 코루틴을 사용하여, 일정 주기마다 스킬을 달리하여 공격한다.
+            if (!isCorRunning)
+            {
+                StartCoroutine(SetDelay(changeTime, _unityAction, true));
+            }
 
             Debug.Log("Enemy's Attack() is Called.");
         }
+
+        public virtual void Attack01()
+        {
+            _animator.SetInteger("AttackIndex", 1);
+        }
+
+        public virtual void Attack02()
+        {
+            _animator.SetInteger("AttackIndex", 2);
+        }
+
+        public virtual void Attack03()
+        {
+            _animator.SetInteger("AttackIndex", 3);
+        }
+
         #endregion Action Methods
     }
 }
