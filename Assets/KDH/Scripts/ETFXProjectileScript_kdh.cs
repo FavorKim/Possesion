@@ -15,7 +15,7 @@ namespace EpicToonFX
 
         void Start()
         {
-            projectileParticle = Instantiate(projectileParticle, transform.position, transform.rotation) as GameObject;
+            projectileParticle = Instantiate(projectileParticle, transform.position, transform.rotation, this.transform.parent) as GameObject;
             projectileParticle.transform.parent = transform;
             if (muzzleParticle)
             {

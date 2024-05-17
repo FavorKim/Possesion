@@ -13,6 +13,7 @@ public class BossDryad : Monsters
         DEAD
     }
 
+
     
 
     // 플레이어 정보를 받아야 NevMesh를 따라 추적이 가능함.
@@ -118,20 +119,20 @@ public class BossDryad : Monsters
 
     private void Update()
     {
-        if (skill1_curCooltime > 0f)
+        /*if (skill1_curCooltime > 0f)
         {
             skill1_curCooltime -= Time.deltaTime;
         }
         if (skill2_curCooltime > 0f)
         {
             skill2_curCooltime -= Time.deltaTime;
-        }
+        }*/
     }
 
     class BaseEnemyState : BaseState
     {
-        protected TurtleShell owner;
-        public BaseEnemyState(TurtleShell owner)
+        protected BossDryad owner;
+        public BaseEnemyState(BossDryad owner)
         {
             this.owner = owner;
         }
@@ -139,39 +140,41 @@ public class BossDryad : Monsters
 
     class IdleState : BaseEnemyState
     {
-        public IdleState(TurtleShell owner) : base(owner) { }
+        public IdleState(BossDryad owner) : base(owner) { }
 
         public override void Enter()
         {
-            /*owner.agent.isStopped = true;
+            owner.agent.isStopped = true;
             owner.animator.SetBool(owner.hashTrace, false);
-            owner.animator.SetBool(owner.hashAttack, false);*/
+            owner.animator.SetBool(owner.hashAttack, false);
         }
     }
 
     class TraceState : BaseEnemyState
     {
-        public TraceState(TurtleShell owner) : base(owner) { }
+        public TraceState(BossDryad owner) : base(owner) { }
 
         public override void Enter()
         {
-            /*owner.agent.SetDestination(owner.playerTrf.position);
+            owner.agent.SetDestination(owner.playerTrf.position);
             
             owner.agent.isStopped = false;
             owner.animator.SetBool(owner.hashTrace, true);
-            owner.animator.SetBool(owner.hashAttack, false);*/
+            owner.animator.SetBool(owner.hashAttack, false);
             
         }
     }
 
     class AttackState : BaseEnemyState
     {
-        public AttackState(TurtleShell owner) : base(owner) { }
+        public AttackState(BossDryad owner) : base(owner) { }
 
-        /*public override void Enter()
+        public override void Enter()
         {
             owner.agent.isStopped = true;
-            float distance = Vector3.Distance(owner.playerTrf.position, owner.enemyTrf.position);
+            owner.Attack();
+
+            /*float distance = Vector3.Distance(owner.playerTrf.position, owner.enemyTrf.position);
 
             if (distance >= owner.attackDistance && owner.skill1_curCooltime <= 0f)
             {
@@ -185,13 +188,13 @@ public class BossDryad : Monsters
             else
             {
                 owner.Attack();
-            }
-        }*/
+            }*/
+        }
     }
 
     class DeadState : BaseEnemyState
     {
-        public DeadState(TurtleShell owner) : base(owner) { }
+        public DeadState(BossDryad owner) : base(owner) { }
 
         public override void Enter()
         {
@@ -206,11 +209,11 @@ public class BossDryad : Monsters
     public override void Skill1()
     {
         //기왕이면 다 돌아가고 나서 스킬 발동?
-        float distance = Vector3.Distance(playerTrf.position, enemyTrf.position);
-        animator.SetBool(hashSkill1, true);
+        /*float distance = Vector3.Distance(playerTrf.position, enemyTrf.position);
+        animator.SetBool(hashSkill1, true);*/
     }
 
-    void RAttack()
+    /*void RAttack()
     {
         StartCoroutine(RollingAttack());
     }
@@ -226,18 +229,18 @@ public class BossDryad : Monsters
         //skill1_curCooltime = mstSkill1Cooltime;
         Destroy(ps);
         animator.SetBool(hashSkill1, false);
-    }
+    }*/
 
     public void Skill2()
     {
         //skill2_curCooltime = mstSkill2Cooltime;
-        StartCoroutine(Defend());
+        /*StartCoroutine(Defend());
 
         IEnumerator Defend()
         {
             animator.SetBool(hashDefend, true);
             yield return new WaitForSeconds(1.5f);
             animator.SetBool(hashDefend, false);
-        }
+        }*/
     }
 }

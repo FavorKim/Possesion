@@ -333,7 +333,7 @@ MonoBehaviour:
   mstSkill2Cooltime: 3
   traceDistance: 0
   skillDistance: 10
-  attackDistance: 3
+  attackDistance: 5
   isDie: 0
   isPlayer: 0
 --- !u!114 &8567259836824947624
