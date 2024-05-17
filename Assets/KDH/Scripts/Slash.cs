@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Slash : MonoBehaviour
 {
-    /*
+
     public GameObject slash;
     Rigidbody rb;
 
@@ -14,25 +14,17 @@ public class Slash : MonoBehaviour
         rb = slash.GetComponent<Rigidbody>();
     }
 
-    void Slashed()
+    public void StartSlash()
     {
-        rb.transform.position = gameObject.transform.localPosition;
-        
-        StartCoroutine(Destroyed());
-        //Debug.Log("º£¿´À½");
+        StartCoroutine(Slashed());
     }
-    IEnumerator Destroyed()
+    IEnumerator Slashed()
     {
-        gb = Instantiate(rb, rb.transform.localPosition, rb.transform.localRotation).GetComponent<GameObject>();
+        slash.SetActive(true);
         yield return new WaitForSeconds(0.1f);
-        Destroy(gb);
+        slash.SetActive(false);
     }
     // Start is called before the first frame update
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            GameManager.Instance.Player.GetDamage(10);
-        }
-    }*/
+    
 }
+

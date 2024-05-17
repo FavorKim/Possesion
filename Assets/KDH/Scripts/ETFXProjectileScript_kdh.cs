@@ -70,11 +70,5 @@ namespace EpicToonFX
                 Destroy(gameObject); // Removes the projectile
             }
         }
-
-        /*private void OnCollisionEnter(Collision collision)
-        {
-            if (collision.collider.CompareTag("Player"))
-                GameManager.Instance.Player.GetDamage(10);
-        }*/
     }
 }

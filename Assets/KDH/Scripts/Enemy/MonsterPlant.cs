@@ -226,7 +226,6 @@ public class MonsterPlant : Monsters
         skill1_curCooltime = mstSkill1Cooltime;
 
         animator.SetBool(hashAttack, true);
-
     }
     public void Skill2()
     {

@@ -29,6 +29,7 @@ public class Skeleton : Monsters
     NavMeshAgent agent;
     Animator animator;
 
+    public ParticleSystem stabAttack;
     public StateMachine stateMachine;
 
     readonly int hashTrace = Animator.StringToHash("IsTrace");
@@ -36,6 +37,7 @@ public class Skeleton : Monsters
     readonly int hashSkill1 = Animator.StringToHash("IsSkill1");
     readonly int hashSkill2 = Animator.StringToHash("IsSkill2");
 
+    Rigidbody rb;
     #region 스킬 등등
     [SerializeField]
     float mstATK = 10.0f;
@@ -216,16 +218,30 @@ public class Skeleton : Monsters
             animator.SetBool(hashSkill1, false);
         }
     }
+
+    void SAttack()
+    {
+        StartCoroutine(StabAttack());
+    }
     public void Skill2()
     {
-        skill2_curCooltime = mstSkill2Cooltime;
-        StartCoroutine(StingAttack());
+        animator.SetBool(hashSkill2, true);
+    }
 
-        IEnumerator StingAttack()
-        {
-            animator.SetBool(hashSkill2, true);
-            yield return new WaitForSeconds(1.5f);
-            animator.SetBool(hashSkill2, false);
-        }
+    IEnumerator StabAttack()
+    {
+        agent.isStopped = true;
+
+        ParticleSystem ps = Instantiate(stabAttack, this.transform);
+        ps.transform.LookAt(playerTrf.localPosition);
+        rb.AddRelativeForce(Vector3.forward * 10f, ForceMode.VelocityChange);
+        yield return new WaitForSeconds(0.4f);
+
+        rb.velocity = Vector3.zero;
+        rb.angularVelocity = Vector3.zero;
+        skill2_curCooltime = mstSkill2Cooltime;
+        Destroy(ps);
+        animator.SetBool(hashSkill2, false);
+
     }
 }
