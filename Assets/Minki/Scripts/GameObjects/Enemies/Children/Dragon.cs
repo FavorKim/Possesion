@@ -76,6 +76,24 @@ namespace Enemy
             Debug.Log("Dragon's Attack!");
         }
 
+        public override void Attack01()
+        {
+            base.Attack01();
+        }
+
+        public override void Attack02()
+        {
+            base.Attack02();
+
+            // 도트 대미지를 구현할 것인가?
+            // 상태 이상에 대해서 별도의 코드를 작성하는 것이 바람직해 보인다.
+        }
+
+        public override void Attack03()
+        {
+            // 세 번째 공격 스킬이 존재하지 않는다.
+        }
+
         #endregion Action Methods
 
         #region Animation Events

@@ -7,10 +7,20 @@ namespace Enemy
     // 마법사 클래스
     public class EvilMage : Enemy
     {
+        #region Components
+
+        // 투사체를 발사하는 위치
+        [SerializeField] private Transform projectileTransform;
+
+        #endregion Components
+
         #region Fields
 
         // 필드(Fields)
         private ProjectilePool projectilePool; // 투사체를 구현하기 위한 오브젝트 풀링
+        private Projectile projectile; // 투사체 게임 오브젝트
+
+        [SerializeField] private float shootPower = 1000.0f; // 투사체를 쏘는 힘의 값
 
         #endregion Fields
 
@@ -77,22 +87,37 @@ namespace Enemy
             Debug.Log("EvilMage's Attack!");
         }
 
+        public override void Attack01()
+        {
+            base.Attack01();
+        }
+
+        public override void Attack02()
+        {
+            base.Attack02();
+        }
+
+        public override void Attack03()
+        {
+            // 세 번째 공격 스킬이 존재하지 않는다.
+        }
+
         #endregion Action Methods
 
         #region Animation Events
 
         // 아래는 애니메이션(Animation) 클립에서 이벤트를 추가하여 호출하는 함수들이다.
 
-        // 원거리 뇌전 공격(Attack02)의 첫 번째 이벤트 함수
+        // 원거리 뇌전 공격(Attack02)의 첫 번째 이벤트 함수 (기를 모으는 애니메이션)
         private void OnAttack02Event01()
         {
-            projectilePool.OnShoot();
+            projectile = projectilePool.OnReadyToShoot(projectileTransform);
         }
 
-        // 원거리 뇌전 공격(Attack02)의 두 번째 이벤트 함수
+        // 원거리 뇌전 공격(Attack02)의 두 번째 이벤트 함수 (발사하는 애니메이션)
         private void OnAttack02Event02()
         {
-            
+            StartCoroutine(projectile.Shoot());
         }
 
         #endregion Animation Events

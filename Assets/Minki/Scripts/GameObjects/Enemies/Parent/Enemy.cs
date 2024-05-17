@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Events;
 
 namespace Enemy
 {
@@ -22,6 +24,11 @@ namespace Enemy
         #region Fields
 
         // 필드(Fields)
+
+        // 애니메이터를 AI용, 빙의용으로 2개 생성하여 교환할 수 있도록 수정할 것.
+
+        private Action _attackAction;
+
         protected int _attackSkillCount; // 공격 기술 개수
         public bool IsPossessed { get; private set; } // 빙의 상태를 판별하는 변수
         public bool IsGetHit { get; private set; } // 피격을 판별하는 변수
@@ -52,6 +59,9 @@ namespace Enemy
         // 대리자 (코루틴용)
         private delegate void CorDelegate(); // 대리자
         private bool isCorRunning = false; // 코루틴의 중복 실행을 방지하기 위한 변수
+        
+        UnityAction _unityAction;
+
 
         #endregion Delegates
 
@@ -90,7 +100,7 @@ namespace Enemy
         #region Coroutines
 
         // 일부 함수에 대해, 대기 시간을 포함한 함수를 호출하기 위한 코루틴 함수
-        private IEnumerator SetDelay(float time, CorDelegate corDelegate, bool isCallFirst)
+        private IEnumerator SetDelay(float time, UnityAction unityAction, bool isCallFirst)
         {
             // 코루틴을 시작한다.
             isCorRunning = true;
@@ -98,8 +108,8 @@ namespace Enemy
             // 함수를 먼저 호출할 경우,
             if (isCallFirst)
             {
-                // 전달받은 대리자를 호출한다.
-                corDelegate.Invoke();
+                // 전달받은 대리자(UnityAction)를 호출한다.
+                unityAction.Invoke();
 
                 // 받은 시간만큼 대기한다.
                 yield return new WaitForSeconds(time);
@@ -111,7 +121,7 @@ namespace Enemy
                 yield return new WaitForSeconds(time);
 
                 // 전달받은 대리자를 호출한다.
-                corDelegate.Invoke();
+                unityAction.Invoke();
             }
 
             // 코루틴을 종료한다.
@@ -191,19 +201,53 @@ namespace Enemy
         // 공격을 구현하는 함수
         public virtual void Attack()
         {
-            // 소지한 공격 스킬 중 무작위로 하나를 고른다.
-            int currentAttackSkill = Random.Range(1, _attackSkillCount + 1);
-
             // 공격 스킬을 바꿀 주기
             float changeTime = 3.0f;
+
+            // 소지한 공격 스킬 중 무작위로 하나를 고른다.
+            int curAttackIndex = UnityEngine.Random.Range(1, _attackSkillCount + 1);
+
+            switch (curAttackIndex)
+            {
+                case 0:
+                    _unityAction = null;
+                    break;
+                case 1:
+                    _unityAction = Attack01;
+                    break;
+                case 2:
+                    _unityAction = Attack02;
+                    break;
+                case 3:
+                    _unityAction = Attack03;
+                    break;
+                default:
+                    _unityAction = null;
+                    break;
+            }
 
             // 코루틴을 사용하여, 일정 주기마다 스킬을 달리하여 공격한다.
             if (!isCorRunning)
             {
-                StartCoroutine(SetDelay(changeTime, () => _animator.SetInteger("AttackIndex", currentAttackSkill), true));
+                StartCoroutine(SetDelay(changeTime, _unityAction, true));
             }
 
             Debug.Log("Enemy's Attack() is Called.");
+        }
+
+        public virtual void Attack01()
+        {
+            _animator.SetInteger("AttackIndex", 1);
+        }
+
+        public virtual void Attack02()
+        {
+            _animator.SetInteger("AttackIndex", 2);
+        }
+
+        public virtual void Attack03()
+        {
+            _animator.SetInteger("AttackIndex", 3);
         }
 
         #endregion Action Methods

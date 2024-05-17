@@ -37,7 +37,7 @@ namespace ObjectPool
         // 활성화되었을 때(풀에서 가져올 때)의 함수
         private void OnEnable()
         {
-            StartCoroutine(Shoot());
+
         }
 
         // 비활성화되었을 때(풀에 돌려놓을 때)의 함수
@@ -51,13 +51,23 @@ namespace ObjectPool
         // 오브젝트 풀의 참조를 받아온다.
         public void GetObjectPool(IObjectPool<Projectile> objectPool)
         {
+            Debug.Log("ObjectPool이 제대로 들어왔는가? = " + objectPool);
             this.objectPool = objectPool;
         }
 
         #region Coroutines
 
-        private IEnumerator Shoot()
+        // 다른 클래스에서 코루틴을 실행시킬 수 없다.
+        //public void RunCoroutine()
+        //{
+        //    StartCoroutine(Shoot());
+        //}
+
+        public IEnumerator Shoot()
         {
+            // 투사체 게임 오브젝트를 최상위 계층으로 옮긴다.
+            transform.SetParent(null);
+
             // 투사체에 앞으로 힘을 가한다.
             rb.AddForce(Vector3.forward * shootPower, ForceMode.Impulse);
 
