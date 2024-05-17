@@ -37,6 +37,8 @@ public class PlayerController : MonoBehaviour
 
     #region Vector
     public Vector3 MoveDir { get; private set; }
+    Vector3 heading;
+    Vector2 dir;
     #endregion
 
     #region float
@@ -109,6 +111,8 @@ public class PlayerController : MonoBehaviour
         if (isDead) return;
         state.StateUpdate();
         SetHPUI();
+        PlayerMove();
+
     }
 
     private void FixedUpdate()
@@ -119,7 +123,14 @@ public class PlayerController : MonoBehaviour
 
     #region Method
 
-
+    void PlayerMove()
+    {
+        heading = Camera.main.transform.localRotation * Vector3.forward;
+        heading.y = 0;
+        heading = heading.normalized;
+        MoveDir = heading * dir.y * Time.deltaTime * moveSpeed;
+        MoveDir += Quaternion.Euler(0, 90, 0) * heading * dir.x * Time.deltaTime * moveSpeed;
+    }
 
     void SetHPUI()
     {
@@ -190,16 +201,10 @@ public class PlayerController : MonoBehaviour
     void OnMove(InputValue val)
     {
         
-        Vector2 dir = val.Get<Vector2>();
+        dir = val.Get<Vector2>();
         MoveDir = new Vector3(dir.x, 0, dir.y);
-        Vector3 heading = Camera.main.transform.localRotation * Vector3.forward;
-        heading.y = 0;
-        heading = heading.normalized;
+        PlayerMove();
         //Debug.Log(heading);
-
-        
-        
-        
         if (MoveDir != Vector3.zero)
         {
             anim.SetBool("isRun", true);
@@ -209,13 +214,11 @@ public class PlayerController : MonoBehaviour
             anim.SetBool("isRun", false);
         }
 
-       
+        
 
         anim.SetFloat("vecX",  dir.x);
         anim.SetFloat("vecY",  dir.y);
 
-        MoveDir = heading * dir.y * Time.deltaTime * moveSpeed;
-        MoveDir += Quaternion.Euler(0, 90, 0) * heading * dir.x * Time.deltaTime * moveSpeed;
     }
 
     void OnJump(InputValue val) { if (val.isPressed) state.StateOnJump(); }
@@ -249,7 +252,11 @@ public class PlayerController : MonoBehaviour
         float delta = val.Get<Vector2>().x;
 
         if (Input.GetMouseButton(1))
+        {
             transform.Rotate(new Vector3(0, delta, 0) * sensitivity * Time.deltaTime);
+            heading = Camera.main.transform.localRotation * Vector3.forward;
+
+        }
     }
 
 
