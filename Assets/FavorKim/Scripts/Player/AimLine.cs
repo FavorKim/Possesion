@@ -12,6 +12,7 @@ public class AimLine : MonoBehaviour
 
     private void Awake()
     {
+        
         lR = GetComponent<LineRenderer>();
         lR.SetPosition(0, transform.position);
         lR.SetPosition(1, transform.position + Vector3.forward * length);

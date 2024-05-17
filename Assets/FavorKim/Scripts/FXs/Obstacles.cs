@@ -1,25 +1,42 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class Obstacles : MonoBehaviour
 {
-    [SerializeField] int damage;
+    public enum Type
+    {
+        NONE, LEAF = 10, FIRE = 20, CUTTER
+    }
+
+    /*
+    몬스터의 스킬 내지 공격이 타입을 갖고있어서
+    이걸로 플랫포머의 장애물 등등을 극복하는 형태
+    덤불 장애물은 CUTTER나 FIRE로 극복
+    FIRE, CUTTER >> LEAF
+    몬스터 타입은 일단 추후에.
+    */
+
     ParticleSystem ps;
+    [SerializeField] private int damage;
+    [SerializeField] Type type;
+    public int Damage { get { return damage; } }
+    public Type GetObsType() { return type; }
 
     private void Awake()
     {
         ps = GetComponent<ParticleSystem>();
-        ParticleSystem.TriggerModule triggerModule = ps.trigger;
-
-        triggerModule.enabled = true;
-        triggerModule.SetCollider(0, FindAnyObjectByType<PlayerController>());
-
-        triggerModule.enter = ParticleSystemOverlapAction.Callback;
+        if (ps == null) return;
+        ParticleSystem.CollisionModule col = ps.collision;
+        col.enabled = true;
+        col.type = ParticleSystemCollisionType.World;
     }
 
-    private void OnParticleTrigger()
+    
+    private void OnParticleCollision(GameObject other)
     {
-        GameManager.Instance.Player.GetDamage(damage);
+        GameManager.Instance.GetDamage(this, other);
     }
 }
