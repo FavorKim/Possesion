@@ -418,8 +418,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4744821207475892}
   - component: {fileID: 95892162074931524}
-  - component: {fileID: 1345224021}
   - component: {fileID: 1345224022}
+  - component: {fileID: 1345224021}
   m_Layer: 0
   m_Name: EvilMagePBR
   m_TagString: Untagged
@@ -466,19 +466,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &1345224021
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1201003157251696}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 480d8a447d73bf24bb2d835232a18511, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _playerTransform: {fileID: 0}
 --- !u!195 &1345224022
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -501,6 +488,20 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &1345224021
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1201003157251696}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 480d8a447d73bf24bb2d835232a18511, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  projectileTransform: {fileID: 0}
+  shootPower: 1000
 --- !u!1 &1217098102103856
 GameObject:
   m_ObjectHideFlags: 0

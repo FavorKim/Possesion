@@ -9,15 +9,23 @@ namespace ObjectPool
         #region Components
 
         // 컴포넌트(Components)
+
+        // Rigidbody
         private Rigidbody rb;
+
+        // AudioSource
+        private AudioSource audioSource;
 
         #endregion Components
 
         #region Fields
 
         // 필드(Fields)
+
+        // 오브젝트 풀
         private IObjectPool<Projectile> objectPool;
 
+        // 투사체의 속도
         [SerializeField] private float shootPower = 100.0f;
 
         #endregion Fields
@@ -49,27 +57,23 @@ namespace ObjectPool
         #endregion OnEnable() / Disable()
 
         // 오브젝트 풀의 참조를 받아온다.
-        public void GetObjectPool(IObjectPool<Projectile> objectPool)
+        public void SetObjectPool(IObjectPool<Projectile> objectPool)
         {
-            Debug.Log("ObjectPool이 제대로 들어왔는가? = " + objectPool);
             this.objectPool = objectPool;
         }
 
         #region Coroutines
 
-        // 다른 클래스에서 코루틴을 실행시킬 수 없다.
-        //public void RunCoroutine()
-        //{
-        //    StartCoroutine(Shoot());
-        //}
-
         public IEnumerator Shoot()
         {
             // 투사체 게임 오브젝트를 최상위 계층으로 옮긴다.
-            transform.SetParent(null);
+            //transform.SetParent(null);
 
             // 투사체에 앞으로 힘을 가한다.
-            rb.AddForce(Vector3.forward * shootPower, ForceMode.Impulse);
+            rb.AddForce(transform.TransformDirection(Vector3.forward) * shootPower, ForceMode.Impulse);
+
+            // 발사 시 효과음을 재생한다.
+            audioSource.Play();
 
             // 약 3초 후,
             yield return new WaitForSeconds(3.0f);
