@@ -23,6 +23,7 @@ public class PlayerController : MonoBehaviour
     Animator anim;
     Animator monAnim;
     DOTweenAnimation knockBack;
+    ParticleSystem invinFX;
 
     [SerializeField] Transform lookAtTransform;
     [SerializeField] HatManager hatM;
@@ -97,6 +98,8 @@ public class PlayerController : MonoBehaviour
         sM = new SkillManager(skill1Gauge, skill2Gauge);
 
         knockBack = GetComponent<DOTweenAnimation>();
+        invinFX = GetComponentInChildren<ParticleSystem>();
+        invinFX.Stop();
         //skill1 = new Skill("test1", 5, () => { Debug.Log("skill1"); }, skill1Gauge);
 
         //outFits.Add("Goblin", goblinOF);
@@ -172,7 +175,7 @@ public class PlayerController : MonoBehaviour
 
     public void GetDamage(int dmg)
     {
-        if (isInvincible) return;
+        if (isInvincible || isDead) return;
 
         if (state.IsPossessing())
         {
@@ -261,12 +264,14 @@ public class PlayerController : MonoBehaviour
     {
         Vector2 delta = val.Get<Vector2>();
         //float deltaX = delta.x;
-
         //transform.Rotate(new Vector3(0, delta.x, delta.y) * sensitivity * Time.deltaTime);
-        transform.LookAt(lookAtTransform);
-        transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
-        heading = Camera.main.transform.localRotation * Vector3.forward;
 
+        if (!isDead)
+        {
+            transform.LookAt(lookAtTransform);
+            transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
+            heading = Camera.main.transform.localRotation * Vector3.forward;
+        }
         // 산나비 때 썼던 쉐이더 그래프 끌고와서 조준선으로 만들면 좋을 것
     }
 
@@ -279,6 +284,7 @@ public class PlayerController : MonoBehaviour
     IEnumerator CorInvincible()
     {
         isInvincible = true;
+        invinFX.Play();
         float org = invincibleTime;
         while (true)
         {
@@ -286,6 +292,7 @@ public class PlayerController : MonoBehaviour
             invincibleTime -= Time.deltaTime;
             if (invincibleTime < 0)
             {
+                invinFX.Stop();
                 isInvincible = false;
                 invincibleTime = org;
                 StopCoroutine(CorInvincible());
