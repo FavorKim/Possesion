@@ -36,6 +36,7 @@ namespace ObjectPool
         {
             // 컴포넌트를 초기화한다.
             rb = GetComponent<Rigidbody>();
+            audioSource = GetComponent<AudioSource>();
         }
 
         #endregion Awake()
