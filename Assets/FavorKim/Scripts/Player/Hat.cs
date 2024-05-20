@@ -54,10 +54,10 @@ public class Hat : MonoBehaviour
 
     void Sledge()
     {
-        if (Physics.Raycast(transform.position, transform.forward, out hit, 1f))
+        if (Physics.Raycast(transform.position, transform.forward, out hit, 15f))
         {
-            Debug.Log("dmg");
-            hit.collider.gameObject.SendMessage("Damage", 1f, SendMessageOptions.DontRequireReceiver);
+            hit.collider.gameObject.SendMessage("Damage", 100f, SendMessageOptions.DontRequireReceiver);
+            Debug.Log("Dmg");
         }
     }
 }

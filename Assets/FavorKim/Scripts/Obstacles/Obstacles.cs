@@ -41,4 +41,9 @@ public class Obstacles : MonoBehaviour, ITyped
 
     public virtual void OnTypeAttacked(Obstacles attackedType) { }
 
+    private void OnTriggerStay(Collider other)
+    {
+        GameManager.Instance.GetDamage(this, other.gameObject);
+
+    }
 }

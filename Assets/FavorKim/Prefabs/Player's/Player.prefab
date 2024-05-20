@@ -1348,7 +1348,7 @@ MonoBehaviour:
   moveSpeed: 7
   gravityScale: 1
   jumpForce: 15
-  rayDist: 0.12
+  rayDist: 0.18
   fullHP: 100
   curHP: 100
   duration: 20
