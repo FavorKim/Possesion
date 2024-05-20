@@ -12,9 +12,14 @@ namespace ObjectPool
         // 오브젝트 풀링에 사용할 게임 오브젝트 프리팹
         [SerializeField] protected GameObject poolPrefab;
 
+        // 필드(Fields)
+        bool collectionCheck = false;
+        int defaultCapacity = 10;
+        int maxSize = 10000;
+
         private void Awake()
         {
-            objectPool = new ObjectPool<T>(CreatePrefab);
+            objectPool = new ObjectPool<T>(CreatePrefab, OnGetPrefab, OnReleasePrefab, OnDestroyPrefab, collectionCheck, defaultCapacity, maxSize);
         }
 
         // 새로운 오브젝트를 생성하는 함수

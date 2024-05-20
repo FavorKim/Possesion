@@ -34,22 +34,22 @@ namespace Enemy
         {
             base.Patrol();
 
-            Debug.Log("Smile's Patrol!");
-            Debug.Log("Smile's AttackRange = " + AttackRange);
+            //Debug.Log("Smile's Patrol!");
+            //Debug.Log("Smile's AttackRange = " + AttackRange);
         }
 
         public override void Chase()
         {
             base.Chase();
 
-            Debug.Log("Smile's Chase!");
+            //Debug.Log("Smile's Chase!");
         }
 
         public override void Attack()
         {
             base.Attack();
 
-            Debug.Log("Smile's Attack!");
+            //Debug.Log("Smile's Attack!");
         }
     }
 }
