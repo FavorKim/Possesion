@@ -119,7 +119,6 @@ public abstract class PlayerState : IState
 public class NormalState : PlayerState
 {
     public NormalState(PlayerController controller) : base(controller) { orgJumpForce = jumpForce; }
-    private float speed;
 
     float orgJumpForce;
     bool isJumping = false;
@@ -225,13 +224,13 @@ public class PossessState : PlayerState
 
     public override void Move()
     {
-        //mon.Move();
         base.Move();
     }
 
     public override void StateUpdate()
     {
-
+        if (mon.GetHP() <= 0) 
+            player.SetState("Normal");
         if (mon.skill1 != null)
             mon.skill1.SetCurCD();
         if (mon.skill2 != null)
@@ -266,7 +265,7 @@ public class PossessState : PlayerState
         mon.transform.parent = null;
 
         // 임시로 오브젝트를 비활성화했지만, 몬스터가 죽었을 때의 행동을 호출할 것임
-        mon.gameObject.SetActive(false);
+        //mon.gameObject.SetActive(false);
 
         // 빙의 해제 시 무조건 죽이지는 말자.
         //mon.Dead();

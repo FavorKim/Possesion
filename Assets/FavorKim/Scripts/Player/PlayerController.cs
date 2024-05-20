@@ -44,12 +44,6 @@ public class PlayerController : MonoBehaviour
     #region float
     [SerializeField]
     private float moveSpeed;
-    //[SerializeField]
-    //private float maxSpeed;
-    //[SerializeField]
-    //private float minSpeed;
-
-
     [SerializeField]
     private float gravityScale;
     [SerializeField]

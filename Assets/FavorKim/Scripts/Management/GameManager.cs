@@ -29,6 +29,7 @@ public class GameManager : MonoBehaviour
                 GameObject obj = new GameObject("GameManager");
                 obj.AddComponent<GameManager>();
                 instance = obj.GetComponent<GameManager>();
+                DontDestroyOnLoad(obj);
             }
         }
     }
@@ -37,6 +38,8 @@ public class GameManager : MonoBehaviour
     {
         if (dest.CompareTag("Player"))
             player.GetDamage(obs.Damage);
+        else if (dest.CompareTag("Monster"))
+            dest.GetComponent<Monsters>().GetDamage(obs.Damage);
         else if (dest.GetComponent<Obstacles>() != null)
             SetTypeAttack(obs, dest.GetComponent<Obstacles>());
         else
