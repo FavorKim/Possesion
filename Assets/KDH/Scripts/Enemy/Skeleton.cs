@@ -56,7 +56,7 @@ public class Skeleton : Monsters
     public bool isPlayer = false;
     #endregion
 
-    public override void Awake()
+    protected override void Awake()
     {
         isPlayer = gameObject.transform.parent != null;
         player = FindObjectOfType<PlayerController>();
@@ -229,7 +229,7 @@ public class Skeleton : Monsters
     {
         StartCoroutine(StabAttack());
     }
-    public void Skill2()
+    public override void Skill2()
     {
         animator.SetBool(hashSkill2, true);
     }

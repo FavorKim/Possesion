@@ -30,6 +30,8 @@ public class Hat : MonoBehaviour
         dO.DORestartAllById("Shoot");
     }
 
+    
+
     private void OnTriggerEnter(Collider other)
     {
         Sledge();
@@ -41,7 +43,6 @@ public class Hat : MonoBehaviour
                 hatM.SetHitParticle(transform.position);
                 
                 player.SetState(other.GetComponentInParent<Monsters>());
-                
             }
             ResetHat();
         }

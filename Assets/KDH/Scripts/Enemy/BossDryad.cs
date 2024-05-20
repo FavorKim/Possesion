@@ -51,7 +51,7 @@ public class BossDryad : Monsters
     int i = 0;
     #endregion
 
-    public override void Awake()
+    protected override void Awake()
     {
         player = FindObjectOfType<PlayerController>();
         playerTrf = player.transform;

@@ -59,7 +59,7 @@ public class MonsterPlant : Monsters
     #endregion
 
     // Start is called before the first frame update
-    public override void Awake()
+    protected override void Awake()
     {
         isPlayer = gameObject.transform.parent != null;
         player = FindObjectOfType<PlayerController>();
@@ -241,7 +241,7 @@ public class MonsterPlant : Monsters
 
         animator.SetBool(hashAttack, true);
     }
-    public void Skill2()
+    public override void Skill2()
     {
         animator.SetTrigger(hashSkill2);
         skill2_curCooltime = mstSkill2Cooltime;

@@ -50,7 +50,7 @@ public class TurtleShell : Monsters
 
     #endregion
 
-    public override void Awake()
+    protected override void Awake()
     {
         player = FindObjectOfType<PlayerController>();
         playerTrf = player.transform;
@@ -221,7 +221,7 @@ public class TurtleShell : Monsters
         animator.SetBool(hashSkill1, false);
     }
 
-    public void Skill2()
+    public override void Skill2()
     {
         skill2_curCooltime = mstSkill2Cooltime;
         StartCoroutine(Defend());

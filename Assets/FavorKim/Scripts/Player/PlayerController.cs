@@ -155,7 +155,7 @@ public class PlayerController : MonoBehaviour
 
     public void ThrowHat()
     {
-        hatM.ShootHat();
+        hatM.ShootHat(lookAtTransform.position);
     }
 
     public void SetState(string name)
@@ -201,7 +201,6 @@ public class PlayerController : MonoBehaviour
 
     public void KnockBack(Vector3 dir, float duration, float length)
     {
-        //Debug.Log(dir);
         transform.DOMove((dir + transform.position).normalized * length, duration);
     }
 
@@ -261,14 +260,14 @@ public class PlayerController : MonoBehaviour
     void OnCursor(InputValue val)
     {
         Vector2 delta = val.Get<Vector2>();
-        float deltaX = delta.x;
+        //float deltaX = delta.x;
 
-        if (Input.GetMouseButton(1))
-        {
-            transform.Rotate(new Vector3(0, deltaX, 0) * sensitivity * Time.deltaTime);
-            heading = Camera.main.transform.localRotation * Vector3.forward;
-            // 산나비 때 썼던 쉐이더 그래프 끌고와서 조준선으로 만들면 좋을 것
-        }
+        //transform.Rotate(new Vector3(0, delta.x, delta.y) * sensitivity * Time.deltaTime);
+        transform.LookAt(lookAtTransform);
+        transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
+        heading = Camera.main.transform.localRotation * Vector3.forward;
+
+        // 산나비 때 썼던 쉐이더 그래프 끌고와서 조준선으로 만들면 좋을 것
     }
 
 

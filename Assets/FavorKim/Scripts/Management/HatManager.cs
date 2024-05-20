@@ -25,12 +25,13 @@ public class HatManager : MonoBehaviour
         hitParticle.Stop();
     }
 
-    public void ShootHat()
+    public void ShootHat(Vector3 dir)
     {
         if (hat.activeSelf) return;
 
         hat.transform.position = hatTransform.position;
         hat.transform.rotation = hatTransform.parent.rotation;
+        hat.transform.LookAt(dir);
         hatImg.SetActive(false);
         hat.SetActive(true);
     }
