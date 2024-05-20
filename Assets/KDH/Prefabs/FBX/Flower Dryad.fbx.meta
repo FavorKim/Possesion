@@ -1,0 +1,971 @@
+fileFormatVersion: 2
+guid: 87e796dd3acd7b5419150e4545644a79
+ModelImporter:
+  serializedVersion: 21300
+  internalIDToNameTable:
+  - first:
+      1: 100000
+    second: chest_l1
+  - first:
+      1: 100002
+    second: chest_l2
+  - first:
+      1: 100004
+    second: chest_r1
+  - first:
+      1: 100006
+    second: chest_r2
+  - first:
+      1: 100008
+    second: clavicle_l
+  - first:
+      1: 100010
+    second: clavicle_r
+  - first:
+      1: 100012
+    second: ear_ring_01
+  - first:
+      1: 100014
+    second: ear_ring_02
+  - first:
+      1: 100016
+    second: //RootNode
+  - first:
+      1: 100018
+    second: Flower_Dryad
+  - first:
+      1: 100020
+    second: hair_back_01
+  - first:
+      1: 100022
+    second: hair_back_02
+  - first:
+      1: 100024
+    second: hair_back_03
+  - first:
+      1: 100026
+    second: hair_back_04
+  - first:
+      1: 100028
+    second: hair_flower_0
+  - first:
+      1: 100030
+    second: hair_flower_1
+  - first:
+      1: 100032
+    second: hair_flower_2
+  - first:
+      1: 100034
+    second: hair_flower_3
+  - first:
+      1: 100036
+    second: hair_flower_4
+  - first:
+      1: 100038
+    second: hair_front_01
+  - first:
+      1: 100040
+    second: hair_front_02
+  - first:
+      1: 100042
+    second: hair_root
+  - first:
+      1: 100044
+    second: hand_l
+  - first:
+      1: 100046
+    second: hand_r
+  - first:
+      1: 100048
+    second: head
+  - first:
+      1: 100050
+    second: leaf_00
+  - first:
+      1: 100052
+    second: leaf_01
+  - first:
+      1: 100054
+    second: leaf_02
+  - first:
+      1: 100056
+    second: leaf_02b
+  - first:
+      1: 100058
+    second: leaf_03
+  - first:
+      1: 100060
+    second: leaf_03b
+  - first:
+      1: 100062
+    second: leaf_04
+  - first:
+      1: 100064
+    second: leaf_04b
+  - first:
+      1: 100066
+    second: leaf_05b
+  - first:
+      1: 100068
+    second: lowerarm_l
+  - first:
+      1: 100070
+    second: lowerarm_r
+  - first:
+      1: 100072
+    second: neck_01
+  - first:
+      1: 100074
+    second: pelvis
+  - first:
+      1: 100076
+    second: petal_01
+  - first:
+      1: 100078
+    second: petal_01b
+  - first:
+      1: 100080
+    second: petal_01c
+  - first:
+      1: 100082
+    second: petal_02
+  - first:
+      1: 100084
+    second: petal_02b
+  - first:
+      1: 100086
+    second: petal_02c
+  - first:
+      1: 100088
+    second: petal_03
+  - first:
+      1: 100090
+    second: petal_03b
+  - first:
+      1: 100092
+    second: petal_03c
+  - first:
+      1: 100094
+    second: petal_04
+  - first:
+      1: 100096
+    second: petal_04b
+  - first:
+      1: 100098
+    second: petal_04c
+  - first:
+      1: 100100
+    second: petal_l_01
+  - first:
+      1: 100102
+    second: petal_l_01b
+  - first:
+      1: 100104
+    second: petal_l_02
+  - first:
+      1: 100106
+    second: petal_l_02b
+  - first:
+      1: 100108
+    second: petal_l_03
+  - first:
+      1: 100110
+    second: petal_l_03b
+  - first:
+      1: 100112
+    second: petal_l_04
+  - first:
+      1: 100114
+    second: petal_l_04b
+  - first:
+      1: 100116
+    second: petal_r_01
+  - first:
+      1: 100118
+    second: petal_r_01b
+  - first:
+      1: 100120
+    second: petal_r_02
+  - first:
+      1: 100122
+    second: petal_r_02b
+  - first:
+      1: 100124
+    second: petal_r_03
+  - first:
+      1: 100126
+    second: petal_r_03b
+  - first:
+      1: 100128
+    second: petal_r_04
+  - first:
+      1: 100130
+    second: petal_r_04b
+  - first:
+      1: 100132
+    second: pollen_l
+  - first:
+      1: 100134
+    second: pollen_r
+  - first:
+      1: 100136
+    second: root
+  - first:
+      1: 100138
+    second: spine_02
+  - first:
+      1: 100140
+    second: spine_03
+  - first:
+      1: 100142
+    second: upperarm_l
+  - first:
+      1: 100144
+    second: upperarm_r
+  - first:
+      1: 100146
+    second: leaf_02b1
+  - first:
+      1: 100148
+    second: leaf_03b1
+  - first:
+      1: 100150
+    second: leaf_04b1
+  - first:
+      1: 100152
+    second: leaf_05b1
+  - first:
+      4: 400000
+    second: chest_l1
+  - first:
+      4: 400002
+    second: chest_l2
+  - first:
+      4: 400004
+    second: chest_r1
+  - first:
+      4: 400006
+    second: chest_r2
+  - first:
+      4: 400008
+    second: clavicle_l
+  - first:
+      4: 400010
+    second: clavicle_r
+  - first:
+      4: 400012
+    second: ear_ring_01
+  - first:
+      4: 400014
+    second: ear_ring_02
+  - first:
+      4: 400016
+    second: //RootNode
+  - first:
+      4: 400018
+    second: Flower_Dryad
+  - first:
+      4: 400020
+    second: hair_back_01
+  - first:
+      4: 400022
+    second: hair_back_02
+  - first:
+      4: 400024
+    second: hair_back_03
+  - first:
+      4: 400026
+    second: hair_back_04
+  - first:
+      4: 400028
+    second: hair_flower_0
+  - first:
+      4: 400030
+    second: hair_flower_1
+  - first:
+      4: 400032
+    second: hair_flower_2
+  - first:
+      4: 400034
+    second: hair_flower_3
+  - first:
+      4: 400036
+    second: hair_flower_4
+  - first:
+      4: 400038
+    second: hair_front_01
+  - first:
+      4: 400040
+    second: hair_front_02
+  - first:
+      4: 400042
+    second: hair_root
+  - first:
+      4: 400044
+    second: hand_l
+  - first:
+      4: 400046
+    second: hand_r
+  - first:
+      4: 400048
+    second: head
+  - first:
+      4: 400050
+    second: leaf_00
+  - first:
+      4: 400052
+    second: leaf_01
+  - first:
+      4: 400054
+    second: leaf_02
+  - first:
+      4: 400056
+    second: leaf_02b
+  - first:
+      4: 400058
+    second: leaf_03
+  - first:
+      4: 400060
+    second: leaf_03b
+  - first:
+      4: 400062
+    second: leaf_04
+  - first:
+      4: 400064
+    second: leaf_04b
+  - first:
+      4: 400066
+    second: leaf_05b
+  - first:
+      4: 400068
+    second: lowerarm_l
+  - first:
+      4: 400070
+    second: lowerarm_r
+  - first:
+      4: 400072
+    second: neck_01
+  - first:
+      4: 400074
+    second: pelvis
+  - first:
+      4: 400076
+    second: petal_01
+  - first:
+      4: 400078
+    second: petal_01b
+  - first:
+      4: 400080
+    second: petal_01c
+  - first:
+      4: 400082
+    second: petal_02
+  - first:
+      4: 400084
+    second: petal_02b
+  - first:
+      4: 400086
+    second: petal_02c
+  - first:
+      4: 400088
+    second: petal_03
+  - first:
+      4: 400090
+    second: petal_03b
+  - first:
+      4: 400092
+    second: petal_03c
+  - first:
+      4: 400094
+    second: petal_04
+  - first:
+      4: 400096
+    second: petal_04b
+  - first:
+      4: 400098
+    second: petal_04c
+  - first:
+      4: 400100
+    second: petal_l_01
+  - first:
+      4: 400102
+    second: petal_l_01b
+  - first:
+      4: 400104
+    second: petal_l_02
+  - first:
+      4: 400106
+    second: petal_l_02b
+  - first:
+      4: 400108
+    second: petal_l_03
+  - first:
+      4: 400110
+    second: petal_l_03b
+  - first:
+      4: 400112
+    second: petal_l_04
+  - first:
+      4: 400114
+    second: petal_l_04b
+  - first:
+      4: 400116
+    second: petal_r_01
+  - first:
+      4: 400118
+    second: petal_r_01b
+  - first:
+      4: 400120
+    second: petal_r_02
+  - first:
+      4: 400122
+    second: petal_r_02b
+  - first:
+      4: 400124
+    second: petal_r_03
+  - first:
+      4: 400126
+    second: petal_r_03b
+  - first:
+      4: 400128
+    second: petal_r_04
+  - first:
+      4: 400130
+    second: petal_r_04b
+  - first:
+      4: 400132
+    second: pollen_l
+  - first:
+      4: 400134
+    second: pollen_r
+  - first:
+      4: 400136
+    second: root
+  - first:
+      4: 400138
+    second: spine_02
+  - first:
+      4: 400140
+    second: spine_03
+  - first:
+      4: 400142
+    second: upperarm_l
+  - first:
+      4: 400144
+    second: upperarm_r
+  - first:
+      4: 400146
+    second: leaf_02b1
+  - first:
+      4: 400148
+    second: leaf_03b1
+  - first:
+      4: 400150
+    second: leaf_04b1
+  - first:
+      4: 400152
+    second: leaf_05b1
+  - first:
+      21: 2100000
+    second: M_Flower_Dryad
+  - first:
+      43: 4300000
+    second: Flower_Dryad
+  - first:
+      95: 9500000
+    second: //RootNode
+  - first:
+      137: 13700000
+    second: Flower_Dryad
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: M_Flower_Dryad
+    second: {fileID: 2100000, guid: da5f942c23672714ea37c167fca84f54, type: 2}
+  materials:
+    materialImportMode: 1
+    materialName: 0
+    materialSearch: 2
+    materialLocation: 0
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    removeConstantScaleCurves: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 3
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    nodeNameCollisionStrategy: 0
+    fileIdsGeneration: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    keepQuads: 0
+    weldVertices: 1
+    bakeAxisConversion: 0
+    preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    optimizeBones: 1
+    meshOptimizationFlags: -1
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVMarginMethod: 0
+    secondaryUVMinLightmapResolution: 40
+    secondaryUVMinObjectScale: 1
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+    strictVertexDataChecks: 0
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  referencedClips: []
+  importAnimation: 1
+  humanDescription:
+    serializedVersion: 3
+    human: []
+    skeleton:
+    - name: Flower Dryad(Clone)
+      parentName: 
+      position: {x: 0, y: 0, z: 0}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: root
+      parentName: Flower Dryad(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: pelvis
+      parentName: root
+      position: {x: 0.09479327, y: 1.3844796, z: 0.009382215}
+      rotation: {x: -0.70558316, y: 0.70862716, z: 4.3390904e-17, w: -4.320451e-17}
+      scale: {x: 1.0000002, y: 1.0000002, z: 1.0000005}
+    - name: spine_02
+      parentName: pelvis
+      position: {x: -0.0924466, y: 0.0003101823, z: 0.0038822957}
+      rotation: {x: 0.70558316, y: -0.70862716, z: -4.3390897e-17, w: 4.320451e-17}
+      scale: {x: 1.0000002, y: 1.0000002, z: 1.0000005}
+    - name: spine_03
+      parentName: spine_02
+      position: {x: 1.0568479e-17, y: 0.081404015, z: -0.017146807}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: clavicle_l
+      parentName: spine_03
+      position: {x: -0.022532519, y: 0.047744274, z: -0.033646565}
+      rotation: {x: 1.4889251e-23, y: -1.8197973e-23, z: -0.25961328, w: 0.9657127}
+      scale: {x: 1.0000001, y: 0.99999994, z: 1}
+    - name: upperarm_l
+      parentName: clavicle_l
+      position: {x: -0.021084301, y: -0.011662786, z: -0.0073047783}
+      rotation: {x: -0.6928646, y: -0.16009755, z: 0.15192787, w: 0.68645865}
+      scale: {x: 1, y: 1.0000001, z: 1.0000001}
+    - name: lowerarm_l
+      parentName: upperarm_l
+      position: {x: -0.17838542, y: 0.001791174, z: -0.0012459493}
+      rotation: {x: 0.71516955, y: 0.00062234676, z: 0.002937176, w: 0.6989446}
+      scale: {x: 0.99999994, y: 1.0000001, z: 1}
+    - name: hand_l
+      parentName: lowerarm_l
+      position: {x: -0.24831644, y: -1.8223194e-15, z: -2.8378632e-16}
+      rotation: {x: -0, y: -0, z: -5.3413267e-11, w: 1}
+      scale: {x: 0.99999994, y: 1.0000001, z: 1}
+    - name: petal_l_03
+      parentName: hand_l
+      position: {x: -0.3391521, y: -0.13023096, z: -0.00076885865}
+      rotation: {x: 0.9820981, y: 0.07148861, z: -0.15876754, w: 0.07187233}
+      scale: {x: 1, y: 1.0000004, z: 1.0000006}
+    - name: petal_l_03b
+      parentName: petal_l_03
+      position: {x: -0.25968707, y: 4.1421377e-17, z: 1.3287666e-17}
+      rotation: {x: -0.9110398, y: -0.4123184, z: 0.0000074959194, w: 0.00001650304}
+      scale: {x: 1.0000002, y: 1.0000002, z: 1.0000006}
+    - name: petal_l_02
+      parentName: hand_l
+      position: {x: -0.3391521, y: 0.0018271309, z: 0.13128917}
+      rotation: {x: 0.6828781, y: 0.18044956, z: -0.18275176, w: 0.68389857}
+      scale: {x: 1, y: 1.0000002, z: 1}
+    - name: petal_l_02b
+      parentName: petal_l_02
+      position: {x: -0.25968716, y: -6.5252785e-17, z: 3.866584e-16}
+      rotation: {x: -0.6442139, y: -0.29155862, z: 0.29154804, w: 0.6441908}
+      scale: {x: 1.0000004, y: 1, z: 0.9999997}
+    - name: petal_l_01
+      parentName: hand_l
+      position: {x: -0.3391522, y: 0.13387105, z: -0.0007547061}
+      rotation: {x: 0.07149523, y: 0.15801032, z: -0.076645486, w: 0.98185885}
+      scale: {x: 0.9999998, y: 1, z: 1}
+    - name: petal_l_01b
+      parentName: petal_l_01
+      position: {x: -0.25968716, y: 1.7036113e-16, z: -3.5712184e-15}
+      rotation: {x: 0.00001654019, y: 0.0000074561726, z: 0.41231853, w: 0.91103977}
+      scale: {x: 1.0000002, y: 0.99999994, z: 1}
+    - name: petal_l_04
+      parentName: hand_l
+      position: {x: -0.3391522, y: 0.0018130927, z: -0.13281275}
+      rotation: {x: -0.6441908, y: -0.29154822, z: -0.29155865, w: 0.6442139}
+      scale: {x: 1, y: 0.9999998, z: 0.9999996}
+    - name: petal_l_04b
+      parentName: petal_l_04
+      position: {x: -0.2596871, y: 1.6191887e-16, z: -2.671807e-16}
+      rotation: {x: 0.6441908, y: 0.29154822, z: 0.29155865, w: 0.6442139}
+      scale: {x: 1.0000004, y: 0.9999998, z: 0.99999946}
+    - name: pollen_l
+      parentName: hand_l
+      position: {x: -0.57895213, y: -0.00056117476, z: -0.004069559}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: neck_01
+      parentName: spine_03
+      position: {x: 0.0001935101, y: 0.07750065, z: -0.02958017}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: head
+      parentName: neck_01
+      position: {x: -0, y: 0.05777949, z: 0.017371612}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: ear_ring_01
+      parentName: head
+      position: {x: 0.05684225, y: 0.032824464, z: 0.0016752366}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: ear_ring_02
+      parentName: ear_ring_01
+      position: {x: -0, y: -0.026956912, z: 0}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: hair_root
+      parentName: head
+      position: {x: -0, y: 0.13229294, z: 0.0063163736}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: hair_back_01
+      parentName: hair_root
+      position: {x: -7.649308e-18, y: -0.13088931, z: -0.06246192}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: hair_back_02
+      parentName: hair_back_01
+      position: {x: -0, y: -0.14129014, z: -0.047419704}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: hair_back_03
+      parentName: hair_back_02
+      position: {x: -0, y: -0.13656837, z: -0.028079476}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: hair_back_04
+      parentName: hair_back_03
+      position: {x: -0, y: -0.11784871, z: -0.015316078}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: hair_flower_0
+      parentName: hair_root
+      position: {x: -0.04503411, y: 0.000040021812, z: 0.06202565}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: hair_flower_1
+      parentName: hair_flower_0
+      position: {x: 0.0020759962, y: 0.027226867, z: -0.008446312}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: hair_flower_2
+      parentName: hair_flower_0
+      position: {x: -0.025609912, y: -0.0008399963, z: -0.012607136}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: hair_flower_4
+      parentName: hair_flower_0
+      position: {x: -0.008272257, y: -0.02217636, z: 0.015953941}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: hair_flower_3
+      parentName: hair_flower_0
+      position: {x: 0.019413633, y: 0.0058903503, z: 0.020114822}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: hair_front_01
+      parentName: hair_root
+      position: {x: -0.047896035, y: -0.11108123, z: 0.037476648}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: hair_front_02
+      parentName: hair_front_01
+      position: {x: -0.02605816, y: -0.099317126, z: 0.0069322037}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: clavicle_r
+      parentName: spine_03
+      position: {x: 0.02253251, y: 0.0477492, z: -0.03364661}
+      rotation: {x: 0.98033464, y: 0.19723338, z: 0.0065518683, w: -0.0002721869}
+      scale: {x: 1, y: 1.0000002, z: 1}
+    - name: upperarm_r
+      parentName: clavicle_r
+      position: {x: 0.024564525, y: 0.0055215303, z: 0}
+      rotation: {x: -7.2707674e-17, y: -8.0985755e-18, z: 0.25961334, w: 0.96571267}
+      scale: {x: 0.9999998, y: 0.99999994, z: 1}
+    - name: lowerarm_r
+      parentName: upperarm_r
+      position: {x: 0.1783721, y: 2.842171e-16, z: 0.0030787}
+      rotation: {x: -0, y: -0, z: -5.888286e-34, w: 1}
+      scale: {x: 1.0000001, y: 1, z: 1}
+    - name: hand_r
+      parentName: lowerarm_r
+      position: {x: 0.24831699, y: 0, z: -4.4408918e-17}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: petal_r_03
+      parentName: hand_r
+      position: {x: 0.33915198, y: 0.13023, z: 0.0007688}
+      rotation: {x: -0.9820978, y: -0.07149455, z: 0.15876606, w: -0.071873285}
+      scale: {x: 1, y: 1.0000001, z: 1.0000002}
+    - name: petal_r_03b
+      parentName: petal_r_03
+      position: {x: 0.2596893, y: -0.000002164553, z: 0.000000023623102}
+      rotation: {x: 0.9110398, y: 0.41231847, z: -0.000007477496, w: -0.000016521934}
+      scale: {x: 1, y: 1.0000005, z: 1.0000007}
+    - name: petal_r_02
+      parentName: hand_r
+      position: {x: 0.33915198, y: -0.0018199999, z: -0.1312892}
+      rotation: {x: -0.68287987, y: -0.1804604, z: 0.18274078, w: -0.683897}
+      scale: {x: 1, y: 1.0000002, z: 1}
+    - name: petal_r_02b
+      parentName: petal_r_02
+      position: {x: 0.25968707, y: -0.000000020106215, z: 0.0000070190413}
+      rotation: {x: 0.644214, y: 0.2915585, z: -0.29154804, w: -0.6441908}
+      scale: {x: 1.0000002, y: 1, z: 0.99999994}
+    - name: petal_r_01
+      parentName: hand_r
+      position: {x: 0.33915198, y: -0.13386999, z: 0.0007547}
+      rotation: {x: 0.07149242, y: 0.15801169, z: -0.07664475, w: 0.98185885}
+      scale: {x: 1, y: 1, z: 1.0000002}
+    - name: petal_r_01b
+      parentName: petal_r_01
+      position: {x: 0.2596818, y: 0.000004593342, z: -0.000000076007865}
+      rotation: {x: 0.000016521928, y: 0.0000074774975, z: 0.4123186, w: 0.9110397}
+      scale: {x: 1, y: 0.99999994, z: 0.9999998}
+    - name: petal_r_04
+      parentName: hand_r
+      position: {x: 0.33915198, y: -0.0018099999, z: 0.1328128}
+      rotation: {x: -0.6441907, y: -0.2915481, z: -0.29155862, w: 0.644214}
+      scale: {x: 1, y: 0.9999998, z: 0.9999996}
+    - name: petal_r_04b
+      parentName: petal_r_04
+      position: {x: 0.25968707, y: 0.000000030680113, z: -0.0000029809587}
+      rotation: {x: 0.6441907, y: 0.2915481, z: 0.29155862, w: 0.644214}
+      scale: {x: 1, y: 0.9999998, z: 0.9999998}
+    - name: pollen_r
+      parentName: hand_r
+      position: {x: 0.57895, y: 0.00056, z: 0.0040694997}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: chest_l1
+      parentName: spine_03
+      position: {x: -0.028147418, y: -0.011709588, z: 0.040559378}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: chest_l2
+      parentName: chest_l1
+      position: {x: -0.030460386, y: -0.0005218566, z: 0.045560434}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: chest_r1
+      parentName: spine_03
+      position: {x: 0.028147409, y: -0.011710797, z: 0.040559385}
+      rotation: {x: 1, y: -0, z: -0, w: -1.222011e-16}
+      scale: {x: 1, y: 1, z: 1}
+    - name: chest_r2
+      parentName: chest_r1
+      position: {x: 0.0304604, y: 0.00052, z: -0.045560397}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: petal_03
+      parentName: pelvis
+      position: {x: 0.36614397, y: -0.19200844, z: 0.009382215}
+      rotation: {x: -0.36316606, y: -0.9317244, z: -2.2237517e-17, w: 5.7051666e-17}
+      scale: {x: 1.0000002, y: 1.0000005, z: 1.0000002}
+    - name: petal_03b
+      parentName: petal_03
+      position: {x: -0.59278977, y: 0.08600374, z: 2.4941285e-16}
+      rotation: {x: 6.617444e-24, y: -0, z: -0.2740581, w: 0.96171314}
+      scale: {x: 1.0000007, y: 1.0000006, z: 1}
+    - name: petal_03c
+      parentName: petal_03b
+      position: {x: -0.5347249, y: -0.023426943, z: 9.059755e-17}
+      rotation: {x: -4.431385e-24, y: -1.3936478e-24, z: -0.7690154, w: 0.6392304}
+      scale: {x: 1, y: 0.99999994, z: 1}
+    - name: petal_01
+      parentName: pelvis
+      position: {x: 0.36696258, y: -0.0018610684, z: -0.18076693}
+      rotation: {x: -0.2567972, y: -0.65882874, z: -0.659928, w: 0.25395858}
+      scale: {x: 1.0000004, y: 1.0000002, z: 1.0000001}
+    - name: petal_01b
+      parentName: petal_01
+      position: {x: -0.59278977, y: 0.08600374, z: 1.0338511e-17}
+      rotation: {x: -0.00000004656612, y: 0.0000000074505797, z: -0.27405798, w: 0.9617132}
+      scale: {x: 1.0000006, y: 1.0000005, z: 1.0000005}
+    - name: petal_01c
+      parentName: petal_01b
+      position: {x: -0.5347249, y: -0.023426943, z: 3.7106676e-16}
+      rotation: {x: 0.5437759, y: 0.45200413, z: -0.54377604, w: 0.4520041}
+      scale: {x: 0.9999997, y: 0.9999997, z: 0.9999998}
+    - name: petal_04
+      parentName: pelvis
+      position: {x: 0.36696258, y: -0.0018610684, z: 0.19953135}
+      rotation: {x: -0.2567972, y: -0.65882874, z: 0.659928, w: -0.25395858}
+      scale: {x: 1.0000004, y: 1.0000002, z: 1.0000001}
+    - name: petal_04b
+      parentName: petal_04
+      position: {x: -0.59278977, y: 0.08600374, z: 3.6934782e-16}
+      rotation: {x: 0.00000004656612, y: -0.0000000074505797, z: -0.27405798, w: 0.9617132}
+      scale: {x: 1.0000006, y: 1.0000005, z: 1.0000005}
+    - name: petal_04c
+      parentName: petal_04b
+      position: {x: -0.5347249, y: -0.023426943, z: 6.220008e-16}
+      rotation: {x: -0.5437759, y: -0.45200413, z: -0.54377604, w: 0.4520041}
+      scale: {x: 0.9999997, y: 0.9999997, z: 0.9999998}
+    - name: petal_02
+      parentName: pelvis
+      position: {x: 0.36778113, y: 0.1882863, z: 0.009382215}
+      rotation: {x: 0.014956969, y: 0.0033962391, z: 0.9580319, w: -0.28625134}
+      scale: {x: 1.0000004, y: 1.0000002, z: 1.0000005}
+    - name: petal_02b
+      parentName: petal_02
+      position: {x: -0.59278977, y: 0.08600374, z: -7.461106e-17}
+      rotation: {x: -1.424579e-17, y: -4.598825e-18, z: -0.27405822, w: 0.96171314}
+      scale: {x: 1.0000006, y: 1.0000005, z: 1.000001}
+    - name: petal_02c
+      parentName: petal_02b
+      position: {x: -0.5347249, y: -0.023426943, z: 5.2807452e-17}
+      rotation: {x: -0.71747214, y: -0.69641846, z: 0.014730372, w: 0.004273351}
+      scale: {x: 1, y: 0.99999994, z: 0.9999998}
+    - name: leaf_00
+      parentName: pelvis
+      position: {x: 0.4136037, y: -0.0020618567, z: 0.009382215}
+      rotation: {x: 0.5432094, y: -0.80561084, z: -0.13780802, w: 0.19215575}
+      scale: {x: 1.0000002, y: 1.0000002, z: 1.0000005}
+    - name: leaf_04
+      parentName: leaf_00
+      position: {x: 0.2728178, y: -0.34858376, z: 0.27281776}
+      rotation: {x: -0.31145912, y: -0.22235075, z: 0.7519287, w: 0.5368022}
+      scale: {x: 1.0000004, y: 1.0000005, z: 1.0000002}
+    - name: leaf_04b
+      parentName: leaf_04
+      position: {x: -0.2685777, y: -0.026218347, z: -4.6148337e-17}
+      rotation: {x: -0.000000059604645, y: -0.000000044703484, z: -0.16465068, w: 0.98635197}
+      scale: {x: 1.0000004, y: 1.0000004, z: 1.0000002}
+    - name: leaf_04b1
+      parentName: leaf_04b
+      position: {x: -0.31997818, y: 1.4210854e-16, z: -3.6250797e-16}
+      rotation: {x: -0, y: -0, z: -2.6645353e-15, w: 1}
+      scale: {x: 1, y: 1.0000001, z: 0.99999994}
+    - name: leaf_03
+      parentName: leaf_00
+      position: {x: 0.2728178, y: -0.34858376, z: -0.27281776}
+      rotation: {x: 0.31145912, y: 0.22235075, z: 0.7519287, w: 0.5368022}
+      scale: {x: 1.0000004, y: 1.0000005, z: 1.0000002}
+    - name: leaf_03b
+      parentName: leaf_03
+      position: {x: -0.2685777, y: -0.026218347, z: 4.453512e-17}
+      rotation: {x: 0.000000059604645, y: 0.000000044703484, z: -0.16465068, w: 0.98635197}
+      scale: {x: 1.0000004, y: 1.0000004, z: 1.0000002}
+    - name: leaf_03b1
+      parentName: leaf_03b
+      position: {x: -0.31997818, y: 0, z: 2.530319e-16}
+      rotation: {x: -0, y: -0, z: -2.6645353e-15, w: 1}
+      scale: {x: 1, y: 1.0000001, z: 0.99999994}
+    - name: leaf_02
+      parentName: leaf_00
+      position: {x: -0.2728178, y: -0.34858376, z: -0.27281776}
+      rotation: {x: 0.7519287, y: 0.5368022, z: 0.31145915, w: 0.22235078}
+      scale: {x: 1.0000002, y: 1.0000006, z: 1.000001}
+    - name: leaf_02b
+      parentName: leaf_02
+      position: {x: -0.2685777, y: -0.026218347, z: 1.0278465e-16}
+      rotation: {x: -0.78069395, y: -0.12110601, z: -0.009048066, w: 0.6129996}
+      scale: {x: 1.0000005, y: 1.0000002, z: 1.0000005}
+    - name: leaf_02b1
+      parentName: leaf_02b
+      position: {x: -0.31997818, y: 0, z: -5.150643e-16}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1.0000002}
+    - name: leaf_01
+      parentName: leaf_00
+      position: {x: -0.2728178, y: -0.34858376, z: 0.27281776}
+      rotation: {x: 0.7519287, y: 0.5368022, z: -0.31145915, w: -0.22235078}
+      scale: {x: 1.0000002, y: 1.0000006, z: 1.000001}
+    - name: leaf_05b
+      parentName: leaf_01
+      position: {x: -0.2685777, y: -0.026218347, z: -1.0278465e-16}
+      rotation: {x: -0.000000059604638, y: -0, z: -0.16465075, w: 0.9863519}
+      scale: {x: 1.0000005, y: 1.0000002, z: 1.0000005}
+    - name: leaf_05b1
+      parentName: leaf_05b
+      position: {x: -0.31997818, y: 7.105427e-17, z: 7.873862e-16}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1.0000002}
+    - name: Flower_Dryad
+      parentName: Flower Dryad(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    globalScale: 1
+    rootMotionBoneName: root
+    hasTranslationDoF: 0
+    hasExtraRoot: 1
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  autoGenerateAvatarMappingIfUnspecified: 1
+  animationType: 3
+  humanoidOversampling: 1
+  avatarSetup: 1
+  addHumanoidExtraRootOnlyWhenUsingAvatar: 0
+  remapMaterialsIfMaterialImportModeIsNone: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

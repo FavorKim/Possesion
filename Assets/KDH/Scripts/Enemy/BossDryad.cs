@@ -2,6 +2,7 @@ using ObjectPool;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
+using static UnityEngine.UI.GridLayoutGroup;
 
 public class BossDryad : Monsters
 {
@@ -23,16 +24,17 @@ public class BossDryad : Monsters
 
     Transform enemyTrf;
     Transform playerTrf;
-    NavMeshAgent agent;
     Animator animator;
 
-    public ParticleSystem rollAttack;
+    //public ParticleSystem rollAttack;
     public StateMachine stateMachine;
 
-    readonly int hashTrace = Animator.StringToHash("IsTrace");
+    [SerializeField] public GameObject projectile;
+    public Transform[] spawnPositions;
+    [SerializeField] public float shootSpeed = 800.0f;
+
     readonly int hashAttack = Animator.StringToHash("IsAttack");
-    readonly int hashSkill1 = Animator.StringToHash("IsSkill1");
-    readonly int hashDefend = Animator.StringToHash("IsDefend");
+    readonly int hashSkill = Animator.StringToHash("animation");
 
     Rigidbody rb;
     #region 스킬 등등
@@ -46,6 +48,7 @@ public class BossDryad : Monsters
 
     public bool isDie = false;
 
+    int i = 0;
     #endregion
 
     public override void Awake()
@@ -53,18 +56,17 @@ public class BossDryad : Monsters
         player = FindObjectOfType<PlayerController>();
         playerTrf = player.transform;
         enemyTrf = GetComponent<Transform>();
-        agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
 
         rb = GetComponent<Rigidbody>();
         stateMachine = gameObject.AddComponent<StateMachine>();
 
-        /*stateMachine.AddState(MonsterState.IDLE, new IdleState(this));
-        stateMachine.AddState(MonsterState.TRACE, new TraceState(this));
-        stateMachine.AddState(MonsterState.ATTACK, new AttackState(this));*/
+        stateMachine.AddState(BossState.IDLE, new IdleState(this));
+        stateMachine.AddState(BossState.PATTERN, new TraceState(this));
+        stateMachine.AddState(BossState.ATTACK, new AttackState(this));
+        stateMachine.AddState(BossState.DEAD, new TraceState(this));
         stateMachine.InitState(BossState.IDLE);
 
-        agent.destination = playerTrf.position;
     }
     protected virtual void Start()
     {
@@ -95,6 +97,23 @@ public class BossDryad : Monsters
         while (!isDie)
         {
             yield return new WaitForSeconds(0.3f);
+
+            
+            if (Input.GetKeyDown("1"))
+            {
+                i = 1;
+                stateMachine.ChangeState(BossState.ATTACK);
+            }
+            else if (Input.GetKeyDown("2"))
+            {
+                i = 2;
+                stateMachine.ChangeState(BossState.ATTACK);
+            }
+            else if (Input.GetKeyDown("3"))
+            {
+                i = 3;
+                stateMachine.ChangeState(BossState.ATTACK);
+            }
 
             /*if (state == MonsterState.DEAD)
             {
@@ -141,8 +160,7 @@ public class BossDryad : Monsters
 
         public override void Enter()
         {
-            owner.agent.isStopped = true;
-            owner.animator.SetBool(owner.hashTrace, false);
+            
             owner.animator.SetBool(owner.hashAttack, false);
         }
     }
@@ -153,10 +171,6 @@ public class BossDryad : Monsters
 
         public override void Enter()
         {
-            owner.agent.SetDestination(owner.playerTrf.position);
-            
-            owner.agent.isStopped = false;
-            owner.animator.SetBool(owner.hashTrace, true);
             owner.animator.SetBool(owner.hashAttack, false);
             
         }
@@ -168,9 +182,22 @@ public class BossDryad : Monsters
 
         public override void Enter()
         {
-            owner.agent.isStopped = true;
-            owner.Attack();
-
+            if(owner.i == 1)
+            {
+                owner.Skill1();
+            }
+            else if (owner.i == 2)
+            {
+                owner.Skill2();
+            }
+            else if (owner.i == 3)
+            {
+                owner.Skill3();
+            }
+            else
+            {
+                owner.Attack();
+            }
             /*float distance = Vector3.Distance(owner.playerTrf.position, owner.enemyTrf.position);
 
             if (distance >= owner.attackDistance && owner.skill1_curCooltime <= 0f)
@@ -205,11 +232,42 @@ public class BossDryad : Monsters
     }
     public override void Skill1()
     {
+        StartCoroutine(Skill_1());
         //기왕이면 다 돌아가고 나서 스킬 발동?
         /*float distance = Vector3.Distance(playerTrf.position, enemyTrf.position);
         animator.SetBool(hashSkill1, true);*/
     }
 
+    IEnumerator Skill_1()
+    {
+        float distance;
+        
+        distance = Vector3.Distance(playerTrf.position, enemyTrf.position);
+        
+        GameObject pd = Instantiate(projectile, spawnPositions[0].position, Quaternion.identity) as GameObject;
+        //GameObject pd2 = Instantiate(projectile, spawnPositions[0].position, Quaternion.identity) as GameObject;
+        pd.transform.LookAt(playerTrf.localPosition);
+        pd.GetComponent<Rigidbody>().AddForce(pd.transform.forward * shootSpeed);
+        pd.GetComponent<Rigidbody>().AddForce(pd.transform.up * distance * 15.5f);
+
+
+        animator.SetInteger(hashSkill, 1);
+        yield return new WaitForSeconds(1.5f);
+        animator.SetInteger(hashSkill, 0);
+    }
+
+    IEnumerator Skill_2()
+    {
+        animator.SetInteger(hashSkill, 2);
+        yield return new WaitForSeconds(1.5f);
+        animator.SetInteger(hashSkill, 0);
+    }
+    IEnumerator Skill_3()
+    {
+        animator.SetInteger(hashSkill, 3);
+        yield return new WaitForSeconds(1.5f);
+        animator.SetInteger(hashSkill, 0);
+    }
     /*void RAttack()
     {
         StartCoroutine(RollingAttack());
@@ -228,16 +286,13 @@ public class BossDryad : Monsters
         animator.SetBool(hashSkill1, false);
     }*/
 
-    public void Skill2()
+    public override void Skill2()
     {
-        //skill2_curCooltime = mstSkill2Cooltime;
-        /*StartCoroutine(Defend());
+        StartCoroutine(Skill_2());
+    }
 
-        IEnumerator Defend()
-        {
-            animator.SetBool(hashDefend, true);
-            yield return new WaitForSeconds(1.5f);
-            animator.SetBool(hashDefend, false);
-        }*/
+    public void Skill3()
+    {
+        StartCoroutine(Skill_3());
     }
 }

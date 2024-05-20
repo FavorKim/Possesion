@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 4b9e34f9c69cb764fa74794967946050
+guid: b9c9e222285148746a32f41403421954
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable:
@@ -89,148 +89,148 @@ ModelImporter:
     second: leaf_02b
   - first:
       1: 100056
-    second: leaf_02b1
-  - first:
-      1: 100058
     second: leaf_03
   - first:
-      1: 100060
+      1: 100058
     second: leaf_03b
   - first:
-      1: 100062
-    second: leaf_03b1
-  - first:
-      1: 100064
+      1: 100060
     second: leaf_04
   - first:
-      1: 100066
+      1: 100062
     second: leaf_04b
   - first:
-      1: 100068
-    second: leaf_04b1
-  - first:
-      1: 100070
+      1: 100064
     second: leaf_05b
   - first:
-      1: 100072
-    second: leaf_05b1
-  - first:
-      1: 100074
+      1: 100066
     second: lowerarm_l
   - first:
-      1: 100076
+      1: 100068
     second: lowerarm_r
   - first:
-      1: 100078
+      1: 100070
     second: neck_01
   - first:
-      1: 100080
+      1: 100072
     second: pelvis
   - first:
-      1: 100082
+      1: 100074
     second: petal_01
   - first:
-      1: 100084
+      1: 100076
     second: petal_01b
   - first:
-      1: 100086
+      1: 100078
     second: petal_01c
   - first:
-      1: 100088
+      1: 100080
     second: petal_02
   - first:
-      1: 100090
+      1: 100082
     second: petal_02b
   - first:
-      1: 100092
+      1: 100084
     second: petal_02c
   - first:
-      1: 100094
+      1: 100086
     second: petal_03
   - first:
-      1: 100096
+      1: 100088
     second: petal_03b
   - first:
-      1: 100098
+      1: 100090
     second: petal_03c
   - first:
-      1: 100100
+      1: 100092
     second: petal_04
   - first:
-      1: 100102
+      1: 100094
     second: petal_04b
   - first:
-      1: 100104
+      1: 100096
     second: petal_04c
   - first:
-      1: 100106
+      1: 100098
     second: petal_l_01
   - first:
-      1: 100108
+      1: 100100
     second: petal_l_01b
   - first:
-      1: 100110
+      1: 100102
     second: petal_l_02
   - first:
-      1: 100112
+      1: 100104
     second: petal_l_02b
   - first:
-      1: 100114
+      1: 100106
     second: petal_l_03
   - first:
-      1: 100116
+      1: 100108
     second: petal_l_03b
   - first:
-      1: 100118
+      1: 100110
     second: petal_l_04
   - first:
-      1: 100120
+      1: 100112
     second: petal_l_04b
   - first:
-      1: 100122
+      1: 100114
     second: petal_r_01
   - first:
-      1: 100124
+      1: 100116
     second: petal_r_01b
   - first:
-      1: 100126
+      1: 100118
     second: petal_r_02
   - first:
-      1: 100128
+      1: 100120
     second: petal_r_02b
   - first:
-      1: 100130
+      1: 100122
     second: petal_r_03
   - first:
-      1: 100132
+      1: 100124
     second: petal_r_03b
   - first:
-      1: 100134
+      1: 100126
     second: petal_r_04
   - first:
-      1: 100136
+      1: 100128
     second: petal_r_04b
   - first:
-      1: 100138
+      1: 100130
     second: pollen_l
   - first:
-      1: 100140
+      1: 100132
     second: pollen_r
   - first:
-      1: 100142
+      1: 100134
     second: root
   - first:
-      1: 100144
+      1: 100136
     second: spine_02
   - first:
-      1: 100146
+      1: 100138
     second: spine_03
   - first:
-      1: 100148
+      1: 100140
     second: upperarm_l
   - first:
-      1: 100150
+      1: 100142
     second: upperarm_r
+  - first:
+      1: 100144
+    second: leaf_02b1
+  - first:
+      1: 100146
+    second: leaf_03b1
+  - first:
+      1: 100148
+    second: leaf_04b1
+  - first:
+      1: 100150
+    second: leaf_05b1
   - first:
       4: 400000
     second: //RootNode
@@ -317,151 +317,151 @@ ModelImporter:
     second: leaf_02b
   - first:
       4: 400056
-    second: leaf_02b1
-  - first:
-      4: 400058
     second: leaf_03
   - first:
-      4: 400060
+      4: 400058
     second: leaf_03b
   - first:
-      4: 400062
-    second: leaf_03b1
-  - first:
-      4: 400064
+      4: 400060
     second: leaf_04
   - first:
-      4: 400066
+      4: 400062
     second: leaf_04b
   - first:
-      4: 400068
-    second: leaf_04b1
-  - first:
-      4: 400070
+      4: 400064
     second: leaf_05b
   - first:
-      4: 400072
-    second: leaf_05b1
-  - first:
-      4: 400074
+      4: 400066
     second: lowerarm_l
   - first:
-      4: 400076
+      4: 400068
     second: lowerarm_r
   - first:
-      4: 400078
+      4: 400070
     second: neck_01
   - first:
-      4: 400080
+      4: 400072
     second: pelvis
   - first:
-      4: 400082
+      4: 400074
     second: petal_01
   - first:
-      4: 400084
+      4: 400076
     second: petal_01b
   - first:
-      4: 400086
+      4: 400078
     second: petal_01c
   - first:
-      4: 400088
+      4: 400080
     second: petal_02
   - first:
-      4: 400090
+      4: 400082
     second: petal_02b
   - first:
-      4: 400092
+      4: 400084
     second: petal_02c
   - first:
-      4: 400094
+      4: 400086
     second: petal_03
   - first:
-      4: 400096
+      4: 400088
     second: petal_03b
   - first:
-      4: 400098
+      4: 400090
     second: petal_03c
   - first:
-      4: 400100
+      4: 400092
     second: petal_04
   - first:
-      4: 400102
+      4: 400094
     second: petal_04b
   - first:
-      4: 400104
+      4: 400096
     second: petal_04c
   - first:
-      4: 400106
+      4: 400098
     second: petal_l_01
   - first:
-      4: 400108
+      4: 400100
     second: petal_l_01b
   - first:
-      4: 400110
+      4: 400102
     second: petal_l_02
   - first:
-      4: 400112
+      4: 400104
     second: petal_l_02b
   - first:
-      4: 400114
+      4: 400106
     second: petal_l_03
   - first:
-      4: 400116
+      4: 400108
     second: petal_l_03b
   - first:
-      4: 400118
+      4: 400110
     second: petal_l_04
   - first:
-      4: 400120
+      4: 400112
     second: petal_l_04b
   - first:
-      4: 400122
+      4: 400114
     second: petal_r_01
   - first:
-      4: 400124
+      4: 400116
     second: petal_r_01b
   - first:
-      4: 400126
+      4: 400118
     second: petal_r_02
   - first:
-      4: 400128
+      4: 400120
     second: petal_r_02b
   - first:
-      4: 400130
+      4: 400122
     second: petal_r_03
   - first:
-      4: 400132
+      4: 400124
     second: petal_r_03b
   - first:
-      4: 400134
+      4: 400126
     second: petal_r_04
   - first:
-      4: 400136
+      4: 400128
     second: petal_r_04b
   - first:
-      4: 400138
+      4: 400130
     second: pollen_l
   - first:
-      4: 400140
+      4: 400132
     second: pollen_r
   - first:
-      4: 400142
+      4: 400134
     second: root
   - first:
-      4: 400144
+      4: 400136
     second: spine_02
   - first:
-      4: 400146
+      4: 400138
     second: spine_03
   - first:
-      4: 400148
+      4: 400140
     second: upperarm_l
   - first:
-      4: 400150
+      4: 400142
     second: upperarm_r
   - first:
+      4: 400144
+    second: leaf_02b1
+  - first:
+      4: 400146
+    second: leaf_03b1
+  - first:
+      4: 400148
+    second: leaf_04b1
+  - first:
+      4: 400150
+    second: leaf_05b1
+  - first:
       74: 7400000
-    second: Anim_Dryad_Skill_AOE
+    second: Anim_Dryad_Idle
   - first:
       95: 9500000
     second: //RootNode
@@ -495,11 +495,11 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Anim_Dryad_Skill_AOE
-      takeName: Anim_Dryad_Skill_AOE
+      name: Anim_Dryad_Idle
+      takeName: Anim_Dryad_Idle
       internalID: 0
-      firstFrame: 81
-      lastFrame: 180
+      firstFrame: 1
+      lastFrame: 30
       wrapMode: 0
       orientationOffsetY: 0
       level: 0

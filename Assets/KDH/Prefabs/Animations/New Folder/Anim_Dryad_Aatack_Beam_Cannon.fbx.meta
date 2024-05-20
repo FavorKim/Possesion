@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 4b9e34f9c69cb764fa74794967946050
+guid: 51ff33230eda8be4f943560dd83c5d0b
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable:
@@ -461,7 +461,7 @@ ModelImporter:
     second: upperarm_r
   - first:
       74: 7400000
-    second: Anim_Dryad_Skill_AOE
+    second: Anim_Dryad_Aatack_Beam_Cannon
   - first:
       95: 9500000
     second: //RootNode
@@ -495,11 +495,11 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Anim_Dryad_Skill_AOE
-      takeName: Anim_Dryad_Skill_AOE
+      name: Anim_Dryad_Aatack_Beam_Cannon
+      takeName: Anim_Dryad_Aatack_Beam_Cannon
       internalID: 0
-      firstFrame: 81
-      lastFrame: 180
+      firstFrame: 41
+      lastFrame: 70
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
