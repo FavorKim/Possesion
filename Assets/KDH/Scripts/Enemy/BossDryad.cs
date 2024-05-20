@@ -24,6 +24,8 @@ public class BossDryad : Monsters
 
     Transform enemyTrf;
     Transform playerTrf;
+    NavMeshAgent agent;
+    
     Animator animator;
 
     //public ParticleSystem rollAttack;
@@ -32,6 +34,8 @@ public class BossDryad : Monsters
     [SerializeField] public GameObject projectile;
     public Transform[] spawnPositions;
     [SerializeField] public float shootSpeed = 800.0f;
+
+    public ParticleSystem spinAttack;
 
     readonly int hashAttack = Animator.StringToHash("IsAttack");
     readonly int hashSkill = Animator.StringToHash("animation");
@@ -42,9 +46,7 @@ public class BossDryad : Monsters
     float mstATK = 10.0f;
     float mstSPD = 10.0f;
 
-    public float traceDistance = 10f;
-    public float skillDistance = 10f;
-    public float attackDistance = 2f;
+    public float traceDistance = 1000f;
 
     public bool isDie = false;
 
@@ -55,6 +57,7 @@ public class BossDryad : Monsters
     {
         player = FindObjectOfType<PlayerController>();
         playerTrf = player.transform;
+        agent = GetComponent<NavMeshAgent>();
         enemyTrf = GetComponent<Transform>();
         animator = GetComponent<Animator>();
 
@@ -67,10 +70,13 @@ public class BossDryad : Monsters
         stateMachine.AddState(BossState.DEAD, new TraceState(this));
         stateMachine.InitState(BossState.IDLE);
 
+        agent.destination = playerTrf.position;
+        
     }
     protected virtual void Start()
     {
         StartCoroutine(BossPattern());
+        
     }
 
     protected virtual IEnumerator BossPattern()
@@ -96,9 +102,8 @@ public class BossDryad : Monsters
         */
         while (!isDie)
         {
-            yield return new WaitForSeconds(0.3f);
+            yield return new WaitForSeconds(0.1f);
 
-            
             if (Input.GetKeyDown("1"))
             {
                 i = 1;
@@ -114,6 +119,16 @@ public class BossDryad : Monsters
                 i = 3;
                 stateMachine.ChangeState(BossState.ATTACK);
             }
+            else if (Input.GetKeyDown("4"))
+            {
+                i = 4;
+                stateMachine.ChangeState(BossState.ATTACK);
+            }
+            else
+            {
+                agent.SetDestination(playerTrf.position);
+                agent.isStopped = false;
+            }
 
             /*if (state == MonsterState.DEAD)
             {
@@ -121,7 +136,6 @@ public class BossDryad : Monsters
                 yield break;
             }*/
 
-            bool isPatterned = false;
             // 특수 공격가능 상태
             /*if (isPatterned)
             {
@@ -182,6 +196,7 @@ public class BossDryad : Monsters
 
         public override void Enter()
         {
+
             if(owner.i == 1)
             {
                 owner.Skill1();
@@ -198,21 +213,6 @@ public class BossDryad : Monsters
             {
                 owner.Attack();
             }
-            /*float distance = Vector3.Distance(owner.playerTrf.position, owner.enemyTrf.position);
-
-            if (distance >= owner.attackDistance && owner.skill1_curCooltime <= 0f)
-            {
-                owner.Skill1();
-            }
-            else if (owner.skill2_curCooltime <= 0f)
-            {
-                
-                owner.Skill2();
-            }
-            else
-            {
-                owner.Attack();
-            }*/
         }
     }
 
@@ -226,73 +226,123 @@ public class BossDryad : Monsters
         }
 
     }
+    #region Attack
     public override void Attack()
     {
         animator.SetBool(hashAttack, true);
     }
-    public override void Skill1()
+    void Attack_Event()
     {
-        StartCoroutine(Skill_1());
-        //기왕이면 다 돌아가고 나서 스킬 발동?
-        /*float distance = Vector3.Distance(playerTrf.position, enemyTrf.position);
-        animator.SetBool(hashSkill1, true);*/
+        StartCoroutine(Attack_crt());
     }
-
-    IEnumerator Skill_1()
+    IEnumerator Attack_crt()
     {
         float distance;
-        
+
         distance = Vector3.Distance(playerTrf.position, enemyTrf.position);
-        
+
         GameObject pd = Instantiate(projectile, spawnPositions[0].position, Quaternion.identity) as GameObject;
         //GameObject pd2 = Instantiate(projectile, spawnPositions[0].position, Quaternion.identity) as GameObject;
         pd.transform.LookAt(playerTrf.localPosition);
         pd.GetComponent<Rigidbody>().AddForce(pd.transform.forward * shootSpeed);
         pd.GetComponent<Rigidbody>().AddForce(pd.transform.up * distance * 15.5f);
 
-
-        animator.SetInteger(hashSkill, 1);
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(1.0f);
         animator.SetInteger(hashSkill, 0);
     }
+    #endregion
 
-    IEnumerator Skill_2()
-    {
-        animator.SetInteger(hashSkill, 2);
-        yield return new WaitForSeconds(1.5f);
-        animator.SetInteger(hashSkill, 0);
-    }
-    IEnumerator Skill_3()
-    {
-        animator.SetInteger(hashSkill, 3);
-        yield return new WaitForSeconds(1.5f);
-        animator.SetInteger(hashSkill, 0);
-    }
-    /*void RAttack()
-    {
-        StartCoroutine(RollingAttack());
-    }
-    IEnumerator RollingAttack()
-    {
-        agent.isStopped = true;
-        ParticleSystem ps = Instantiate(rollAttack, this.transform); //, Quaternion.identity
-        rb.AddRelativeForce(Vector3.forward * 20f, ForceMode.VelocityChange);
-        yield return new WaitForSeconds(0.8f);
-
-        rb.velocity = Vector3.zero;
-        rb.angularVelocity = Vector3.zero;
-        //skill1_curCooltime = mstSkill1Cooltime;
-        Destroy(ps);
-        animator.SetBool(hashSkill1, false);
-    }*/
+    #region Skill2
 
     public override void Skill2()
     {
-        StartCoroutine(Skill_2());
+        animator.SetInteger(hashSkill, 2);
     }
+    void SKill_2_Event()
+    {
+        StartCoroutine(Skill_2_crt());
+    }
+
+    IEnumerator Skill_2_crt()
+    {
+        for(int i = 0; i < 20; i++)
+        {
+            GameObject pd = Instantiate(projectile, spawnPositions[0].position, Quaternion.identity) as GameObject;
+            float posX = Random.Range(-1, 1);
+            float posY = Random.Range(-1, 1);
+            pd.transform.Translate(posX, 0, posY);
+
+            pd.GetComponent<Rigidbody>().AddForce(pd.transform.forward * posX * 100.0f);
+            pd.GetComponent<Rigidbody>().AddForce(pd.transform.right * posY * 100.0f);
+            pd.GetComponent<Rigidbody>().AddForce(pd.transform.up * 1000.5f);
+        }
+        
+        yield return new WaitForSeconds(3.0f);
+        animator.SetInteger(hashSkill, 0);
+
+    }
+    #endregion
+
+    #region Skill3
 
     public void Skill3()
     {
-        StartCoroutine(Skill_3());
+        animator.SetInteger(hashSkill, 3);
     }
+    void SKill_3_Event()
+    {
+        StartCoroutine(Skill_3_crt());
+    }
+
+    IEnumerator Skill_3_crt()
+    {
+        ParticleSystem ps = Instantiate(spinAttack, this.transform); //, Quaternion.identity
+
+
+        /*
+        float time = 0;
+        while (time > 3f)
+        {
+            time += Time.deltaTime;
+            player.transform.Translate(Vector3.back);
+        
+        }*/
+        yield return new WaitForSeconds(3.0f);
+        Destroy(ps);
+        animator.SetInteger(hashSkill, 0);
+        
+    }
+    #endregion
+
+
+    #region skill1
+
+    public override void Skill1()
+    {
+        animator.SetInteger(hashSkill, 1);
+    }
+
+    void Skill_1_Event()
+    {
+        StartCoroutine(Skill_1_crt());
+    }
+
+    IEnumerator Skill_1_crt()
+    {
+        float distance;
+
+        distance = Vector3.Distance(playerTrf.position, enemyTrf.position);
+
+        GameObject pd = Instantiate(projectile, spawnPositions[0].position, Quaternion.identity) as GameObject;
+        //GameObject pd2 = Instantiate(projectile, spawnPositions[0].position, Quaternion.identity) as GameObject;
+        pd.transform.LookAt(playerTrf.localPosition);
+        pd.GetComponent<Rigidbody>().AddForce(pd.transform.forward * shootSpeed);
+        pd.GetComponent<Rigidbody>().AddForce(pd.transform.up * distance * 15.5f);
+
+        yield return new WaitForSeconds(1.0f);
+        animator.SetInteger(hashSkill, 0);
+    }
+
+    #endregion
+
 }

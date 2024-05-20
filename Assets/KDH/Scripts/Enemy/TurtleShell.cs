@@ -29,6 +29,8 @@ public class TurtleShell : Monsters
     public ParticleSystem rollAttack;
     public StateMachine stateMachine;
 
+    
+
     readonly int hashTrace = Animator.StringToHash("IsTrace");
     readonly int hashAttack = Animator.StringToHash("IsAttack");
     readonly int hashSkill1 = Animator.StringToHash("IsSkill1");

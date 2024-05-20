@@ -225,13 +225,14 @@ public class Skeleton : Monsters
         }
     }
 
+    
+    public override void Skill2()
+    {
+        animator.SetBool(hashSkill2, true);
+    }
     void SAttack()
     {
         StartCoroutine(StabAttack());
-    }
-    public void Skill2()
-    {
-        animator.SetBool(hashSkill2, true);
     }
 
     IEnumerator StabAttack()
