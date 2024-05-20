@@ -4,12 +4,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Obstacles : MonoBehaviour
+public class Obstacles : MonoBehaviour, ITyped
 {
-    public enum Type
-    {
-        NONE, LEAF = 10, FIRE = 20, CUTTER
-    }
 
     /*
     몬스터의 스킬 내지 공격이 타입을 갖고있어서
@@ -21,9 +17,11 @@ public class Obstacles : MonoBehaviour
 
     ParticleSystem ps;
     [SerializeField] private int damage;
-    [SerializeField] protected Type type;
+    [SerializeField] protected ITyped.Type myType;
+
+    public ITyped.Type type { get { return myType; } set { } }
+    
     public int Damage { get { return damage; } }
-    public Type GetObsType() { return type; }
 
     private void Awake()
     {
@@ -41,6 +39,11 @@ public class Obstacles : MonoBehaviour
         GameManager.Instance.GetDamage(this, other);
     }
 
-    public virtual void OnTypeAttacked(Type attackedType) { }
+    public virtual void OnTypeAttacked(Obstacles attackedType) { }
 
+    private void OnTriggerStay(Collider other)
+    {
+        GameManager.Instance.GetDamage(this, other.gameObject);
+
+    }
 }

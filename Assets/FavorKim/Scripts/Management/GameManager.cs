@@ -29,6 +29,7 @@ public class GameManager : MonoBehaviour
                 GameObject obj = new GameObject("GameManager");
                 obj.AddComponent<GameManager>();
                 instance = obj.GetComponent<GameManager>();
+                DontDestroyOnLoad(obj);
             }
         }
     }
@@ -37,8 +38,8 @@ public class GameManager : MonoBehaviour
     {
         if (dest.CompareTag("Player"))
             player.GetDamage(obs.Damage);
-        else if (dest.GetComponent<Obstacles>() != null)
-            SetTypeAttack(obs, dest.GetComponent<Obstacles>());
+        else if (dest.GetComponent<ITyped>() != null)
+            SetTypeAttack(obs, dest.GetComponent<ITyped>());
         else
             return;
     }
@@ -47,14 +48,17 @@ public class GameManager : MonoBehaviour
         player.GetDamage(dmg);
     }
 
-
-    public void SetTypeAttack(Obstacles from, Obstacles to)
+    /// <summary>
+    /// 몬스터가 아닌 구조물이 속성 공격을 받았을 때
+    /// </summary>
+    /// <param name="from">공격자</param>
+    /// <param name="to">피격자</param>
+    public void SetTypeAttack(Obstacles from, ITyped to)
     {
-        if ((int)from.GetObsType() > (int)to.GetObsType())
+        if ((int)from.type > (int)to.type)
         {
             // 공격자가 공격대상 속성보다 우세일 경우 실행할 내용
-            to.OnTypeAttacked(from.GetObsType());
-            //to.gameObject.SetActive(false);
+            to.OnTypeAttacked(from);
         }
         else
         {
@@ -62,6 +66,4 @@ public class GameManager : MonoBehaviour
             return;
         }
     }
-
-
 }

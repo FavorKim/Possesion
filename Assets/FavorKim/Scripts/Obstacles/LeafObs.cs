@@ -12,27 +12,20 @@ public class LeafObs : Obstacles
     {
         fire.SetActive(false);
         cutter.SetActive(false);
-        type = Type.LEAF;
+        myType = ITyped.Type.LEAF;
     }
 
-    public override void OnTypeAttacked(Type attackedType)
+    public override void OnTypeAttacked(Obstacles attackedType)
     {
-        switch (attackedType)
+        switch (attackedType.type)
         {
-            case Type.CUTTER:
+            case ITyped.Type.CUTTER:
                 cutter.SetActive(true);
                 break;
 
-            case Type.FIRE:
+            case ITyped.Type.FIRE:
                 fire.SetActive(true);
                 break;
         }
-    }
-
-
-    private void OnTriggerStay(Collider other)
-    {
-        if (other.CompareTag("Player"))
-            GameManager.Instance.GetDamage(this, other.gameObject);
     }
 }

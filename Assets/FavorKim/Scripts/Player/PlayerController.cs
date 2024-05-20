@@ -44,12 +44,6 @@ public class PlayerController : MonoBehaviour
     #region float
     [SerializeField]
     private float moveSpeed;
-    //[SerializeField]
-    //private float maxSpeed;
-    //[SerializeField]
-    //private float minSpeed;
-
-
     [SerializeField]
     private float gravityScale;
     [SerializeField]
@@ -101,6 +95,7 @@ public class PlayerController : MonoBehaviour
         //outFits.Add("Plant", plantOF);
         //outFits.Add("Player", playerOF);
         OnDead += DeadCheck;
+        OnDead += SetHPUI;
 
 
         t_fullHP.text = fullHP.ToString();
@@ -187,8 +182,10 @@ public class PlayerController : MonoBehaviour
         {
             curHP = 0;
             isDead = true;
+            isInvincible = true;
             anim.SetBool("isDead", true);
             anim.SetTrigger("Dead");
+
         }
     }
     
@@ -249,11 +246,12 @@ public class PlayerController : MonoBehaviour
 
     void OnCursor(InputValue val)
     {
-        float delta = val.Get<Vector2>().x;
+        Vector2 delta = val.Get<Vector2>();
+        float deltaX = delta.x;
 
         if (Input.GetMouseButton(1))
         {
-            transform.Rotate(new Vector3(0, delta, 0) * sensitivity * Time.deltaTime);
+            transform.Rotate(new Vector3(0, deltaX,0 ) * sensitivity * Time.deltaTime);
             heading = Camera.main.transform.localRotation * Vector3.forward;
 
         }

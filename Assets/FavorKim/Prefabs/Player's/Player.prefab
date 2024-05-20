@@ -1348,7 +1348,7 @@ MonoBehaviour:
   moveSpeed: 7
   gravityScale: 1
   jumpForce: 15
-  rayDist: 0.12
+  rayDist: 0.18
   fullHP: 100
   curHP: 100
   duration: 20
@@ -1814,6 +1814,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   point: {fileID: 1841985977192466168}
   length: 20.6
+  aimLayer:
+    serializedVersion: 2
+    m_Bits: 55
 --- !u!1 &1866617188614824503
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,14 +1,31 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
-public abstract class Monsters : MonoBehaviour
+public abstract class Monsters : MonoBehaviour, ITyped
 {
-    //protected float moveSpeed;
-    //protected GameObject VFXPrefab;
-    //protected Animator anim;
+    [SerializeField] float curHP;
+    [SerializeField] float maxHP;
+    float invincibleTime = 1.0f;
 
-    // 이펙트, 이동속도, 애니메이터 등등... 
+    bool isInvincible = false;
+
+    [SerializeField] Slider HPSlider;
+    GameObject HPHUDObj;
+
+    
+    public ITyped.Type type { get; protected set; }
+
+    public float GetHP() { return curHP; }
+
+
+    private void Start()
+    {
+        HPHUDObj = Instantiate(Resources.Load<GameObject>("HP_HUD"), transform);
+        HPSlider = HPHUDObj.GetComponentInChildren<Slider>();
+        HPSlider.value = curHP/maxHP;
+    }
 
     /// <summary>
     /// InitSkill 구체화(Skill1 쿨타임, Skill2 쿨타임) 스킬 없으면 Awake 비워두기
@@ -35,7 +52,7 @@ public abstract class Monsters : MonoBehaviour
     /// </summary>
     /// <param name="firstCoolTime">첫번째 스킬의 쿨타임 (쿨타임 없으면 0)</param>
     /// <param name="secondCoolTime">두번째 스킬의 쿨타임 (쿨타임 없으면 0)</param>
-    public void InitSkill(float firstCoolTime, float secondCoolTime) 
+    public void InitSkill(float firstCoolTime, float secondCoolTime)
     {
         skill1 = new Skill(firstCoolTime, Skill1);
         skill2 = new Skill(secondCoolTime, Skill2);
@@ -49,29 +66,61 @@ public abstract class Monsters : MonoBehaviour
         skill1 = new Skill(firstCoolTime, Skill1);
     }
 
+    /// <summary>
+    /// 몬스터 피격 함수
+    /// </summary>
+    /// <param name="dmg">공격자 공격력</param>
+    public void GetDamage(int dmg)
+    {
+        if (!isInvincible)
+        {
+            curHP -= dmg;
+            HPSlider.value = curHP / maxHP;
+            StartCoroutine(CorInvincible());
+            if (curHP <= 0)
+                gameObject.SetActive(false);
+        }
+    }
+
+
+    public virtual void OnTypeAttacked(Obstacles attacker)
+    {
+        if ((int)attacker.type > (int)type)
+            GetDamage(attacker.Damage * 2);
+        else if ((int)attacker.type == (int)type)
+            GetDamage(attacker.Damage);
+        else
+            GetDamage(attacker.Damage / 2);
+    }
+
+    IEnumerator CorInvincible()
+    {
+        isInvincible = true;
+        float org = invincibleTime;
+        while (true)
+        {
+            yield return null;
+            invincibleTime -= Time.deltaTime;
+            if (invincibleTime < 0)
+            {
+                isInvincible = false;
+                invincibleTime = org;
+                StopCoroutine(CorInvincible());
+                break;
+            }
+        }
+    }
     public Skill skill1;
     public Skill skill2;
 
     /// <summary>
     /// 스킬을 스킬 UI에 등록
     /// </summary>
-    public void SetSkill() 
+    public void SetSkill()
     {
         if (skill1 == null) return;
         SkillManager.SetSkill(skill1, 1);
-        if(skill2 == null) return;
+        if (skill2 == null) return;
         SkillManager.SetSkill(skill2, 2);
     }
-
-    //public void InitAnim(Animator anim)
-    //{
-    //    this.anim = anim;
-    //}
-
-
-    //private void OnCollisionEnter(Collision collision)
-    //{
-    //    if (collision.collider.CompareTag("Obstacles"))
-    //        GameManager.Instance.Player.SetState("Normal");
-    //}
 }

@@ -9,9 +9,10 @@ public class Hat : MonoBehaviour
     [SerializeField] float power;
     HatManager hatM;
     DOTweenAnimation dO;
-
     PlayerController player;
+    //[SerializeField] LayerMask monsterLayer;
 
+    RaycastHit hit;
     private void Awake()
     {
         hatM = FindObjectOfType<HatManager>();
@@ -31,6 +32,8 @@ public class Hat : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        Sledge();
+
         if (!other.CompareTag("Player")&&!other.CompareTag("Camera"))
         {
             if (other.CompareTag("Monster"))
@@ -46,5 +49,15 @@ public class Hat : MonoBehaviour
     {
         gameObject.SetActive(false);
         hatM.GetHatImg().SetActive(true);
+    }
+
+
+    void Sledge()
+    {
+        if (Physics.Raycast(transform.position, transform.forward, out hit, 15f))
+        {
+            hit.collider.gameObject.SendMessage("Damage", 100f, SendMessageOptions.DontRequireReceiver);
+            Debug.Log("Dmg");
+        }
     }
 }
