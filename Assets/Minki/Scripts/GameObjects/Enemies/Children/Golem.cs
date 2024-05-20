@@ -23,7 +23,7 @@ namespace Enemy
         // 적(Enemy)의 기본 스탯을 초기화하는 함수
         protected override void InitializeStats()
         {
-            Name = "EvilMage";
+            Name = "Golem";
 
             _attackSkillCount = 2;
 

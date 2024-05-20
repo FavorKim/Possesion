@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
@@ -14,9 +13,10 @@ namespace Enemy
         #region Components
 
         // 컴포넌트(Components)
-        private Animator _animator; // 적 자신의 애니메이터
+        private Animator _animator; // 적 자신의 애니메이터(Animator)
         private NavMeshAgent _navMeshAgent; // 플레이어를 추적하기 위한 네비게이션(NavMesh)
 
+        [SerializeField] private Transform[] patrolTransforms; // 순찰하는 위치들(Transform)
         public Transform _playerTransform { get; private set; } // 플레이어의 위치(Transform)
 
         #endregion Components
@@ -27,7 +27,7 @@ namespace Enemy
 
         // 애니메이터를 AI용, 빙의용으로 2개 생성하여 교환할 수 있도록 수정할 것.
 
-        private Action _attackAction;
+        private int _patrolIndex = 0; // 순찰할 때 현재 이동할 위치의 순서
 
         protected int _attackSkillCount; // 공격 기술 개수
         public bool IsPossessed { get; private set; } // 빙의 상태를 판별하는 변수
@@ -57,11 +57,8 @@ namespace Enemy
         #region Delegates
 
         // 대리자 (코루틴용)
-        private delegate void CorDelegate(); // 대리자
+        private UnityAction _unityAction;
         private bool isCorRunning = false; // 코루틴의 중복 실행을 방지하기 위한 변수
-        
-        UnityAction _unityAction;
-
 
         #endregion Delegates
 
@@ -150,7 +147,7 @@ namespace Enemy
             _animator.SetBool("Chase", false);
             _animator.SetInteger("AttackIndex", 0);
 
-            Debug.Log("Enemy's BeingPossessed() is Called.");
+            // Debug.Log("Enemy's BeingPossessed() is Called.");
         }
 
         // 피격을 담당하는 함수
@@ -159,7 +156,7 @@ namespace Enemy
             // 피격 애니메이션을 재생한다.
             _animator.SetTrigger("GetHit");
 
-            Debug.Log("Enemy's GetHit() is Called.");
+            // Debug.Log("Enemy's GetHit() is Called.");
         }
 
         // 죽음을 담당하는 함수
@@ -169,20 +166,58 @@ namespace Enemy
             _animator.SetTrigger("Die");
 
             // 게임 오브젝트를 비활성화한다. 단, 죽음 애니메이션이 끝난 후 호출해야 하므로 일정 시간 여유를 둔다.
-            StartCoroutine(SetDelay(3.0f, () => gameObject.SetActive(false), false)); // 약 3.0초 후 호출한다.
+            StartCoroutine(SetDelay(3.0f, () => gameObject.SetActive(false), isCallFirst: false)); // 약 3.0초 후 호출한다.
 
-            Debug.Log("Enemy's Die() is Called.");
+            // Debug.Log("Enemy's Die() is Called.");
         }
 
         // 순찰을 구현하는 함수
         public virtual void Patrol()
         {
-            // 순찰 애니메이션을 재생한다.
-            _animator.SetBool("Patrol", true);
-            // _animator.SetBool("LookAround", false);
-            _animator.SetBool("Chase", false);
+            // 순찰의 종류
+            
+            // 1. 가만히 서서 주변을 둘러본다.
+            UnityAction lookAround = () =>
+            {
+                // 주변을 둘러보는 애니메이션을 재생한다.
+                _animator.SetBool("LookAround", true);
+                _animator.SetBool("Patrol", false);
+                _animator.SetBool("Chase", false);
 
-            Debug.Log("Enemy's Patrol() is Called.");
+                // 다음 순찰 위치를 지정한다.
+                _patrolIndex = ++_patrolIndex % patrolTransforms.Length;
+            };
+
+            // 2. 일정 구역을 돌아다닌다.
+            UnityAction patrol = () =>
+            {
+                // 돌아다니는 애니메이션을 재생한다.
+                _animator.SetBool("Patrol", true);
+                _animator.SetBool("LookAround", false);
+                _animator.SetBool("Chase", false);
+
+                // 정해진 순찰 구역으로 이동한다.
+                _navMeshAgent.SetDestination(patrolTransforms[_patrolIndex].position);
+            };
+
+            // 기본적으로, (그리고 주변을 둘러보는 함수가 실행 중이지 않을 때,)
+            if (!isCorRunning)
+            {
+                // 돌아다니는 애니메이션을 재생한다.
+                _animator.SetBool("Patrol", true);
+                _animator.SetBool("LookAround", false);
+                _animator.SetBool("Chase", false);
+
+                // 정해진 순찰 구역으로 이동한다.
+                _navMeshAgent.SetDestination(patrolTransforms[_patrolIndex].position);
+            }
+
+            // 순찰 목적지까지 이동했다면,
+            if (!_navMeshAgent.pathPending && _navMeshAgent.remainingDistance <= _navMeshAgent.stoppingDistance && !isCorRunning)
+            {
+                // 잠시 주변을 둘러본다. (약 5.0초간)
+                StartCoroutine(SetDelay(5.0f, lookAround, isCallFirst: true));
+            }
         }
 
         // 추적을 구현하는 함수
@@ -195,14 +230,14 @@ namespace Enemy
             // → NavMesh로 재구현할 것.
             _navMeshAgent.SetDestination(_playerTransform.position);
 
-            Debug.Log("Enemy's Chase() is Called.");
+            // Debug.Log("Enemy's Chase() is Called.");
         }
 
         // 공격을 구현하는 함수
         public virtual void Attack()
         {
             // 공격 스킬을 바꿀 주기
-            float changeTime = 3.0f;
+            float changeTime = 1.0f;
 
             // 소지한 공격 스킬 중 무작위로 하나를 고른다.
             int curAttackIndex = UnityEngine.Random.Range(1, _attackSkillCount + 1);
@@ -229,10 +264,10 @@ namespace Enemy
             // 코루틴을 사용하여, 일정 주기마다 스킬을 달리하여 공격한다.
             if (!isCorRunning)
             {
-                StartCoroutine(SetDelay(changeTime, _unityAction, true));
+                StartCoroutine(SetDelay(changeTime, _unityAction, isCallFirst: true));
             }
 
-            Debug.Log("Enemy's Attack() is Called.");
+            // Debug.Log("Enemy's Attack() is Called.");
         }
 
         public virtual void Attack01()
