@@ -14,7 +14,7 @@ namespace Enemy
 
         // 컴포넌트(Components)
         private Animator _animator; // 적 자신의 애니메이터(Animator)
-        private NavMeshAgent _navMeshAgent; // 플레이어를 추적하기 위한 네비게이션(NavMesh)
+        protected NavMeshAgent _navMeshAgent; // 플레이어를 추적하기 위한 네비게이션(NavMesh)
 
         [SerializeField] private Transform[] patrolTransforms; // 순찰하는 위치들(Transform)
         public Transform _playerTransform { get; private set; } // 플레이어의 위치(Transform)
@@ -56,7 +56,7 @@ namespace Enemy
 
         #region Delegates
 
-        // 대리자 (코루틴용)
+        // 대리자
         private UnityAction _unityAction;
         private bool isCorRunning = false; // 코루틴의 중복 실행을 방지하기 위한 변수
 
@@ -75,6 +75,11 @@ namespace Enemy
 
             // 현재 Scene에서 "PlayerController" 스크립트를 가진 게임 오브젝트(= 플레이어)를 찾는다.
             _playerTransform = FindObjectOfType<PlayerController>().GetComponent<Transform>();
+
+            // NavMeshAgent의 속성 값을 조절한다.
+            _navMeshAgent.speed = MoveSpeed; // 추적 속도를 이동 속도로 지정한다.
+            _navMeshAgent.stoppingDistance = AttackRange; // 정지 거리를 공격 범위로 지정한다.
+            
         }
 
         #endregion Awake()
@@ -228,6 +233,7 @@ namespace Enemy
             _animator.SetInteger("AttackIndex", 0);
 
             // → NavMesh로 재구현할 것.
+            _navMeshAgent.isStopped = false;
             _navMeshAgent.SetDestination(_playerTransform.position);
 
             // Debug.Log("Enemy's Chase() is Called.");
@@ -236,6 +242,12 @@ namespace Enemy
         // 공격을 구현하는 함수
         public virtual void Attack()
         {
+            // !! 중요 !!
+            // 공격을 수행하기 전, 적이 플레이어를 바라보고 있어야 한다. 현재는 플레이어 근처에 있다면 방향에 상관 없이 공격을 수행하고 있다.
+
+            // 추적을 멈춘다.
+            _navMeshAgent.isStopped = true;
+
             // 공격 스킬을 바꿀 주기
             float changeTime = 1.0f;
 

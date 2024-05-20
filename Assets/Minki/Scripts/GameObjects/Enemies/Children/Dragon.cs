@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace Enemy
 {
@@ -42,7 +43,7 @@ namespace Enemy
             Skill2Damage = 100;
             Skill3Damage = 0; // Attack03이 존재하지 않는다.
             SkillCoolTime = 100;
-            AttackRange = 4.0f;
+            AttackRange = 6.0f;
             DetectRange = 10.0f;
         }
 
@@ -71,7 +72,15 @@ namespace Enemy
 
         public override void Attack()
         {
-            base.Attack();
+            // 플레이어와의 거리가 1번 공격의 사정 범위보다 멀 경우, 2번 공격만 시전한다.
+            if (_navMeshAgent.remainingDistance > 3.0f)
+            {
+                Attack02();
+            }
+            else // 그 외에는 무작위로 공격한다.
+            {
+                base.Attack();
+            }
 
             Debug.Log("Dragon's Attack!");
         }

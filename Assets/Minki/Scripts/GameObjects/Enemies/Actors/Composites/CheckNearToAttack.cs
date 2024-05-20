@@ -9,20 +9,16 @@ namespace Enemy
         // 적(Enemy) 클래스
         private Enemy _enemy;
 
-        // 필드(Field)
-        private float _attackRange; // 공격을 시전하는 범위
-
         // 생성자
         public CheckNearToAttack(Enemy enemy)
         {
             _enemy = enemy;
-            _attackRange = enemy.AttackRange;
         }
 
         public override NodeState Evaluate()
         {
             // 적과 플레이어 사이의 거리가 일정 미만(공격 범위 내)일 경우,
-            if (Vector3.Distance(_enemy.transform.position, _enemy._playerTransform.position) <= _attackRange)
+            if (Vector3.Distance(_enemy.transform.position, _enemy._playerTransform.position) <= _enemy.AttackRange)
             {
                 //Debug.Log("Enemy Attack Success!");
 
