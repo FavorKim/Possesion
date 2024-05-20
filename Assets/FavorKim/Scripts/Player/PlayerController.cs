@@ -117,6 +117,7 @@ public class PlayerController : MonoBehaviour
         if (isDead) return;
         state.StateUpdate();
         SetHPUI();
+
         PlayerMove();
 
     }
@@ -215,9 +216,9 @@ public class PlayerController : MonoBehaviour
     {
 
         dir = val.Get<Vector2>();
-        MoveDir = new Vector3(dir.x, 0, dir.y);
-        PlayerMove();
-        //Debug.Log(heading);
+
+        MoveDir = transform.TransformDirection(new Vector3(dir.x, 0, dir.y));
+        MoveDir *= moveSpeed * Time.deltaTime;
         if (MoveDir != Vector3.zero)
         {
             anim.SetBool("isRun", true);
@@ -231,7 +232,8 @@ public class PlayerController : MonoBehaviour
 
         anim.SetFloat("vecX", dir.x);
         anim.SetFloat("vecY", dir.y);
-
+        PlayerMove();
+        //Debug.Log(heading);
     }
 
     void OnJump(InputValue val) { if (val.isPressed) state.StateOnJump(); }
