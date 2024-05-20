@@ -95,6 +95,7 @@ public class PlayerController : MonoBehaviour
         //outFits.Add("Plant", plantOF);
         //outFits.Add("Player", playerOF);
         OnDead += DeadCheck;
+        OnDead += SetHPUI;
 
 
         t_fullHP.text = fullHP.ToString();
@@ -181,8 +182,10 @@ public class PlayerController : MonoBehaviour
         {
             curHP = 0;
             isDead = true;
+            isInvincible = true;
             anim.SetBool("isDead", true);
             anim.SetTrigger("Dead");
+
         }
     }
     
