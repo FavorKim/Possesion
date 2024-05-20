@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,23 +15,35 @@ public abstract class Monsters : MonoBehaviour, ITyped
     [SerializeField] Slider HPSlider;
     GameObject HPHUDObj;
 
-    
-    public ITyped.Type type { get; protected set; }
+    [SerializeField] protected ITyped.Type myType;
+    public ITyped.Type type { get { return myType; } }
 
     public float GetHP() { return curHP; }
-
-
-    private void Start()
-    {
-        HPHUDObj = Instantiate(Resources.Load<GameObject>("HP_HUD"), transform);
-        HPSlider = HPHUDObj.GetComponentInChildren<Slider>();
-        HPSlider.value = curHP/maxHP;
-    }
 
     /// <summary>
     /// InitSkill 구체화(Skill1 쿨타임, Skill2 쿨타임) 스킬 없으면 Awake 비워두기
     /// </summary>
-    public abstract void Awake();
+    protected virtual void Awake() 
+    {
+        InitHPUI();
+        /*
+        스킬 1개인 애랑
+        2개인 애
+        없는 애
+        InitSkill(); << 스킬 UI에 등록을 시킬 수 있다.
+        */
+    }
+
+    /*
+    
+    공격1
+    
+    공격2
+    
+    공격3
+    
+    */
+
 
     /// <summary>
     /// 공격 추상함수
@@ -82,6 +95,12 @@ public abstract class Monsters : MonoBehaviour, ITyped
         }
     }
 
+    public void EnterPossess()
+    {
+        OnPossessed();
+    }
+
+
 
     public virtual void OnTypeAttacked(Obstacles attacker)
     {
@@ -92,6 +111,20 @@ public abstract class Monsters : MonoBehaviour, ITyped
         else
             GetDamage(attacker.Damage / 2);
     }
+
+    void InitHPUI()
+    {
+        HPHUDObj = Instantiate(Resources.Load<GameObject>("HP_HUD"), transform);
+        HPSlider = HPHUDObj.GetComponentInChildren<Slider>();
+        HPSlider.value = curHP / maxHP;
+    }
+
+    /// <summary>
+    /// 빙의 상태 진입 시 호출되는 이벤트. Awake(혹은 Start)에서 OnPossessed+=으로 구독.
+    /// </summary>
+    protected event Action OnPossessed;
+
+
 
     IEnumerator CorInvincible()
     {

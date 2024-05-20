@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -6,6 +7,11 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
+
+/*
+플레이어 카메라 무브 이전 방법으로 움직이는게 상하조절이 가능해서 좋을 듯
+
+*/
 public class PlayerController : MonoBehaviour
 {
     #region Variable
@@ -16,6 +22,7 @@ public class PlayerController : MonoBehaviour
     PlayerStateMachine state;
     Animator anim;
     Animator monAnim;
+    DOTweenAnimation knockBack;
 
     [SerializeField] Transform lookAtTransform;
     [SerializeField] HatManager hatM;
@@ -89,6 +96,7 @@ public class PlayerController : MonoBehaviour
         state = new PlayerStateMachine(this);
         sM = new SkillManager(skill1Gauge, skill2Gauge);
 
+        knockBack = GetComponent<DOTweenAnimation>();
         //skill1 = new Skill("test1", 5, () => { Debug.Log("skill1"); }, skill1Gauge);
 
         //outFits.Add("Goblin", goblinOF);
@@ -127,6 +135,8 @@ public class PlayerController : MonoBehaviour
         MoveDir += Quaternion.Euler(0, 90, 0) * heading * dir.x * Time.deltaTime * moveSpeed;
     }
 
+
+
     void SetHPUI()
     {
         t_curHP.text = curHP.ToString();
@@ -164,10 +174,10 @@ public class PlayerController : MonoBehaviour
     {
         if (isInvincible) return;
 
-        if (state.IsPossessing()) 
+        if (state.IsPossessing())
         {
-            SetState("Normal");  
-            return; 
+            SetState("Normal");
+            return;
         }
 
         curHP -= dmg;
@@ -188,16 +198,20 @@ public class PlayerController : MonoBehaviour
 
         }
     }
-    
+
+    public void KnockBack(Vector3 dir, float duration, float length)
+    {
+        //Debug.Log(dir);
+        transform.DOMove((dir + transform.position).normalized * length, duration);
+    }
 
     #endregion
 
     #region Event
-    
 
     void OnMove(InputValue val)
     {
-        
+
         dir = val.Get<Vector2>();
         MoveDir = new Vector3(dir.x, 0, dir.y);
         PlayerMove();
@@ -211,16 +225,16 @@ public class PlayerController : MonoBehaviour
             anim.SetBool("isRun", false);
         }
 
-        
 
-        anim.SetFloat("vecX",  dir.x);
-        anim.SetFloat("vecY",  dir.y);
+
+        anim.SetFloat("vecX", dir.x);
+        anim.SetFloat("vecY", dir.y);
 
     }
 
     void OnJump(InputValue val) { if (val.isPressed) state.StateOnJump(); }
 
-    void OnAttack(InputValue val) { if (val.isPressed) state.StateOnAttack(); }
+    void OnAttack(InputValue val) { if (val.isPressed) state.StateOnAttack(); KnockBack(transform.forward, 2, 50); }
 
     void OnThrowHat(InputValue val)
     {
@@ -251,9 +265,9 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetMouseButton(1))
         {
-            transform.Rotate(new Vector3(0, deltaX,0 ) * sensitivity * Time.deltaTime);
+            transform.Rotate(new Vector3(0, deltaX, 0) * sensitivity * Time.deltaTime);
             heading = Camera.main.transform.localRotation * Vector3.forward;
-
+            // 산나비 때 썼던 쉐이더 그래프 끌고와서 조준선으로 만들면 좋을 것
         }
     }
 
@@ -271,7 +285,7 @@ public class PlayerController : MonoBehaviour
         {
             yield return null;
             invincibleTime -= Time.deltaTime;
-            if(invincibleTime < 0)
+            if (invincibleTime < 0)
             {
                 isInvincible = false;
                 invincibleTime = org;
@@ -284,7 +298,7 @@ public class PlayerController : MonoBehaviour
 
 public class Skill
 {
-    public Skill( float maxCD, Action effect)
+    public Skill(float maxCD, Action effect)
     {
         this.effect = effect;
         this.maxCD = maxCD;

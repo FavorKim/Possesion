@@ -199,8 +199,11 @@ public class PossessState : PlayerState
     {
         /*
         애니메이션 호출
-         */
+        */
 
+        Debug.Log(mon);
+        
+        mon.EnterPossess();
 
         mon.SetSkill();
         durationGauge.gameObject.SetActive(true);
@@ -217,6 +220,12 @@ public class PossessState : PlayerState
         _mon.transform.parent = player.transform;
         _mon.transform.localPosition = Vector3.zero;
         _mon.transform.localEulerAngles = Vector3.zero;
+        if(_mon.GetComponent<Rigidbody>() != null)
+        {
+            _mon.GetComponent<Rigidbody>().velocity = Vector3.zero;
+            _mon.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
+            //_mon.GetComponent<Rigidbody>().isKinematic = true;
+        }
 
         Enter();
     }

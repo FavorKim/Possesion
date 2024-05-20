@@ -44,6 +44,5 @@ public class Obstacles : MonoBehaviour, ITyped
     private void OnTriggerStay(Collider other)
     {
         GameManager.Instance.GetDamage(this, other.gameObject);
-
     }
 }
