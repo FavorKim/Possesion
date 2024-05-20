@@ -246,11 +246,12 @@ public class PlayerController : MonoBehaviour
 
     void OnCursor(InputValue val)
     {
-        float delta = val.Get<Vector2>().x;
+        Vector2 delta = val.Get<Vector2>();
+        float deltaX = delta.x;
 
         if (Input.GetMouseButton(1))
         {
-            transform.Rotate(new Vector3(0, delta, 0) * sensitivity * Time.deltaTime);
+            transform.Rotate(new Vector3(0, deltaX,0 ) * sensitivity * Time.deltaTime);
             heading = Camera.main.transform.localRotation * Vector3.forward;
 
         }
