@@ -19306,7 +19306,7 @@ GameObject:
   - component: {fileID: 4961155425873038803}
   m_Layer: 0
   m_Name: SunVisor
-  m_TagString: Untagged
+  m_TagString: Hat
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -19540,6 +19540,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   power: 20
+  monsterLayer:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!82 &4961155425873038803
 AudioSource:
   m_ObjectHideFlags: 0

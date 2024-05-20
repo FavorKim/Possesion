@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Slime : Monsters
+public class Slime : Monsters, ITyped
 {
 
 

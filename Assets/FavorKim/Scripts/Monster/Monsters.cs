@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public abstract class Monsters : MonoBehaviour
+public abstract class Monsters : MonoBehaviour, ITyped
 {
     [SerializeField] float curHP;
     [SerializeField] float maxHP;
@@ -13,6 +13,9 @@ public abstract class Monsters : MonoBehaviour
 
     [SerializeField] Slider HPSlider;
     GameObject HPHUDObj;
+
+    
+    public ITyped.Type type { get; protected set; }
 
     public float GetHP() { return curHP; }
 
@@ -63,6 +66,10 @@ public abstract class Monsters : MonoBehaviour
         skill1 = new Skill(firstCoolTime, Skill1);
     }
 
+    /// <summary>
+    /// 몬스터 피격 함수
+    /// </summary>
+    /// <param name="dmg">공격자 공격력</param>
     public void GetDamage(int dmg)
     {
         if (!isInvincible)
@@ -73,6 +80,17 @@ public abstract class Monsters : MonoBehaviour
             if (curHP <= 0)
                 gameObject.SetActive(false);
         }
+    }
+
+
+    public virtual void OnTypeAttacked(Obstacles attacker)
+    {
+        if ((int)attacker.type > (int)type)
+            GetDamage(attacker.Damage * 2);
+        else if ((int)attacker.type == (int)type)
+            GetDamage(attacker.Damage);
+        else
+            GetDamage(attacker.Damage / 2);
     }
 
     IEnumerator CorInvincible()
