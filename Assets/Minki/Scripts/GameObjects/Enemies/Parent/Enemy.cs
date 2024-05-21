@@ -16,6 +16,7 @@ namespace Enemy
         private Animator _animator; // 적 자신의 애니메이터(Animator)
         private NavMeshAgent _navMeshAgent; // 플레이어를 추적하기 위한 네비게이션(NavMesh)
         [SerializeField] private RuntimeAnimatorController _poAnimator; // 빙의 시 애니메이터
+        [SerializeField] private RuntimeAnimatorController _AIAnimator; // 일반 애니메이터
 
         [SerializeField] private Transform[] patrolTransforms; // 순찰하는 위치들(Transform)
         public Transform _playerTransform { get; private set; } // 플레이어의 위치(Transform)
@@ -78,6 +79,9 @@ namespace Enemy
 
             // 현재 Scene에서 "PlayerController" 스크립트를 가진 게임 오브젝트(= 플레이어)를 찾는다.
             _playerTransform = FindObjectOfType<PlayerController>().GetComponent<Transform>();
+
+            // 일반 애니메이터 저장
+            _AIAnimator = _animator.runtimeAnimatorController;
         }
 
         #endregion Awake()
@@ -163,6 +167,8 @@ namespace Enemy
             _animator.SetInteger("AttackIndex", 0);
             */
             
+            // 애니메이션 초기화 함수 단, 매 프레임마다 호출될 것
+            _animator.Rebind();
 
             //Debug.Log("Enemy's BeingPossessed() is Called.");
         }
@@ -177,9 +183,17 @@ namespace Enemy
             if (_poAnimator != null)
                 _animator.runtimeAnimatorController = _poAnimator;
             // ! 빙의 해제 시 애니메이터 원래대로 설정할 것
-
+            else
             // 2안. 기존 애니메이터를 사용하고, 애니메이션이 Attack01, Attack02로 전이할 수 있는 Chase상태를 유지시키는 방식
-            //_animator.SetBool("Chase", true);
+            _animator.SetBool("Chase", true);
+
+            _navMeshAgent.ResetPath();
+        }
+
+        // 빙의 탈출 시 한번만 호출되는 함수
+        public void OffPossess()
+        {
+            _animator.runtimeAnimatorController = _AIAnimator;
         }
 
         // 피격을 담당하는 함수
@@ -206,6 +220,7 @@ namespace Enemy
         // 순찰을 구현하는 함수
         public virtual void Patrol()
         {
+            Debug.Log("Pat");
             // 순찰의 종류
             
             // 1. 가만히 서서 주변을 둘러본다.
@@ -255,6 +270,8 @@ namespace Enemy
         // 추적을 구현하는 함수
         public virtual void Chase()
         {
+            Debug.Log("chase");
+
             // 추적 애니메이션을 재생한다.
             _animator.SetBool("Chase", true);
             _animator.SetInteger("AttackIndex", 0);

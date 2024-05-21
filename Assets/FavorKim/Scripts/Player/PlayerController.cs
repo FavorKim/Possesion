@@ -119,8 +119,8 @@ public class PlayerController : MonoBehaviour
         state.StateUpdate();
         SetHPUI();
 
-        PlayerMove();
         playerFoward.position = camTransform.position + new Vector3(0, 1.0f, 0);
+        PlayerMove();
     }
 
     private void FixedUpdate()

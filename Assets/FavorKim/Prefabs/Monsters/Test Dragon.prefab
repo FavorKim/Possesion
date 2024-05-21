@@ -5260,8 +5260,8 @@ MonoBehaviour:
   HPSlider: {fileID: 0}
   myType: 0
   _poAnimator: {fileID: 9100000, guid: 55f88f653e0d91c4caafeae441f4be94, type: 2}
+  _AIAnimator: {fileID: 0}
   patrolTransforms:
-  - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   _fireParticle: {fileID: 5455071482461848145}
