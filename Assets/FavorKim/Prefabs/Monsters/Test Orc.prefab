@@ -1675,7 +1675,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3845842770581226697}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 95.15271, y: -0.000011920929, z: 900.4088}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1762,6 +1762,7 @@ MonoBehaviour:
   HPSlider: {fileID: 0}
   myType: 0
   _poAnimator: {fileID: 0}
+  _AIAnimator: {fileID: 0}
   patrolTransforms:
   - {fileID: 0}
   - {fileID: 0}

@@ -162,6 +162,7 @@ namespace Enemy
         // 빙의를 담당하는 함수 (빙의 중일 때 지속적으로 호출)
         public virtual void BeingPossessed()
         {
+            /*
             // 모든 애니메이션을 초기화한다.
             _animator.SetBool("Patrol", false);
             _animator.SetBool("LookAround", false);
@@ -171,6 +172,7 @@ namespace Enemy
             
             /// 애니메이션 초기화 함수 단, 매 프레임마다 호출될 것
             _animator.Rebind();
+            */
 
             //Debug.Log("Enemy's BeingPossessed() is Called.");
         }
@@ -180,7 +182,6 @@ namespace Enemy
         {
             /// 애니메이션 초기화 함수
             _animator.Rebind();
-
             /// 1안. 애니메이터를 추가하고, 빙의시 애니메이터를 교체하는 방식
             if (_poAnimator != null)
                 _animator.runtimeAnimatorController = _poAnimator;
@@ -188,11 +189,12 @@ namespace Enemy
             else
             /// 2안. 기존 애니메이터를 사용하고, 애니메이션이 Attack01, Attack02로 전이할 수 있는 Chase상태를 유지시키는 방식
             _animator.SetBool("Chase", true);
+            
 
             _navMeshAgent.ResetPath();
 
          
-            ///1안의 경우 : 모든 몬스터에 각각 애니메이터를 생성한다. 빙의 시작과 빙의 끝에서 애니메이터 변경 함수를 호출한다.
+            ///1안의 경우 : 모든 몬스터에 각각 애니메이터를 생성한다. 빙의 시작과 빙의 끝에서 애니메이터를 변경한다.
             ///2안의 경우 : 모든 몬스터가 빙의 중에 Chase 상태의 애니메이션으로 고정된다. (움직이지 않아도 계속 걸어다닐 것)
         }
 
@@ -233,7 +235,6 @@ namespace Enemy
         // 순찰을 구현하는 함수
         public virtual void Patrol()
         {
-            Debug.Log("Pat");
             // 순찰의 종류
             
             // 1. 가만히 서서 주변을 둘러본다.
@@ -283,8 +284,6 @@ namespace Enemy
         // 추적을 구현하는 함수
         public virtual void Chase()
         {
-            Debug.Log("chase");
-
             // 추적 애니메이션을 재생한다.
             _animator.SetBool("Chase", true);
             _animator.SetInteger("AttackIndex", 0);

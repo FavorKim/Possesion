@@ -321,6 +321,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5e5d0c487c326b428d7618c8d866abd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  curHP: 50
+  maxHP: 50
+  HPSlider: {fileID: 0}
+  myType: 0
   player: {fileID: 0}
   projectile: {fileID: 128572, guid: 1ffd246d8771ab647bc3bfff5324acaf, type: 3}
   shootSpeed: 800
@@ -331,7 +335,7 @@ MonoBehaviour:
   mstATK: 10
   mstSkill1Cooltime: 3
   mstSkill2Cooltime: 3
-  traceDistance: 0
+  traceDistance: 10
   skillDistance: 10
   attackDistance: 5
   isDie: 0
@@ -2277,6 +2281,7 @@ GameObject:
   - component: {fileID: 7164519730727832985}
   - component: {fileID: 3423851955851709836}
   - component: {fileID: 323987463597780456}
+  - component: {fileID: 6378451566206153563}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -2332,6 +2337,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0fd78df25108bc846adec1e918d54c0f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &6378451566206153563
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 184201243646999636}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2910bd8bcd3b3c541b9e725423d9aebf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 10
+  myType: 21
 --- !u!1 &2061305424454103110
 GameObject:
   m_ObjectHideFlags: 0
