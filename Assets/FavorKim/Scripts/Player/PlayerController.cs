@@ -119,8 +119,8 @@ public class PlayerController : MonoBehaviour
         state.StateUpdate();
         SetHPUI();
 
-        PlayerMove();
         playerFoward.position = camTransform.position + new Vector3(0, 1.0f, 0);
+        PlayerMove();
     }
 
     private void FixedUpdate()
@@ -147,7 +147,7 @@ public class PlayerController : MonoBehaviour
         MoveDir = heading * dir.y * Time.deltaTime * moveSpeed;
         MoveDir += Quaternion.Euler(0, 90, 0) * heading * dir.x * Time.deltaTime * moveSpeed;
         */
-        MoveDir = transform.TransformDirection(new Vector3(dir.x, 0, dir.y));
+        MoveDir = camTransform.TransformDirection(new Vector3(dir.x, 0, dir.y));
         MoveDir *= moveSpeed * Time.deltaTime;
     }
 
@@ -229,7 +229,7 @@ public class PlayerController : MonoBehaviour
 
         dir = val.Get<Vector2>();
 
-        MoveDir = transform.TransformDirection(new Vector3(dir.x, 0, dir.y));
+        MoveDir = camTransform.TransformDirection(new Vector3(dir.x, 0, dir.y));
         MoveDir *= moveSpeed * Time.deltaTime;
         if (MoveDir != Vector3.zero)
         {
@@ -244,7 +244,7 @@ public class PlayerController : MonoBehaviour
 
         anim.SetFloat("vecX", dir.x);
         anim.SetFloat("vecY", dir.y);
-        PlayerMove();
+        //PlayerMove();
         //Debug.Log(heading);
     }
 

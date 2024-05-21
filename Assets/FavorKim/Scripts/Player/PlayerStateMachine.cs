@@ -280,6 +280,8 @@ public class PossessState : PlayerState
 
         player.transform.position = mon.transform.position;
         mon.transform.parent = null;
+        player.GetCC().Move(mon.transform.position - player.transform.position);
+
 
         // 임시로 오브젝트를 비활성화했지만, 몬스터가 죽었을 때의 행동을 호출할 것임
         //mon.gameObject.SetActive(false);
