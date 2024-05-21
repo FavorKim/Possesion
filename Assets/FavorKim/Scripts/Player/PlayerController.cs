@@ -127,11 +127,15 @@ public class PlayerController : MonoBehaviour
 
     void PlayerMove()
     {
+        /*
         heading = Camera.main.transform.localRotation * Vector3.forward;
         heading.y = 0;
         heading = heading.normalized;
         MoveDir = heading * dir.y * Time.deltaTime * moveSpeed;
         MoveDir += Quaternion.Euler(0, 90, 0) * heading * dir.x * Time.deltaTime * moveSpeed;
+        */
+        MoveDir = transform.TransformDirection(new Vector3(dir.x, 0, dir.y));
+        MoveDir *= moveSpeed * Time.deltaTime;
     }
 
 
@@ -263,7 +267,7 @@ public class PlayerController : MonoBehaviour
         //float deltaX = delta.x;
         //transform.Rotate(new Vector3(0, delta.x, delta.y) * sensitivity * Time.deltaTime);
 
-        if (!isDead)
+        if (!isDead && Input.GetMouseButton(1))
         {
             LookAtPlayer(camTransform);
         }
