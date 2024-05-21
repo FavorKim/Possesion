@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 407474}
   - component: {fileID: 19846080}
   - component: {fileID: 19909894}
+  - component: {fileID: -7824506531056102114}
   m_Layer: 0
   m_Name: StabAttack
   m_TagString: Untagged
@@ -4814,6 +4815,20 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!114 &-7824506531056102114
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 101470}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2910bd8bcd3b3c541b9e725423d9aebf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 20
+  myType: 21
 --- !u!1 &164484
 GameObject:
   m_ObjectHideFlags: 0

@@ -203,8 +203,9 @@ public class PossessState : PlayerState
         애니메이션 호출
         */
 
-        GameManager.Instance.SetCameraFollow(mon.transform);
         player.CameraTransform = mon.transform;
+        GameManager.Instance.SetCameraFollow(player.CameraTransform);
+        GameManager.Instance.SetCameraLookAt(player.GetPlayerFoward());
 
         mon.SetSkill();
         durationGauge.gameObject.SetActive(true);
@@ -218,15 +219,16 @@ public class PossessState : PlayerState
 
         player.GetCC().Move(mon.transform.position - player.transform.position);
 
-        _mon.transform.parent = player.transform;
-        _mon.transform.localPosition = Vector3.zero;
-        _mon.transform.localEulerAngles = Vector3.zero;
         if(_mon.GetComponent<Rigidbody>() != null)
         {
             _mon.GetComponent<Rigidbody>().velocity = Vector3.zero;
             _mon.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
             //_mon.GetComponent<Rigidbody>().isKinematic = true;
         }
+
+        _mon.transform.parent = player.transform;
+        _mon.transform.localPosition = Vector3.zero;
+        _mon.transform.localEulerAngles = Vector3.zero;
 
         Enter();
     }
@@ -275,8 +277,8 @@ public class PossessState : PlayerState
 
     public override void Exit()
     {
-        player.transform.position = mon.transform.position;
 
+        player.transform.position = mon.transform.position;
         mon.transform.parent = null;
 
         // 임시로 오브젝트를 비활성화했지만, 몬스터가 죽었을 때의 행동을 호출할 것임
@@ -287,7 +289,9 @@ public class PossessState : PlayerState
         player.CameraTransform = player.transform;
 
         FXManager.Instance.PlayFX("PoExit", player.transform.position);
-        GameManager.Instance.SetCameraFollow(player.transform);
+
+        GameManager.Instance.SetCameraFollow(player.CameraTransform);
+        GameManager.Instance.SetCameraLookAt(player.GetPlayerFoward());
 
         durationGauge.gameObject.SetActive(false);
     }

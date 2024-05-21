@@ -134,11 +134,8 @@ public class Skeleton : Monsters
         //{
         //    skill2_curCooltime -= Time.deltaTime;
         //}
-        if (!isPlayer)
-        {
             animator.SetFloat("FloatX", rb.velocity.x * 100f);
             animator.SetFloat("FloatY", rb.velocity.z * 100f);
-        }
     }
 
     class BaseEnemyState : BaseState

@@ -28,7 +28,8 @@ namespace Enemy
         public void DoBeingPossessed()
         {
             // 빙의 함수를 실행한다.
-            //_enemy.BeingPossessed();
+            _enemy.BeingPossessed();
+            
         }
     }
 }
