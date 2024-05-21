@@ -34,7 +34,6 @@ public class Hat : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Sledge();
 
         if (!other.CompareTag("Player")&&!other.CompareTag("Camera"))
         {
@@ -54,12 +53,4 @@ public class Hat : MonoBehaviour
     }
 
 
-    void Sledge()
-    {
-        if (Physics.Raycast(transform.position, transform.forward, out hit, 15f))
-        {
-            hit.collider.gameObject.SendMessage("Damage", 100f, SendMessageOptions.DontRequireReceiver);
-            Debug.Log("Dmg");
-        }
-    }
 }
