@@ -24,19 +24,22 @@ namespace Enemy
         {
             Name = "Spider";
 
-            _attackSkillCount = 2;
+            _attackSkillCount = 3;
 
             HealthPoint = 100;
             MagicPoint = 100;
-            MoveSpeed = 100;
-            JumpSpeed = 100;
+            MoveSpeed = 6;
+            JumpSpeed = 0;
             AttackDamage = 100;
             Skiil1Damage = 100;
             Skill2Damage = 100;
-            Skill3Damage = 100; // Attack03이 존재하지 않는다.
-            SkillCoolTime = 100;
+            AttackCoolTime = 100.0f;
+            Skill1CoolTime = 100.0f;
+            Skill2CoolTime = 100.0f;
             AttackRange = 3.0f;
             DetectRange = 5.0f;
+
+            InitSkill(AttackCoolTime, Skill1CoolTime, Skill2CoolTime);
         }
 
         #endregion Initialize Methods
@@ -58,26 +61,26 @@ namespace Enemy
             Debug.Log("Spider's Chase!");
         }
 
-        public override void Attack()
+        public override void AttackAI()
         {
-            base.Attack();
+            base.AttackAI();
 
             Debug.Log("Spider's Attack!");
         }
 
-        public override void Attack01()
+        public override void Attack()
         {
-            base.Attack01();
+            base.Attack();
         }
 
-        public override void Attack02()
+        public override void Skill1()
         {
-            base.Attack02();
+            base.Skill1();
         }
 
-        public override void Attack03()
+        public override void Skill2()
         {
-            // 세 번째 공격 스킬이 존재하지 않는다.
+            base.Skill2();
         }
 
         #endregion Action Methods
@@ -86,7 +89,7 @@ namespace Enemy
 
         // 아래는 애니메이션(Animation) 클립에서 이벤트를 추가하여 호출하는 함수들이다.
 
-        private void OnAttack01Event()
+        private void OnSkill1Event1()
         {
 
         }

@@ -1,6 +1,5 @@
 using ObjectPool;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 namespace Enemy
 {
@@ -50,15 +49,18 @@ namespace Enemy
 
             HealthPoint = 100;
             MagicPoint = 100;
-            MoveSpeed = 100;
-            JumpSpeed = 100;
+            MoveSpeed = 2;
+            JumpSpeed = 0;
             AttackDamage = 100;
             Skiil1Damage = 100;
-            Skill2Damage = 100;
-            Skill3Damage = 100; // Attack03이 존재하지 않는다.
-            SkillCoolTime = 100;
+            Skill2Damage = 0;
+            AttackCoolTime = 100.0f;
+            Skill1CoolTime = 100.0f;
+            Skill2CoolTime = 0.0f;
             AttackRange = 3.0f;
             DetectRange = 5.0f;
+
+            InitSkill(AttackCoolTime, Skill1CoolTime);
         }
 
         #endregion Initialize Methods
@@ -80,24 +82,24 @@ namespace Enemy
             Debug.Log("EvilMage's Chase!");
         }
 
-        public override void Attack()
+        public override void AttackAI()
         {
-            base.Attack();
+            base.AttackAI();
 
             Debug.Log("EvilMage's Attack!");
         }
 
-        public override void Attack01()
+        public override void Attack()
         {
-            base.Attack01();
+            base.Attack();
         }
 
-        public override void Attack02()
+        public override void Skill1()
         {
-            base.Attack02();
+            base.Skill1();
         }
 
-        public override void Attack03()
+        public override void Skill2()
         {
             // 세 번째 공격 스킬이 존재하지 않는다.
         }
@@ -108,14 +110,14 @@ namespace Enemy
 
         // 아래는 애니메이션(Animation) 클립에서 이벤트를 추가하여 호출하는 함수들이다.
 
-        // 원거리 뇌전 공격(Attack02)의 첫 번째 이벤트 함수 (기를 모으는 애니메이션)
-        private void OnAttack02Event01()
+        // 원거리 뇌전 공격(Skill1)의 첫 번째 이벤트 함수 (기를 모으는 애니메이션)
+        private void OnSkill1Event1()
         {
             projectile = projectilePool.OnReadyToShoot(projectileTransform);
         }
 
-        // 원거리 뇌전 공격(Attack02)의 두 번째 이벤트 함수 (발사하는 애니메이션)
-        private void OnAttack02Event02()
+        // 원거리 뇌전 공격(Skill2)의 두 번째 이벤트 함수 (발사하는 애니메이션)
+        private void OnSkill1Event2()
         {
             StartCoroutine(projectile.Shoot());
         }
