@@ -82,13 +82,11 @@ namespace Enemy
         public override void Attack()
         {
             base.Attack();
-            Debug.Log("dragon atk");
         }
 
         public override void Skill1()
         {
             base.Skill1();
-            Debug.Log("dragon SKill1");
             // 도트 대미지를 구현할 것인가?
             // 상태 이상에 대해서 별도의 코드를 작성하는 것이 바람직해 보인다.
         }

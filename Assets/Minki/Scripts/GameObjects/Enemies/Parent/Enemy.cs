@@ -100,7 +100,7 @@ namespace Enemy
             if (other.CompareTag("Hat"))
             {
                 IsPossessed = true;
-                _animator.Rebind();
+                BeingPossessed();
             }
 
         }
@@ -155,11 +155,19 @@ namespace Enemy
         public virtual void BeingPossessed()
         {
             // 모든 애니메이션을 초기화한다.
+            /*
             _animator.SetBool("Patrol", false);
             _animator.SetBool("LookAround", false);
             _animator.SetBool("Chase", false);
             _animator.SetInteger("AttackIndex", 0);
+            */
+            
+            // 애니메이션 초기화 함수
+            _animator.Rebind();
 
+            // 1안. 애니메이터를 추가하고, 빙의시 애니메이터를 교체하는 방식
+            // 2안. 기존 애니메이터를 사용하고, Attack01, Attack02로 애니메이션이 전이할 수 있도록 Chase상태를 유지시키는 방식
+            _animator.SetBool("Chase", true);
             //Debug.Log("Enemy's BeingPossessed() is Called.");
         }
 
@@ -287,13 +295,11 @@ namespace Enemy
 
         public override void Attack()   // Attack01 -> Attack으로 이름 변경
         {
-            Debug.Log("enemy atk");
             _animator.SetInteger("AttackIndex", 1);
         }
          
         public override void Skill1()   // Attack02 -> Skill1로 이름 변경
         {
-            Debug.Log("enemy skill");
             _animator.SetInteger("AttackIndex", 2);
         }
 
