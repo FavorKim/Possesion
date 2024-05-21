@@ -203,11 +203,11 @@ GameObject:
   m_Component:
   - component: {fileID: 2266157265114776205}
   - component: {fileID: 2266157265121750397}
-  - component: {fileID: 1258686019}
   - component: {fileID: 5004841277818399207}
+  - component: {fileID: 1258686019}
   m_Layer: 0
   m_Name: Flower Dryad
-  m_TagString: Untagged
+  m_TagString: Monster
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -242,7 +242,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: 2eab4731bae15714cbc9eef5030a93a5, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
-  m_ApplyRootMotion: 0
+  m_ApplyRootMotion: 1
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_WarningMessage: 
@@ -250,6 +250,28 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!195 &5004841277818399207
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2266157265114488493}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 0.05
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 360
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!114 &1258686019
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -268,39 +290,18 @@ MonoBehaviour:
   player: {fileID: 0}
   state: 0
   stateMachine: {fileID: 0}
-  projectile: {fileID: 128572, guid: c03d0f63116deaa449465c9de4c1d138, type: 3}
+  projectile: {fileID: 128572, guid: 9c941f2d9380298498eff1f6187025f8, type: 3}
+  bullets: {fileID: 128572, guid: 9a0588d7277245d4da3d370894b6cdac, type: 3}
+  windStorm: {fileID: 1284970568538890, guid: d0db91f215831a847b2989440d1d8c60, type: 3}
   spawnPositions:
   - {fileID: 2266157265114776345}
   - {fileID: 2266157265114776347}
-  shootSpeed: 800
+  shootSpeed: 900
+  spreadRange: 150
   spinAttack: {fileID: 19827156, guid: 12473d1f4ebc46644a4addbc8803838e, type: 3}
   mstATK: 10
   traceDistance: 10
-  skillDistance: 10
-  attackDistance: 2
   isDie: 0
---- !u!195 &5004841277818399207
-NavMeshAgent:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2266157265114488493}
-  m_Enabled: 1
-  m_AgentTypeID: 0
-  m_Radius: 0.5
-  m_Speed: 0.01
-  m_Acceleration: 8
-  avoidancePriority: 50
-  m_AngularSpeed: 120
-  m_StoppingDistance: 0
-  m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 1
-  m_AutoRepath: 1
-  m_Height: 2
-  m_BaseOffset: 0
-  m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 4
 --- !u!1 &2266157265114488495
 GameObject:
   m_ObjectHideFlags: 0

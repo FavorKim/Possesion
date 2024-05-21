@@ -1384,7 +1384,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1748489546896114}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 1564.758, y: 6.348757, z: 43359.465}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1449,6 +1449,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e0e26d3323048e4ba46c890fd0241b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  curHP: 0
+  maxHP: 0
+  HPSlider: {fileID: 0}
   player: {fileID: 0}
   projectile: {fileID: 128572, guid: c03d0f63116deaa449465c9de4c1d138, type: 3}
   spawnPosition: {fileID: 3625261320191301173}
@@ -1456,6 +1459,7 @@ MonoBehaviour:
   shootSpeed: 800
   stateMachine: {fileID: 0}
   rb: {fileID: 0}
+  mstAttackCooltime: 2
   mstSkill1Cooltime: 3
   mstSkill2Cooltime: 3
   traceDistance: 30

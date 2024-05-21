@@ -48,7 +48,7 @@ public class Skeleton : Monsters
     public float mstSkill1Cooltime = 3.0f;
     public float mstSkill2Cooltime = 3.0f;
 
-    public float traceDistance = 10f;
+    public float traceDistance = 100f;
     public float skillDistance = 10f;
     public float attackDistance = 2f;
 
