@@ -16,7 +16,8 @@ namespace Enemy
         private Animator _animator; // 적 자신의 애니메이터(Animator)
         private NavMeshAgent _navMeshAgent; // 플레이어를 추적하기 위한 네비게이션(NavMesh)
         [SerializeField] private RuntimeAnimatorController _poAnimator; // 빙의 시 애니메이터
-        [SerializeField] private RuntimeAnimatorController _AIAnimator; // 일반 애니메이터
+
+        [SerializeField] private RuntimeAnimatorController _AIAnimator; /// 일반 애니메이터
 
         [SerializeField] private Transform[] patrolTransforms; // 순찰하는 위치들(Transform)
         public Transform _playerTransform { get; private set; } // 플레이어의 위치(Transform)
@@ -80,15 +81,15 @@ namespace Enemy
             // 현재 Scene에서 "PlayerController" 스크립트를 가진 게임 오브젝트(= 플레이어)를 찾는다.
             _playerTransform = FindObjectOfType<PlayerController>().GetComponent<Transform>();
 
-            // 일반 애니메이터 저장
+            /// 일반 애니메이터 저장
             _AIAnimator = _animator.runtimeAnimatorController;
         }
 
         #endregion Awake()
 
         #region Collision Events
-        /*
-        // 플레이어에게 피격(충돌) 시의 처리 함수
+        
+        /* //플레이어에게 피격(충돌) 시의 처리 함수
         private void OnCollisionEnter(Collision collision)
         {
             // 플레이어의 모자와 충돌했을 경우,
@@ -99,12 +100,14 @@ namespace Enemy
             }
         }*/
 
-        //Trigger로 변경
+        ///Trigger로 변경
         private void OnTriggerEnter(Collider other)
         {
             if (other.CompareTag("Hat"))
             {
                 IsPossessed = true;
+
+                /// 빙의 시 한번만 호출
                 OnPossessed();
             }
 
@@ -160,40 +163,50 @@ namespace Enemy
         public virtual void BeingPossessed()
         {
             // 모든 애니메이션을 초기화한다.
-            /*
             _animator.SetBool("Patrol", false);
             _animator.SetBool("LookAround", false);
             _animator.SetBool("Chase", false);
             _animator.SetInteger("AttackIndex", 0);
-            */
             
-            // 애니메이션 초기화 함수 단, 매 프레임마다 호출될 것
+            
+            /// 애니메이션 초기화 함수 단, 매 프레임마다 호출될 것
             _animator.Rebind();
 
             //Debug.Log("Enemy's BeingPossessed() is Called.");
         }
 
-        // 빙의됐을 때 한 번 만 호출되는 함수
+        /// 빙의됐을 때 한 번 만 호출되는 함수
         private void OnPossessed()
         {
-            // 애니메이션 초기화 함수
+            /// 애니메이션 초기화 함수
             _animator.Rebind();
 
-            // 1안. 애니메이터를 추가하고, 빙의시 애니메이터를 교체하는 방식
+            /// 1안. 애니메이터를 추가하고, 빙의시 애니메이터를 교체하는 방식
             if (_poAnimator != null)
                 _animator.runtimeAnimatorController = _poAnimator;
-            // ! 빙의 해제 시 애니메이터 원래대로 설정할 것
+            /// 빙의 해제 시 애니메이터 원래대로 설정할 것
             else
-            // 2안. 기존 애니메이터를 사용하고, 애니메이션이 Attack01, Attack02로 전이할 수 있는 Chase상태를 유지시키는 방식
+            /// 2안. 기존 애니메이터를 사용하고, 애니메이션이 Attack01, Attack02로 전이할 수 있는 Chase상태를 유지시키는 방식
             _animator.SetBool("Chase", true);
 
             _navMeshAgent.ResetPath();
+
+         
+            ///1안의 경우 : 모든 몬스터에 각각 애니메이터를 생성한다. 빙의 시작과 빙의 끝에서 애니메이터 변경 함수를 호출한다.
+            ///2안의 경우 : 모든 몬스터가 빙의 중에 Chase 상태의 애니메이션으로 고정된다. (움직이지 않아도 계속 걸어다닐 것)
         }
 
-        // 빙의 탈출 시 한번만 호출되는 함수
+        /// 빙의 탈출 시 한번만 호출되는 함수
         public void OffPossess()
         {
+            /// 원래 애니메이터로 돌아오기
             _animator.runtimeAnimatorController = _AIAnimator;
+        }
+
+        /// 빙의 애니메이터의 이벤트 함수
+        public void ResetAttackIndex()
+        {
+            _animator.SetInteger("AttackIndex", 0);
         }
 
         // 피격을 담당하는 함수
@@ -282,14 +295,10 @@ namespace Enemy
             // Debug.Log("Enemy's Chase() is Called.");
         }
 
-        // 빙의 애니메이터의 이벤트 함수
-        public void ResetAttackIndex() 
-        {
-            _animator.SetInteger("AttackIndex", 0);
-        }
+        
 
         // 공격을 구현하는 함수
-        public virtual void AIAttack()  // Attack -> AIAttack으로 이름 변경
+        public virtual void AIAttack()  /// Attack -> AIAttack으로 이름 변경
         {
             // 공격 스킬을 바꿀 주기
             float changeTime = 1.0f;
@@ -325,17 +334,17 @@ namespace Enemy
             // Debug.Log("Enemy's AIAttack() is Called.");
         }
 
-        public override void Attack()   // Attack01 -> Attack으로 이름 변경
+        public override void Attack()   /// Attack01 -> Attack으로 이름 변경
         {
             _animator.SetInteger("AttackIndex", 1);
         }
         
-        public override void Skill1()   // Attack02 -> Skill1로 이름 변경
+        public override void Skill1()   /// Attack02 -> Skill1로 이름 변경
         {
             _animator.SetInteger("AttackIndex", 2);
         }
 
-        public override void Skill2()   // Attack03 -> Skill2로 이름 변경
+        public override void Skill2()   /// Attack03 -> Skill2로 이름 변경
         {
             _animator.SetInteger("AttackIndex", 3);
         }
