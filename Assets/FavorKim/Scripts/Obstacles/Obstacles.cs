@@ -1,49 +1,59 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AI;
 
 public class Obstacles : MonoBehaviour, ITyped
 {
 
     /*
-    ¸ó½ºÅÍÀÇ ½ºÅ³ ³»Áö °ø°İÀÌ Å¸ÀÔÀ» °®°íÀÖ¾î¼­
-    ÀÌ°É·Î ÇÃ·§Æ÷¸ÓÀÇ Àå¾Ö¹° µîµîÀ» ±Øº¹ÇÏ´Â ÇüÅÂ
-    ´ıºÒ Àå¾Ö¹°Àº CUTTER³ª FIRE·Î ±Øº¹
-    FIRE, CUTTER >> LEAF
-    ¸ó½ºÅÍ Å¸ÀÔÀº ÀÏ´Ü ÃßÈÄ¿¡.
+        ëª¬ìŠ¤í„°ì˜ ìŠ¤í‚¬ ë‚´ì§€ ê³µê²©ì´ íƒ€ì…ì„ ê°–ê³ ìˆì–´ì„œ
+        ì´ê±¸ë¡œ í”Œë«í¬ë¨¸ì˜ ì¥ì• ë¬¼ ë“±ë“±ì„ ê·¹ë³µí•˜ëŠ” í˜•íƒœ
+        ë¤ë¶ˆ ì¥ì• ë¬¼ì€ CUTTERë‚˜ FIREë¡œ ê·¹ë³µ
+        FIRE, CUTTER >> LEAF
+        ëª¬ìŠ¤í„° íƒ€ì…ì€ ì¼ë‹¨ ì¶”í›„ì—.
     */
 
-    ParticleSystem ps;
+    #region Components
+    // ì»´í¬ë„ŒíŠ¸(Components)
+    private ParticleSystem ps;
     [SerializeField] private int damage;
     [SerializeField] protected ITyped.Type myType;
+    #endregion Components
 
-    public ITyped.Type type { get { return myType; } set { } }
+    #region Get/Set Methods
+    // Get/Set í•¨ìˆ˜ë“¤
+    public ITyped.Type type { get { return myType; } }
     
     public int Damage { get { return damage; } }
+    #endregion Get/Set Methods
 
+    #region Awake()
     private void Awake()
     {
+        // íŒŒí‹°í´ ì‹œìŠ¤í…œ(Particle System)ì„ ì´ˆê¸°í™”í•œë‹¤.
         ps = GetComponent<ParticleSystem>();
         if (ps == null) return;
+
         ParticleSystem.CollisionModule col = ps.collision;
         col.enabled = true;
         col.type = ParticleSystemCollisionType.World;
         col.sendCollisionMessages = true;
     }
+    #endregion Awake()
 
-    
+    #region Unity Events
+    // OnParticleCollision()
     private void OnParticleCollision(GameObject other)
     {
         GameManager.Instance.GetDamage(this, other);
     }
 
-    public virtual void OnTypeAttacked(Obstacles attackedType) { }
-
+    // OnTriggerStay()
     private void OnTriggerStay(Collider other)
     {
         GameManager.Instance.GetDamage(this, other.gameObject);
-
     }
+    #endregion Unity Events
+
+    #region Custom Methods
+    public virtual void OnTypeAttacked(Obstacles attackedType) { }
+    #endregion Custom Methods
 }

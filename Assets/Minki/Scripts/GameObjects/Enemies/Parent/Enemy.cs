@@ -79,7 +79,6 @@ namespace Enemy
             // NavMeshAgent의 속성 값을 조절한다.
             _navMeshAgent.speed = MoveSpeed; // 추적 속도를 이동 속도로 지정한다.
             _navMeshAgent.stoppingDistance = AttackRange; // 정지 거리를 공격 범위로 지정한다.
-            
         }
 
         #endregion Awake()

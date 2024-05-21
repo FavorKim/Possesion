@@ -1,18 +1,18 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
+/// <summary>
+/// ëª¬ìŠ¤í„°ì˜ ê³µê²©ì´ ê°€ì§€ëŠ” ì†ì„±ì„ ì •ì˜í•©ë‹ˆë‹¤.
+/// </summary>
 public interface ITyped
 {
     public enum Type
     {
         NONE, AQUA , LEAF = 10, FIRE = 20, CUTTER
     }
+
     Type type { get; }
 
     /// <summary>
-    /// ¼Ó¼º°ø°İÀ» ¹Ş¾ÒÀ» ½ÃÀÇ Çàµ¿
+    /// ì†ì„±ê³µê²©ì„ ë°›ì•˜ì„ ì‹œì˜ í–‰ë™
     /// </summary>
-    /// <param name="type">°ø°İÀÚ ¼Ó¼º</param>
+    /// <param name="type">ê³µê²©ì ì†ì„±</param>
     public void OnTypeAttacked(Obstacles attacker);
 }
