@@ -8,10 +8,6 @@ using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 
-/*
-플레이어 카메라 무브 이전 방법으로 움직이는게 상하조절이 가능해서 좋을 듯
-
-*/
 public class PlayerController : MonoBehaviour
 {
     #region Variable
@@ -21,10 +17,9 @@ public class PlayerController : MonoBehaviour
     private CharacterController CC;
     PlayerStateMachine state;
     Animator anim;
-    Animator monAnim;
-    DOTweenAnimation knockBack;
     ParticleSystem invinFX;
 
+    private Transform camTransform;
     [SerializeField] Transform lookAtTransform;
     [SerializeField] HatManager hatM;
 
@@ -41,7 +36,6 @@ public class PlayerController : MonoBehaviour
 
     SkillManager sM;
 
-    public Transform camTransform;
     #endregion
 
     #region Vector
@@ -83,6 +77,7 @@ public class PlayerController : MonoBehaviour
     public CharacterController GetCC() { return CC; }
     public Animator GetAnimator() { return anim; }
     public Slider GetDurationGauge() { return durationGauge; }
+    public Transform CameraTransform { get { return camTransform; } set {  camTransform = value; } }
     public float GetMoveSpeed() { return moveSpeed; }
     public float GetGravityScale() { return gravityScale; }
     public float GetJumpForce() { return jumpForce; }
@@ -98,7 +93,6 @@ public class PlayerController : MonoBehaviour
         state = new PlayerStateMachine(this);
         sM = new SkillManager(skill1Gauge, skill2Gauge);
 
-        knockBack = GetComponent<DOTweenAnimation>();
         invinFX = GetComponentInChildren<ParticleSystem>();
         invinFX.Stop();
         //skill1 = new Skill("test1", 5, () => { Debug.Log("skill1"); }, skill1Gauge);
@@ -293,24 +287,7 @@ public class PlayerController : MonoBehaviour
     {
         isInvincible = true;
         invinFX.Play();
-        float org = invincibleTime;
-        while (true)
-        {
-            yield return null;
-            invincibleTime -= Time.deltaTime;
-            if (invincibleTime < 0)
-            {
-                invinFX.Stop();
-                isInvincible = false;
-                invincibleTime = org;
-                StopCoroutine(CorInvincible());
-                break;
-            }
-        }
-
-        isInvincible = true;
-        invinFX.Play();
-        new WaitForSeconds(invincibleTime);
+        yield return new WaitForSeconds(invincibleTime);
         invinFX.Stop();
         isInvincible = false;
     }

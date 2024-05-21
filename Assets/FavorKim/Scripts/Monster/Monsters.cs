@@ -22,27 +22,12 @@ public abstract class Monsters : MonoBehaviour, ITyped
 
     /// <summary>
     /// InitSkill 구체화(Skill1 쿨타임, Skill2 쿨타임) 스킬 없으면 Awake 비워두기
+    /// base.Awake()를 호출해야 체력바 UI가 생깁니다!
     /// </summary>
     protected virtual void Awake() 
     {
         InitHPUI();
-        /*
-        스킬 1개인 애랑
-        2개인 애
-        없는 애
-        InitSkill(); << 스킬 UI에 등록을 시킬 수 있다.
-        */
     }
-
-    /*
-    
-    공격1
-    
-    공격2
-    
-    공격3
-    
-    */
 
 
     /// <summary>
@@ -121,19 +106,8 @@ public abstract class Monsters : MonoBehaviour, ITyped
     IEnumerator CorInvincible()
     {
         isInvincible = true;
-        float org = invincibleTime;
-        while (true)
-        {
-            yield return null;
-            invincibleTime -= Time.deltaTime;
-            if (invincibleTime < 0)
-            {
-                isInvincible = false;
-                invincibleTime = org;
-                StopCoroutine(CorInvincible());
-                break;
-            }
-        }
+        yield return new WaitForSeconds(invincibleTime);
+        isInvincible = false;
     }
     public Skill skill1;
     public Skill skill2;

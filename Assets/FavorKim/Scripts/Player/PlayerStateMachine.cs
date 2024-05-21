@@ -202,8 +202,7 @@ public class PossessState : PlayerState
         */
 
         GameManager.Instance.SetCameraFollow(mon.transform);
-        GameManager.Instance.SetCameraLookAt(mon.transform);
-        player.camTransform = mon.transform;
+        player.CameraTransform = mon.transform;
 
         mon.SetSkill();
         durationGauge.gameObject.SetActive(true);
@@ -283,7 +282,7 @@ public class PossessState : PlayerState
 
         // 빙의 해제 시 무조건 죽이지는 말자.
         //mon.Dead();
-        player.camTransform = player.transform;
+        player.CameraTransform = player.transform;
 
         FXManager.Instance.PlayFX("PoExit", player.transform.position);
         GameManager.Instance.SetCameraFollow(player.transform);
