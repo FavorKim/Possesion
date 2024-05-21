@@ -174,7 +174,8 @@ namespace Enemy
             _animator.Rebind();
 
             // 1안. 애니메이터를 추가하고, 빙의시 애니메이터를 교체하는 방식
-            _animator.runtimeAnimatorController = _poAnimator;
+            if (_poAnimator != null)
+                _animator.runtimeAnimatorController = _poAnimator;
             // ! 빙의 해제 시 애니메이터 원래대로 설정할 것
 
             // 2안. 기존 애니메이터를 사용하고, 애니메이션이 Attack01, Attack02로 전이할 수 있는 Chase상태를 유지시키는 방식
