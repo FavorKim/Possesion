@@ -1,11 +1,9 @@
-using ObjectPool;
 using System.Collections;
 using UnityEngine;
-using UnityEngine.AI;
-using static UnityEngine.UI.GridLayoutGroup;
 
 public class BossDryad : Monsters
 {
+    // 보스는 보스만의 상태를 별도로 가지고 있다. (MonsterState를 사용하지 않는다.)
     public enum BossState
     {
         IDLE,
@@ -51,7 +49,7 @@ public class BossDryad : Monsters
     int i = 0;
     #endregion
 
-    public override void Awake()
+    protected override void Awake()
     {
         player = FindObjectOfType<PlayerController>();
         playerTrf = player.transform;

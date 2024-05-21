@@ -15,12 +15,8 @@ public abstract class Monsters : MonoBehaviour, ITyped
     private GameObject HP_HUD_Obj; // 몬스터의 체력을 나타내는 패널(Panel)
     [SerializeField] private Slider HPSlider; // 패널 내의 슬라이더
 
-
-    // ※ 아래의 스킬 목록을
-    public Skill skill1 { get; set; } // 몬스터의 스킬 1 (스킬(Skill) 클래스는 PlayerController에서 정의하고 있다.)
-    public Skill skill2; // 몬스터의 스킬 2
-    // → 아래와 같이 배열로 구성하는 것이 더 좋지 않을까?
-    public Skill[] skills { get; protected set; } // 몬스터의 스킬 목록 (최소 0 ~ 최대 3 정도로 고려 중)
+    public Skill skill1 { get; private set; } // 몬스터의 스킬 1 (스킬(Skill) 클래스는 PlayerController에서 정의하고 있다.)
+    public Skill skill2 { get; private set; } // 몬스터의 스킬 2
 
     public ITyped.Type type { get; protected set; }
 
@@ -47,7 +43,7 @@ public abstract class Monsters : MonoBehaviour, ITyped
     /// <summary>
     /// InitSkill 구체화(Skill1 쿨타임, Skill2 쿨타임) 스킬 없으면 Awake 비워두기
     /// </summary>
-    public abstract void Awake();
+    protected abstract void Awake();
 
     /// <summary>
     /// 몬스터의 기본 공격(평타)을 구현하는 함수입니다. (Abstract; 필수)
@@ -158,10 +154,12 @@ public abstract class Monsters : MonoBehaviour, ITyped
     }
 
     /// <summary>
-    /// 스킬을 스킬 UI에 등록
+    /// [플레이어 한정] 몬스터의 스킬을 스킬 UI에 등록합니다.
     /// </summary>
     public void SetSkill()
     {
+        // ※ Player에서 빙의한 몬스터를 참조하여 스킬을 참조할 수 있게 하는 것이 더 적절해 보입니다.
+
         if (skill1 == null) return;
         SkillManager.SetSkill(skill1, 1);
         if (skill2 == null) return;

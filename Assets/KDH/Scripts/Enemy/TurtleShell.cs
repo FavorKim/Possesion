@@ -1,213 +1,64 @@
-using ObjectPool;
 using System.Collections;
 using UnityEngine;
-using UnityEngine.AI;
 
-public class TurtleShell : Monsters
+public class TurtleShell : BaseMonster
 {
-    public enum MonsterState
+    #region Fields
+
+    // TurtleShellë§Œì˜ íŒŒí‹°í´ ì‹œìŠ¤í…œ(Particle System)
+    [SerializeField] private ParticleSystem rollAttack;
+
+    // ì• ë‹ˆë©”ì´í„°ì˜ í•´ì‹œ(Hash)
+    private readonly int hashSkill1 = Animator.StringToHash("IsSkill1");
+    private readonly int hashDefend = Animator.StringToHash("IsDefend");
+
+    #endregion Fields
+
+    #region Override Methods
+
+    // ìŠ¤í‚¬ ì´ˆê¸°í™” í•¨ìˆ˜
+    protected override void InitSkills()
     {
-        IDLE,
-        TRACE,
-        ATTACK,
-        DEAD
+        mstATK = 10.0f;
+        mstSPD = 10.0f;
+
+        attackCooltime = 0.0f;
+        skill1Cooltime = 3.0f;
+        skill2Cooltime = 3.0f;
+
+        traceDistance = 10f;
+        skillDistance = 10f;
+        attackDistance = 2f;
     }
 
-    // ÇÃ·¹ÀÌ¾î Á¤º¸¸¦ ¹Ş¾Æ¾ß NevMesh¸¦ µû¶ó ÃßÀûÀÌ °¡´ÉÇÔ.
-    [SerializeField] PlayerController player;
-
-    public MonsterState state = MonsterState.IDLE;
-
-    float skill1_curCooltime = 0f;
-    float skill2_curCooltime = 0f;
-
-    Transform enemyTrf;
-    Transform playerTrf;
-    NavMeshAgent agent;
-    Animator animator;
-
-    public ParticleSystem rollAttack;
-    public StateMachine stateMachine;
-
-    readonly int hashTrace = Animator.StringToHash("IsTrace");
-    readonly int hashAttack = Animator.StringToHash("IsAttack");
-    readonly int hashSkill1 = Animator.StringToHash("IsSkill1");
-    readonly int hashDefend = Animator.StringToHash("IsDefend");
-
-    Rigidbody rb;
-    #region ½ºÅ³ µîµî
-    [SerializeField]
-    float mstATK = 10.0f;
-    float mstSPD = 10.0f;
-    public float mstSkill1Cooltime = 3.0f;
-    public float mstSkill2Cooltime = 3.0f;
-
-    public float traceDistance = 10f;
-    public float skillDistance = 10f;
-    public float attackDistance = 2f;
-
-    public bool isDie = false;
-
-    #endregion
-
-    public override void Awake()
-    {
-        player = FindObjectOfType<PlayerController>();
-        playerTrf = player.transform;
-        enemyTrf = GetComponent<Transform>();
-        agent = GetComponent<NavMeshAgent>();
-        animator = GetComponent<Animator>();
-
-        rb = GetComponent<Rigidbody>();
-        stateMachine = gameObject.AddComponent<StateMachine>();
-
-        stateMachine.AddState(MonsterState.IDLE, new IdleState(this));
-        stateMachine.AddState(MonsterState.TRACE, new TraceState(this));
-        stateMachine.AddState(MonsterState.ATTACK, new AttackState(this));
-        stateMachine.InitState(MonsterState.IDLE);
-
-        agent.destination = playerTrf.position;
-    }
-    protected virtual void Start()
-    {
-        StartCoroutine(CheckEnemyState());
-    }
-
-    protected virtual IEnumerator CheckEnemyState()
-    {
-        while (!isDie)
-        {
-            yield return new WaitForSeconds(0.3f);
-
-            if (state == MonsterState.DEAD)
-            {
-                stateMachine.ChangeState(MonsterState.DEAD);
-                yield break;
-            }
-
-            float distance = Vector3.Distance(playerTrf.position, enemyTrf.position);
-
-            // Æ¯¼ö °ø°İ°¡´É »óÅÂ
-            bool is_pjtAtk = skillDistance < distance && skill1_curCooltime <= 0f;
-            if (distance <= attackDistance || is_pjtAtk)
-            {
-                stateMachine.ChangeState(MonsterState.ATTACK);
-                state = MonsterState.ATTACK;
-            }
-            else if (distance <= traceDistance)
-            {
-                stateMachine.ChangeState(MonsterState.TRACE);
-                state = MonsterState.TRACE;
-            }
-            else
-            {
-                stateMachine.ChangeState(MonsterState.IDLE);
-                state = MonsterState.IDLE;
-            }
-        }
-        stateMachine.ChangeState(MonsterState.DEAD);
-        state = MonsterState.DEAD;
-    }
-
-    private void Update()
-    {
-        if (skill1_curCooltime > 0f)
-        {
-            skill1_curCooltime -= Time.deltaTime;
-        }
-        if (skill2_curCooltime > 0f)
-        {
-            skill2_curCooltime -= Time.deltaTime;
-        }
-    }
-
-    class BaseEnemyState : BaseState
-    {
-        protected TurtleShell owner;
-        public BaseEnemyState(TurtleShell owner)
-        {
-            this.owner = owner;
-        }
-    }
-
-    class IdleState : BaseEnemyState
-    {
-        public IdleState(TurtleShell owner) : base(owner) { }
-
-        public override void Enter()
-        {
-            owner.agent.isStopped = true;
-            owner.animator.SetBool(owner.hashTrace, false);
-            owner.animator.SetBool(owner.hashAttack, false);
-        }
-    }
-
-    class TraceState : BaseEnemyState
-    {
-        public TraceState(TurtleShell owner) : base(owner) { }
-
-        public override void Enter()
-        {
-            owner.agent.SetDestination(owner.playerTrf.position);
-            
-            owner.agent.isStopped = false;
-            owner.animator.SetBool(owner.hashTrace, true);
-            owner.animator.SetBool(owner.hashAttack, false);
-            
-        }
-    }
-
-    class AttackState : BaseEnemyState
-    {
-        public AttackState(TurtleShell owner) : base(owner) { }
-
-        public override void Enter()
-        {
-            owner.agent.isStopped = true;
-            float distance = Vector3.Distance(owner.playerTrf.position, owner.enemyTrf.position);
-
-            if (distance >= owner.attackDistance && owner.skill1_curCooltime <= 0f)
-            {
-                owner.Skill1();
-            }
-            else if (owner.skill2_curCooltime <= 0f)
-            {
-                
-                owner.Skill2();
-            }
-            else
-            {
-                owner.Attack();
-            }
-        }
-    }
-
-    class DeadState : BaseEnemyState
-    {
-        public DeadState(TurtleShell owner) : base(owner) { }
-
-        public override void Enter()
-        {
-            Debug.Log("Dead");
-        }
-
-    }
+    // ê³µê²© í•¨ìˆ˜
     public override void Attack()
     {
         animator.SetBool(hashAttack, true);
     }
+
+    // ìŠ¤í‚¬ 1 í•¨ìˆ˜
     public override void Skill1()
     {
-        //±â¿ÕÀÌ¸é ´Ù µ¹¾Æ°¡°í ³ª¼­ ½ºÅ³ ¹ßµ¿?
+        // ê¸°ì™•ì´ë©´ ë‹¤ ëŒì•„ê°€ê³  ë‚˜ì„œ ìŠ¤í‚¬ ë°œë™?
         float distance = Vector3.Distance(playerTrf.position, enemyTrf.position);
         animator.SetBool(hashSkill1, true);
     }
 
-    void RAttack()
+    // ìŠ¤í‚¬ 2 í•¨ìˆ˜
+    public override void Skill2()
+    {
+        skill2_curCooltime = skill2Cooltime;
+        StartCoroutine(Defend());
+    }
+
+    // íŠ¹ìˆ˜ê¸°?
+    public void RAttack()
     {
         StartCoroutine(RollingAttack());
     }
-    IEnumerator RollingAttack()
+
+    private IEnumerator RollingAttack()
     {
         agent.isStopped = true;
         ParticleSystem ps = Instantiate(rollAttack, this.transform); //, Quaternion.identity
@@ -216,21 +67,17 @@ public class TurtleShell : Monsters
 
         rb.velocity = Vector3.zero;
         rb.angularVelocity = Vector3.zero;
-        skill1_curCooltime = mstSkill1Cooltime;
+        skill1_curCooltime = skill1Cooltime;
         Destroy(ps);
         animator.SetBool(hashSkill1, false);
     }
 
-    public void Skill2()
+    private IEnumerator Defend()
     {
-        skill2_curCooltime = mstSkill2Cooltime;
-        StartCoroutine(Defend());
-
-        IEnumerator Defend()
-        {
-            animator.SetBool(hashDefend, true);
-            yield return new WaitForSeconds(1.5f);
-            animator.SetBool(hashDefend, false);
-        }
+        animator.SetBool(hashDefend, true);
+        yield return new WaitForSeconds(1.5f);
+        animator.SetBool(hashDefend, false);
     }
+
+    #endregion Override Methods
 }

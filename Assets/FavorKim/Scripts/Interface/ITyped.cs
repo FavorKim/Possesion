@@ -5,7 +5,7 @@ public interface ITyped
 {
     public enum Type
     {
-        NONE, AQUA , LEAF = 10, FIRE = 20, CUTTER
+        NONE, AQUA, LEAF = 10, FIRE = 20, CUTTER
     }
 
     Type type { get; }

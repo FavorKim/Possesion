@@ -525,7 +525,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &4544219117696442
 Transform:
   m_ObjectHideFlags: 0
@@ -598,17 +598,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92886955cd99f2e42a346bc9fbfc1aeb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
-  state: 0
+  curHP: 0
+  maxHP: 0
+  HPSlider: {fileID: 0}
+  isDie: 0
   rollAttack: {fileID: 19850766, guid: ba9bd4b65da160c4bb96afcc36706d6d, type: 3}
   stateMachine: {fileID: 0}
+  state: 0
+  player: {fileID: 0}
   mstATK: 10
   mstSkill1Cooltime: 3
   mstSkill2Cooltime: 3
   traceDistance: 10
   skillDistance: 10
   attackDistance: 2
-  isDie: 0
 --- !u!136 &2837302226418138425
 CapsuleCollider:
   m_ObjectHideFlags: 0
