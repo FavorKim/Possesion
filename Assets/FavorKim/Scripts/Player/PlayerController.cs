@@ -10,6 +10,9 @@ using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
+    public float tempKnockBack;
+
+    public Transform tempKnockBackdirect;
     #region Variable
 
     #region Mono
@@ -67,6 +70,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] public bool isGround { get; private set; }
     bool isDead = false;
     bool isInvincible = false;
+    public bool isKnockBack = false;
+
 
     //Dictionary<string, GameObject> outFits = new Dictionary<string, GameObject>();
 
@@ -95,11 +100,6 @@ public class PlayerController : MonoBehaviour
 
         invinFX = GetComponentInChildren<ParticleSystem>();
         invinFX.Stop();
-        //skill1 = new Skill("test1", 5, () => { Debug.Log("skill1"); }, skill1Gauge);
-
-        //outFits.Add("Goblin", goblinOF);
-        //outFits.Add("Plant", plantOF);
-        //outFits.Add("Player", playerOF);
         OnDead += DeadCheck;
         OnDead += SetHPUI;
         camTransform = transform;
@@ -121,6 +121,13 @@ public class PlayerController : MonoBehaviour
     {
         CheckLand();
     }
+
+    private void LateUpdate()
+    {
+        if (isKnockBack)
+            CC.Move((transform.position - tempKnockBackdirect.position).normalized * Time.deltaTime * tempKnockBack);
+    }
+
     #endregion
 
     #region Method

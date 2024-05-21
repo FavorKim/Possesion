@@ -36,6 +36,7 @@ public class PlayerStateMachine
         curState.StateUpdate();
     }
 
+
     //public void StateFixedUpdate()
     //{
 
@@ -155,6 +156,7 @@ public class NormalState : PlayerState
 
     public override void Skill1()
     {
+
     }
 
     public override void Skill2()
