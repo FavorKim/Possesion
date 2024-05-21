@@ -15,6 +15,7 @@ namespace Enemy
         // 컴포넌트(Components)
         private Animator _animator; // 적 자신의 애니메이터(Animator)
         private NavMeshAgent _navMeshAgent; // 플레이어를 추적하기 위한 네비게이션(NavMesh)
+        [SerializeField] private RuntimeAnimatorController _poAnimator; // 빙의 시 애니메이터
 
         [SerializeField] private Transform[] patrolTransforms; // 순찰하는 위치들(Transform)
         public Transform _playerTransform { get; private set; } // 플레이어의 위치(Transform)
@@ -151,7 +152,7 @@ namespace Enemy
 
         // 적의 행동을 다루는 함수들, 부모 클래스에서 공통된 속성을 지정하고, 자식 클래스에서 각 특성에 맞게 추가한다.
 
-        // 빙의를 담당하는 함수
+        // 빙의를 담당하는 함수 (빙의 중일 때 지속적으로 호출)
         public virtual void BeingPossessed()
         {
             // 모든 애니메이션을 초기화한다.
@@ -173,8 +174,11 @@ namespace Enemy
             _animator.Rebind();
 
             // 1안. 애니메이터를 추가하고, 빙의시 애니메이터를 교체하는 방식
+            _animator.runtimeAnimatorController = _poAnimator;
+            // ! 빙의 해제 시 애니메이터 원래대로 설정할 것
+
             // 2안. 기존 애니메이터를 사용하고, 애니메이션이 Attack01, Attack02로 전이할 수 있는 Chase상태를 유지시키는 방식
-            _animator.SetBool("Chase", true);
+            //_animator.SetBool("Chase", true);
         }
 
         // 피격을 담당하는 함수
@@ -260,7 +264,11 @@ namespace Enemy
             // Debug.Log("Enemy's Chase() is Called.");
         }
 
-
+        // 빙의 애니메이터의 이벤트 함수
+        public void ResetAttackIndex() 
+        {
+            _animator.SetInteger("AttackIndex", 0);
+        }
 
         // 공격을 구현하는 함수
         public virtual void AIAttack()  // Attack -> AIAttack으로 이름 변경
