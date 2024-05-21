@@ -19304,6 +19304,7 @@ GameObject:
   - component: {fileID: 8592002013233848470}
   - component: {fileID: 8592002013233848471}
   - component: {fileID: 4961155425873038803}
+  - component: {fileID: 535826860069041906}
   m_Layer: 0
   m_Name: SunVisor
   m_TagString: Hat
@@ -19636,3 +19637,15 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &535826860069041906
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8242824099685750447}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e53217990b6f804faeb33428f612cf9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
