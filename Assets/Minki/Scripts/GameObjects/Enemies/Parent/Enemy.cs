@@ -98,7 +98,11 @@ namespace Enemy
         private void OnTriggerEnter(Collider other)
         {
             if (other.CompareTag("Hat"))
+            {
                 IsPossessed = true;
+                _animator.Rebind();
+            }
+
         }
 
         #endregion Collision Events
