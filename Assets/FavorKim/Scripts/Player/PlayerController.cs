@@ -141,7 +141,7 @@ public class PlayerController : MonoBehaviour
         MoveDir = heading * dir.y * Time.deltaTime * moveSpeed;
         MoveDir += Quaternion.Euler(0, 90, 0) * heading * dir.x * Time.deltaTime * moveSpeed;
         */
-        MoveDir = transform.TransformDirection(new Vector3(dir.x, 0, dir.y));
+        MoveDir = camTransform.TransformDirection(new Vector3(dir.x, 0, dir.y));
         MoveDir *= moveSpeed * Time.deltaTime;
     }
 
