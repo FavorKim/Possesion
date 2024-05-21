@@ -23,6 +23,7 @@ public class PlayerController : MonoBehaviour
     ParticleSystem invinFX;
 
     private Transform camTransform;
+    [SerializeField] Transform playerFoward;
     [SerializeField] Transform lookAtTransform;
     [SerializeField] HatManager hatM;
 
@@ -83,6 +84,10 @@ public class PlayerController : MonoBehaviour
     public Animator GetAnimator() { return anim; }
     public Slider GetDurationGauge() { return durationGauge; }
     public Transform CameraTransform { get { return camTransform; } set {  camTransform = value; } }
+    public Transform GetPlayerFoward() 
+    {
+        return playerFoward;
+    }
     public float GetMoveSpeed() { return moveSpeed; }
     public float GetGravityScale() { return gravityScale; }
     public float GetJumpForce() { return jumpForce; }
@@ -114,7 +119,7 @@ public class PlayerController : MonoBehaviour
         SetHPUI();
 
         PlayerMove();
-
+        playerFoward.position = camTransform.position + new Vector3(0, 1.0f, 0);
     }
 
     private void FixedUpdate()
