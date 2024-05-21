@@ -223,7 +223,7 @@ public class PlayerController : MonoBehaviour
 
         dir = val.Get<Vector2>();
 
-        MoveDir = transform.TransformDirection(new Vector3(dir.x, 0, dir.y));
+        MoveDir = camTransform.TransformDirection(new Vector3(dir.x, 0, dir.y));
         MoveDir *= moveSpeed * Time.deltaTime;
         if (MoveDir != Vector3.zero)
         {
@@ -238,7 +238,7 @@ public class PlayerController : MonoBehaviour
 
         anim.SetFloat("vecX", dir.x);
         anim.SetFloat("vecY", dir.y);
-        PlayerMove();
+        //PlayerMove();
         //Debug.Log(heading);
     }
 

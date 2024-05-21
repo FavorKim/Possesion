@@ -45,11 +45,11 @@ namespace Enemy
             //Debug.Log("Smile's Chase!");
         }
 
-        public override void Attack()
+        public override void AIAttack()
         {
-            base.Attack();
+            base.AIAttack();
 
-            //Debug.Log("Smile's Attack!");
+            //Debug.Log("Smile's AIAttack!");
         }
     }
 }

@@ -80,24 +80,24 @@ namespace Enemy
             Debug.Log("EvilMage's Chase!");
         }
 
+        public override void AIAttack()
+        {
+            base.AIAttack();
+
+            Debug.Log("EvilMage's AIAttack!");
+        }
+
         public override void Attack()
         {
             base.Attack();
-
-            Debug.Log("EvilMage's Attack!");
         }
 
-        public override void Attack01()
+        public override void Skill1()
         {
-            base.Attack01();
+            base.Skill1();
         }
 
-        public override void Attack02()
-        {
-            base.Attack02();
-        }
-
-        public override void Attack03()
+        public override void Skill2()
         {
             // 세 번째 공격 스킬이 존재하지 않는다.
         }
@@ -108,13 +108,13 @@ namespace Enemy
 
         // 아래는 애니메이션(Animation) 클립에서 이벤트를 추가하여 호출하는 함수들이다.
 
-        // 원거리 뇌전 공격(Attack02)의 첫 번째 이벤트 함수 (기를 모으는 애니메이션)
+        // 원거리 뇌전 공격(Skill1)의 첫 번째 이벤트 함수 (기를 모으는 애니메이션)
         private void OnAttack02Event01()
         {
             projectile = projectilePool.OnReadyToShoot(projectileTransform);
         }
 
-        // 원거리 뇌전 공격(Attack02)의 두 번째 이벤트 함수 (발사하는 애니메이션)
+        // 원거리 뇌전 공격(Skill1)의 두 번째 이벤트 함수 (발사하는 애니메이션)
         private void OnAttack02Event02()
         {
             StartCoroutine(projectile.Shoot());

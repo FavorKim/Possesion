@@ -45,11 +45,11 @@ namespace Enemy
             Debug.Log("Orc's Chase!");
         }
 
-        public override void Attack()
+        public override void AIAttack()
         {
-            base.Attack();
+            base.AIAttack();
 
-            Debug.Log("Orc's Attack!");
+            Debug.Log("Orc's AIAttack!");
         }
     }
 }

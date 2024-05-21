@@ -6,7 +6,7 @@ using UnityEngine.Events;
 namespace Enemy
 {
     // 적(몬스터)를 정의하는 부모 클래스
-    public abstract class Enemy : MonoBehaviour
+    public abstract class Enemy : Monsters
     {
         // 적의 공통된 정보를 부모 클래스에서 우선 정의한다.
 
@@ -64,8 +64,10 @@ namespace Enemy
 
         #region Awake()
 
-        protected virtual void Awake()
+        protected override void Awake()
         {
+            base.Awake();
+
             // 행동 트리의 뿌리(Root)를 생성한다.
             gameObject.AddComponent<EnemyBT>();
 
@@ -80,7 +82,7 @@ namespace Enemy
         #endregion Awake()
 
         #region Collision Events
-
+        /*
         // 플레이어에게 피격(충돌) 시의 처리 함수
         private void OnCollisionEnter(Collision collision)
         {
@@ -90,6 +92,13 @@ namespace Enemy
                 // 빙의 상태가 된다.
                 IsPossessed = true;
             }
+        }*/
+
+        //Trigger로 변경
+        private void OnTriggerEnter(Collider other)
+        {
+            if (other.CompareTag("Hat"))
+                IsPossessed = true;
         }
 
         #endregion Collision Events
@@ -147,7 +156,7 @@ namespace Enemy
             _animator.SetBool("Chase", false);
             _animator.SetInteger("AttackIndex", 0);
 
-            // Debug.Log("Enemy's BeingPossessed() is Called.");
+            //Debug.Log("Enemy's BeingPossessed() is Called.");
         }
 
         // 피격을 담당하는 함수
@@ -233,8 +242,10 @@ namespace Enemy
             // Debug.Log("Enemy's Chase() is Called.");
         }
 
+
+
         // 공격을 구현하는 함수
-        public virtual void Attack()
+        public virtual void AIAttack()  // Attack -> AIAttack으로 이름 변경
         {
             // 공격 스킬을 바꿀 주기
             float changeTime = 1.0f;
@@ -248,13 +259,13 @@ namespace Enemy
                     _unityAction = null;
                     break;
                 case 1:
-                    _unityAction = Attack01;
+                    _unityAction = Attack;
                     break;
                 case 2:
-                    _unityAction = Attack02;
+                    _unityAction = Skill1;
                     break;
                 case 3:
-                    _unityAction = Attack03;
+                    _unityAction = Skill2;
                     break;
                 default:
                     _unityAction = null;
@@ -267,20 +278,22 @@ namespace Enemy
                 StartCoroutine(SetDelay(changeTime, _unityAction, isCallFirst: true));
             }
 
-            // Debug.Log("Enemy's Attack() is Called.");
+            // Debug.Log("Enemy's AIAttack() is Called.");
         }
 
-        public virtual void Attack01()
+        public override void Attack()   // Attack01 -> Attack으로 이름 변경
         {
+            Debug.Log("enemy atk");
             _animator.SetInteger("AttackIndex", 1);
         }
-
-        public virtual void Attack02()
+         
+        public override void Skill1()   // Attack02 -> Skill1로 이름 변경
         {
+            Debug.Log("enemy skill");
             _animator.SetInteger("AttackIndex", 2);
         }
 
-        public virtual void Attack03()
+        public override void Skill2()   // Attack03 -> Skill2로 이름 변경
         {
             _animator.SetInteger("AttackIndex", 3);
         }

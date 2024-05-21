@@ -44,7 +44,7 @@ namespace Enemy
                                                               ┏━━━━━┻━━━━━┓        ┏━━━━━━━━━━━━━━━━━━━━━━━━━╋━━━━━━━━━━━━━━━━━━━━━━━━━┓
                                                          CheckGetHit → GetHit  Sequence                  Sequence                   Patrol
                                                                            ┏━━━━━━━┻━━━━━━┓           ┏━━━━━━┻━━━━━━┓
-                                                                   CheckNearToAttack → Attack  CheckNearToChase → Chase
+                                                                   CheckNearToAttack → AIAttack  CheckNearToChase → Chase
 
             */
 

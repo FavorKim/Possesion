@@ -20,6 +20,9 @@ namespace Enemy
             InitializeStats();
 
             base.Awake();
+
+            // 스킬 등록
+            InitSkill(3);
         }
 
         #endregion Awake()
@@ -69,27 +72,28 @@ namespace Enemy
             Debug.Log("Dragon's Chase!");
         }
 
+        public override void AIAttack()
+        {
+            base.AIAttack();
+
+            Debug.Log("Dragon's AIAttack!");
+        }
+
         public override void Attack()
         {
             base.Attack();
-
-            Debug.Log("Dragon's Attack!");
+            Debug.Log("dragon atk");
         }
 
-        public override void Attack01()
+        public override void Skill1()
         {
-            base.Attack01();
-        }
-
-        public override void Attack02()
-        {
-            base.Attack02();
-
+            base.Skill1();
+            Debug.Log("dragon SKill1");
             // 도트 대미지를 구현할 것인가?
             // 상태 이상에 대해서 별도의 코드를 작성하는 것이 바람직해 보인다.
         }
 
-        public override void Attack03()
+        public override void Skill2()
         {
             // 세 번째 공격 스킬이 존재하지 않는다.
         }
@@ -100,13 +104,13 @@ namespace Enemy
 
         // 아래는 애니메이션(Animation) 클립에서 이벤트를 추가하여 호출하는 함수들이다.
 
-        // 원거리 화염 공격(Attack02)의 첫 번째 이벤트 함수
+        // 원거리 화염 공격(Skill1)의 첫 번째 이벤트 함수
         private void OnAttack02Event01()
         {
             _fireParticle.Play();
         }
 
-        // 원거리 화염 공격(Attack02)의 두 번째 이벤트 함수
+        // 원거리 화염 공격(Skill1)의 두 번째 이벤트 함수
         private void OnAttack02Event02()
         {
             _fireParticle.Stop();

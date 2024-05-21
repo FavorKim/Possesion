@@ -59,24 +59,24 @@ namespace Enemy
             Debug.Log("Golem's Chase!");
         }
 
+        public override void AIAttack()
+        {
+            base.AIAttack();
+
+            Debug.Log("Golem's AIAttack!");
+        }
+
         public override void Attack()
         {
             base.Attack();
-
-            Debug.Log("Golem's Attack!");
         }
 
-        public override void Attack01()
+        public override void Skill1()
         {
-            base.Attack01();
+            base.Skill1();
         }
 
-        public override void Attack02()
-        {
-            base.Attack02();
-        }
-
-        public override void Attack03()
+        public override void Skill2()
         {
             // 세 번째 공격 스킬이 존재하지 않는다.
         }
