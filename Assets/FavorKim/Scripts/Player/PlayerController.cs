@@ -110,6 +110,7 @@ public class PlayerController : MonoBehaviour
         camTransform = transform;
 
         t_fullHP.text = fullHP.ToString();
+
     }
 
     void Update()
