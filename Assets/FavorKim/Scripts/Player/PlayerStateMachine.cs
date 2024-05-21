@@ -201,9 +201,9 @@ public class PossessState : PlayerState
         애니메이션 호출
         */
 
-        Debug.Log(mon);
-        
-        mon.EnterPossess();
+        GameManager.Instance.SetCameraFollow(mon.transform);
+        GameManager.Instance.SetCameraLookAt(mon.transform);
+        player.camTransform = mon.transform;
 
         mon.SetSkill();
         durationGauge.gameObject.SetActive(true);
@@ -245,6 +245,9 @@ public class PossessState : PlayerState
         if (mon.skill2 != null)
             mon.skill2.SetCurCD();
         SetDuration();
+
+        //player.transform.position = mon.transform.position;
+        //mon.transform.localPosition = Vector3.zero;
     }
 
     public override void Jump()
@@ -271,6 +274,8 @@ public class PossessState : PlayerState
 
     public override void Exit()
     {
+        player.transform.position = mon.transform.position;
+
         mon.transform.parent = null;
 
         // 임시로 오브젝트를 비활성화했지만, 몬스터가 죽었을 때의 행동을 호출할 것임
@@ -278,8 +283,11 @@ public class PossessState : PlayerState
 
         // 빙의 해제 시 무조건 죽이지는 말자.
         //mon.Dead();
+        player.camTransform = player.transform;
 
         FXManager.Instance.PlayFX("PoExit", player.transform.position);
+        GameManager.Instance.SetCameraFollow(player.transform);
+
         durationGauge.gameObject.SetActive(false);
     }
 

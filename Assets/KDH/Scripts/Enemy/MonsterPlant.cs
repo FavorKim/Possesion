@@ -61,6 +61,9 @@ public class MonsterPlant : Monsters
     // Start is called before the first frame update
     protected override void Awake()
     {
+        base.Awake();
+        InitSkill(2, 5);
+
         isPlayer = gameObject.transform.parent != null;
         player = FindObjectOfType<PlayerController>();
         playerTrf = player.transform;
@@ -74,6 +77,7 @@ public class MonsterPlant : Monsters
         stateMachine.AddState(MonsterState.IDLE, new IdleState(this));
         stateMachine.AddState(MonsterState.TRACE, new TraceState(this));
         stateMachine.AddState(MonsterState.ATTACK, new AttackState(this));
+        stateMachine.AddState(MonsterState.DEAD, new DeadState(this));
         stateMachine.InitState(MonsterState.IDLE);
 
         agent.destination = playerTrf.position;
@@ -126,22 +130,25 @@ public class MonsterPlant : Monsters
     }
     private void Update()
     {
-        if (skill1_curCooltime > 0f)
-        {
-            skill1_curCooltime -= Time.deltaTime;
-        }
-        if (skill2_curCooltime > 0f)
-        {
-            skill2_curCooltime -= Time.deltaTime;
-        }
-        if (attack_curCooltime> 0f)
-        {
-            attack_curCooltime -= Time.deltaTime;
-        }
-        stateMachine.ChangeState(state);
+        //if (skill1_curCooltime > 0f)
+        //{
+        //    skill1_curCooltime -= Time.deltaTime;
+        //}
+        //if (skill2_curCooltime > 0f)
+        //{
+        //    skill2_curCooltime -= Time.deltaTime;
+        //}
+        //if (attack_curCooltime> 0f)
+        //{
+        //    attack_curCooltime -= Time.deltaTime;
+        //}
 
-        animator.SetFloat("FloatX", rb.velocity.x * 100f);
-        animator.SetFloat("FloatY", rb.velocity.z * 100f);
+        if (transform.parent != null)
+        {
+            stateMachine.ChangeState(state);
+            animator.SetFloat("FloatX", rb.velocity.x * 100f);
+            animator.SetFloat("FloatY", rb.velocity.z * 100f);
+        }
     }
 
     class BaseEnemyState : BaseState

@@ -19540,9 +19540,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   power: 20
-  monsterLayer:
-    serializedVersion: 2
-    m_Bits: 0
 --- !u!82 &4961155425873038803
 AudioSource:
   m_ObjectHideFlags: 0

@@ -95,10 +95,7 @@ public abstract class Monsters : MonoBehaviour, ITyped
         }
     }
 
-    public void EnterPossess()
-    {
-        OnPossessed();
-    }
+    
 
 
 
@@ -112,18 +109,13 @@ public abstract class Monsters : MonoBehaviour, ITyped
             GetDamage(attacker.Damage / 2);
     }
 
+
     void InitHPUI()
     {
         HPHUDObj = Instantiate(Resources.Load<GameObject>("HP_HUD"), transform);
         HPSlider = HPHUDObj.GetComponentInChildren<Slider>();
         HPSlider.value = curHP / maxHP;
     }
-
-    /// <summary>
-    /// 빙의 상태 진입 시 호출되는 이벤트. Awake(혹은 Start)에서 OnPossessed+=으로 구독.
-    /// </summary>
-    protected event Action OnPossessed;
-
 
 
     IEnumerator CorInvincible()

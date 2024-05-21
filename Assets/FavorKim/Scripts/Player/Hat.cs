@@ -41,7 +41,6 @@ public class Hat : MonoBehaviour
             if (other.CompareTag("Monster"))
             {
                 hatM.SetHitParticle(transform.position);
-                
                 player.SetState(other.GetComponentInParent<Monsters>());
             }
             ResetHat();

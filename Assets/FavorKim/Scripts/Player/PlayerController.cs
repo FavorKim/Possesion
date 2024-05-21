@@ -41,6 +41,7 @@ public class PlayerController : MonoBehaviour
 
     SkillManager sM;
 
+    public Transform camTransform;
     #endregion
 
     #region Vector
@@ -107,7 +108,7 @@ public class PlayerController : MonoBehaviour
         //outFits.Add("Player", playerOF);
         OnDead += DeadCheck;
         OnDead += SetHPUI;
-
+        camTransform = transform;
 
         t_fullHP.text = fullHP.ToString();
     }
@@ -270,11 +271,16 @@ public class PlayerController : MonoBehaviour
 
         if (!isDead)
         {
-            transform.LookAt(lookAtTransform);
-            transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
-            heading = Camera.main.transform.localRotation * Vector3.forward;
+            LookAtPlayer(camTransform);
         }
         // 산나비 때 썼던 쉐이더 그래프 끌고와서 조준선으로 만들면 좋을 것
+    }
+
+    public void LookAtPlayer(Transform dest)
+    {
+        dest.LookAt(lookAtTransform);
+        dest.eulerAngles = new Vector3(0, dest.eulerAngles.y, 0);
+        heading = Camera.main.transform.localRotation * Vector3.forward;
     }
 
 
@@ -301,6 +307,12 @@ public class PlayerController : MonoBehaviour
                 break;
             }
         }
+
+        isInvincible = true;
+        invinFX.Play();
+        new WaitForSeconds(invincibleTime);
+        invinFX.Stop();
+        isInvincible = false;
     }
 }
 
