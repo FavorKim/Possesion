@@ -73,6 +73,7 @@ public abstract class PlayerState : IState
         gravityScale = player.GetGravityScale();
         jumpForce = player.GetJumpForce();
         anim = player.GetComponent<Animator>();
+        orgJumpForce = jumpForce;
         //isGround = player.isGround;
     }
 
@@ -89,7 +90,8 @@ public abstract class PlayerState : IState
 
     protected bool isGround => player.isGround;
 
-
+    protected float orgJumpForce;
+    protected bool isJumping = false;
 
     public virtual void Move()
     {
@@ -101,9 +103,21 @@ public abstract class PlayerState : IState
         stateCC.Move(moveDir);
     }
 
-    public abstract void StateUpdate();
+    public virtual void StateUpdate() 
+    {
+        stateCC.SimpleMove(-player.transform.up * gravityScale * Time.deltaTime);
+        if (isJumping)
+        {
+            NormJump();
+        }
+    }
 
-    public abstract void Jump();
+    public virtual void Jump() 
+    {
+        if (!isGround) return;
+        anim.SetTrigger("Jump");
+        isJumping = true;
+    }
     public abstract void Attack();
     public abstract void Skill1();
     public abstract void Skill2();
@@ -111,14 +125,24 @@ public abstract class PlayerState : IState
 
     public abstract void Enter();
     public abstract void Exit();
+
+    void NormJump()
+    {
+        Debug.Log(jumpForce);
+        stateCC.Move(player.transform.up * jumpForce * Time.deltaTime);
+        jumpForce -= Time.deltaTime * jumpForce;
+        if (jumpForce < 10)
+        {
+            jumpForce = orgJumpForce;
+            isJumping = false;
+        }
+    }
 }
 
 public class NormalState : PlayerState
 {
     public NormalState(PlayerController controller) : base(controller) { orgJumpForce = jumpForce; }
 
-    float orgJumpForce;
-    bool isJumping = false;
     public override void Enter()
     {
         SkillManager.ResetSkill();
@@ -127,22 +151,16 @@ public class NormalState : PlayerState
     public override void Move()
     {
         base.Move();
-        if (isJumping)
-        {
-            NormJump();
-        }
     }
 
     public override void StateUpdate()
     {
-        stateCC.SimpleMove(-player.transform.up * gravityScale * Time.deltaTime);
+        base.StateUpdate();
     }
 
     public override void Jump()
     {
-        if (!isGround) return;
-        anim.SetTrigger("Jump");
-        isJumping = true;
+        base.Jump();
     }
 
     public override void Attack()
@@ -170,17 +188,6 @@ public class NormalState : PlayerState
 
     }
 
-    void NormJump()
-    {
-
-        stateCC.Move(player.transform.up * jumpForce * Time.deltaTime);
-        jumpForce -= Time.deltaTime * jumpForce;
-        if (jumpForce < 10)
-        {
-            jumpForce = orgJumpForce;
-            isJumping = false;
-        }
-    }
 }
 
 
@@ -242,6 +249,8 @@ public class PossessState : PlayerState
 
     public override void StateUpdate()
     {
+        base.StateUpdate();
+
         if (mon.GetHP() <= 0) 
             player.SetState("Normal");
         if (mon.skill1 != null)
@@ -256,7 +265,8 @@ public class PossessState : PlayerState
 
     public override void Jump()
     {
-        // mon.Jump();
+        base.Jump();
+        Debug.Log("poJump");
     }
     public override void Attack()
     {
