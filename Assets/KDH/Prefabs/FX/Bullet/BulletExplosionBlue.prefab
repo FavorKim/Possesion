@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 8269356}
   - component: {fileID: 11426486}
   - component: {fileID: 8079480274752758345}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: BulletExplosionBlue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4949,7 +4949,7 @@ GameObject:
   - component: {fileID: 437554}
   - component: {fileID: 19890378}
   - component: {fileID: 19982432}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Glow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9760,7 +9760,7 @@ GameObject:
   - component: {fileID: 19883024}
   - component: {fileID: 19993404}
   - component: {fileID: 2288440872043475989}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Sparks
   m_TagString: Untagged
   m_Icon: {fileID: 0}

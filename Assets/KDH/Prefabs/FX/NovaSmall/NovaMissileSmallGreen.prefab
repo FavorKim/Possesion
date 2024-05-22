@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 481992}
   - component: {fileID: 19854742}
   - component: {fileID: 19965978}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: SparkTrail
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4782,7 +4782,7 @@ GameObject:
   - component: {fileID: 19827528}
   - component: {fileID: 19919032}
   - component: {fileID: 8235178}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: NovaMissileSmallGreen
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9676,7 +9676,7 @@ GameObject:
   - component: {fileID: 496992}
   - component: {fileID: 19866256}
   - component: {fileID: 19926492}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Glow
   m_TagString: Untagged
   m_Icon: {fileID: 0}

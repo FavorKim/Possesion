@@ -205,6 +205,7 @@ GameObject:
   - component: {fileID: 2266157265121750397}
   - component: {fileID: 5004841277818399207}
   - component: {fileID: 1258686019}
+  - component: {fileID: 2094621524}
   m_Layer: 0
   m_Name: Flower Dryad
   m_TagString: Monster
@@ -286,9 +287,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   curHP: 500
   maxHP: 500
-  HPSlider: {fileID: 0}
   player: {fileID: 0}
   state: 0
+  EnfPhased: 0
   stateMachine: {fileID: 0}
   projectile: {fileID: 128572, guid: 9c941f2d9380298498eff1f6187025f8, type: 3}
   bullets: {fileID: 128572, guid: 9a0588d7277245d4da3d370894b6cdac, type: 3}
@@ -297,11 +298,24 @@ MonoBehaviour:
   - {fileID: 2266157265114776345}
   - {fileID: 2266157265114776347}
   shootSpeed: 900
-  spreadRange: 150
-  spinAttack: {fileID: 19827156, guid: 12473d1f4ebc46644a4addbc8803838e, type: 3}
+  spreadRange: 250
+  HPSlider: {fileID: 0}
   mstATK: 10
-  traceDistance: 10
   isDie: 0
+--- !u!136 &2094621524
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2266157265114488493}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.5
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!1 &2266157265114488495
 GameObject:
   m_ObjectHideFlags: 0

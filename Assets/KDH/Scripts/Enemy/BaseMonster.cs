@@ -103,9 +103,13 @@ public abstract class BaseMonster : Monsters
     {
         // 스킬의 재사용 대기 시간을 계산한다.
         CalcCooltime();
-        
-        animator.SetFloat("FloatX", gameObject.GetComponentInParent<PlayerController>().MoveDir.normalized.x);
-        animator.SetFloat("FloatY", gameObject.GetComponentInParent<PlayerController>().MoveDir.normalized.z);
+
+        if(transform.parent != null)
+        {
+            animator.SetFloat("FloatX", player.MoveDir.normalized.x);
+            animator.SetFloat("FloatY", player.MoveDir.normalized.z);
+        }
+
     }
 
     #endregion Life Cycles (Awake / Start / Update)

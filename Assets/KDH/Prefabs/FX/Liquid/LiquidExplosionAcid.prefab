@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 469048}
   - component: {fileID: 19884648}
   - component: {fileID: 19929202}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: InnerSplash
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4821,7 +4821,7 @@ GameObject:
   - component: {fileID: 455026}
   - component: {fileID: 19859442}
   - component: {fileID: 19988052}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Liquid
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9624,7 +9624,7 @@ GameObject:
   - component: {fileID: 19993800}
   - component: {fileID: 8235924}
   - component: {fileID: 11467424}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: LiquidExplosionAcid
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14542,7 +14542,7 @@ GameObject:
   - component: {fileID: 198591784343114920}
   - component: {fileID: 199419432770259676}
   - component: {fileID: 8938176218952596588}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Smoke
   m_TagString: Untagged
   m_Icon: {fileID: 0}

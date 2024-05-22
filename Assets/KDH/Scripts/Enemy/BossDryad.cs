@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UI;
 
-public class BossDryad : MonoBehaviour
+public class BossDryad : MonoBehaviour, IDamagable
 {
     public enum BossState
     {
@@ -14,6 +14,8 @@ public class BossDryad : MonoBehaviour
         ATTACK,
         DEAD
     }
+
+    private bool isInvincible = false; // 무적 여부
 
     [SerializeField] private float curHP = 500f; // 몬스터의 현재 체력
     [SerializeField] private float maxHP = 500f; // 몬스터의 최대 체력
@@ -62,7 +64,6 @@ public class BossDryad : MonoBehaviour
 
     void Awake()
     {
-        
         player = FindObjectOfType<PlayerController>();
         playerTrf = player.transform;
         agent = GetComponent<NavMeshAgent>();
@@ -74,7 +75,7 @@ public class BossDryad : MonoBehaviour
         stateMachine.AddState(BossState.PATTERN, new PartternState(this));
         stateMachine.AddState(BossState.ATTACK, new AttackState(this));
         stateMachine.AddState(BossState.DEAD, new DeadState(this));
-        stateMachine.InitState(BossState.IDLE);
+        stateMachine.InitState(state);
 
         agent.destination = playerTrf.position;
     }
@@ -94,45 +95,25 @@ public class BossDryad : MonoBehaviour
 
     protected virtual IEnumerator BossPattern()
     {
-        /*
-        1페이즈
-        기본 공격 - 탄막 발사 
-
-        몹 소환 
-        덩굴 소환으로 진행 막기
-        
-
-        2페이즈 밀쳐내기
-        기본 공격 - 강화 탄막 발사 
-        
-        폭탄씨앗 발사 투사체 주위를 터뜨림
-        
-        발사 중심으로 쭉 밀어내기.
-        +1페이즈까지
-
-        2페이즈 시 맵 바깥은 사라지지 않는 가시 추가.
-       
-        */
         while (!isDie)
         {
             if (Input.GetKeyDown("1"))
             {
                 i = 1;
-                stateMachine.ChangeState(BossState.ATTACK);
+                stateMachine.ChangeState(BossState.PATTERN);
             }
             else if (Input.GetKeyDown("2"))
             {
                 i = 2;
-                stateMachine.ChangeState(BossState.ATTACK);
+                stateMachine.ChangeState(BossState.PATTERN);
             }
             else if (Input.GetKeyDown("3"))
             {
                 i = 3;
-                stateMachine.ChangeState(BossState.ATTACK);
+                stateMachine.ChangeState(BossState.PATTERN);
             }
             else if (Input.GetKeyDown("4"))
             {
-                i = 4;
                 stateMachine.ChangeState(BossState.ATTACK);
             }
             else if (Input.GetKeyDown("5"))
@@ -145,14 +126,14 @@ public class BossDryad : MonoBehaviour
                 i = 6;
                 stateMachine.ChangeState(BossState.IDLE);
             }
-            else if (Input.GetKeyDown("7"))
-            {
-                stateMachine.ChangeState(BossState.DEAD);
-                isDie = true;
-            }
             else
             {
                 stateMachine.ChangeState(BossState.IDLE);
+            }
+
+            if (curHP <= 0)
+            {
+                stateMachine.ChangeState(BossState.DEAD);
             }
             yield return new WaitForSeconds(0.01f);
         }
@@ -209,18 +190,7 @@ public class BossDryad : MonoBehaviour
         }
     }
     
-    class PartternState : BaseEnemyState
-    {
-        public PartternState(BossDryad owner) : base(owner) { }
-
-        public override void Enter()
-        {
-            //패턴 체인지 모션?
-
-            owner.agent.isStopped = true;
-            owner.animator.SetBool(owner.hashAttack, false);
-        }
-    }
+    
 
     class AttackState : BaseEnemyState
     {
@@ -229,6 +199,15 @@ public class BossDryad : MonoBehaviour
         public override void Enter()
         {
             owner.agent.isStopped = true;
+            owner.Attack();
+        }
+    }
+    class PartternState : BaseEnemyState
+    {
+        public PartternState(BossDryad owner) : base(owner) { }
+
+        public override void Enter()
+        {
             if (owner.i == 1)
             {
                 owner.Skill1();
@@ -241,11 +220,11 @@ public class BossDryad : MonoBehaviour
             {
                 owner.Skill3();
             }
-            else
-            {
-                owner.Attack();
-            }
+
+            owner.agent.isStopped = true;
+            owner.animator.SetBool(owner.hashAttack, false);
         }
+
     }
 
     class DeadState : BaseEnemyState
@@ -256,6 +235,7 @@ public class BossDryad : MonoBehaviour
         {
             owner.agent.isStopped = true;
             owner.animator.SetTrigger(owner.hashDie);
+            owner.isDie = true;
         }
     }
     
@@ -455,7 +435,7 @@ public class BossDryad : MonoBehaviour
 
     public void GetDamage(int damage)
     {
-        /*// 무적 상태가 아닐 경우,
+        // 무적 상태가 아닐 경우,
         if (!isInvincible)
         {
             // 대미지만큼 체력을 감소시킨다.
@@ -464,12 +444,8 @@ public class BossDryad : MonoBehaviour
             // 감소한 체력을 체력 패널에 적용한다.
             HPSlider.value = curHP / maxHP;
 
-            // 무적 상태에 돌입한다.
-            StartCoroutine(CorInvincible());
-
             // 체력이 0 이하일 경우(죽음), 그 몬스터를 비활성화한다.
-            if (curHP <= 0)
-                gameObject.SetActive(false);
-        }*/
+            
+        }
     }
 }

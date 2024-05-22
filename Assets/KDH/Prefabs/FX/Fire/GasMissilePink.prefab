@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4218906134354218}
   - component: {fileID: 198735514997521776}
   - component: {fileID: 199594629741345404}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: SparkTrail
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3823,7 +3823,7 @@ ParticleSystem:
     quality: 0
     voxelSize: 0.5
     collisionMessages: 0
-    collidesWithDynamic: 1
+    collidesWithDynamic: 0
     interiorCollisions: 0
   TriggerModule:
     enabled: 0
@@ -4863,7 +4863,7 @@ GameObject:
   - component: {fileID: 198087617074957196}
   - component: {fileID: 199291562929112974}
   - component: {fileID: 82043633011682206}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: GasMissilePink
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8587,7 +8587,7 @@ ParticleSystem:
     quality: 0
     voxelSize: 0.5
     collisionMessages: 0
-    collidesWithDynamic: 1
+    collidesWithDynamic: 0
     interiorCollisions: 1
   TriggerModule:
     enabled: 0
@@ -9722,7 +9722,7 @@ GameObject:
   - component: {fileID: 4641952074973932}
   - component: {fileID: 198930959015460800}
   - component: {fileID: 199924889352709796}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: WhiteGlobe
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13426,7 +13426,7 @@ ParticleSystem:
     quality: 0
     voxelSize: 0.5
     collisionMessages: 0
-    collidesWithDynamic: 1
+    collidesWithDynamic: 0
     interiorCollisions: 1
   TriggerModule:
     enabled: 0

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 13576440}
   - component: {fileID: 5479992}
   - component: {fileID: 11464288}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: GasPinkOBJ
   m_TagString: Missile
   m_Icon: {fileID: 0}
