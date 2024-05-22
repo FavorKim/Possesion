@@ -38,12 +38,10 @@ public class GameManager : MonoBehaviour
 
     public void GetDamage(Obstacles obs, GameObject dest)
     {
-        if (dest.CompareTag("Player"))
+        if (dest.CompareTag("Player") && obs.Damage != 0)
             player.GetDamage(obs.Damage);
         else if (dest.GetComponent<ITyped>() != null)
             SetTypeAttack(obs, dest.GetComponent<ITyped>());
-        else
-            return;
     }
 
     public void GetDamage(int dmg)
