@@ -27,7 +27,7 @@ public abstract class Monsters : MonoBehaviour, ITyped
 
     #region Start()
 
-    private void Start()
+    protected virtual void Start()
     {
         // 체력 패널을 초기화(생성)한다.
         HP_HUD_Obj = Instantiate(Resources.Load<GameObject>("HP_HUD"), transform);

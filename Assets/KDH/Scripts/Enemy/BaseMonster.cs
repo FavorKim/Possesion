@@ -78,6 +78,7 @@ public abstract class BaseMonster : Monsters
         stateMachine.AddState(MonsterState.IDLE, new IdleState(this));
         stateMachine.AddState(MonsterState.TRACE, new TraceState(this));
         stateMachine.AddState(MonsterState.ATTACK, new AttackState(this));
+        stateMachine.AddState(MonsterState.DEAD, new DeadState(this));
         stateMachine.InitState(MonsterState.IDLE);
 
         // NavMesh를 초기화한다.
@@ -87,8 +88,9 @@ public abstract class BaseMonster : Monsters
         InitSkills();
     }
 
-    private void Start()
+    protected override void Start()
     {
+        base.Start();
         // 몬스터의 상태 검사를 시작한다.
         StartCoroutine(CheckEnemyState());
     }
@@ -152,8 +154,6 @@ public abstract class BaseMonster : Monsters
                 stateMachine.ChangeState(MonsterState.IDLE); // 대기 상태로 변경한다.
                 state = MonsterState.IDLE;
             }
-
-            Debug.Log($"distance = {distance}, is_pjtAtk = {is_pjtAtk.ToString()}, state = {state.ToString()}");
         }
 
         // 그 외에는 (공격, 추적, 대기 상태 모두 불가능한 경우) 사망 상태로 변경한다.

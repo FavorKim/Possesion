@@ -4821,6 +4821,7 @@ GameObject:
   - component: {fileID: 3971878199808273892}
   - component: {fileID: 3971878199823460018}
   - component: {fileID: 3971878199822297390}
+  - component: {fileID: 6779559029891030271}
   m_Layer: 0
   m_Name: SwordSpinBlue
   m_TagString: Untagged
@@ -9623,6 +9624,20 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!114 &6779559029891030271
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3971878199808543594}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2910bd8bcd3b3c541b9e725423d9aebf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 0
+  myType: 2
 --- !u!1 &3971878199808550742
 GameObject:
   m_ObjectHideFlags: 0

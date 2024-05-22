@@ -58,16 +58,9 @@ public class GameManager : MonoBehaviour
     /// <param name="to">피격자</param>
     public void SetTypeAttack(Obstacles from, ITyped to)
     {
-        if ((int)from.type > (int)to.type)
-        {
-            // 공격자가 공격대상 속성보다 우세일 경우 실행할 내용
-            to.OnTypeAttacked(from);
-        }
-        else
-        {
-            // 공격자가 공격대상 속성보다 열세일 경우 실행할 내용
-            return;
-        }
+        // 공격자가 공격대상 속성보다 우세일 경우 실행할 내용
+        to.OnTypeAttacked(from);
+
     }
 
     public void SetCameraFollow(Transform dest)

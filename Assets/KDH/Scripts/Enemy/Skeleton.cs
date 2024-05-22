@@ -31,6 +31,8 @@ public class Skeleton : BaseMonster
         traceDistance = 10f;
         skillDistance = 5f;
         attackDistance = 2f;
+
+        InitSkill(skill1Cooltime, skill2Cooltime);
     }
 
     // 공격 함수
