@@ -6,36 +6,36 @@ public abstract class BaseMonster : Monsters
 {
     #region Components
 
-    protected Transform enemyTrf; // ¸ó½ºÅÍ(ÀÚ½Å)ÀÇ À§Ä¡(Transform)
-    protected Transform playerTrf; // ÇÃ·¹ÀÌ¾îÀÇ À§Ä¡(Transform)
-    protected NavMeshAgent agent; // ³×ºñ°ÔÀÌ¼Ç(NavMesh)
-    protected Animator animator; // ¾Ö´Ï¸ŞÀÌÅÍ(Animator)
-    protected Rigidbody rb; // ¸®Áöµå¹Ùµğ(Rigidbody)
+    protected Transform enemyTrf; // ëª¬ìŠ¤í„°(ìì‹ )ì˜ ìœ„ì¹˜(Transform)
+    protected Transform playerTrf; // í”Œë ˆì´ì–´ì˜ ìœ„ì¹˜(Transform)
+    protected NavMeshAgent agent; // ë„¤ë¹„ê²Œì´ì…˜(NavMesh)
+    protected Animator animator; // ì• ë‹ˆë©”ì´í„°(Animator)
+    protected Rigidbody rb; // ë¦¬ì§€ë“œë°”ë””(Rigidbody)
 
     #endregion Components
 
     #region Fields
 
-    // ¸ó½ºÅÍÀÇ »óÅÂ¸¦ ³ªÅ¸³»´Â enum (»óÅÂ ÆĞÅÏ)
+    // ëª¬ìŠ¤í„°ì˜ ìƒíƒœë¥¼ ë‚˜íƒ€ë‚´ëŠ” enum (ìƒíƒœ íŒ¨í„´)
     protected enum MonsterState
     {
         IDLE, TRACE, ATTACK, DEAD
     }
 
-    protected MonsterState state = MonsterState.IDLE; // Ã³À½¿¡´Â IDLE »óÅÂÀÌ´Ù.
+    protected MonsterState state = MonsterState.IDLE; // ì²˜ìŒì—ëŠ” IDLE ìƒíƒœì´ë‹¤.
 
-    // À¯ÇÑ »óÅÂ ±â°è Å¬·¡½º
+    // ìœ í•œ ìƒíƒœ ê¸°ê³„ í´ë˜ìŠ¤
     private StateMachine stateMachine;
 
-    // ¸ó½ºÅÍÀÇ »ç¸Á / ºùÀÇ ¿©ºÎ
+    // ëª¬ìŠ¤í„°ì˜ ì‚¬ë§ / ë¹™ì˜ ì—¬ë¶€
     protected bool isDie = false;
     protected bool isPlayer = false;
 
-    // ¾Ö´Ï¸ŞÀÌÅÍÀÇ ÇØ½Ã(Hash), °¢ ÇÏÀ§ Å¬·¡½º¿¡¼­ ¾Ë¸Â°Ô Ãß°¡ Á¤ÀÇÇÒ °Í.
+    // ì• ë‹ˆë©”ì´í„°ì˜ í•´ì‹œ(Hash), ê° í•˜ìœ„ í´ë˜ìŠ¤ì—ì„œ ì•Œë§ê²Œ ì¶”ê°€ ì •ì˜í•  ê²ƒ.
     protected readonly int hashTrace = Animator.StringToHash("IsTrace");
     protected readonly int hashAttack = Animator.StringToHash("IsAttack");
 
-    // ÇÃ·¹ÀÌ¾î Á¤º¸¸¦ ¹Ş¾Æ¾ß NevMesh¸¦ µû¶ó ÃßÀûÀÌ °¡´ÉÇÔ.
+    // í”Œë ˆì´ì–´ ì •ë³´ë¥¼ ë°›ì•„ì•¼ NevMeshë¥¼ ë”°ë¼ ì¶”ì ì´ ê°€ëŠ¥í•¨.
     [SerializeField] private PlayerController player;
 
     #endregion Fields
@@ -45,7 +45,7 @@ public abstract class BaseMonster : Monsters
     protected float mstATK;
     protected float mstSPD;
 
-    // ¸ó½ºÅÍÀÇ ½ºÅ³ Àç»ç¿ë ´ë±â ½Ã°£
+    // ëª¬ìŠ¤í„°ì˜ ìŠ¤í‚¬ ì¬ì‚¬ìš© ëŒ€ê¸° ì‹œê°„
     protected float attackCooltime;
     protected float attack_curCooltime = 0f;
     protected float skill1Cooltime;
@@ -65,7 +65,7 @@ public abstract class BaseMonster : Monsters
 
     protected override void Awake()
     {
-        // ÄÄÆ÷³ÍÆ®¸¦ ÃÊ±âÈ­ÇÑ´Ù.
+        // ì»´í¬ë„ŒíŠ¸ë¥¼ ì´ˆê¸°í™”í•œë‹¤.
         player = FindObjectOfType<PlayerController>();
         playerTrf = player?.transform;
         enemyTrf = GetComponent<Transform>();
@@ -73,29 +73,29 @@ public abstract class BaseMonster : Monsters
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody>();
 
-        // »óÅÂ ±â°è¸¦ ÃÊ±âÈ­ÇÑ´Ù.
+        // ìƒíƒœ ê¸°ê³„ë¥¼ ì´ˆê¸°í™”í•œë‹¤.
         stateMachine = gameObject.AddComponent<StateMachine>();
         stateMachine.AddState(MonsterState.IDLE, new IdleState(this));
         stateMachine.AddState(MonsterState.TRACE, new TraceState(this));
         stateMachine.AddState(MonsterState.ATTACK, new AttackState(this));
         stateMachine.InitState(MonsterState.IDLE);
 
-        // NavMesh¸¦ ÃÊ±âÈ­ÇÑ´Ù.
+        // NavMeshë¥¼ ì´ˆê¸°í™”í•œë‹¤.
         agent.destination = playerTrf.position;
 
-        // ¸ó½ºÅÍÀÇ ½ºÅ³À» ÃÊ±âÈ­ÇÑ´Ù.
+        // ëª¬ìŠ¤í„°ì˜ ìŠ¤í‚¬ì„ ì´ˆê¸°í™”í•œë‹¤.
         InitSkills();
     }
 
     private void Start()
     {
-        // ¸ó½ºÅÍÀÇ »óÅÂ °Ë»ç¸¦ ½ÃÀÛÇÑ´Ù.
+        // ëª¬ìŠ¤í„°ì˜ ìƒíƒœ ê²€ì‚¬ë¥¼ ì‹œì‘í•œë‹¤.
         StartCoroutine(CheckEnemyState());
     }
 
     private void Update()
     {
-        // ½ºÅ³ÀÇ Àç»ç¿ë ´ë±â ½Ã°£À» °è»êÇÑ´Ù.
+        // ìŠ¤í‚¬ì˜ ì¬ì‚¬ìš© ëŒ€ê¸° ì‹œê°„ì„ ê³„ì‚°í•œë‹¤.
         CalcCooltime();
 
         animator.SetFloat("FloatX", rb.velocity.x * 100f);
@@ -106,62 +106,62 @@ public abstract class BaseMonster : Monsters
 
     #region State Classes
 
-    // »óÅÂ¸¦ È®ÀÎÇÏ´Â ÄÚ·çÆ¾ ÇÔ¼ö
+    // ìƒíƒœë¥¼ í™•ì¸í•˜ëŠ” ì½”ë£¨í‹´ í•¨ìˆ˜
     private IEnumerator CheckEnemyState()
     {
-        // Á×Áö ¾Ê¾Ò°Å³ª, ºùÀÇµÇÁö ¾Ê¾Ò´Ù¸é ¹«ÇÑ ¹İº¹ÇÑ´Ù.
+        // ì£½ì§€ ì•Šì•˜ê±°ë‚˜, ë¹™ì˜ë˜ì§€ ì•Šì•˜ë‹¤ë©´ ë¬´í•œ ë°˜ë³µí•œë‹¤.
         while (!isDie && !isPlayer)
         {
-            // isDie, isPlayer Ã¼Å©
+            // isDie, isPlayer ì²´í¬
             isDie = (state == MonsterState.DEAD);
             isPlayer = (gameObject.transform.parent != null);
 
-            // ¾à 0.3ÃÊÀÇ ´ë±â ½Ã°£
+            // ì•½ 0.3ì´ˆì˜ ëŒ€ê¸° ì‹œê°„
             yield return new WaitForSeconds(0.3f);
 
-            // ¸ó½ºÅÍÀÇ »óÅÂ°¡ DEAD¶ó¸é,
+            // ëª¬ìŠ¤í„°ì˜ ìƒíƒœê°€ DEADë¼ë©´,
             if (state == MonsterState.DEAD)
             {
-                // »óÅÂ ±â°èÀÇ »óÅÂ¸¦ DEAD·Î ¹Ù²Û´Ù.
+                // ìƒíƒœ ê¸°ê³„ì˜ ìƒíƒœë¥¼ DEADë¡œ ë°”ê¾¼ë‹¤.
                 stateMachine.ChangeState(MonsterState.DEAD);
 
-                // Áï½Ã Å»ÃâÇÑ´Ù.
+                // ì¦‰ì‹œ íƒˆì¶œí•œë‹¤.
                 yield break;
             }
 
-            // ¸ó½ºÅÍ(ÀÚ½Å)°ú ÇÃ·¹ÀÌ¾îÀÇ °Å¸®¸¦ °è»êÇÑ´Ù.
+            // ëª¬ìŠ¤í„°(ìì‹ )ê³¼ í”Œë ˆì´ì–´ì˜ ê±°ë¦¬ë¥¼ ê³„ì‚°í•œë‹¤.
             float distance = Vector3.Distance(playerTrf.position, enemyTrf.position);
 
-            // Æ¯¼ö °ø°İ°¡´É »óÅÂ
+            // íŠ¹ìˆ˜ ê³µê²©ê°€ëŠ¥ ìƒíƒœ
             bool is_pjtAtk = skillDistance > distance && skill1_curCooltime <= 0f;
 
-            if (distance <= attackDistance || is_pjtAtk) // °ø°İ °¡´ÉÇÑ »óÅÂ¶ó¸é (ÀÏÁ¤ °Å¸® ÀÌ³»)
+            if (distance <= attackDistance || is_pjtAtk) // ê³µê²© ê°€ëŠ¥í•œ ìƒíƒœë¼ë©´ (ì¼ì • ê±°ë¦¬ ì´ë‚´)
             {
-                stateMachine.ChangeState(MonsterState.ATTACK); // °ø°İ »óÅÂ·Î º¯°æÇÑ´Ù.
+                stateMachine.ChangeState(MonsterState.ATTACK); // ê³µê²© ìƒíƒœë¡œ ë³€ê²½í•œë‹¤.
                 state = MonsterState.ATTACK;
 
-                yield return new WaitForSeconds(attackCooltime); // Àç»ç¿ë ´ë±â ½Ã°£¸¸Å­ ±â´Ù¸°´Ù.
+                yield return new WaitForSeconds(attackCooltime); // ì¬ì‚¬ìš© ëŒ€ê¸° ì‹œê°„ë§Œí¼ ê¸°ë‹¤ë¦°ë‹¤.
             }
-            else if (distance <= traceDistance) // ÃßÀû °¡´ÉÇÑ »óÅÂ¶ó¸é
+            else if (distance <= traceDistance) // ì¶”ì  ê°€ëŠ¥í•œ ìƒíƒœë¼ë©´
             {
-                stateMachine.ChangeState(MonsterState.TRACE); // ÃßÀû »óÅÂ·Î º¯°æÇÑ´Ù.
+                stateMachine.ChangeState(MonsterState.TRACE); // ì¶”ì  ìƒíƒœë¡œ ë³€ê²½í•œë‹¤.
                 state = MonsterState.TRACE;
             }
-            else // ±× ¿Ü¿¡´Â
+            else // ê·¸ ì™¸ì—ëŠ”
             {
-                stateMachine.ChangeState(MonsterState.IDLE); // ´ë±â »óÅÂ·Î º¯°æÇÑ´Ù.
+                stateMachine.ChangeState(MonsterState.IDLE); // ëŒ€ê¸° ìƒíƒœë¡œ ë³€ê²½í•œë‹¤.
                 state = MonsterState.IDLE;
             }
 
             Debug.Log($"distance = {distance}, is_pjtAtk = {is_pjtAtk.ToString()}, state = {state.ToString()}");
         }
 
-        // ±× ¿Ü¿¡´Â (°ø°İ, ÃßÀû, ´ë±â »óÅÂ ¸ğµÎ ºÒ°¡´ÉÇÑ °æ¿ì) »ç¸Á »óÅÂ·Î º¯°æÇÑ´Ù.
+        // ê·¸ ì™¸ì—ëŠ” (ê³µê²©, ì¶”ì , ëŒ€ê¸° ìƒíƒœ ëª¨ë‘ ë¶ˆê°€ëŠ¥í•œ ê²½ìš°) ì‚¬ë§ ìƒíƒœë¡œ ë³€ê²½í•œë‹¤.
         stateMachine.ChangeState(MonsterState.DEAD);
         state = MonsterState.DEAD;
     }
 
-    // ±âº» »óÅÂ
+    // ê¸°ë³¸ ìƒíƒœ
     private class BaseEnemyState : BaseState
     {
         protected BaseMonster owner;
@@ -171,53 +171,53 @@ public abstract class BaseMonster : Monsters
         }
     }
 
-    // ´ë±â(Idle) »óÅÂ
+    // ëŒ€ê¸°(Idle) ìƒíƒœ
     private class IdleState : BaseEnemyState
     {
         public IdleState(BaseMonster owner) : base(owner) { }
 
         public override void Enter()
         {
-            // ÃßÀûÀ» ¸ØÃá´Ù.
+            // ì¶”ì ì„ ë©ˆì¶˜ë‹¤.
             owner.agent.isStopped = true;
 
-            // ÃßÀû ¾Ö´Ï¸ŞÀÌ¼Ç°ú °ø°İ ¾Ö´Ï¸ŞÀÌ¼ÇÀ» ÁßÁöÇÑ´Ù.
+            // ì¶”ì  ì• ë‹ˆë©”ì´ì…˜ê³¼ ê³µê²© ì• ë‹ˆë©”ì´ì…˜ì„ ì¤‘ì§€í•œë‹¤.
             owner.animator.SetBool(owner.hashTrace, false);
             owner.animator.SetBool(owner.hashAttack, false);
         }
     }
 
-    // ÃßÀû »óÅÂ
+    // ì¶”ì  ìƒíƒœ
     private class TraceState : BaseEnemyState
     {
         public TraceState(BaseMonster owner) : base(owner) { }
 
         public override void Enter()
         {
-            // Ä³¸¯ÅÍÀÇ À§Ä¡¸¦ ÁöÁ¤ÇÏ¿© ÃßÀûÀ» ½ÃÀÛÇÑ´Ù.
+            // ìºë¦­í„°ì˜ ìœ„ì¹˜ë¥¼ ì§€ì •í•˜ì—¬ ì¶”ì ì„ ì‹œì‘í•œë‹¤.
             owner.agent.SetDestination(owner.playerTrf.position);
             owner.agent.isStopped = false;
 
-            // ÃßÀû ¾Ö´Ï¸ŞÀÌ¼ÇÀ» Àç»ıÇÏ°í °ø°İ ¾Ö´Ï¸ŞÀÌ¼ÇÀ» ÁßÁöÇÑ´Ù.
+            // ì¶”ì  ì• ë‹ˆë©”ì´ì…˜ì„ ì¬ìƒí•˜ê³  ê³µê²© ì• ë‹ˆë©”ì´ì…˜ì„ ì¤‘ì§€í•œë‹¤.
             owner.animator.SetBool(owner.hashTrace, true);
             owner.animator.SetBool(owner.hashAttack, false);
         }
     }
 
-    // °ø°İ »óÅÂ
+    // ê³µê²© ìƒíƒœ
     private class AttackState : BaseEnemyState
     {
         public AttackState(BaseMonster owner) : base(owner) { }
 
         public override void Enter()
         {
-            // ÃßÀûÀ» ¸ØÃá´Ù.
+            // ì¶”ì ì„ ë©ˆì¶˜ë‹¤.
             owner.agent.isStopped = true;
 
-            // ¸ó½ºÅÍ(ÀÚ½Å)¿Í ÇÃ·¹ÀÌ¾îÀÇ °Å¸®¸¦ °è»êÇÑ´Ù.
+            // ëª¬ìŠ¤í„°(ìì‹ )ì™€ í”Œë ˆì´ì–´ì˜ ê±°ë¦¬ë¥¼ ê³„ì‚°í•œë‹¤.
             float distance = Vector3.Distance(owner.playerTrf.position, owner.enemyTrf.position);
 
-            // °¢ ½ºÅ³ÀÇ Àç»ç¿ë ´ë±â ½Ã°£¿¡ µû¶ó ÀûÀıÇÑ °ø°İÀ» ÃëÇÑ´Ù.
+            // ê° ìŠ¤í‚¬ì˜ ì¬ì‚¬ìš© ëŒ€ê¸° ì‹œê°„ì— ë”°ë¼ ì ì ˆí•œ ê³µê²©ì„ ì·¨í•œë‹¤.
             if (distance >= owner.attackDistance && owner.skill1_curCooltime <= 0f)
             {
                 owner.Skill1();
@@ -233,7 +233,7 @@ public abstract class BaseMonster : Monsters
         }
     }
 
-    // »ç¸Á »óÅÂ
+    // ì‚¬ë§ ìƒíƒœ
     private class DeadState : BaseEnemyState
     {
         public DeadState(BaseMonster owner) : base(owner) { }
@@ -249,10 +249,10 @@ public abstract class BaseMonster : Monsters
 
     #region Abstract Methods
 
-    // ½ºÅ³À» ÃÊ±âÈ­ÇÑ´Ù. (°¢ ÀÚ½Ä Å¬·¡½º¿¡¼­ ±¸Ã¼È­ÇÑ´Ù.)
+    // ìŠ¤í‚¬ì„ ì´ˆê¸°í™”í•œë‹¤. (ê° ìì‹ í´ë˜ìŠ¤ì—ì„œ êµ¬ì²´í™”í•œë‹¤.)
     protected abstract void InitSkills();
 
-    // ½ºÅ³ÀÇ Àç»ç¿ë ´ë±â ½Ã°£À» °è»êÇÑ´Ù.
+    // ìŠ¤í‚¬ì˜ ì¬ì‚¬ìš© ëŒ€ê¸° ì‹œê°„ì„ ê³„ì‚°í•œë‹¤.
     private void CalcCooltime()
     {
         if (attack_curCooltime > 0f)

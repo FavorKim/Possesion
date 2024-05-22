@@ -7,6 +7,6 @@ public class Portal : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
-            Debug.Log("Æ÷Å» ¹ßµ¿");
+            Debug.Log("í¬íƒˆ ë°œë™");
     }
 }

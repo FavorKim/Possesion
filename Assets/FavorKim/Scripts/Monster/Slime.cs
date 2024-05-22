@@ -13,11 +13,11 @@ public class Slime : Monsters, ITyped
 
     public override void Attack()
     {
-        Debug.Log("½½¶óÀÓ°ø°İ");
+        Debug.Log("ìŠ¬ë¼ì„ê³µê²©");
     }
     public override void Skill1()
     {
-        Debug.Log("½½¶óÀÓ ½ºÅ³ 1");
+        Debug.Log("ìŠ¬ë¼ì„ ìŠ¤í‚¬ 1");
     }
 
 

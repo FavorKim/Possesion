@@ -16,7 +16,7 @@ public class SpawnMonster : MonoBehaviour
     // Start is called before the first frame update
     private void OnCollisionEnter(Collision collision)
     {
-        //ÇØ´ç À§Ä¡¿¡ ·£´ıÀ¸·Î ÇÏ³ª ¼ÒÈ¯
+        //í•´ë‹¹ ìœ„ì¹˜ì— ëœë¤ìœ¼ë¡œ í•˜ë‚˜ ì†Œí™˜
         //int randNumber = Random.Range(0, monsters.Length);
         //Instantiate(monsters[0], gameObject.transform);
         /*monsters[randNumber].transform.Translate(collision.transform.position);

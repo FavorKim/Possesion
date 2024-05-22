@@ -47,7 +47,7 @@ public class BossDryad : Monsters
     readonly int hashGroggy = Animator.StringToHash("IsGroggy");
     readonly int hashDie = Animator.StringToHash("IsDie");
 
-    #region ½ºÅ³ µîµî
+    #region ìŠ¤í‚¬ ë“±ë“±
     [SerializeField]
     float mstATK = 10.0f;
     float mstSPD = 10.0f;
@@ -84,22 +84,22 @@ public class BossDryad : Monsters
     protected virtual IEnumerator BossPattern()
     {
         /*
-        1ÆäÀÌÁî
-        ±âº» °ø°İ - Åº¸· ¹ß»ç 
+        1í˜ì´ì¦ˆ
+        ê¸°ë³¸ ê³µê²© - íƒ„ë§‰ ë°œì‚¬ 
 
-        ¸÷ ¼ÒÈ¯ 
-        µ¢±¼ ¼ÒÈ¯À¸·Î ÁøÇà ¸·±â
+        ëª¹ ì†Œí™˜ 
+        ë©êµ´ ì†Œí™˜ìœ¼ë¡œ ì§„í–‰ ë§‰ê¸°
         
 
-        2ÆäÀÌÁî ¹ĞÃÄ³»±â
-        ±âº» °ø°İ - °­È­ Åº¸· ¹ß»ç 
+        2í˜ì´ì¦ˆ ë°€ì³ë‚´ê¸°
+        ê¸°ë³¸ ê³µê²© - ê°•í™” íƒ„ë§‰ ë°œì‚¬ 
         
-        ÆøÅº¾¾¾Ñ ¹ß»ç Åõ»çÃ¼ ÁÖÀ§¸¦ ÅÍ¶ß¸²
+        í­íƒ„ì”¨ì•— ë°œì‚¬ íˆ¬ì‚¬ì²´ ì£¼ìœ„ë¥¼ í„°ëœ¨ë¦¼
         
-        ¹ß»ç Áß½ÉÀ¸·Î Âß ¹Ğ¾î³»±â.
-        +1ÆäÀÌÁî±îÁö
+        ë°œì‚¬ ì¤‘ì‹¬ìœ¼ë¡œ ì­‰ ë°€ì–´ë‚´ê¸°.
+        +1í˜ì´ì¦ˆê¹Œì§€
 
-        2ÆäÀÌÁî ½Ã ¸Ê ¹Ù±ùÀº »ç¶óÁöÁö ¾Ê´Â °¡½Ã Ãß°¡.
+        2í˜ì´ì¦ˆ ì‹œ ë§µ ë°”ê¹¥ì€ ì‚¬ë¼ì§€ì§€ ì•ŠëŠ” ê°€ì‹œ ì¶”ê°€.
        
         */
         while (!isDie)
@@ -176,14 +176,14 @@ public class BossDryad : Monsters
 
         public override void Enter()
         {
-            // µ¥¹ÌÁö
+            // ë°ë¯¸ì§€
             if (owner.i == 5)
             {
                 owner.animator.SetBool(owner.hashAttack, false);
                 owner.i = 0;
             }
 
-            //±×·Î±â
+            //ê·¸ë¡œê¸°
             else if (owner.i == 6)
             {
                 owner.animator.SetTrigger(owner.hashGroggy);
@@ -357,8 +357,8 @@ public class BossDryad : Monsters
 
         if (percent < 70)
         {
-            // ¸ó½ºÅÍ¸¦ ¼ÒÈ¯ÇØÁà¾ß ÇÔ... ÀÌ°Ô ÀÖ¾î¾ß ÇÃ·¹¾î°¡ º¸½º¿¡°Ô °ø°İÀÌ °¡´É.
-            // °­È­ÆĞÅÏÀ» ÄğÅ¸ÀÓÀ» ³Ö¾îÁà¾ß ÇÏ´Â°¡? ÀÏ´Ü ÇØ?
+            // ëª¬ìŠ¤í„°ë¥¼ ì†Œí™˜í•´ì¤˜ì•¼ í•¨... ì´ê²Œ ìˆì–´ì•¼ í”Œë ˆì–´ê°€ ë³´ìŠ¤ì—ê²Œ ê³µê²©ì´ ê°€ëŠ¥.
+            // ê°•í™”íŒ¨í„´ì„ ì¿¨íƒ€ì„ì„ ë„£ì–´ì¤˜ì•¼ í•˜ëŠ”ê°€? ì¼ë‹¨ í•´?
         }
         else
         {

@@ -283,7 +283,7 @@ public class PlayerController : MonoBehaviour
         {
             LookAtPlayer(camTransform);
         }
-        // »ê³ªºñ ¶§ ½è´ø ½¦ÀÌ´õ ±×·¡ÇÁ ²ø°í¿Í¼­ Á¶ÁØ¼±À¸·Î ¸¸µé¸é ÁÁÀ» °Í
+        // ì‚°ë‚˜ë¹„ ë•Œ ì¼ë˜ ì‰ì´ë” ê·¸ë˜í”„ ëŒê³ ì™€ì„œ ì¡°ì¤€ì„ ìœ¼ë¡œ ë§Œë“¤ë©´ ì¢‹ì„ ê²ƒ
     }
 
     public void LookAtPlayer(Transform dest)

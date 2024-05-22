@@ -52,20 +52,20 @@ public class GameManager : MonoBehaviour
     }
 
     /// <summary>
-    /// ¸ó½ºÅÍ°¡ ¾Æ´Ñ ±¸Á¶¹°ÀÌ ¼Ó¼º °ø°ÝÀ» ¹Þ¾ÒÀ» ¶§
+    /// ëª¬ìŠ¤í„°ê°€ ì•„ë‹Œ êµ¬ì¡°ë¬¼ì´ ì†ì„± ê³µê²©ì„ ë°›ì•˜ì„ ë•Œ
     /// </summary>
-    /// <param name="from">°ø°ÝÀÚ</param>
-    /// <param name="to">ÇÇ°ÝÀÚ</param>
+    /// <param name="from">ê³µê²©ìž</param>
+    /// <param name="to">í”¼ê²©ìž</param>
     public void SetTypeAttack(Obstacles from, ITyped to)
     {
         if ((int)from.type > (int)to.type)
         {
-            // °ø°ÝÀÚ°¡ °ø°Ý´ë»ó ¼Ó¼ºº¸´Ù ¿ì¼¼ÀÏ °æ¿ì ½ÇÇàÇÒ ³»¿ë
+            // ê³µê²©ìžê°€ ê³µê²©ëŒ€ìƒ ì†ì„±ë³´ë‹¤ ìš°ì„¸ì¼ ê²½ìš° ì‹¤í–‰í•  ë‚´ìš©
             to.OnTypeAttacked(from);
         }
         else
         {
-            // °ø°ÝÀÚ°¡ °ø°Ý´ë»ó ¼Ó¼ºº¸´Ù ¿­¼¼ÀÏ °æ¿ì ½ÇÇàÇÒ ³»¿ë
+            // ê³µê²©ìžê°€ ê³µê²©ëŒ€ìƒ ì†ì„±ë³´ë‹¤ ì—´ì„¸ì¼ ê²½ìš° ì‹¤í–‰í•  ë‚´ìš©
             return;
         }
     }

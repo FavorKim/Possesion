@@ -5,13 +5,13 @@ public class Skeleton : BaseMonster
 {
 
     #region Fields
-    // MonsterPlant¸¸ÀÇ °ÔÀÓ ¿ÀºêÁ§Æ®(Projectile)
+    // MonsterPlantë§Œì˜ ê²Œì„ ì˜¤ë¸Œì íŠ¸(Projectile)
     [SerializeField] private GameObject projectile;
     [SerializeField] private float shootSpeed = 800.0f;
     [SerializeField] private Transform spawnPosition;
     [SerializeField] private ParticleSystem stabAttack;
 
-    // ¾Ö´Ï¸ŞÀÌÅÍÀÇ ÇØ½Ã(Hash)
+    // ì• ë‹ˆë©”ì´í„°ì˜ í•´ì‹œ(Hash)
     private readonly int hashSkill1 = Animator.StringToHash("IsSkill1");
     private readonly int hashSkill2 = Animator.StringToHash("IsSkill2");
 
@@ -19,7 +19,7 @@ public class Skeleton : BaseMonster
 
     #region Override Methods
 
-    // ½ºÅ³ ÃÊ±âÈ­ ÇÔ¼ö
+    // ìŠ¤í‚¬ ì´ˆê¸°í™” í•¨ìˆ˜
     protected override void InitSkills()
     {
         mstATK = 10.0f;
@@ -33,13 +33,13 @@ public class Skeleton : BaseMonster
         attackDistance = 2f;
     }
 
-    // °ø°İ ÇÔ¼ö
+    // ê³µê²© í•¨ìˆ˜
     public override void Attack()
     {
         animator.SetBool(hashAttack, true);
     }
 
-    // ½ºÅ³ 1 ÇÔ¼ö
+    // ìŠ¤í‚¬ 1 í•¨ìˆ˜
     public override void Skill1()
     {
         float distance = Vector3.Distance(playerTrf.position, enemyTrf.position);
@@ -60,7 +60,7 @@ public class Skeleton : BaseMonster
         }
     }
 
-    // ½ºÅ³ 2 ÇÔ¼ö
+    // ìŠ¤í‚¬ 2 í•¨ìˆ˜
     public override void Skill2()
     {
         animator.SetBool(hashSkill2, true);
