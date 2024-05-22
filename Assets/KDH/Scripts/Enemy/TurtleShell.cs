@@ -27,7 +27,7 @@ public class TurtleShell : BaseMonster
         skill2Cooltime = 3.0f;
 
         traceDistance = 10f;
-        skillDistance = 10f;
+        skillDistance = 7f;
         attackDistance = 2f;
 
         InitSkill(skill1Cooltime, skill2Cooltime);
@@ -39,6 +39,7 @@ public class TurtleShell : BaseMonster
         animator.SetBool(hashAttack, true);
     }
 
+    #region Skill1
     // 스킬 1 함수
     public override void Skill1()
     {
@@ -46,15 +47,7 @@ public class TurtleShell : BaseMonster
         float distance = Vector3.Distance(playerTrf.position, enemyTrf.position);
         animator.SetBool(hashSkill1, true);
     }
-
-    // 스킬 2 함수
-    public override void Skill2()
-    {
-        skill2_curCooltime = skill2Cooltime;
-        StartCoroutine(Defend());
-    }
-
-    // 특수기?
+    // 스킬 1
     public void RAttack()
     {
         StartCoroutine(RollingAttack());
@@ -73,6 +66,15 @@ public class TurtleShell : BaseMonster
         Destroy(ps);
         animator.SetBool(hashSkill1, false);
     }
+    #endregion
+
+    #region Skill2
+    // 스킬 2 함수
+    public override void Skill2()
+    {
+        skill2_curCooltime = skill2Cooltime;
+        StartCoroutine(Defend());
+    }
 
     private IEnumerator Defend()
     {
@@ -80,6 +82,12 @@ public class TurtleShell : BaseMonster
         yield return new WaitForSeconds(1.5f);
         animator.SetBool(hashDefend, false);
     }
+    #endregion
+
+
+
+
+
 
     #endregion Override Methods
 }

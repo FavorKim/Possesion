@@ -3,10 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.UIElements;
-using static UnityEngine.UI.GridLayoutGroup;
+using UnityEngine.UI;
 
-public class BossDryad : Monsters
+public class BossDryad : MonoBehaviour
 {
     public enum BossState
     {
@@ -16,18 +15,19 @@ public class BossDryad : Monsters
         DEAD
     }
 
+    [SerializeField] private float curHP = 500f; // 몬스터의 현재 체력
+    [SerializeField] private float maxHP = 500f; // 몬스터의 최대 체력
+
+    protected Transform enemyTrf; // 몬스터(자신)의 위치(Transform)
+    protected Transform playerTrf; // 플레이어의 위치(Transform)
+    protected NavMeshAgent agent; // 네비게이션(NavMesh)
+    protected Animator animator; // 애니메이터(Animator)
+    protected Rigidbody rb; // 리지드바디(Rigidbody)
+
     [SerializeField] PlayerController player;
 
     public BossState state = BossState.IDLE;
 
-    float skill1_curCooltime = 0f;
-    float skill2_curCooltime = 0f;
-
-    Transform enemyTrf;
-    Transform playerTrf;
-    NavMeshAgent agent;
-    
-    Animator animator;
 
     [SerializeField] bool EnfPhased = false;
 
@@ -41,6 +41,9 @@ public class BossDryad : Monsters
     public Transform[] spawnPositions;
     [SerializeField] public float shootSpeed = 800.0f;
     [SerializeField] public float spreadRange = 100.0f;
+
+    private GameObject HP_HUD_Obj; // 몬스터의 체력을 나타내는 패널(Panel)
+    [SerializeField] private Slider HPSlider; // 패널 내의 슬라이더
 
     readonly int hashAttack = Animator.StringToHash("IsAttack");
     readonly int hashSkill = Animator.StringToHash("animation");
@@ -57,8 +60,9 @@ public class BossDryad : Monsters
     int i = 0;
     #endregion
 
-    protected override void Awake()
+    void Awake()
     {
+        
         player = FindObjectOfType<PlayerController>();
         playerTrf = player.transform;
         agent = GetComponent<NavMeshAgent>();
@@ -76,8 +80,15 @@ public class BossDryad : Monsters
     }
 
 
-    protected virtual void Start()
+    void Start()
     {
+        // 체력 패널을 초기화(생성)한다.
+        HP_HUD_Obj = Instantiate(Resources.Load<GameObject>("HP_HUD"), transform);
+        HPSlider = HP_HUD_Obj.GetComponentInChildren<UnityEngine.UI.Slider>();
+
+        // 슬라이더의 값을 (현재 체력 / 최대 체력)으로 한다.
+        //HPSlider.value = curHP / maxHP;
+
         StartCoroutine(BossPattern());
     }
 
@@ -249,7 +260,7 @@ public class BossDryad : Monsters
     }
     
     #region Attack
-    public override void Attack()
+    void Attack()
     {
         animator.SetBool(hashAttack, true);
     }
@@ -286,7 +297,7 @@ public class BossDryad : Monsters
     
     #region skill1
 
-    public override void Skill1()
+    void Skill1()
     {
         animator.SetInteger(hashSkill, 1);
     }
@@ -340,7 +351,7 @@ public class BossDryad : Monsters
 
     #region Skill2
 
-    public override void Skill2()
+    void Skill2()
     {
         animator.SetInteger(hashSkill, 2);
     }
@@ -438,5 +449,27 @@ public class BossDryad : Monsters
         animator.SetInteger(hashSkill, 0);
     }
     #endregion
- 
+
+    // 데미지 받는거 구현
+    // 패턴 들어갈 때 무적.
+
+    public void GetDamage(int damage)
+    {
+        /*// 무적 상태가 아닐 경우,
+        if (!isInvincible)
+        {
+            // 대미지만큼 체력을 감소시킨다.
+            curHP -= damage;
+
+            // 감소한 체력을 체력 패널에 적용한다.
+            HPSlider.value = curHP / maxHP;
+
+            // 무적 상태에 돌입한다.
+            StartCoroutine(CorInvincible());
+
+            // 체력이 0 이하일 경우(죽음), 그 몬스터를 비활성화한다.
+            if (curHP <= 0)
+                gameObject.SetActive(false);
+        }*/
+    }
 }

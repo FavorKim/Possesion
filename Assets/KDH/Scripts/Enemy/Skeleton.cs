@@ -17,6 +17,8 @@ public class Skeleton : BaseMonster
 
     #endregion Fields
 
+    
+
     #region Override Methods
 
     // 스킬 초기화 함수
@@ -62,7 +64,12 @@ public class Skeleton : BaseMonster
         {
             agent.isStopped = true;
             animator.SetBool(hashSkill1, true);
-            GameObject pd = Instantiate(projectile, spawnPosition.position, gameObject.transform.rotation);
+            GameObject pd = Instantiate(projectile, spawnPosition.position, spawnPosition.rotation);
+
+            if(transform.parent != null)
+            {
+                pd.transform.LookAt(GetPC().lookAtTransform);
+            }
             //pd.transform.LookAt(playerTrf.localPosition);
             //addforce 위치 정해줘야 함.
             pd.GetComponent<Rigidbody>().AddForce(pd.transform.forward * shootSpeed);
@@ -88,11 +95,11 @@ public class Skeleton : BaseMonster
         agent.isStopped = true;
 
         ParticleSystem ps = Instantiate(stabAttack, this.transform);
-        //ps.transform.LookAt(gameObject.transform.localPosition + Vector3.forward);
         ps.transform.position = spawnPosition.position;
+        
         rb.AddRelativeForce(Vector3.forward * 20f, ForceMode.VelocityChange);
         yield return new WaitForSeconds(0.4f);
-
+        
         rb.velocity = Vector3.zero;
         rb.angularVelocity = Vector3.zero;
         skill2_curCooltime = skill2Cooltime;

@@ -40,6 +40,10 @@ public abstract class BaseMonster : Monsters
 
     #endregion Fields
 
+    #region Getter
+    public PlayerController GetPC() { return player; }
+    #endregion
+
     #region Skills / Stats
 
     protected float mstATK;
@@ -93,20 +97,15 @@ public abstract class BaseMonster : Monsters
         base.Start();
         // 몬스터의 상태 검사를 시작한다.
         StartCoroutine(CheckEnemyState());
-        base.Start();
     }
 
     private void Update()
     {
         // 스킬의 재사용 대기 시간을 계산한다.
         CalcCooltime();
-
         
-    }
-    private void FixedUpdate()
-    {
-        animator.SetFloat("FloatX", rb.velocity.x);
-        animator.SetFloat("FloatY", rb.velocity.z);
+        animator.SetFloat("FloatX", gameObject.GetComponentInParent<PlayerController>().MoveDir.normalized.x);
+        animator.SetFloat("FloatY", gameObject.GetComponentInParent<PlayerController>().MoveDir.normalized.z);
     }
 
     #endregion Life Cycles (Awake / Start / Update)
@@ -245,6 +244,7 @@ public abstract class BaseMonster : Monsters
 
         public override void Enter()
         {
+            owner.agent.isStopped = true;
             Debug.Log("Dead");
         }
 
