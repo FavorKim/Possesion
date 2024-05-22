@@ -68,7 +68,7 @@ public class Skeleton : BaseMonster
 
             if(transform.parent != null)
             {
-                pd.transform.LookAt(GetPC().lookAtTransform);
+                pd.transform.LookAt(GameManager.Instance.Player.GetLookAt());
             }
             //pd.transform.LookAt(playerTrf.localPosition);
             //addforce 위치 정해줘야 함.
