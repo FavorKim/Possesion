@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class Portal : MonoBehaviour
 {
+    Transform destination;
+
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
-            Debug.Log("Æ÷Å» ¹ßµ¿");
+        other.GetComponent<PlayerController>()?.GetCC().Move(destination.position);
     }
 }

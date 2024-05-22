@@ -11,7 +11,7 @@ public class GameManager : MonoBehaviour
 
     PlayerController player;
     [SerializeField] CinemachineFreeLook tpsCam;
-    //public PlayerController Player { get { return player; } }
+    public PlayerController Player { get { return player; } }
 
 
 

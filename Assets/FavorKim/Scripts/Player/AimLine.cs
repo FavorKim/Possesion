@@ -6,6 +6,9 @@ public class AimLine : MonoBehaviour
 {
     LineRenderer lR;
     [SerializeField] GameObject point;
+    [SerializeField] Transform lookat;
+    PlayerController player;
+
     [SerializeField] float length;
     [SerializeField] LayerMask aimLayer;
     float orgLength;
@@ -13,21 +16,20 @@ public class AimLine : MonoBehaviour
 
     private void Awake()
     {
-        
         lR = GetComponent<LineRenderer>();
         lR.SetPosition(0, transform.position);
-        lR.SetPosition(1, transform.position + Vector3.forward * length);
         lR.startWidth = 0.03f;
         orgLength = length;
         point.transform.position = Vector3.zero;
+        player = GetComponentInParent<PlayerController>();
     }
 
     private void Update()
     {
-        //lR.SetPosition(1, transform.parent.localPosition * length);
-
+        lookat = player.GetLookAt();
+        transform.LookAt(lookat);
         DrawAim();
-        lR.SetPosition(1, transform.position + transform.forward * length);
+        lR.SetPosition(1, point.transform.position);
         lR.SetPosition(0, transform.position);
     }
 
@@ -43,25 +45,20 @@ public class AimLine : MonoBehaviour
         }
         else
         {
+            point.SetActive(true);
             lR.enabled = true;
 
-            if (Physics.Raycast(transform.position, transform.forward, out hit, length,aimLayer))
+            if (Physics.Raycast(transform.position, transform.forward, out hit, length, aimLayer))
             {
                 length = hit.distance;
-                point.SetActive(true);
                 point.transform.position = hit.point;
             }
             else
             {
+                lR.enabled = false;
                 length = orgLength;
                 point.transform.position = Vector3.zero;
             }
         }
-
-        //else if (!Physics.Raycast(transform.position, transform.forward, out hit, length))
-        //{
-        //    length = orgLength;
-        //    point.SetActive(false);
-        //}
     }
 }
