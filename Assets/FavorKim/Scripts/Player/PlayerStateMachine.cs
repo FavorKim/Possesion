@@ -197,7 +197,11 @@ public class PossessState : PlayerState
     {
         /*
         애니메이션 호출
+        
         */
+        GameObject hatImg = player.GetHatManager().GetHatImg();
+        hatImg.SetActive(true);
+        
 
         player.CameraTransform = mon.transform;
         GameManager.Instance.SetCameraFollow(player.CameraTransform);

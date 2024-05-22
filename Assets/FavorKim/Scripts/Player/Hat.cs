@@ -39,6 +39,7 @@ public class Hat : MonoBehaviour
         {
             if (other.CompareTag("Monster"))
             {
+                Debug.LogWarning("hat");
                 hatM.SetHitParticle(transform.position);
                 player.SetState(other.GetComponentInParent<Monsters>());
             }

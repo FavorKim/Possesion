@@ -43,3 +43,12 @@ public class HatManager : MonoBehaviour
         hitParticle.Play();
     }
 }
+
+
+
+
+/*
+UI << 만들지 뭐 
+시스템 설정 - 사운드, 창모드, 해상도, 감도
+
+*/

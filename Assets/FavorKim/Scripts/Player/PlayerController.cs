@@ -23,7 +23,7 @@ public class PlayerController : MonoBehaviour, IDamagable
 
     private Transform camTransform;
     [SerializeField] Transform playerFoward;
-    [SerializeField]private Transform lookAtTransform;
+    [SerializeField] private Transform lookAtTransform;
     [SerializeField] HatManager hatM;
 
     [SerializeField] TextMeshProUGUI t_fullHP;
@@ -81,9 +81,10 @@ public class PlayerController : MonoBehaviour, IDamagable
     public CharacterController GetCC() { return CC; }
     public Animator GetAnimator() { return anim; }
     public Slider GetDurationGauge() { return durationGauge; }
-    public Transform CameraTransform { get { return camTransform; } set {  camTransform = value; } }
-    public Transform GetPlayerFoward()  { return playerFoward; }
+    public Transform CameraTransform { get { return camTransform; } set { camTransform = value; } }
+    public Transform GetPlayerFoward() { return playerFoward; }
     public Transform GetLookAt() { return lookAtTransform; }
+    public HatManager GetHatManager() { return hatM; }
     public float GetMoveSpeed() { return moveSpeed; }
     public float GetGravityScale() { return gravityScale; }
     public float GetJumpForce() { return jumpForce; }
@@ -100,7 +101,7 @@ public class PlayerController : MonoBehaviour, IDamagable
         sM = new SkillManager(skill1Gauge, skill2Gauge);
 
         invinFX = GetComponentInChildren<ParticleSystem>();
-        invinFX.Stop();
+        invinFX.gameObject.SetActive(false);
         OnDead += DeadCheck;
         OnDead += SetHPUI;
         camTransform = transform;
@@ -108,7 +109,7 @@ public class PlayerController : MonoBehaviour, IDamagable
         t_fullHP.text = fullHP.ToString();
 
         lookAtTransform = Instantiate(new GameObject("LookAt"), Camera.main.transform).transform;
-        lookAtTransform.localPosition = new Vector3(0, 0, 56f);
+        lookAtTransform.localPosition = new Vector3(0, 20.0f, 56f);
 
     }
 
@@ -118,7 +119,7 @@ public class PlayerController : MonoBehaviour, IDamagable
         state.StateUpdate();
         SetHPUI();
 
-        playerFoward.position = camTransform.position + new Vector3(0, 1.0f, 0);
+        playerFoward.position = camTransform.position + new Vector3(0, 1.0f, 0f);
         PlayerMove();
     }
 
@@ -278,10 +279,7 @@ public class PlayerController : MonoBehaviour, IDamagable
         //float deltaX = delta.x;
         //transform.Rotate(new Vector3(0, delta.x, delta.y) * sensitivity * Time.deltaTime);
 
-        if (!isDead && Input.GetMouseButton(1))
-        {
-            LookAtPlayer(camTransform);
-        }
+        LookAtPlayer(camTransform);
         // 산나비 때 썼던 쉐이더 그래프 끌고와서 조준선으로 만들면 좋을 것
     }
 
@@ -300,9 +298,10 @@ public class PlayerController : MonoBehaviour, IDamagable
     IEnumerator CorInvincible()
     {
         isInvincible = true;
+        invinFX.gameObject.SetActive(true);
         invinFX.Play();
         yield return new WaitForSeconds(invincibleTime);
-        invinFX.Stop();
+        invinFX.gameObject.SetActive(false);
         isInvincible = false;
     }
 }

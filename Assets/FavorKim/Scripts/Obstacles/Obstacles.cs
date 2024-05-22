@@ -43,7 +43,7 @@ public class Obstacles : MonoBehaviour, ITyped
     }
 
     // OnTriggerEnter()
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
         other.GetComponent<Obstacles>()?.OnTypeAttacked(type);
         other.GetComponent<IDamagable>()?.GetDamage(Damage);
