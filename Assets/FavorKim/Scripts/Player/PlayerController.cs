@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System;
 using System.Collections;
 using TMPro;
@@ -5,8 +6,12 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
+
 public class PlayerController : MonoBehaviour
 {
+    public float tempKnockBack;
+
+    public Transform tempKnockBackdirect;
     #region Variable
 
     #region Mono
@@ -14,8 +19,10 @@ public class PlayerController : MonoBehaviour
     private CharacterController CC;
     PlayerStateMachine state;
     Animator anim;
-    Animator monAnim;
+    ParticleSystem invinFX;
 
+    private Transform camTransform;
+    [SerializeField] Transform playerFoward;
     [SerializeField] Transform lookAtTransform;
     [SerializeField] HatManager hatM;
 
@@ -63,6 +70,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] public bool isGround { get; private set; }
     bool isDead = false;
     bool isInvincible = false;
+    public bool isKnockBack = false;
+
 
     //Dictionary<string, GameObject> outFits = new Dictionary<string, GameObject>();
 
@@ -73,6 +82,11 @@ public class PlayerController : MonoBehaviour
     public CharacterController GetCC() { return CC; }
     public Animator GetAnimator() { return anim; }
     public Slider GetDurationGauge() { return durationGauge; }
+    public Transform CameraTransform { get { return camTransform; } set {  camTransform = value; } }
+    public Transform GetPlayerFoward() 
+    {
+        return playerFoward;
+    }
     public float GetMoveSpeed() { return moveSpeed; }
     public float GetGravityScale() { return gravityScale; }
     public float GetJumpForce() { return jumpForce; }
@@ -88,16 +102,14 @@ public class PlayerController : MonoBehaviour
         state = new PlayerStateMachine(this);
         sM = new SkillManager(skill1Gauge, skill2Gauge);
 
-        //skill1 = new Skill("test1", 5, () => { Debug.Log("skill1"); }, skill1Gauge);
-
-        //outFits.Add("Goblin", goblinOF);
-        //outFits.Add("Plant", plantOF);
-        //outFits.Add("Player", playerOF);
+        invinFX = GetComponentInChildren<ParticleSystem>();
+        invinFX.Stop();
         OnDead += DeadCheck;
         OnDead += SetHPUI;
-
+        camTransform = transform;
 
         t_fullHP.text = fullHP.ToString();
+
     }
 
     void Update()
@@ -105,26 +117,40 @@ public class PlayerController : MonoBehaviour
         if (isDead) return;
         state.StateUpdate();
         SetHPUI();
-        PlayerMove();
 
+        playerFoward.position = camTransform.position + new Vector3(0, 1.0f, 0);
+        PlayerMove();
     }
 
     private void FixedUpdate()
     {
         CheckLand();
     }
+
+    private void LateUpdate()
+    {
+        if (isKnockBack)
+            CC.Move((transform.position - tempKnockBackdirect.position).normalized * Time.deltaTime * tempKnockBack);
+    }
+
     #endregion
 
     #region Method
 
     void PlayerMove()
     {
+        /*
         heading = Camera.main.transform.localRotation * Vector3.forward;
         heading.y = 0;
         heading = heading.normalized;
         MoveDir = heading * dir.y * Time.deltaTime * moveSpeed;
         MoveDir += Quaternion.Euler(0, 90, 0) * heading * dir.x * Time.deltaTime * moveSpeed;
+        */
+        MoveDir = camTransform.TransformDirection(new Vector3(dir.x, 0, dir.y));
+        MoveDir *= moveSpeed * Time.deltaTime;
     }
+
+
 
     void SetHPUI()
     {
@@ -144,7 +170,7 @@ public class PlayerController : MonoBehaviour
 
     public void ThrowHat()
     {
-        hatM.ShootHat();
+        hatM.ShootHat(lookAtTransform.position);
     }
 
     public void SetState(string name)
@@ -161,12 +187,12 @@ public class PlayerController : MonoBehaviour
 
     public void GetDamage(int dmg)
     {
-        if (isInvincible) return;
+        if (isInvincible || isDead) return;
 
-        if (state.IsPossessing()) 
+        if (state.IsPossessing())
         {
-            SetState("Normal");  
-            return; 
+            SetState("Normal");
+            return;
         }
 
         curHP -= dmg;
@@ -187,20 +213,23 @@ public class PlayerController : MonoBehaviour
 
         }
     }
-    
+
+    public void KnockBack(Vector3 dir, float duration, float length)
+    {
+        transform.DOMove((dir + transform.position).normalized * length, duration);
+    }
 
     #endregion
 
     #region Event
-    
 
     void OnMove(InputValue val)
     {
-        
+
         dir = val.Get<Vector2>();
-        MoveDir = new Vector3(dir.x, 0, dir.y);
-        PlayerMove();
-        //Debug.Log(heading);
+
+        MoveDir = camTransform.TransformDirection(new Vector3(dir.x, 0, dir.y));
+        MoveDir *= moveSpeed * Time.deltaTime;
         if (MoveDir != Vector3.zero)
         {
             anim.SetBool("isRun", true);
@@ -210,16 +239,17 @@ public class PlayerController : MonoBehaviour
             anim.SetBool("isRun", false);
         }
 
-        
 
-        anim.SetFloat("vecX",  dir.x);
-        anim.SetFloat("vecY",  dir.y);
 
+        anim.SetFloat("vecX", dir.x);
+        anim.SetFloat("vecY", dir.y);
+        //PlayerMove();
+        //Debug.Log(heading);
     }
 
     void OnJump(InputValue val) { if (val.isPressed) state.StateOnJump(); }
 
-    void OnAttack(InputValue val) { if (val.isPressed) state.StateOnAttack(); }
+    void OnAttack(InputValue val) { if (val.isPressed) state.StateOnAttack(); KnockBack(transform.forward, 2, 50); }
 
     void OnThrowHat(InputValue val)
     {
@@ -246,14 +276,21 @@ public class PlayerController : MonoBehaviour
     void OnCursor(InputValue val)
     {
         Vector2 delta = val.Get<Vector2>();
-        float deltaX = delta.x;
+        //float deltaX = delta.x;
+        //transform.Rotate(new Vector3(0, delta.x, delta.y) * sensitivity * Time.deltaTime);
 
-        if (Input.GetMouseButton(1))
+        if (!isDead && Input.GetMouseButton(1))
         {
-            transform.Rotate(new Vector3(0, deltaX,0 ) * sensitivity * Time.deltaTime);
-            heading = Camera.main.transform.localRotation * Vector3.forward;
-
+            LookAtPlayer(camTransform);
         }
+        // 산나비 때 썼던 쉐이더 그래프 끌고와서 조준선으로 만들면 좋을 것
+    }
+
+    public void LookAtPlayer(Transform dest)
+    {
+        dest.LookAt(lookAtTransform);
+        dest.eulerAngles = new Vector3(0, dest.eulerAngles.y, 0);
+        heading = Camera.main.transform.localRotation * Vector3.forward;
     }
 
 
@@ -265,19 +302,10 @@ public class PlayerController : MonoBehaviour
     IEnumerator CorInvincible()
     {
         isInvincible = true;
-        float org = invincibleTime;
-        while (true)
-        {
-            yield return null;
-            invincibleTime -= Time.deltaTime;
-            if(invincibleTime < 0)
-            {
-                isInvincible = false;
-                invincibleTime = org;
-                StopCoroutine(CorInvincible());
-                break;
-            }
-        }
+        invinFX.Play();
+        yield return new WaitForSeconds(invincibleTime);
+        invinFX.Stop();
+        isInvincible = false;
     }
 }
 

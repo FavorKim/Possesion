@@ -1,3 +1,4 @@
+using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -9,6 +10,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get { return instance; } }
 
     PlayerController player;
+    [SerializeField] CinemachineFreeLook tpsCam;
     //public PlayerController Player { get { return player; } }
 
 
@@ -43,6 +45,7 @@ public class GameManager : MonoBehaviour
         else
             return;
     }
+
     public void GetDamage(int dmg)
     {
         player.GetDamage(dmg);
@@ -65,5 +68,14 @@ public class GameManager : MonoBehaviour
             // 공격자가 공격대상 속성보다 열세일 경우 실행할 내용
             return;
         }
+    }
+
+    public void SetCameraFollow(Transform dest)
+    {
+        tpsCam.Follow = dest;
+    }
+    public void SetCameraLookAt(Transform dest)
+    {
+        tpsCam.LookAt = dest;
     }
 }

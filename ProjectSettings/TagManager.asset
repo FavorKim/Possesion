@@ -9,6 +9,7 @@ TagManager:
   - Camera
   - Obstacles
   - Hat
+  - SledgeWall
   layers:
   - Default
   - TransparentFX

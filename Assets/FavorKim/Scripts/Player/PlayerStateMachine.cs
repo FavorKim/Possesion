@@ -32,6 +32,7 @@ public class PlayerStateMachine
         curState.StateUpdate();
     }
 
+
     //public void StateFixedUpdate()
     //{
 
@@ -151,6 +152,7 @@ public class NormalState : PlayerState
 
     public override void Skill1()
     {
+
     }
 
     public override void Skill2()
@@ -195,8 +197,11 @@ public class PossessState : PlayerState
     {
         /*
         애니메이션 호출
-         */
+        */
 
+        player.CameraTransform = mon.transform;
+        GameManager.Instance.SetCameraFollow(player.CameraTransform);
+        GameManager.Instance.SetCameraLookAt(player.GetPlayerFoward());
 
         mon.SetSkill();
         durationGauge.gameObject.SetActive(true);
@@ -209,6 +214,13 @@ public class PossessState : PlayerState
         mon = _mon;
 
         player.GetCC().Move(mon.transform.position - player.transform.position);
+
+        if(_mon.GetComponent<Rigidbody>() != null)
+        {
+            _mon.GetComponent<Rigidbody>().velocity = Vector3.zero;
+            _mon.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
+            //_mon.GetComponent<Rigidbody>().isKinematic = true;
+        }
 
         _mon.transform.parent = player.transform;
         _mon.transform.localPosition = Vector3.zero;
@@ -232,6 +244,9 @@ public class PossessState : PlayerState
         if (mon.skill2 != null)
             mon.skill2.SetCurCD();
         SetDuration();
+
+        //player.transform.position = mon.transform.position;
+        //mon.transform.localPosition = Vector3.zero;
     }
 
     public override void Jump()
@@ -259,14 +274,24 @@ public class PossessState : PlayerState
     public override void Exit()
     {
         mon.transform.parent = null;
+        player.GetCC().Move(mon.transform.position - player.transform.position);
+
+        mon.GetDamage((int)(mon.GetHP() / 10.0f));
+
+        // if(mon.transform.parent==null)
 
         // 임시로 오브젝트를 비활성화했지만, 몬스터가 죽었을 때의 행동을 호출할 것임
         //mon.gameObject.SetActive(false);
 
         // 빙의 해제 시 무조건 죽이지는 말자.
         //mon.Dead();
+        player.CameraTransform = player.transform;
 
         FXManager.Instance.PlayFX("PoExit", player.transform.position);
+
+        GameManager.Instance.SetCameraFollow(player.CameraTransform);
+        GameManager.Instance.SetCameraLookAt(player.GetPlayerFoward());
+
         durationGauge.gameObject.SetActive(false);
     }
 
