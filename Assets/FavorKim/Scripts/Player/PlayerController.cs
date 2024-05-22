@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -284,7 +283,7 @@ public class PlayerController : MonoBehaviour
 
 public class Skill
 {
-    public Skill( float maxCD, Action effect)
+    public Skill(float maxCD, Action effect)
     {
         this.effect = effect;
         this.maxCD = maxCD;

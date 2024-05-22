@@ -28,7 +28,7 @@ namespace Enemy
         public void DoAttack()
         {
             // 공격 함수를 실행한다.
-            _enemy.Attack();
+            _enemy.AttackAI();
         }
     }
 }

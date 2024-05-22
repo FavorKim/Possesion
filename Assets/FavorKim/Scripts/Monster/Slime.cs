@@ -6,7 +6,7 @@ public class Slime : Monsters, ITyped
 {
 
 
-    public override void Awake()
+    protected override void Awake()
     {
         InitSkill(0);
     }

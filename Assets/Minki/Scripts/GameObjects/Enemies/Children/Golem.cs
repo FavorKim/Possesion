@@ -1,4 +1,3 @@
-using ObjectPool;
 using UnityEngine;
 
 namespace Enemy
@@ -29,15 +28,17 @@ namespace Enemy
 
             HealthPoint = 100;
             MagicPoint = 100;
-            MoveSpeed = 100;
-            JumpSpeed = 100;
+            MoveSpeed = 3;
+            JumpSpeed = 0;
             AttackDamage = 100;
             Skiil1Damage = 100;
-            Skill2Damage = 100;
-            Skill3Damage = 100; // Attack03이 존재하지 않는다.
-            SkillCoolTime = 100;
+            Skill2Damage = 0;
+            AttackCoolTime = 100.0f;
+            Skill1CoolTime = 100.0f;
+            Skill2CoolTime = 0.0f;
             AttackRange = 3.0f;
-            DetectRange = 5.0f;
+
+            InitSkill(AttackCoolTime, Skill1CoolTime);
         }
 
         #endregion Initialize Methods
@@ -59,24 +60,24 @@ namespace Enemy
             Debug.Log("Golem's Chase!");
         }
 
-        public override void Attack()
+        public override void AttackAI()
         {
-            base.Attack();
+            base.AttackAI();
 
             Debug.Log("Golem's Attack!");
         }
 
-        public override void Attack01()
+        public override void Attack()
         {
-            base.Attack01();
+            base.Attack();
         }
 
-        public override void Attack02()
+        public override void Skill1()
         {
-            base.Attack02();
+            base.Skill1();
         }
 
-        public override void Attack03()
+        public override void Skill2()
         {
             // 세 번째 공격 스킬이 존재하지 않는다.
         }
