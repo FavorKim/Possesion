@@ -14,9 +14,9 @@ public class TeslaCoil : Obstacles
         onFX = GetComponentInChildren<ParticleSystem>();
     }
 
-    public override void OnTypeAttacked(Obstacles attackedType)
+    public override void OnTypeAttacked(ITyped.Type type)
     {
-        if (attackedType.type == ITyped.Type.THUNDER)
+        if (type == ITyped.Type.THUNDER)
         {
             onFX.Play();
             wall.CoilWallOpen();

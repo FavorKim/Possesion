@@ -11,9 +11,9 @@ public class SpinningObs : Obstacles
         anim = GetComponent<Animator>();
     }
 
-    public override void OnTypeAttacked(Obstacles attackedType)
+    public override void OnTypeAttacked(ITyped.Type attackedType)
     {
-        if(attackedType.type == ITyped.Type.WEB)
+        if(attackedType == ITyped.Type.WEB)
         {
             StartCoroutine(CorSlowDown());
         }

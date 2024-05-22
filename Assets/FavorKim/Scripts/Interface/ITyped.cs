@@ -14,5 +14,5 @@ public interface ITyped
     /// 속성공격을 받았을 시의 행동
     /// </summary>
     /// <param name="type">공격자 속성</param>
-    public void OnTypeAttacked(Obstacles attacker);
+    public void OnTypeAttacked(Type type);
 }

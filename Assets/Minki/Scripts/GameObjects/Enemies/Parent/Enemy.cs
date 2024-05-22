@@ -334,14 +334,14 @@ namespace Enemy
                 _animator.SetInteger("AI_AttackIndex", 3);
             }
         }
-
-        public override void OnTypeAttacked(Obstacles attacker)
+        /*
+        public override void OnTypeAttacked(ITyped.Type attacker)
         {
             base.OnTypeAttacked(attacker);
 
             IsGetHit = true;
         }
-
+        */
         #endregion Action Methods
     }
 }
