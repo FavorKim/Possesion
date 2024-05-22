@@ -23,8 +23,9 @@ public class CoilWall : MonoBehaviour
     {
         foreach (TeslaCoil coil in teslaCoils)
         {
+            Debug.Log(coil.name +":"+coil.TeslaIsOn());
             if (!coil.TeslaIsOn()) return;
         }
-        openAnim.SetTrigger(0);
+        openAnim.SetTrigger("Open");
     }
 }

@@ -11,12 +11,11 @@ public class TeslaCoil : Obstacles
 
     private void Awake()
     {
-        onFX = GetComponent<ParticleSystem>();
+        onFX = GetComponentInChildren<ParticleSystem>();
     }
 
     public override void OnTypeAttacked(Obstacles attackedType)
     {
-        Debug.Log("Tesla");
         if (attackedType.type == ITyped.Type.THUNDER)
         {
             onFX.Play();
