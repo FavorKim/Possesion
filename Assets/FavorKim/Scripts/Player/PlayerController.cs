@@ -108,7 +108,7 @@ public class PlayerController : MonoBehaviour, IDamagable
         t_fullHP.text = fullHP.ToString();
 
         lookAtTransform = Instantiate(new GameObject("LookAt"), Camera.main.transform).transform;
-        lookAtTransform.localPosition = new Vector3(0, 0, 56f);
+        lookAtTransform.localPosition = new Vector3(0, 20, 56f);
 
     }
 

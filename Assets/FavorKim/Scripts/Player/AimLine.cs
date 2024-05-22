@@ -28,37 +28,37 @@ public class AimLine : MonoBehaviour
     {
         lookat = player.GetLookAt();
         transform.LookAt(lookat);
-        DrawAim();
         lR.SetPosition(1, point.transform.position);
         lR.SetPosition(0, transform.position);
     }
 
-
+    private void FixedUpdate()
+    {
+        DrawAim();
+    }
 
     void DrawAim()
     {
-        if (!Input.GetMouseButton(1))
+
+        if (Input.GetMouseButton(1))
         {
-            lR.enabled = false;
-            point.transform.position = Vector3.zero;
-            return;
-        }
-        else
-        {
-            point.SetActive(true);
             lR.enabled = true;
+            point.gameObject.SetActive(true);
 
             if (Physics.Raycast(transform.position, transform.forward, out hit, length, aimLayer))
             {
                 length = hit.distance;
-                point.transform.position = hit.point;
+                point.transform.position = hit.point - transform.forward*0.5f;
             }
             else
             {
-                lR.enabled = false;
                 length = orgLength;
-                point.transform.position = Vector3.zero;
             }
+        }
+        else
+        {
+            point.gameObject.SetActive(false);
+            lR.enabled = false;
         }
     }
 }
