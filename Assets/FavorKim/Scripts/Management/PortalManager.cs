@@ -4,10 +4,15 @@ using UnityEngine;
 
 public class PortalManager : MonoBehaviour
 {
-    private Portal[] portals;
+    [SerializeField]
+    private Portal portal1;
+    [SerializeField]
+    private Portal portal2;
+
 
     private void Awake()
     {
-        portals = GetComponentsInChildren<Portal>();
+        portal1.SetDestination(portal2.gameObject.transform);
+        portal2.SetDestination(portal1.gameObject.transform);
     }
 }

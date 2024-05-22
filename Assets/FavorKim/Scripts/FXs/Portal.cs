@@ -5,9 +5,27 @@ using UnityEngine;
 public class Portal : MonoBehaviour
 {
     Transform destination;
-
+    bool closed;
+    
+    public void SetDestination(Transform dest) {  destination = dest; }
     private void OnTriggerEnter(Collider other)
     {
-        other.GetComponent<PlayerController>()?.GetCC().Move(destination.position);
+        if (other.CompareTag("Player")&&!closed)
+        {
+            other.GetComponent<PlayerController>().GetCC().enabled = false;
+            other.transform.position = destination.position;
+            other.GetComponent<PlayerController>().GetCC().enabled = true;
+            closed = true;
+        }
+    }
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.CompareTag("Player"))
+            closed = true;
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player"))
+            closed = false;
     }
 }
