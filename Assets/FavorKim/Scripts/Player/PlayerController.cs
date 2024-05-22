@@ -23,7 +23,7 @@ public class PlayerController : MonoBehaviour
 
     private Transform camTransform;
     [SerializeField] Transform playerFoward;
-    [SerializeField] Transform lookAtTransform;
+    [SerializeField]private Transform lookAtTransform;
     [SerializeField] HatManager hatM;
 
     [SerializeField] TextMeshProUGUI t_fullHP;
@@ -109,6 +109,9 @@ public class PlayerController : MonoBehaviour
         camTransform = transform;
 
         t_fullHP.text = fullHP.ToString();
+
+        lookAtTransform = Instantiate(new GameObject("LookAt"), Camera.main.transform).transform;
+        lookAtTransform.localPosition = new Vector3(0, 0, 5.6f);
 
     }
 
@@ -297,7 +300,6 @@ public class PlayerController : MonoBehaviour
     event Action OnDead;
 
     #endregion
-
 
     IEnumerator CorInvincible()
     {
