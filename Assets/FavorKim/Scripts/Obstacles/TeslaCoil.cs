@@ -2,17 +2,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TeslaCoil : MonoBehaviour
+public class TeslaCoil : Obstacles
 {
-    // Start is called before the first frame update
-    void Start()
+    ParticleSystem onFX;
+    public CoilWall wall;
+    
+    public bool TeslaIsOn() {  return onFX.isPlaying; }
+
+    private void Awake()
     {
-        
+        onFX = GetComponent<ParticleSystem>();
     }
 
-    // Update is called once per frame
-    void Update()
+    public override void OnTypeAttacked(Obstacles attackedType)
     {
-        
+        Debug.Log("Tesla");
+        if (attackedType.type == ITyped.Type.THUNDER)
+        {
+            onFX.Play();
+            wall.CoilWallOpen();
+        }
     }
 }

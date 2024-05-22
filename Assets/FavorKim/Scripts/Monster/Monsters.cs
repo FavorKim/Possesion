@@ -24,7 +24,7 @@ public abstract class Monsters : MonoBehaviour, ITyped
     /// InitSkill 구체화(Skill1 쿨타임, Skill2 쿨타임) 스킬 없으면 Awake 비워두기
     /// base.Awake()를 호출해야 체력바 UI가 생깁니다!
     /// </summary>
-    protected virtual void Awake() 
+    protected virtual void Awake()
     {
         InitHPUI();
     }
@@ -68,30 +68,30 @@ public abstract class Monsters : MonoBehaviour, ITyped
     /// 몬스터 피격 함수
     /// </summary>
     /// <param name="dmg">공격자 공격력</param>
-    public void GetDamage(int dmg)
+    public virtual void GetDamage(int dmg)
     {
-        if (!isInvincible)
-        {
-            curHP -= dmg;
-            HPSlider.value = curHP / maxHP;
-            StartCoroutine(CorInvincible());
-            if (curHP <= 0)
-                gameObject.SetActive(false);
-        }
+        curHP -= dmg;
+        HPSlider.value = curHP / maxHP;
+        StartCoroutine(CorInvincible());
+        if (curHP <= 0)
+            gameObject.SetActive(false);
     }
 
-    
+
 
 
 
     public virtual void OnTypeAttacked(Obstacles attacker)
     {
-        if ((int)attacker.type > (int)type)
-            GetDamage(attacker.Damage * 2);
-        else if ((int)attacker.type == (int)type)
-            GetDamage(attacker.Damage);
-        else
-            GetDamage(attacker.Damage / 2);
+        if (!isInvincible)
+        {
+            if ((int)attacker.type > (int)type)
+                GetDamage(attacker.Damage * 2);
+            else if ((int)attacker.type == (int)type)
+                GetDamage(attacker.Damage);
+            else
+                GetDamage(attacker.Damage / 2);
+        }
     }
 
 
