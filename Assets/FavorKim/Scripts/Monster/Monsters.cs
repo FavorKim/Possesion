@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
-public abstract class Monsters : MonoBehaviour, ITyped
+public abstract class Monsters : MonoBehaviour, IDamagable
 {
     #region Fields
     // 필드(Fields)
@@ -18,8 +18,6 @@ public abstract class Monsters : MonoBehaviour, ITyped
 
     public Skill skill1 { get; private set; } // 몬스터의 스킬 1 (스킬(Skill) 클래스는 PlayerController에서 정의하고 있다.)
     public Skill skill2 { get; private set; } // 몬스터의 스킬 2
-
-    public ITyped.Type type { get; protected set; }
 
     public float GetHP() { return curHP; }
 
@@ -111,6 +109,7 @@ public abstract class Monsters : MonoBehaviour, ITyped
         }
     }
 
+    /*
     /// <summary>
     /// 피격했을 때 타입을 비교하는 함수입니다. 타입의 상성에 따라 받는 대미지가 변화합니다.
     /// </summary>
@@ -130,7 +129,7 @@ public abstract class Monsters : MonoBehaviour, ITyped
         else
             // 받는 대미지가 절반이 된다.
             GetDamage(attacker.Damage / 2);
-    }
+    } */
 
     // 무적을 구현하는 코루틴 함수
     IEnumerator CorInvincible()
@@ -168,6 +167,6 @@ public abstract class Monsters : MonoBehaviour, ITyped
         if (skill2 == null) return;
         SkillManager.SetSkill(skill2, 2);
     }
-
+    
     #endregion Custom Methods
 }

@@ -7,7 +7,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : MonoBehaviour, IDamagable
 {
     public float tempKnockBack;
 
@@ -77,16 +77,13 @@ public class PlayerController : MonoBehaviour
 
     #endregion
 
-
     #region Getter
     public CharacterController GetCC() { return CC; }
     public Animator GetAnimator() { return anim; }
     public Slider GetDurationGauge() { return durationGauge; }
     public Transform CameraTransform { get { return camTransform; } set {  camTransform = value; } }
-    public Transform GetPlayerFoward() 
-    {
-        return playerFoward;
-    }
+    public Transform GetPlayerFoward()  { return playerFoward; }
+    public Transform GetLookAt() { return lookAtTransform; }
     public float GetMoveSpeed() { return moveSpeed; }
     public float GetGravityScale() { return gravityScale; }
     public float GetJumpForce() { return jumpForce; }
@@ -111,7 +108,7 @@ public class PlayerController : MonoBehaviour
         t_fullHP.text = fullHP.ToString();
 
         lookAtTransform = Instantiate(new GameObject("LookAt"), Camera.main.transform).transform;
-        lookAtTransform.localPosition = new Vector3(0, 0, 5.6f);
+        lookAtTransform.localPosition = new Vector3(0, 0, 56f);
 
     }
 
@@ -190,11 +187,10 @@ public class PlayerController : MonoBehaviour
 
     public void GetDamage(int dmg)
     {
-        if (isInvincible || isDead) return;
+        if (isInvincible || isDead || dmg == 0) return;
 
         if (state.IsPossessing())
         {
-            SetState("Normal");
             return;
         }
 

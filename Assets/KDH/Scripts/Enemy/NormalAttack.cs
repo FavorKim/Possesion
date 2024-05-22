@@ -6,9 +6,6 @@ public class NormalAttack : MonoBehaviour
 {
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
-        {
-            GameManager.Instance.GetDamage(10);
-        }
+        other.GetComponent<IDamagable>()?.GetDamage(10);
     }
 }

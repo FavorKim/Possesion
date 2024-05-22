@@ -3,14 +3,6 @@ using UnityEngine;
 public class Obstacles : MonoBehaviour, ITyped
 {
 
-    /*
-        몬스터의 스킬 내지 공격이 타입을 갖고있어서
-        이걸로 플랫포머의 장애물 등등을 극복하는 형태
-        덤불 장애물은 CUTTER나 FIRE로 극복
-        FIRE, CUTTER >> LEAF
-        몬스터 타입은 일단 추후에.
-    */
-
     #region Components
     // 컴포넌트(Components)
     private ParticleSystem ps;
@@ -43,17 +35,52 @@ public class Obstacles : MonoBehaviour, ITyped
     // OnParticleCollision()
     private void OnParticleCollision(GameObject other)
     {
-        GameManager.Instance.GetDamage(this, other);
+        // 데미지 계산 x 상호작용만.
+        other.GetComponent<Obstacles>()?.OnTypeAttacked(type);
+
+        // 데미지를 계산할 필요가 있다면? 데미지 계산까지.
+        other.GetComponent<IDamagable>()?.GetDamage(Damage);
     }
 
-    // OnTriggerStay()
-    private void OnTriggerStay(Collider other)
+    // OnTriggerEnter()
+    private void OnTriggerEnter(Collider other)
     {
-        GameManager.Instance.GetDamage(this, other.gameObject);
+        other.GetComponent<Obstacles>()?.OnTypeAttacked(type);
+        other.GetComponent<IDamagable>()?.GetDamage(Damage);
     }
+
     #endregion Unity Events
 
     #region Custom Methods
-    public virtual void OnTypeAttacked(Obstacles attackedType) { }
+    public virtual void OnTypeAttacked(ITyped.Type attackedType) { }
     #endregion Custom Methods
+
+
+    /*
+    obs to obs
+    피격자의 속성은 중요하지 않아. 공격자에 따른 행동.
+    심지어 공격자가 어떤 속성인지 정확히 들어맞아야만 기능이 수행.
+    그렇다면 Obs는 공격자의 속성을 매개로 받아서 내부적으로 기능을 수행시키면 됨.
+    언제? 맞았을 때.
+
+
+
+    몬스터와 플레이어는 속성은 있지만 관련한 기능은 없으며, 사실 이름뿐.
+    몬스터의 공격은 물체와의 상호작용. 즉, obs to obs에 밀접한 게임의 핵심이기 때문에
+    Obs속성은 필요하다
+    공격은? -> 데미지 계산은 Obs에서 담당할 필요 없음.
+    몬스터가 Obs를 사용하지 않고 자체적으로 공격과 관련한 기능을 수행하려면 무엇이 필요할까
+    Obs는 달아주되, 데미지는 기재하지 않는다. 오직 속성만 담는 기능을 하는
+    Obs가 아닌 Type이라는 Component를 만들자.
+    속성공격이 아닌 일반 공격은 Type을 부착할 필요가 없다.
+    
+    
+    충돌 시에는 무엇을 검사해야할까?
+    상호작용을 일으킬지 데미지를 입힐지를 검사해야할 것.
+    데미지를 입을 수 있는 녀석들(IDamagable)과 Obstacle 사이를 검사하자.
+    if(other.GetComponent<Obstacles>() !=null)
+    else if (other.GetComponenet<IDamagable>()!=null)
+
+
+     */
 }

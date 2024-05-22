@@ -204,6 +204,7 @@ public class PossessState : PlayerState
         GameManager.Instance.SetCameraLookAt(player.GetPlayerFoward());
 
         mon.SetSkill();
+
         durationGauge.gameObject.SetActive(true);
         durationGauge.value = 1;
     }
@@ -314,7 +315,6 @@ public interface IState
     void Skill1();
     void Skill2();
     void Shift();
-
 }
 
 

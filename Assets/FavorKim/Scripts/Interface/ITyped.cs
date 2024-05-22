@@ -5,7 +5,7 @@ public interface ITyped
 {
     public enum Type
     {
-        NONE, AQUA, THUNDER, LEAF = 10, FIRE = 20, CUTTER
+        NONE, WEB, THUNDER, LEAF, FIRE, CUTTER
     }
 
     Type type { get; }
@@ -14,5 +14,5 @@ public interface ITyped
     /// 속성공격을 받았을 시의 행동
     /// </summary>
     /// <param name="type">공격자 속성</param>
-    public void OnTypeAttacked(Obstacles attacker);
+    public void OnTypeAttacked(Type type);
 }

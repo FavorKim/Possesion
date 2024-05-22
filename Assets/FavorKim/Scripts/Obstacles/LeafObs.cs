@@ -15,9 +15,9 @@ public class LeafObs : Obstacles
         myType = ITyped.Type.LEAF;
     }
 
-    public override void OnTypeAttacked(Obstacles attackedType)
+    public override void OnTypeAttacked(ITyped.Type attackedType)
     {
-        switch (attackedType.type)
+        switch (attackedType)
         {
             case ITyped.Type.CUTTER:
                 cutter.SetActive(true);

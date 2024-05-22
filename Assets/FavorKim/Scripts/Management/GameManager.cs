@@ -11,7 +11,7 @@ public class GameManager : MonoBehaviour
 
     PlayerController player;
     [SerializeField] CinemachineFreeLook tpsCam;
-    //public PlayerController Player { get { return player; } }
+    public PlayerController Player { get { return player; } }
 
 
 
@@ -36,32 +36,29 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void GetDamage(Obstacles obs, GameObject dest)
-    {
-        if (dest.CompareTag("Player"))
-            player.GetDamage(obs.Damage);
-        else if (dest.GetComponent<ITyped>() != null)
-            SetTypeAttack(obs, dest.GetComponent<ITyped>());
-        else
-            return;
-    }
+    //public void GetDamage(Obstacles obs, GameObject dest)
+    //{
+    //    if (dest.CompareTag("Player") && obs.Damage != 0)
+    //        player.GetDamage(obs.Damage);
+    //    else if (dest.GetComponent<ITyped>() != null)
+    //        SetTypeAttack(obs, dest.GetComponent<ITyped>());
+    //}
 
-    public void GetDamage(int dmg)
-    {
-        player.GetDamage(dmg);
-    }
+    //public void GetDamage(int dmg)
+    //{
+    //    player.GetDamage(dmg);
+    //}
 
-    /// <summary>
-    /// 몬스터가 아닌 구조물이 속성 공격을 받았을 때
-    /// </summary>
-    /// <param name="from">공격자</param>
-    /// <param name="to">피격자</param>
-    public void SetTypeAttack(Obstacles from, ITyped to)
-    {
-        // 공격자가 공격대상 속성보다 우세일 경우 실행할 내용
-        to.OnTypeAttacked(from);
-
-    }
+    ///// <summary>
+    ///// 몬스터가 아닌 구조물이 속성 공격을 받았을 때
+    ///// </summary>
+    ///// <param name="from">공격자</param>
+    ///// <param name="to">피격자</param>
+    //public void SetTypeAttack(Obstacles from, ITyped to)
+    //{
+    //    // 공격자가 공격대상 속성보다 우세일 경우 실행할 내용
+    //    to.OnTypeAttacked(from);
+    //}
 
     public void SetCameraFollow(Transform dest)
     {
