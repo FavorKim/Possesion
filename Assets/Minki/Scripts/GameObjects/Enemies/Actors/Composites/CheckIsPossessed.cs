@@ -5,8 +5,8 @@ namespace Enemy
     // 적이 플레이어에게 빙의되었는지를 판별하는 클래스
     public class CheckIsPossessed : Node
     {
-        // 적(Enemy) 클래스
-        private Enemy _enemy;
+        // 필드(Field)
+        private readonly Enemy _enemy;
 
         // 생성자
         public CheckIsPossessed(Enemy enemy)

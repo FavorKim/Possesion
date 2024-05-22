@@ -1,5 +1,3 @@
-using UnityEngine;
-
 namespace Enemy
 {
     // 거미 클래스
@@ -24,7 +22,7 @@ namespace Enemy
         {
             Name = "Spider";
 
-            _attackSkillCount = 3;
+            AttackSkillCount = 3;
 
             HealthPoint = 100;
             MagicPoint = 100;
@@ -39,7 +37,7 @@ namespace Enemy
             AttackRange = 3.0f;
             DetectRange = 5.0f;
 
-            InitSkill(AttackCoolTime, Skill1CoolTime, Skill2CoolTime);
+            InitSkill(Skill1CoolTime, Skill2CoolTime);
         }
 
         #endregion Initialize Methods
@@ -47,27 +45,6 @@ namespace Enemy
         #region Action Methods
 
         // 적(Enemy)의 공통된 행동 함수를 재정의한다.
-        public override void Patrol()
-        {
-            base.Patrol();
-
-            Debug.Log("Spider's Patrol!");
-        }
-
-        public override void Chase()
-        {
-            base.Chase();
-
-            Debug.Log("Spider's Chase!");
-        }
-
-        public override void AttackAI()
-        {
-            base.AttackAI();
-
-            Debug.Log("Spider's Attack!");
-        }
-
         public override void Attack()
         {
             base.Attack();
@@ -88,11 +65,6 @@ namespace Enemy
         #region Animation Events
 
         // 아래는 애니메이션(Animation) 클립에서 이벤트를 추가하여 호출하는 함수들이다.
-
-        private void OnSkill1Event1()
-        {
-
-        }
 
         #endregion Animation Events
     }

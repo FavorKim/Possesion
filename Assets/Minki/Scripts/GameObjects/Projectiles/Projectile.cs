@@ -68,7 +68,7 @@ namespace ObjectPool
         public IEnumerator Shoot()
         {
             // 투사체 게임 오브젝트를 최상위 계층으로 옮긴다.
-            //transform.SetParent(null);
+            transform.SetParent(null);
 
             // 투사체에 앞으로 힘을 가한다.
             rb.AddForce(transform.TransformDirection(Vector3.forward) * shootPower, ForceMode.Impulse);

@@ -1,4 +1,5 @@
 using BehaviourTree;
+using UnityEngine;
 
 namespace Enemy
 {
@@ -6,7 +7,7 @@ namespace Enemy
     public class CheckGetHit : Node
     {
         // 적(Enemy) 클래스
-        private Enemy _enemy;
+        private readonly Enemy _enemy;
 
         // 생성자
         public CheckGetHit(Enemy enemy)

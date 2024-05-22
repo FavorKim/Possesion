@@ -1,5 +1,3 @@
-using UnityEngine;
-
 namespace Enemy
 {
     // 골렘 클래스
@@ -24,7 +22,7 @@ namespace Enemy
         {
             Name = "Golem";
 
-            _attackSkillCount = 2;
+            AttackSkillCount = 2;
 
             HealthPoint = 100;
             MagicPoint = 100;
@@ -37,8 +35,9 @@ namespace Enemy
             Skill1CoolTime = 100.0f;
             Skill2CoolTime = 0.0f;
             AttackRange = 3.0f;
+            DetectRange = 5.0f;
 
-            InitSkill(AttackCoolTime, Skill1CoolTime);
+            InitSkill(Skill1CoolTime);
         }
 
         #endregion Initialize Methods
@@ -46,27 +45,6 @@ namespace Enemy
         #region Action Methods
 
         // 적(Enemy)의 공통된 행동 함수를 재정의한다.
-        public override void Patrol()
-        {
-            base.Patrol();
-
-            Debug.Log("Golem's Patrol!");
-        }
-
-        public override void Chase()
-        {
-            base.Chase();
-
-            Debug.Log("Golem's Chase!");
-        }
-
-        public override void AttackAI()
-        {
-            base.AttackAI();
-
-            Debug.Log("Golem's Attack!");
-        }
-
         public override void Attack()
         {
             base.Attack();
@@ -75,11 +53,6 @@ namespace Enemy
         public override void Skill1()
         {
             base.Skill1();
-        }
-
-        public override void Skill2()
-        {
-            // 세 번째 공격 스킬이 존재하지 않는다.
         }
 
         #endregion Action Methods

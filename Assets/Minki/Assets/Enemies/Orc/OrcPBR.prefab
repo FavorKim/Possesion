@@ -1844,7 +1844,7 @@ Animator:
   m_GameObject: {fileID: 1765397208479606}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 73d2f4319473c3948940539f22e8ae4e, type: 3}
-  m_Controller: {fileID: 9100000, guid: e0e3e20604b9f1841b669ee8e34e7dac, type: 2}
+  m_Controller: {fileID: 9100000, guid: f9186661648b9bd4db306066618f5c4f, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 1
@@ -1908,7 +1908,7 @@ MonoBehaviour:
   curHP: 0
   maxHP: 0
   HPSlider: {fileID: 0}
-  patrolTransforms:
+  _patrolTransforms:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}

@@ -11,7 +11,7 @@ public abstract class Monsters : MonoBehaviour, ITyped
     [SerializeField] private float maxHP; // 몬스터의 최대 체력
     
     private float invincibleTime = 1.0f; // 무적 시간
-    private bool isInvincible = false; // 무적 여부
+    protected bool isInvincible = false; // 무적 여부
 
     private GameObject HP_HUD_Obj; // 몬스터의 체력을 나타내는 패널(Panel)
     [SerializeField] private Slider HPSlider; // 패널 내의 슬라이더

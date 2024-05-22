@@ -1,10 +1,10 @@
-using UnityEngine;
-
 namespace Enemy
 {
     // 슬라임 클래스
     public class Slime : Enemy
     {
+        #region Awake()
+
         protected override void Awake()
         {
             // 스탯을 초기화한다.
@@ -13,12 +13,16 @@ namespace Enemy
             base.Awake();
         }
 
+        #endregion Awake()
+
+        #region Initialize Methods
+
         // 적(Enemy)의 기본 스탯을 초기화하는 함수
         protected override void InitializeStats()
         {
             Name = "Slime";
 
-            _attackSkillCount = 2;
+            AttackSkillCount = 2;
 
             HealthPoint = 100;
             MagicPoint = 100;
@@ -33,33 +37,14 @@ namespace Enemy
             AttackRange = 3.0f;
             DetectRange = 5.0f;
 
-            InitSkill(AttackCoolTime, Skill1CoolTime);
+            InitSkill(Skill1CoolTime);
         }
+
+        #endregion Initialize Methods
 
         #region Action Methods
 
         // 적(Enemy)의 공통된 행동 함수를 재정의한다.
-        public override void Patrol()
-        {
-            base.Patrol();
-
-            Debug.Log("Slime's Patrol!");
-        }
-
-        public override void Chase()
-        {
-            base.Chase();
-
-            Debug.Log("Slime's Chase!");
-        }
-
-        public override void AttackAI()
-        {
-            base.AttackAI();
-
-            Debug.Log("Slime's Attack!");
-        }
-
         public override void Attack()
         {
             base.Attack();
@@ -68,11 +53,6 @@ namespace Enemy
         public override void Skill1()
         {
             base.Skill1();
-        }
-
-        public override void Skill2()
-        {
-            // 세 번째 공격 스킬이 존재하지 않는다.
         }
 
         #endregion Action Methods

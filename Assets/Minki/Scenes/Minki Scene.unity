@@ -385,28 +385,24 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 7183681169288268696, guid: f27d3ad46050fb84ea04907d93c1dc3f, type: 3}
-      propertyPath: patrolTransforms.Array.data[0]
+      propertyPath: _patrolTransforms.Array.data[0]
       value: 
       objectReference: {fileID: 569736821}
     - target: {fileID: 7183681169288268696, guid: f27d3ad46050fb84ea04907d93c1dc3f, type: 3}
-      propertyPath: patrolTransforms.Array.data[1]
+      propertyPath: _patrolTransforms.Array.data[1]
       value: 
       objectReference: {fileID: 1996804097}
     - target: {fileID: 7183681169288268696, guid: f27d3ad46050fb84ea04907d93c1dc3f, type: 3}
-      propertyPath: patrolTransforms.Array.data[2]
+      propertyPath: _patrolTransforms.Array.data[2]
       value: 
       objectReference: {fileID: 922438455}
     - target: {fileID: 7183681169288268696, guid: f27d3ad46050fb84ea04907d93c1dc3f, type: 3}
-      propertyPath: patrolTransforms.Array.data[3]
+      propertyPath: _patrolTransforms.Array.data[3]
       value: 
       objectReference: {fileID: 464002446}
     - target: {fileID: 7185303502546423426, guid: f27d3ad46050fb84ea04907d93c1dc3f, type: 3}
       propertyPath: m_Name
       value: Test Slime
-      objectReference: {fileID: 0}
-    - target: {fileID: 7185303502546423426, guid: f27d3ad46050fb84ea04907d93c1dc3f, type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7187725685756300230, guid: f27d3ad46050fb84ea04907d93c1dc3f, type: 3}
       propertyPath: m_RootOrder
@@ -705,19 +701,19 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1306666528, guid: f3de68db836e7e34fbab84dbde9b09eb, type: 3}
-      propertyPath: patrolTransforms.Array.data[0]
+      propertyPath: _patrolTransforms.Array.data[0]
       value: 
       objectReference: {fileID: 569736821}
     - target: {fileID: 1306666528, guid: f3de68db836e7e34fbab84dbde9b09eb, type: 3}
-      propertyPath: patrolTransforms.Array.data[1]
+      propertyPath: _patrolTransforms.Array.data[1]
       value: 
       objectReference: {fileID: 1996804097}
     - target: {fileID: 1306666528, guid: f3de68db836e7e34fbab84dbde9b09eb, type: 3}
-      propertyPath: patrolTransforms.Array.data[2]
+      propertyPath: _patrolTransforms.Array.data[2]
       value: 
       objectReference: {fileID: 922438455}
     - target: {fileID: 1306666528, guid: f3de68db836e7e34fbab84dbde9b09eb, type: 3}
-      propertyPath: patrolTransforms.Array.data[3]
+      propertyPath: _patrolTransforms.Array.data[3]
       value: 
       objectReference: {fileID: 464002446}
     - target: {fileID: 1594767147126006, guid: f3de68db836e7e34fbab84dbde9b09eb, type: 3}
@@ -768,10 +764,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 95336232578254584, guid: f3de68db836e7e34fbab84dbde9b09eb, type: 3}
-      propertyPath: m_Controller
-      value: 
-      objectReference: {fileID: 9100000, guid: a03efc716b891a24ea3798fd1d22228b, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f3de68db836e7e34fbab84dbde9b09eb, type: 3}
 --- !u!1001 &1321287349
@@ -782,28 +774,24 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1345224021, guid: 3323d1b4b4cbbcd47897294d83f3a891, type: 3}
-      propertyPath: patrolTransforms.Array.data[0]
+      propertyPath: _patrolTransforms.Array.data[0]
       value: 
       objectReference: {fileID: 569736821}
     - target: {fileID: 1345224021, guid: 3323d1b4b4cbbcd47897294d83f3a891, type: 3}
-      propertyPath: patrolTransforms.Array.data[1]
+      propertyPath: _patrolTransforms.Array.data[1]
       value: 
       objectReference: {fileID: 1996804097}
     - target: {fileID: 1345224021, guid: 3323d1b4b4cbbcd47897294d83f3a891, type: 3}
-      propertyPath: patrolTransforms.Array.data[2]
+      propertyPath: _patrolTransforms.Array.data[2]
       value: 
       objectReference: {fileID: 922438455}
     - target: {fileID: 1345224021, guid: 3323d1b4b4cbbcd47897294d83f3a891, type: 3}
-      propertyPath: patrolTransforms.Array.data[3]
+      propertyPath: _patrolTransforms.Array.data[3]
       value: 
       objectReference: {fileID: 464002446}
     - target: {fileID: 1201003157251696, guid: 3323d1b4b4cbbcd47897294d83f3a891, type: 3}
       propertyPath: m_Name
       value: Test EvilMage
-      objectReference: {fileID: 0}
-    - target: {fileID: 1201003157251696, guid: 3323d1b4b4cbbcd47897294d83f3a891, type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4744821207475892, guid: 3323d1b4b4cbbcd47897294d83f3a891, type: 3}
       propertyPath: m_RootOrder
@@ -859,28 +847,24 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 147624033, guid: 3b3558a64b740234c8e651a21d9930e1, type: 3}
-      propertyPath: patrolTransforms.Array.data[0]
+      propertyPath: _patrolTransforms.Array.data[0]
       value: 
       objectReference: {fileID: 569736821}
     - target: {fileID: 147624033, guid: 3b3558a64b740234c8e651a21d9930e1, type: 3}
-      propertyPath: patrolTransforms.Array.data[1]
+      propertyPath: _patrolTransforms.Array.data[1]
       value: 
       objectReference: {fileID: 1996804097}
     - target: {fileID: 147624033, guid: 3b3558a64b740234c8e651a21d9930e1, type: 3}
-      propertyPath: patrolTransforms.Array.data[2]
+      propertyPath: _patrolTransforms.Array.data[2]
       value: 
       objectReference: {fileID: 922438455}
     - target: {fileID: 147624033, guid: 3b3558a64b740234c8e651a21d9930e1, type: 3}
-      propertyPath: patrolTransforms.Array.data[3]
+      propertyPath: _patrolTransforms.Array.data[3]
       value: 
       objectReference: {fileID: 464002446}
     - target: {fileID: 1557585983417840, guid: 3b3558a64b740234c8e651a21d9930e1, type: 3}
       propertyPath: m_Name
       value: Test Spider
-      objectReference: {fileID: 0}
-    - target: {fileID: 1557585983417840, guid: 3b3558a64b740234c8e651a21d9930e1, type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4843028258353612, guid: 3b3558a64b740234c8e651a21d9930e1, type: 3}
       propertyPath: m_RootOrder
@@ -936,28 +920,24 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 586574572, guid: bfe485cfc6266884097e94106e0f9289, type: 3}
-      propertyPath: patrolTransforms.Array.data[0]
+      propertyPath: _patrolTransforms.Array.data[0]
       value: 
       objectReference: {fileID: 569736821}
     - target: {fileID: 586574572, guid: bfe485cfc6266884097e94106e0f9289, type: 3}
-      propertyPath: patrolTransforms.Array.data[1]
+      propertyPath: _patrolTransforms.Array.data[1]
       value: 
       objectReference: {fileID: 1996804097}
     - target: {fileID: 586574572, guid: bfe485cfc6266884097e94106e0f9289, type: 3}
-      propertyPath: patrolTransforms.Array.data[2]
+      propertyPath: _patrolTransforms.Array.data[2]
       value: 
       objectReference: {fileID: 922438455}
     - target: {fileID: 586574572, guid: bfe485cfc6266884097e94106e0f9289, type: 3}
-      propertyPath: patrolTransforms.Array.data[3]
+      propertyPath: _patrolTransforms.Array.data[3]
       value: 
       objectReference: {fileID: 464002446}
     - target: {fileID: 1706760125350986, guid: bfe485cfc6266884097e94106e0f9289, type: 3}
       propertyPath: m_Name
       value: Test Golem
-      objectReference: {fileID: 0}
-    - target: {fileID: 1706760125350986, guid: bfe485cfc6266884097e94106e0f9289, type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4191744185429214, guid: bfe485cfc6266884097e94106e0f9289, type: 3}
       propertyPath: m_RootOrder
@@ -1256,28 +1236,24 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1511762223, guid: c3d0bb7e6eae9cd4d8944d140adfdad7, type: 3}
-      propertyPath: patrolTransforms.Array.data[0]
+      propertyPath: _patrolTransforms.Array.data[0]
       value: 
       objectReference: {fileID: 569736821}
     - target: {fileID: 1511762223, guid: c3d0bb7e6eae9cd4d8944d140adfdad7, type: 3}
-      propertyPath: patrolTransforms.Array.data[1]
+      propertyPath: _patrolTransforms.Array.data[1]
       value: 
       objectReference: {fileID: 1996804097}
     - target: {fileID: 1511762223, guid: c3d0bb7e6eae9cd4d8944d140adfdad7, type: 3}
-      propertyPath: patrolTransforms.Array.data[2]
+      propertyPath: _patrolTransforms.Array.data[2]
       value: 
       objectReference: {fileID: 922438455}
     - target: {fileID: 1511762223, guid: c3d0bb7e6eae9cd4d8944d140adfdad7, type: 3}
-      propertyPath: patrolTransforms.Array.data[3]
+      propertyPath: _patrolTransforms.Array.data[3]
       value: 
       objectReference: {fileID: 464002446}
     - target: {fileID: 1765397208479606, guid: c3d0bb7e6eae9cd4d8944d140adfdad7, type: 3}
       propertyPath: m_Name
       value: Test Orc
-      objectReference: {fileID: 0}
-    - target: {fileID: 1765397208479606, guid: c3d0bb7e6eae9cd4d8944d140adfdad7, type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4240512476921092, guid: c3d0bb7e6eae9cd4d8944d140adfdad7, type: 3}
       propertyPath: m_RootOrder
