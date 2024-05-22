@@ -39,7 +39,7 @@ namespace Enemy
             AttackRange = 3.0f;
             DetectRange = 5.0f;
 
-            InitSkill(AttackCoolTime, Skill1CoolTime, Skill2CoolTime);
+            InitSkill(Skill1CoolTime, Skill2CoolTime);
         }
 
         #endregion Initialize Methods

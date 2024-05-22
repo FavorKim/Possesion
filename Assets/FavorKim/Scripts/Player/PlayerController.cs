@@ -190,7 +190,7 @@ public class PlayerController : MonoBehaviour, IDamagable
 
     public void GetDamage(int dmg)
     {
-        if (isInvincible || isDead) return;
+        if (isInvincible || isDead || dmg == 0) return;
 
         if (state.IsPossessing())
         {
