@@ -204,6 +204,8 @@ public class BossDryad : Monsters
 
         public override void Enter()
         {
+            //패턴 체인지 모션?
+
             owner.agent.isStopped = true;
             owner.animator.SetBool(owner.hashAttack, false);
         }

@@ -25,24 +25,35 @@ public class Skeleton : BaseMonster
         mstATK = 10.0f;
         mstSPD = 10.0f;
 
+        attackCooltime = 1.0f;
         skill1Cooltime = 3.0f;
         skill2Cooltime = 3.0f;
-
+        
         traceDistance = 10f;
-        skillDistance = 5f;
+        skillDistance = 8f;
         attackDistance = 2f;
+
+        InitSkill(skill1Cooltime, skill2Cooltime);
     }
 
     // 공격 함수
     public override void Attack()
     {
-        animator.SetBool(hashAttack, true);
+        StartCoroutine(NormalAttack());
+
+        IEnumerator NormalAttack()
+        {
+            animator.SetBool(hashAttack, true);
+
+            attack_curCooltime = attackCooltime;
+            yield return new WaitForSeconds(0.2f);
+            animator.SetBool(hashAttack, false);
+        }
     }
 
     // 스킬 1 함수
     public override void Skill1()
     {
-        float distance = Vector3.Distance(playerTrf.position, enemyTrf.position);
         skill1_curCooltime = skill1Cooltime;
         
         StartCoroutine(SlashAttack());
@@ -51,11 +62,12 @@ public class Skeleton : BaseMonster
         {
             agent.isStopped = true;
             animator.SetBool(hashSkill1, true);
-            GameObject pd = Instantiate(projectile, spawnPosition.position, Quaternion.identity) as GameObject;
-            pd.transform.LookAt(playerTrf.localPosition);
+            GameObject pd = Instantiate(projectile, spawnPosition.position, gameObject.transform.rotation);
+            //pd.transform.LookAt(playerTrf.localPosition);
+            //addforce 위치 정해줘야 함.
             pd.GetComponent<Rigidbody>().AddForce(pd.transform.forward * shootSpeed);
            
-            yield return new WaitForSeconds(1.5f);
+            yield return new WaitForSeconds(0.2f);
             animator.SetBool(hashSkill1, false);
         }
     }

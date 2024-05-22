@@ -78,6 +78,7 @@ public abstract class BaseMonster : Monsters
         stateMachine.AddState(MonsterState.IDLE, new IdleState(this));
         stateMachine.AddState(MonsterState.TRACE, new TraceState(this));
         stateMachine.AddState(MonsterState.ATTACK, new AttackState(this));
+        stateMachine.AddState(MonsterState.DEAD, new DeadState(this));
         stateMachine.InitState(MonsterState.IDLE);
 
         // NavMesh를 초기화한다.
@@ -87,10 +88,11 @@ public abstract class BaseMonster : Monsters
         InitSkills();
     }
 
-    private void Start()
+    protected override void Start()
     {
         // 몬스터의 상태 검사를 시작한다.
         StartCoroutine(CheckEnemyState());
+        base.Start();
     }
 
     private void Update()
@@ -98,8 +100,12 @@ public abstract class BaseMonster : Monsters
         // 스킬의 재사용 대기 시간을 계산한다.
         CalcCooltime();
 
-        animator.SetFloat("FloatX", rb.velocity.x * 100f);
-        animator.SetFloat("FloatY", rb.velocity.z * 100f);
+        
+    }
+    private void FixedUpdate()
+    {
+        animator.SetFloat("FloatX", rb.velocity.x);
+        animator.SetFloat("FloatY", rb.velocity.z);
     }
 
     #endregion Life Cycles (Awake / Start / Update)
@@ -226,7 +232,7 @@ public abstract class BaseMonster : Monsters
             {
                 owner.Skill2();
             }
-            else
+            else if (owner.attack_curCooltime <= 0f)
             {
                 owner.Attack();
             }
