@@ -29,6 +29,8 @@ public class BossDryad : Monsters
     
     Animator animator;
 
+    [SerializeField] bool EnfPhased = false;
+
     //public ParticleSystem rollAttack;
     public StateMachine stateMachine;
 
@@ -39,20 +41,17 @@ public class BossDryad : Monsters
     public Transform[] spawnPositions;
     [SerializeField] public float shootSpeed = 800.0f;
     [SerializeField] public float spreadRange = 100.0f;
-    public ParticleSystem spinAttack;
 
     readonly int hashAttack = Animator.StringToHash("IsAttack");
     readonly int hashSkill = Animator.StringToHash("animation");
     readonly int hashGroggy = Animator.StringToHash("IsGroggy");
     readonly int hashDie = Animator.StringToHash("IsDie");
 
-    Rigidbody rb;
     #region 스킬 등등
     [SerializeField]
     float mstATK = 10.0f;
     float mstSPD = 10.0f;
 
-    public float traceDistance = 1000f;
     public bool isDie = false;
 
     int i = 0;
@@ -65,8 +64,6 @@ public class BossDryad : Monsters
         agent = GetComponent<NavMeshAgent>();
         enemyTrf = GetComponent<Transform>();
         animator = GetComponent<Animator>();
-
-        rb = GetComponent<Rigidbody>();
         stateMachine = gameObject.AddComponent<StateMachine>();
 
         stateMachine.AddState(BossState.IDLE, new IdleState(this));
@@ -107,8 +104,6 @@ public class BossDryad : Monsters
         */
         while (!isDie)
         {
-            
-
             if (Input.GetKeyDown("1"))
             {
                 i = 1;
@@ -142,8 +137,8 @@ public class BossDryad : Monsters
             else if (Input.GetKeyDown("7"))
             {
                 stateMachine.ChangeState(BossState.DEAD);
+                isDie = true;
             }
-
             else
             {
                 stateMachine.ChangeState(BossState.IDLE);
@@ -199,8 +194,6 @@ public class BossDryad : Monsters
                 owner.agent.isStopped = false;
                 owner.agent.SetDestination(owner.playerTrf.position);
             }
-
-            
             //owner.animator.SetBool(owner.hashAttack, false);
         }
     }
@@ -303,22 +296,42 @@ public class BossDryad : Monsters
 
     IEnumerator Skill_1_crt()
     {
-        float distance;
+        Quaternion q = Quaternion.Euler(new Vector3(0, 20, 0));
+        int percent = 0;
+        if (EnfPhased)
+        {
+            percent = Random.Range(0, 100);
+        }
 
-        distance = Vector3.Distance(playerTrf.position, enemyTrf.position);
+        if (percent < 40)
+        {
+            for (int k = 0; k < 3; k++)
+            {
+                for (int i = 0; i < 5; i++)
+                {
+                    float range = 1.0f;
+                    float posX = Random.Range(-range, range);
+                    float posY = Random.Range(-range, range);
 
-        Quaternion q = Quaternion.Euler(new Vector3(0, 15, 0));
+                    GameObject pd1 = Instantiate(projectile, spawnPositions[0].position + new Vector3(posX * 2f, 0, posY * 2f), Quaternion.LookRotation(gameObject.transform.forward) * q);
 
-        GameObject pd = Instantiate(windStorm, transform.position, Quaternion.LookRotation(-gameObject.transform.right) * q);
-        //GameObject pd2 = Instantiate(projectile, spawnPositions[0].position, Quaternion.identity) as GameObject;
-        //pd.transform.LookAt(playerTrf.localPosition);
-        /*pd.GetComponent<Rigidbody>().AddForce(pd.transform.forward * shootSpeed);
-        pd.GetComponent<Rigidbody>().AddForce(pd.transform.up * distance * 15.5f);*/
+                    pd1.GetComponent<Rigidbody>().AddForce(posX * spreadRange * pd1.transform.up);
+                    pd1.GetComponent<Rigidbody>().AddForce(posY * spreadRange * pd1.transform.right);
+                    pd1.GetComponent<Rigidbody>().AddForce(shootSpeed * Random.Range(0.5f, 1.8f) * pd1.transform.forward);
+                }
+                yield return new WaitForSeconds(0.1f);
+            }
+            animator.SetInteger(hashSkill, 0);
+        }
 
-        animator.SetInteger(hashSkill, 0);
-        yield return new WaitForSeconds(5.0f);
-        Destroy(pd);
-        
+        else 
+        {
+            GameObject pd = Instantiate(windStorm, transform.position, Quaternion.LookRotation(-gameObject.transform.right) * q);
+
+            animator.SetInteger(hashSkill, 0);
+            yield return new WaitForSeconds(5.0f);
+            Destroy(pd);
+        }   
     }
 
     #endregion
@@ -336,23 +349,37 @@ public class BossDryad : Monsters
 
     IEnumerator Skill_2_crt()
     {
-        for(int k = 0; k < 3; k++)
+        int percent = 0;
+        if (EnfPhased)
         {
-            for (int i = 0; i < 10; i++)
-            {
-                float range = 1.0f;
-                float posX = Random.Range(-range, range);
-                float posY = Random.Range(-range, range);
-
-                GameObject pd = Instantiate(projectile, spawnPositions[0].position + new Vector3(posX * 2f, 0, posY * 2f), Quaternion.identity) as GameObject;
-
-                pd.GetComponent<Rigidbody>().AddForce(posX * spreadRange * Vector3.forward);
-                pd.GetComponent<Rigidbody>().AddForce(posY * spreadRange * Vector3.right);
-                pd.GetComponent<Rigidbody>().AddForce(shootSpeed * Random.Range(0.8f, 1.2f) * Vector3.up);
-            }
-            yield return new WaitForSeconds(0.1f);
+            percent = Random.Range(0, 100);
         }
-        
+
+        if (percent < 70)
+        {
+            // 몬스터를 소환해줘야 함... 이게 있어야 플레어가 보스에게 공격이 가능.
+            // 강화패턴을 쿨타임을 넣어줘야 하는가? 일단 해?
+        }
+        else
+        {
+            for (int k = 0; k < 3; k++)
+            {
+                for (int i = 0; i < 10; i++)
+                {
+                    float range = 1.0f;
+                    float posX = Random.Range(-range, range);
+                    float posY = Random.Range(-range, range);
+
+                    GameObject pd = Instantiate(projectile, spawnPositions[0].position + new Vector3(posX * 2f, 0, posY * 2f), Quaternion.identity) as GameObject;
+
+                    pd.GetComponent<Rigidbody>().AddForce(posX * spreadRange * Vector3.forward);
+                    pd.GetComponent<Rigidbody>().AddForce(posY * spreadRange * Vector3.right);
+                    pd.GetComponent<Rigidbody>().AddForce(shootSpeed * Random.Range(0.8f, 1.2f) * Vector3.up);
+                }
+                yield return new WaitForSeconds(0.1f);
+            }
+        }
+
         animator.SetInteger(hashSkill, 0);
     }
     #endregion
@@ -370,18 +397,22 @@ public class BossDryad : Monsters
 
     IEnumerator Skill_3_crt()
     {
-        //ParticleSystem ps = Instantiate(spinAttack, this.transform); //, Quaternion.identity
-        //Destroy(ps);
-
         Vector3[] vector3s = new Vector3[4];
+
         vector3s[0] = new Vector3(2, 1, 0);
         vector3s[1] = new Vector3(0, 1, -2);
         vector3s[2] = new Vector3(-2, 1, 0);
         vector3s[3] = new Vector3(0, 1, 2);
+
         List<GameObject> pds = new List<GameObject>();
-        for (int i = 0; i < 8; i++)
+
+        if (EnfPhased)
         {
-            pds.Add(Instantiate(windStorm, gameObject.transform.position, gameObject.transform.rotation * Quaternion.Euler(new Vector3(0, i * 45, 0))));
+            
+            for (int i = 0; i < 8; i++)
+            {
+                pds.Add(Instantiate(windStorm, gameObject.transform.position, gameObject.transform.rotation * Quaternion.Euler(new Vector3(0, i * 45, 0))));
+            }
         }
 
         for (int k = 0; k < 10; k++)
@@ -393,11 +424,15 @@ public class BossDryad : Monsters
             }
             yield return new WaitForSeconds(0.4f);
         }
-        for (int i = 0; i < 8; i++)
+
+        if (EnfPhased)
         {
-            Destroy(pds[i]);
+            for (int i = 0; i < 8; i++)
+            {
+                Destroy(pds[i]);
+            }
         }
-            
+        
         animator.SetInteger(hashSkill, 0);
     }
     #endregion
