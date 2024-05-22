@@ -115,6 +115,8 @@ public abstract class Monsters : MonoBehaviour, ITyped
     /// </summary>
     public virtual void OnTypeAttacked(Obstacles attacker)
     {
+        if (isInvincible) return;
+
         // 공격자의 타입이 우위일 경우,
         if ((int)attacker.type > (int)type)
             // 받는 대미지가 2배가 된다.

@@ -44,7 +44,7 @@ namespace Enemy
             Skill1CoolTime = 1.0f;
             Skill2CoolTime = 1.0f;
             AttackRange = 3.0f;
-            DetectRange = 5.0f;
+            DetectRange = 10.0f;
 
             InitSkill(Skill1CoolTime, Skill2CoolTime);
         }

@@ -107,7 +107,7 @@ namespace Enemy
         {
             if (other.CompareTag("Hat"))
             {
-                GetHit();
+                IsGetHit = true;
                 IsPossessed = true;
             }
         }
@@ -177,6 +177,9 @@ namespace Enemy
             // 피격 애니메이션을 재생한다.
             _animator.SetTrigger("GetHit");
 
+            // 계속 피격되지 않도록 한다.
+            IsGetHit = false;
+
             // Debug.Log("Enemy's GetHit() is Called.");
         }
 
@@ -213,8 +216,8 @@ namespace Enemy
             UnityAction patrol = () =>
             {
                 // 돌아다니는 애니메이션을 재생한다.
-                _animator.SetBool("AI_Patrol_Sense", false);
                 _animator.SetBool("AI_Patrol_Move", true);
+                _animator.SetBool("AI_Patrol_Sense", false);
                 _animator.SetBool("AI_Chase", false);
 
                 // 정해진 순찰 구역으로 이동한다.
@@ -244,8 +247,11 @@ namespace Enemy
             _animator.SetInteger("AI_AttackIndex", 0);
 
             // 플레이어를 추적한다.
-            _navMeshAgent.isStopped = false;
-            _navMeshAgent.SetDestination(_playerTransform.position);
+            if (_animator.GetCurrentAnimatorStateInfo(0).IsName("RunFWD")) // 공격 모션에 대한 후딜레이를 적용한다.
+            {
+                _navMeshAgent.isStopped = false;
+                _navMeshAgent.SetDestination(_playerTransform.position);
+            }
 
             // Debug.Log("Enemy's Chase() is Called.");
         }
@@ -295,20 +301,45 @@ namespace Enemy
 
         public override void Attack()
         {
-            _animator.SetInteger("AI_AttackIndex", 1);
-            _animator.SetTrigger("Player_Attack");
+            if (IsPossessed)
+            {
+                _animator.SetTrigger("Player_Attack");
+            }
+            else
+            {
+                _animator.SetInteger("AI_AttackIndex", 1);
+            }
         }
 
         public override void Skill1()
         {
-            _animator.SetInteger("AI_AttackIndex", 2);
-            _animator.SetTrigger("Player_Skill1");
+            if (IsPossessed)
+            {
+                _animator.SetTrigger("Player_Skill1");
+            }
+            else
+            {
+                _animator.SetInteger("AI_AttackIndex", 2);
+            }
         }
 
         public override void Skill2()
         {
-            _animator.SetInteger("AI_AttackIndex", 3);
-            _animator.SetTrigger("Player_Skill2");
+            if (IsPossessed)
+            {
+                _animator.SetTrigger("Player_Skill2");
+            }
+            else
+            {
+                _animator.SetInteger("AI_AttackIndex", 3);
+            }
+        }
+
+        public override void OnTypeAttacked(Obstacles attacker)
+        {
+            base.OnTypeAttacked(attacker);
+
+            IsGetHit = true;
         }
 
         #endregion Action Methods
