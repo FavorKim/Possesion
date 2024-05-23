@@ -280,7 +280,7 @@ public class PlayerController : MonoBehaviour, IDamagable
         //transform.Rotate(new Vector3(0, delta.x, delta.y) * sensitivity * Time.deltaTime);
 
         LookAtPlayer(camTransform);
-        // »ê³ªºñ ¶§ ½è´ø ½¦ÀÌ´õ ±×·¡ÇÁ ²ø°í¿Í¼­ Á¶ÁØ¼±À¸·Î ¸¸µé¸é ÁÁÀ» °Í
+        // ï¿½ê³ªï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ì´ï¿½ ï¿½×·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Í¼ï¿½ ï¿½ï¿½ï¿½Ø¼ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
     }
 
     public void LookAtPlayer(Transform dest)
