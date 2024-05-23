@@ -8,11 +8,21 @@ using UnityEngine.UI;
 public class SettingUIManager : MonoBehaviour
 {
     [SerializeField] private GameObject setting;
+    private static SettingUIManager instance;
     bool isFull = false;
 
-    private void Awake()
+
+    private void Start()
     {
-        DontDestroyOnLoad(gameObject);
+        if(instance == null)
+        {
+            instance = FindAnyObjectByType<SettingUIManager>();
+            if (instance == null)
+            {
+                instance = this;
+            }
+            DontDestroyOnLoad(gameObject);
+        }
     }
 
     public void SetFullScreenMode(Toggle isToggle)

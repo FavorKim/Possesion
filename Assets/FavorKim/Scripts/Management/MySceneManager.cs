@@ -1,6 +1,7 @@
 using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -12,33 +13,33 @@ public class MySceneManager : MonoBehaviour
 
 
     [SerializeField] GameObject loading;
-    [SerializeField]CanvasGroup blocker;
+    [SerializeField] TMP_Text loadingTxt;
+    [SerializeField] Slider loadingBar;
+    CanvasGroup blocker;
     [SerializeField] private float fadeDuration;
-    float percentage;
 
 
     private void Awake()
     {
         blocker = GetComponentInChildren<CanvasGroup>();
-
     }
     private void Start()
     {
-        if (instance != null)
+        if (instance == null)
         {
-            DestroyImmediate(this.gameObject);
-            return;
+            instance = FindAnyObjectByType<MySceneManager>();
+            if (instance == null)
+            {
+                instance = this;
+            }
+            SceneManager.sceneLoaded += FadeIn;
+            DontDestroyOnLoad(this);
         }
-        Debug.Log("start");
-        instance = this;
-        DontDestroyOnLoad(gameObject);
-
-        SceneManager.sceneLoaded += FadeIn;
     }
 
-    private void Update()
+    private void OnDestroy()
     {
-        Debug.Log(percentage);
+        SceneManager.sceneLoaded -= FadeIn;
     }
 
     public void ChangeScene(string sceneName)
@@ -59,83 +60,33 @@ public class MySceneManager : MonoBehaviour
     }
     void FadeIn(Scene scene, LoadSceneMode mode)
     {
+        loading.SetActive(false);
         blocker.DOFade(0, fadeDuration).OnStart(() => blocker.blocksRaycasts = false) ;
     }
 
 
     IEnumerator CorLoadScene(string sceneName)
     {
-        //loading.SetActive(true);
+        loading.SetActive(true);
         AsyncOperation async = SceneManager.LoadSceneAsync(sceneName);
         async.allowSceneActivation = false;
 
+        float pastTime=0.0f;
+        float percentage = 0f;
         while (!async.isDone)
         {
             yield return null;
-            percentage = async.progress;
-            if (percentage >= 0.9f)
+            pastTime += Time.deltaTime;
+            if (async.progress < 0.9)
+                percentage = Mathf.Lerp(percentage, async.progress, pastTime);
+            if (async.progress >= 0.90f)
+                percentage = Mathf.Lerp(percentage, 1, pastTime);
+
+            loadingBar.value = percentage;
+            loadingTxt.text = (percentage * 100.0f).ToString("0") + '%';
+
+            if (percentage >= 1)
                 async.allowSceneActivation = true;
         }
     }
-
-    // fadeout -> 완료 후 씬 로딩 -> 완료 후 FadeIn
-    /*
-    기존 - 미사일 프리팹 생성 (엄마, 자식 셋)
-    변경 - 미사일 프리팹 (엄마 생성), 엄마 프리팹(자식 생성 및 변수 초기화)
-
-    -기존-
-    맨 위에 엄마를 생성하는건 objectPool이 projectile을 생성.
-    자식 - 이 구조에선 Projectile 안에 missle, muzzle, explosion이 들어가있음.
-    -변경-
-    Projectile 안에 자식들을 넣어놓지 말고,
-    자식프리팹을 Projectile에 직렬화 한 후, Projectile 내부에서 자식들을 Instantiate
-    Instantiate 후 변수 초기화.
-
-
-    class Projectile
-    {
-        [serializefield] GameObject misslePrefab;
-        [serializefield] GameObject muzzlePrefab;
-        [serializefield] GameObject explosionPrefab;
-        ParticleSystem misslefx;
-        ParticleSystem muzzlefx;
-        ParticleSystem explosionfx;
-        
-        void Awake()
-        {
-            misslefx = Instantiate(missle, transform).GetComponent<ParticleSystem>();
-            misslefx = Instantiate(missle, transform).GetComponent<ParticleSystem>();
-            misslefx = Instantiate(missle, transform).GetComponent<ParticleSystem>();
-        }
-
-        void OnTriggerEnter(Collision other)
-        {
-            if(other.CompareTag("Player)
-            {   
-                misslefx.Stop();
-                explosionfx.Play();
-            }
-        }
-    }
-
-
-    
-    직렬화한 PS변수를 Stop하면
-    clone이 아니라 프리팹 원본의 PS가 Stop.
-    우리는 Clone에 접근해야한다.
-
-
-
-
-
-
-
-
-    Awake
-    ParticleSystem[] fxs = GetComponentsInChildren<GameObject>().GetComponent<ParticleSystem>();
-    missle = fxs[0];
-    explosion = fxs[1];
-    muzzle = fxs[2];
-    */
-
 }

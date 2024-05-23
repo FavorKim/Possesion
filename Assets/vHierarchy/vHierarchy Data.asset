@@ -15,6 +15,7 @@ MonoBehaviour:
   sceneDatas_byGuid:
     keys:
     - f0987962162b1864a984df1b1f6093a1
+    - 51ef9fc5a7a430846a3d7654b5e936b3
     values:
     - goDatas_byGlobalId:
         keys:
@@ -57,6 +58,7 @@ MonoBehaviour:
         - globalObjectIdString: GlobalObjectId_V1-2-f0987962162b1864a984df1b1f6093a1-369137460-0
         - globalObjectIdString: GlobalObjectId_V1-2-f0987962162b1864a984df1b1f6093a1-1847184972-0
         - globalObjectIdString: GlobalObjectId_V1-2-f0987962162b1864a984df1b1f6093a1-687018730-0
+        - globalObjectIdString: GlobalObjectId_V1-2-f0987962162b1864a984df1b1f6093a1-867589780921912615-867589781499691889
         values:
         - colorIndex: 4
           iconNameOrGuid: Folder Icon
@@ -136,3 +138,17 @@ MonoBehaviour:
           iconNameOrGuid: BoxCollider Icon
         - colorIndex: 6
           iconNameOrGuid: cs Script Icon
+        - colorIndex: 3
+          iconNameOrGuid: StandaloneInputModule Icon
+    - goDatas_byGlobalId:
+        keys:
+        - globalObjectIdString: GlobalObjectId_V1-2-51ef9fc5a7a430846a3d7654b5e936b3-2051505265-0
+        - globalObjectIdString: GlobalObjectId_V1-2-51ef9fc5a7a430846a3d7654b5e936b3-208024466-0
+        - globalObjectIdString: GlobalObjectId_V1-2-51ef9fc5a7a430846a3d7654b5e936b3-1084829141-0
+        values:
+        - colorIndex: 8
+          iconNameOrGuid: 
+        - colorIndex: 8
+          iconNameOrGuid: 
+        - colorIndex: 3
+          iconNameOrGuid: 

@@ -228,6 +228,7 @@ public class PlayerController : MonoBehaviour, IDamagable
 
     void OnMove(InputValue val)
     {
+        if (isDead) return;
 
         dir = val.Get<Vector2>();
 
@@ -250,12 +251,17 @@ public class PlayerController : MonoBehaviour, IDamagable
         //Debug.Log(heading);
     }
 
-    void OnJump(InputValue val) { if (val.isPressed) state.StateOnJump(); }
+    void OnJump(InputValue val) {
+        if (isDead) return;
+        if (val.isPressed) state.StateOnJump(); }
 
-    void OnAttack(InputValue val) { if (val.isPressed) state.StateOnAttack(); KnockBack(transform.forward, 2, 50); }
+    void OnAttack(InputValue val) {
+        if (isDead) return;
+        if (val.isPressed) state.StateOnAttack(); KnockBack(transform.forward, 2, 50); }
 
     void OnThrowHat(InputValue val)
     {
+        if (isDead) return;
         if (val.isPressed)
         {
             state.StateOnHat();
@@ -264,6 +270,7 @@ public class PlayerController : MonoBehaviour, IDamagable
 
     void OnSkill1(InputValue val)
     {
+        if (isDead) return;
         if (val.isPressed)
         {
             state.StateOnSkill1();
@@ -272,6 +279,7 @@ public class PlayerController : MonoBehaviour, IDamagable
 
     void OnSkill2(InputValue val)
     {
+        if (isDead) return;
         if (val.isPressed)
         { state.StateOnSkill2(); }
     }
