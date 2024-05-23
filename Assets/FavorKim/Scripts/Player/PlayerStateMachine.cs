@@ -128,7 +128,6 @@ public abstract class PlayerState : IState
 
     void NormJump()
     {
-        Debug.Log(jumpForce);
         stateCC.Move(player.transform.up * jumpForce * Time.deltaTime);
         jumpForce -= Time.deltaTime * jumpForce;
         if (jumpForce < 10)

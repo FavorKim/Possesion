@@ -133,13 +133,23 @@ public class PlayerController : MonoBehaviour, IDamagable
 
     private void LateUpdate()
     {
-        if (isKnockBack)
-            CC.Move((transform.position - tempKnockBackdirect.position).normalized * Time.deltaTime * tempKnockBack);
+        if (Input.GetKeyDown(KeyCode.Y))
+            StartCoroutine(CorKnockBack(tempKnockBackdirect, 5, tempKnockBack));
     }
 
     #endregion
 
     #region Method
+
+    public void StartKnockBack(Transform user, float power, float duration)
+    {
+        StartCoroutine(CorKnockBack(user, power, duration));
+    }
+
+    void KnockBack(Transform knockBackUser, float power)
+    {
+        CC.Move((transform.position - knockBackUser.position).normalized * Time.deltaTime * power);
+    }
 
     void PlayerMove()
     {
@@ -153,8 +163,6 @@ public class PlayerController : MonoBehaviour, IDamagable
         MoveDir = camTransform.TransformDirection(new Vector3(dir.x, 0, dir.y));
         MoveDir *= moveSpeed * Time.deltaTime;
     }
-
-
 
     void SetHPUI()
     {
@@ -314,6 +322,17 @@ public class PlayerController : MonoBehaviour, IDamagable
         invinFX.gameObject.SetActive(false);
         isInvincible = false;
     }
+
+    IEnumerator CorKnockBack(Transform dest, float duration, float power)
+    {
+        while (duration > 0)
+        {
+            duration -= Time.deltaTime;
+            KnockBack(dest, power);
+            yield return null;
+        }
+    }
+
 }
 
 public class Skill
