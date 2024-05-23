@@ -23,6 +23,10 @@ public class SettingUIManager : MonoBehaviour
             }
             DontDestroyOnLoad(gameObject);
         }
+        else
+        {
+            Destroy(FindAnyObjectByType<SettingUIManager>());
+        }
     }
 
     public void SetFullScreenMode(Toggle isToggle)
@@ -66,5 +70,10 @@ public class SettingUIManager : MonoBehaviour
             else
                 setting.SetActive(true);
         }
+    }
+
+    public void QuitApplication()
+    {
+        Application.Quit();
     }
 }

@@ -145,6 +145,10 @@ MonoBehaviour:
         - globalObjectIdString: GlobalObjectId_V1-2-51ef9fc5a7a430846a3d7654b5e936b3-2051505265-0
         - globalObjectIdString: GlobalObjectId_V1-2-51ef9fc5a7a430846a3d7654b5e936b3-208024466-0
         - globalObjectIdString: GlobalObjectId_V1-2-51ef9fc5a7a430846a3d7654b5e936b3-1084829141-0
+        - globalObjectIdString: GlobalObjectId_V1-2-51ef9fc5a7a430846a3d7654b5e936b3-867589780921912615-196721163
+        - globalObjectIdString: GlobalObjectId_V1-2-51ef9fc5a7a430846a3d7654b5e936b3-7876423719962663646-1263245863
+        - globalObjectIdString: GlobalObjectId_V1-2-51ef9fc5a7a430846a3d7654b5e936b3-1250371231-0
+        - globalObjectIdString: GlobalObjectId_V1-2-51ef9fc5a7a430846a3d7654b5e936b3-1287057016-0
         values:
         - colorIndex: 8
           iconNameOrGuid: 
@@ -152,3 +156,11 @@ MonoBehaviour:
           iconNameOrGuid: 
         - colorIndex: 3
           iconNameOrGuid: 
+        - colorIndex: 3
+          iconNameOrGuid: StandaloneInputModule Icon
+        - colorIndex: 6
+          iconNameOrGuid: Settings Icon
+        - colorIndex: 3
+          iconNameOrGuid: 
+        - colorIndex: 6
+          iconNameOrGuid: Settings Icon

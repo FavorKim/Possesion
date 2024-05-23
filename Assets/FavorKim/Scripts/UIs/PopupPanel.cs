@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PopupPanel : MonoBehaviour
 {
@@ -12,7 +13,10 @@ public class PopupPanel : MonoBehaviour
 
     private void OnDisable()
     {
-        Cursor.lockState = CursorLockMode.Locked;
-        Time.timeScale = 1;
+        if (SceneManager.GetActiveScene().name != "MainScene")
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Time.timeScale = 1;
+        }
     }
 }
