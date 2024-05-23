@@ -27,7 +27,7 @@ public class AimLine : MonoBehaviour
     private void Update()
     {
         lookat = player.GetLookAt();
-        transform.LookAt(lookat);
+        //transform.LookAt(lookat);
         lR.SetPosition(1, point.transform.position);
         lR.SetPosition(0, transform.position);
     }
@@ -45,10 +45,10 @@ public class AimLine : MonoBehaviour
             lR.enabled = true;
             point.gameObject.SetActive(true);
 
-            if (Physics.Raycast(transform.position, transform.forward, out hit, length, aimLayer))
+            if (Physics.Raycast(transform.position, lookat.position - transform.position, out hit, length, aimLayer))
             {
                 length = hit.distance;
-                point.transform.position = hit.point - transform.forward*0.5f;
+                point.transform.position = hit.point - transform.forward * 0.5f;
             }
             else
             {
