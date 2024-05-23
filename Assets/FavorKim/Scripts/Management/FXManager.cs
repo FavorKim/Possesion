@@ -12,7 +12,7 @@ public class FXManager : Singleton<FXManager>
     {
         poExitFX = Instantiate(poExitFXPref, transform);
         FXs.Add("PoExit", poExitFX);
-        
+        DontDestroyOnLoad(gameObject);
     }
 
     public void PlayFX(string name, Vector3 pos)

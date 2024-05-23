@@ -10,6 +10,11 @@ public class SettingUIManager : MonoBehaviour
     [SerializeField] private GameObject setting;
     bool isFull = false;
 
+    private void Awake()
+    {
+        DontDestroyOnLoad(gameObject);
+    }
+
     public void SetFullScreenMode(Toggle isToggle)
     {
         isFull = isToggle;

@@ -23,6 +23,7 @@ public class HatManager : MonoBehaviour
         hitParticle = Instantiate(hitParticlePref).GetComponent<ParticleSystem>();
         sfx = hitParticle.gameObject.GetComponent<AudioSource>();
         hitParticle.Stop();
+        DontDestroyOnLoad(gameObject);
     }
 
     public void ShootHat(Vector3 dir)
@@ -43,12 +44,3 @@ public class HatManager : MonoBehaviour
         hitParticle.Play();
     }
 }
-
-
-
-
-/*
-UI << 만들지 뭐 
-시스템 설정 - 사운드, 창모드, 해상도, 감도
-
-*/

@@ -54,6 +54,9 @@ MonoBehaviour:
         - globalObjectIdString: GlobalObjectId_V1-2-f0987962162b1864a984df1b1f6093a1-658836977-0
         - globalObjectIdString: GlobalObjectId_V1-2-f0987962162b1864a984df1b1f6093a1-1603292758-0
         - globalObjectIdString: GlobalObjectId_V1-2-f0987962162b1864a984df1b1f6093a1-472440908-0
+        - globalObjectIdString: GlobalObjectId_V1-2-f0987962162b1864a984df1b1f6093a1-369137460-0
+        - globalObjectIdString: GlobalObjectId_V1-2-f0987962162b1864a984df1b1f6093a1-1847184972-0
+        - globalObjectIdString: GlobalObjectId_V1-2-f0987962162b1864a984df1b1f6093a1-687018730-0
         values:
         - colorIndex: 4
           iconNameOrGuid: Folder Icon
@@ -127,3 +130,9 @@ MonoBehaviour:
           iconNameOrGuid: Canvas Icon
         - colorIndex: 3
           iconNameOrGuid: StandaloneInputModule Icon
+        - colorIndex: 6
+          iconNameOrGuid: cs Script Icon
+        - colorIndex: 4
+          iconNameOrGuid: BoxCollider Icon
+        - colorIndex: 6
+          iconNameOrGuid: cs Script Icon

@@ -20,6 +20,7 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
+        DontDestroyOnLoad(this);
         Cursor.lockState = CursorLockMode.Locked;
         player = FindAnyObjectByType<PlayerController>();
     }
