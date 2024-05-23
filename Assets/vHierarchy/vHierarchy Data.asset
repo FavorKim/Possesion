@@ -63,6 +63,12 @@ MonoBehaviour:
         - globalObjectIdString: GlobalObjectId_V1-2-f0987962162b1864a984df1b1f6093a1-7282897722453413269-7282897721264048292
         - globalObjectIdString: GlobalObjectId_V1-2-f0987962162b1864a984df1b1f6093a1-2826487162001004773-0
         - globalObjectIdString: GlobalObjectId_V1-2-f0987962162b1864a984df1b1f6093a1-1706760125350986-253859443
+        - globalObjectIdString: GlobalObjectId_V1-2-f0987962162b1864a984df1b1f6093a1-7185303502546423426-1164670728
+        - globalObjectIdString: GlobalObjectId_V1-2-f0987962162b1864a984df1b1f6093a1-1557585983417840-1872179925
+        - globalObjectIdString: GlobalObjectId_V1-2-f0987962162b1864a984df1b1f6093a1-1201003157251696-772492464
+        - globalObjectIdString: GlobalObjectId_V1-2-f0987962162b1864a984df1b1f6093a1-1594767147126006-39076333
+        - globalObjectIdString: GlobalObjectId_V1-2-f0987962162b1864a984df1b1f6093a1-1765397208479606-22943500
+        - globalObjectIdString: GlobalObjectId_V1-2-f0987962162b1864a984df1b1f6093a1-1594767147126006-1102722502
         values:
         - colorIndex: 4
           iconNameOrGuid: Folder Icon
@@ -151,7 +157,19 @@ MonoBehaviour:
         - colorIndex: 5
           iconNameOrGuid: BoxCollider Icon
         - colorIndex: 2
-          iconNameOrGuid: AvatarMask On Icon
+          iconNameOrGuid: PreMatCube
+        - colorIndex: 2
+          iconNameOrGuid: PreMatCube
+        - colorIndex: 2
+          iconNameOrGuid: PreMatCube
+        - colorIndex: 2
+          iconNameOrGuid: PreMatCube
+        - colorIndex: 2
+          iconNameOrGuid: PreMatCube
+        - colorIndex: 2
+          iconNameOrGuid: PreMatCube
+        - colorIndex: 2
+          iconNameOrGuid: PreMatCube
     - goDatas_byGlobalId:
         keys:
         - globalObjectIdString: GlobalObjectId_V1-2-51ef9fc5a7a430846a3d7654b5e936b3-2051505265-0
