@@ -7,10 +7,12 @@ public class PopupPanel : MonoBehaviour
     private void OnEnable()
     {
         Cursor.lockState = CursorLockMode.None;
+        Time.timeScale = 0;
     }
 
     private void OnDisable()
     {
-        Cursor.lockState= CursorLockMode.Locked;
+        Cursor.lockState = CursorLockMode.Locked;
+        Time.timeScale = 1;
     }
 }

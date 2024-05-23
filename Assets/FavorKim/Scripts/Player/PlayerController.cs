@@ -60,7 +60,8 @@ public class PlayerController : MonoBehaviour, IDamagable
 
     [SerializeField] float duration;
 
-    [SerializeField] float sensitivity;
+    float targetSens = 5.0f;
+    [SerializeField] float sensitivity = 10.0f;
 
     [SerializeField] float invincibleTime;
 
@@ -89,6 +90,8 @@ public class PlayerController : MonoBehaviour, IDamagable
     public float GetGravityScale() { return gravityScale; }
     public float GetJumpForce() { return jumpForce; }
     public float GetDuration() { return duration; }
+
+    public float Sensitivity {  get { return targetSens; } set { sensitivity = value; } }
     #endregion
 
     #region LifeCycle
@@ -118,9 +121,9 @@ public class PlayerController : MonoBehaviour, IDamagable
         if (isDead) return;
         state.StateUpdate();
         SetHPUI();
-
         playerFoward.position = camTransform.position + new Vector3(0, 1.0f, 0f);
         PlayerMove();
+        LookAtPlayer(camTransform);
     }
 
     private void FixedUpdate()
@@ -273,15 +276,14 @@ public class PlayerController : MonoBehaviour, IDamagable
         { state.StateOnSkill2(); }
     }
 
-    void OnCursor(InputValue val)
-    {
-        Vector2 delta = val.Get<Vector2>();
-        //float deltaX = delta.x;
-        //transform.Rotate(new Vector3(0, delta.x, delta.y) * sensitivity * Time.deltaTime);
+    //void OnCursor(InputValue val)
+    //{
+    //    Vector2 delta = val.Get<Vector2>();
+    //    //float deltaX = delta.x;
+    //    //transform.Rotate(new Vector3(0, delta.x, delta.y) * sensitivity * Time.deltaTime);
 
-        LookAtPlayer(camTransform);
-        // �곪�� �� ��� ���̴� �׷��� ����ͼ� ���ؼ����� ����� ���� ��
-    }
+    //    LookAtPlayer(camTransform);
+    //}
 
     public void LookAtPlayer(Transform dest)
     {

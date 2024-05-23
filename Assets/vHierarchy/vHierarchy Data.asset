@@ -1,0 +1,129 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a9752b0c8e144801967e6897679604b, type: 3}
+  m_Name: vHierarchy Data
+  m_EditorClassIdentifier: 
+  sceneDatas_byGuid:
+    keys:
+    - f0987962162b1864a984df1b1f6093a1
+    values:
+    - goDatas_byGlobalId:
+        keys:
+        - globalObjectIdString: GlobalObjectId_V1-2-f0987962162b1864a984df1b1f6093a1-1124768050-0
+        - globalObjectIdString: GlobalObjectId_V1-2-f0987962162b1864a984df1b1f6093a1-637096857-0
+        - globalObjectIdString: GlobalObjectId_V1-2-f0987962162b1864a984df1b1f6093a1-1594768406946674-0
+        - globalObjectIdString: GlobalObjectId_V1-2-f0987962162b1864a984df1b1f6093a1-1765397324164928-0
+        - globalObjectIdString: GlobalObjectId_V1-2-f0987962162b1864a984df1b1f6093a1-1524411113276028-903333641
+        - globalObjectIdString: GlobalObjectId_V1-2-f0987962162b1864a984df1b1f6093a1-919132147663292768-0
+        - globalObjectIdString: GlobalObjectId_V1-2-f0987962162b1864a984df1b1f6093a1-2185365591221672164-0
+        - globalObjectIdString: GlobalObjectId_V1-2-f0987962162b1864a984df1b1f6093a1-1557585182568458-0
+        - globalObjectIdString: GlobalObjectId_V1-2-f0987962162b1864a984df1b1f6093a1-1088474434442572-419073704
+        - globalObjectIdString: GlobalObjectId_V1-2-f0987962162b1864a984df1b1f6093a1-1594767482179012-0
+        - globalObjectIdString: GlobalObjectId_V1-2-f0987962162b1864a984df1b1f6093a1-1880866448-0
+        - globalObjectIdString: GlobalObjectId_V1-2-f0987962162b1864a984df1b1f6093a1-2032420145-0
+        - globalObjectIdString: GlobalObjectId_V1-2-f0987962162b1864a984df1b1f6093a1-2499860831884218084-2499860833173274678
+        - globalObjectIdString: GlobalObjectId_V1-2-f0987962162b1864a984df1b1f6093a1-798881430-0
+        - globalObjectIdString: GlobalObjectId_V1-2-f0987962162b1864a984df1b1f6093a1-500159124-0
+        - globalObjectIdString: GlobalObjectId_V1-2-f0987962162b1864a984df1b1f6093a1-448734540-0
+        - globalObjectIdString: GlobalObjectId_V1-2-f0987962162b1864a984df1b1f6093a1-1756163860-0
+        - globalObjectIdString: GlobalObjectId_V1-2-f0987962162b1864a984df1b1f6093a1-222584027-0
+        - globalObjectIdString: GlobalObjectId_V1-2-f0987962162b1864a984df1b1f6093a1-389115060-0
+        - globalObjectIdString: GlobalObjectId_V1-2-f0987962162b1864a984df1b1f6093a1-398109019-0
+        - globalObjectIdString: GlobalObjectId_V1-2-f0987962162b1864a984df1b1f6093a1-1720398086-0
+        - globalObjectIdString: GlobalObjectId_V1-2-f0987962162b1864a984df1b1f6093a1-233345279-0
+        - globalObjectIdString: GlobalObjectId_V1-2-f0987962162b1864a984df1b1f6093a1-297282148-0
+        - globalObjectIdString: GlobalObjectId_V1-2-f0987962162b1864a984df1b1f6093a1-1356171102-0
+        - globalObjectIdString: GlobalObjectId_V1-2-f0987962162b1864a984df1b1f6093a1-1425931776-0
+        - globalObjectIdString: GlobalObjectId_V1-2-f0987962162b1864a984df1b1f6093a1-1472300220-0
+        - globalObjectIdString: GlobalObjectId_V1-2-f0987962162b1864a984df1b1f6093a1-1509231649-0
+        - globalObjectIdString: GlobalObjectId_V1-2-f0987962162b1864a984df1b1f6093a1-7061582265898949995-665542320
+        - globalObjectIdString: GlobalObjectId_V1-2-f0987962162b1864a984df1b1f6093a1-7061582265898949995-6953715482076736294
+        - globalObjectIdString: GlobalObjectId_V1-2-f0987962162b1864a984df1b1f6093a1-7160820962549403339-7160820962615997610
+        - globalObjectIdString: GlobalObjectId_V1-2-f0987962162b1864a984df1b1f6093a1-6925063595864274855-6925063596330769822
+        - globalObjectIdString: GlobalObjectId_V1-2-f0987962162b1864a984df1b1f6093a1-916934365375452163-6931384903015083789
+        - globalObjectIdString: GlobalObjectId_V1-2-f0987962162b1864a984df1b1f6093a1-1021474838-0
+        - globalObjectIdString: GlobalObjectId_V1-2-f0987962162b1864a984df1b1f6093a1-658836977-0
+        - globalObjectIdString: GlobalObjectId_V1-2-f0987962162b1864a984df1b1f6093a1-1603292758-0
+        - globalObjectIdString: GlobalObjectId_V1-2-f0987962162b1864a984df1b1f6093a1-472440908-0
+        values:
+        - colorIndex: 4
+          iconNameOrGuid: Folder Icon
+        - colorIndex: 6
+          iconNameOrGuid: Folder Icon
+        - colorIndex: 2
+          iconNameOrGuid: AvatarMask On Icon
+        - colorIndex: 2
+          iconNameOrGuid: AvatarMask On Icon
+        - colorIndex: 2
+          iconNameOrGuid: PreMatCube
+        - colorIndex: 7
+          iconNameOrGuid: AvatarMask On Icon
+        - colorIndex: 2
+          iconNameOrGuid: AvatarMask On Icon
+        - colorIndex: 2
+          iconNameOrGuid: AvatarMask On Icon
+        - colorIndex: 2
+          iconNameOrGuid: PreMatCube
+        - colorIndex: 2
+          iconNameOrGuid: AvatarMask On Icon
+        - colorIndex: 6
+          iconNameOrGuid: cs Script Icon
+        - colorIndex: 6
+          iconNameOrGuid: cs Script Icon
+        - colorIndex: 6
+          iconNameOrGuid: Settings Icon
+        - colorIndex: 8
+          iconNameOrGuid: Camera Icon
+        - colorIndex: 8
+          iconNameOrGuid: Folder Icon
+        - colorIndex: 8
+          iconNameOrGuid: Camera Icon
+        - colorIndex: 8
+          iconNameOrGuid: Light Icon
+        - colorIndex: 3
+          iconNameOrGuid: Folder Icon
+        - colorIndex: 3
+          iconNameOrGuid: Canvas Icon
+        - colorIndex: 3
+          iconNameOrGuid: Canvas Icon
+        - colorIndex: 5
+          iconNameOrGuid: Folder Icon
+        - colorIndex: 5
+          iconNameOrGuid: BoxCollider Icon
+        - colorIndex: 5
+          iconNameOrGuid: Folder Icon
+        - colorIndex: 5
+          iconNameOrGuid: Folder Icon
+        - colorIndex: 5
+          iconNameOrGuid: Folder Icon
+        - colorIndex: 5
+          iconNameOrGuid: Folder Icon
+        - colorIndex: 2
+          iconNameOrGuid: Favorite
+        - colorIndex: 5
+          iconNameOrGuid: PreMatCylinder
+        - colorIndex: 5
+          iconNameOrGuid: PreMatCylinder
+        - colorIndex: 5
+          iconNameOrGuid: MeshCollider Icon
+        - colorIndex: 5
+          iconNameOrGuid: MeshCollider Icon
+        - colorIndex: 5
+          iconNameOrGuid: BoxCollider Icon
+        - colorIndex: 5
+          iconNameOrGuid: Folder Icon
+        - colorIndex: 4
+          iconNameOrGuid: Terrain Icon
+        - colorIndex: 3
+          iconNameOrGuid: Canvas Icon
+        - colorIndex: 3
+          iconNameOrGuid: StandaloneInputModule Icon

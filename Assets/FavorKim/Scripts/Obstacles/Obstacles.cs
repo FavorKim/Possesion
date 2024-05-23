@@ -13,7 +13,7 @@ public class Obstacles : MonoBehaviour, ITyped
     #region Get/Set Methods
     // Get/Set 함수들
     public ITyped.Type type { get { return myType; } }
-    
+
     public int Damage { get { return damage; } }
     #endregion Get/Set Methods
 
