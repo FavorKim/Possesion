@@ -107,6 +107,7 @@ public class PlayerController : MonoBehaviour, IDamagable
         invinFX.gameObject.SetActive(false);
         OnDead += DeadCheck;
         OnDead += SetHPUI;
+        OnDead += () => { SettingUIManager.Instance.PopUpGameOver(); };
         camTransform = transform;
 
         t_fullHP.text = fullHP.ToString();
@@ -133,8 +134,8 @@ public class PlayerController : MonoBehaviour, IDamagable
 
     private void LateUpdate()
     {
-        if (Input.GetKeyDown(KeyCode.Y))
-            StartCoroutine(CorKnockBack(tempKnockBackdirect, 5, tempKnockBack));
+        //if (Input.GetKeyDown(KeyCode.Y))
+        //    StartCoroutine(CorKnockBack(tempKnockBackdirect, 5, tempKnockBack));
     }
 
     #endregion

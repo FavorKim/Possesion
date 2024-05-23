@@ -29,15 +29,10 @@ public class GameManager : MonoBehaviour
     {
         if (instance == null)
         {
-            instance = FindObjectOfType(typeof(GameManager)).GetComponent<GameManager>();
-            if (instance == null)
-            {
-                GameObject obj = new GameObject("GameManager");
-                obj.AddComponent<GameManager>();
-                instance = obj.GetComponent<GameManager>();
-                DontDestroyOnLoad(obj);
-            }
+            instance = this;
         }
+        else
+            DestroyImmediate(gameObject);
     }
 
     //public void GetDamage(Obstacles obs, GameObject dest)

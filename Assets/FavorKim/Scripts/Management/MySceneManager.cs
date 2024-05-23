@@ -25,16 +25,12 @@ public class MySceneManager : MonoBehaviour
     }
     private void Start()
     {
-        if (instance == null)
-        {
-            instance = FindAnyObjectByType<MySceneManager>();
-            if (instance == null)
-            {
-                instance = this;
-            }
-            SceneManager.sceneLoaded += FadeIn;
-            DontDestroyOnLoad(this);
-        }
+        if (instance != null)
+            DestroyImmediate(instance.gameObject);
+
+        instance = this;
+        DontDestroyOnLoad(gameObject);
+        SceneManager.sceneLoaded += FadeIn;
     }
 
     private void OnDestroy()
@@ -42,8 +38,15 @@ public class MySceneManager : MonoBehaviour
         SceneManager.sceneLoaded -= FadeIn;
     }
 
+
+    public void Retry()
+    {
+        ChangeScene(SceneManager.GetActiveScene().name);
+    }
+
     public void ChangeScene(string sceneName)
     {
+        Time.timeScale = 1.0f;
         FadeOut(sceneName);
     }
 

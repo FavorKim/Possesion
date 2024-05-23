@@ -30,16 +30,14 @@ public class Hat : MonoBehaviour
         dO.DORestartAllById("Shoot");
     }
 
-    
+
 
     private void OnTriggerEnter(Collider other)
     {
-
-        if (!other.CompareTag("Player")&&!other.CompareTag("Camera"))
+        if (!other.CompareTag("Player") && !other.CompareTag("Camera"))
         {
-            if (other.CompareTag("Monster"))
+            if (other.GetComponentInParent<Monsters>() != null)
             {
-                Debug.LogWarning("hat");
                 hatM.SetHitParticle(transform.position);
                 player.SetState(other.GetComponentInParent<Monsters>());
             }

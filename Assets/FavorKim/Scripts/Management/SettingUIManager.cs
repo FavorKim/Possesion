@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -8,25 +9,21 @@ using UnityEngine.UI;
 public class SettingUIManager : MonoBehaviour
 {
     [SerializeField] private GameObject setting;
+    [SerializeField] private CanvasGroup retry;
     private static SettingUIManager instance;
+    public static SettingUIManager Instance { get { return instance; } }
     bool isFull = false;
+
+    public CanvasGroup Retry { get { return retry; } }
 
 
     private void Start()
     {
-        if(instance == null)
-        {
-            instance = FindAnyObjectByType<SettingUIManager>();
-            if (instance == null)
-            {
-                instance = this;
-            }
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            Destroy(FindAnyObjectByType<SettingUIManager>());
-        }
+        if (instance != null)
+            DestroyImmediate(instance.gameObject);
+
+        instance = this;
+        DontDestroyOnLoad(gameObject);
     }
 
     public void SetFullScreenMode(Toggle isToggle)
@@ -75,5 +72,22 @@ public class SettingUIManager : MonoBehaviour
     public void QuitApplication()
     {
         Application.Quit();
+    }
+
+    public void PopUpGameOver()
+    {
+        retry.gameObject.SetActive(true);
+        Time.timeScale = 1f;
+        retry.DOFade(1, 7);
+    }
+
+    public void OnRetry()
+    {
+        MySceneManager.Instance.Retry();
+    }
+
+    public void OnChangeScene(CanvasGroup popup)
+    {
+        popup.DOFade(0, 1).OnComplete(() => { popup.gameObject.SetActive(false); popup.alpha = 1; });
     }
 }
