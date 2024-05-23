@@ -59,6 +59,10 @@ MonoBehaviour:
         - globalObjectIdString: GlobalObjectId_V1-2-f0987962162b1864a984df1b1f6093a1-1847184972-0
         - globalObjectIdString: GlobalObjectId_V1-2-f0987962162b1864a984df1b1f6093a1-687018730-0
         - globalObjectIdString: GlobalObjectId_V1-2-f0987962162b1864a984df1b1f6093a1-867589780921912615-867589781499691889
+        - globalObjectIdString: GlobalObjectId_V1-2-f0987962162b1864a984df1b1f6093a1-7876423719962663646-7876423719280101428
+        - globalObjectIdString: GlobalObjectId_V1-2-f0987962162b1864a984df1b1f6093a1-7282897722453413269-7282897721264048292
+        - globalObjectIdString: GlobalObjectId_V1-2-f0987962162b1864a984df1b1f6093a1-2826487162001004773-0
+        - globalObjectIdString: GlobalObjectId_V1-2-f0987962162b1864a984df1b1f6093a1-1706760125350986-253859443
         values:
         - colorIndex: 4
           iconNameOrGuid: Folder Icon
@@ -134,12 +138,20 @@ MonoBehaviour:
           iconNameOrGuid: StandaloneInputModule Icon
         - colorIndex: 6
           iconNameOrGuid: cs Script Icon
-        - colorIndex: 4
+        - colorIndex: 5
           iconNameOrGuid: BoxCollider Icon
         - colorIndex: 6
           iconNameOrGuid: cs Script Icon
         - colorIndex: 3
           iconNameOrGuid: StandaloneInputModule Icon
+        - colorIndex: 6
+          iconNameOrGuid: cs Script Icon
+        - colorIndex: 6
+          iconNameOrGuid: cs Script Icon
+        - colorIndex: 5
+          iconNameOrGuid: BoxCollider Icon
+        - colorIndex: 2
+          iconNameOrGuid: AvatarMask On Icon
     - goDatas_byGlobalId:
         keys:
         - globalObjectIdString: GlobalObjectId_V1-2-51ef9fc5a7a430846a3d7654b5e936b3-2051505265-0
