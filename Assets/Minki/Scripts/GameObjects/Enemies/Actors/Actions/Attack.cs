@@ -11,7 +11,9 @@ namespace Enemy
     {
         // 필드(Field)
         private readonly Enemy _enemy;
+        private readonly Animator _animator;
         private readonly NavMeshAgent _navMeshAgent;
+        private readonly Transform _playerTransform;
 
         private int _attackSkillCount; // 공격 기술의 개수
         private bool _isCorRunning = false; // 코루틴이 실행 중인지를 판별하는 변수
@@ -22,7 +24,9 @@ namespace Enemy
         public Attack(Enemy enemy)
         {
             _enemy = enemy;
+            _animator = _enemy.GetComponent<Animator>();
             _navMeshAgent = _enemy.GetComponent<NavMeshAgent>();
+            _playerTransform = Object.FindObjectOfType<PlayerController>().transform;
 
             _attackSkillCount = _enemy.AttackSkillCount;
         }
@@ -40,9 +44,6 @@ namespace Enemy
         // 공격을 담당하는 함수
         private void DoAttack()
         {
-            // !! 중요 !!
-            // 공격을 수행하기 전, 적이 플레이어를 바라보고 있어야 한다. 현재는 플레이어 근처에 있다면 방향에 상관 없이 공격을 수행하고 있다.
-
             // 추적을 멈춘다.
             _navMeshAgent.isStopped = true;
 
@@ -73,6 +74,46 @@ namespace Enemy
             {
                 _enemy.StartCoroutine(SetDelay(1.0f, _attackAction));
             }
+
+
+
+
+
+
+            // 공격 모션에 대한 후딜레이를 적용한다.
+            string[] animStates = { "Attack", "Skill 01", "Skill 02" };
+            bool isRunningState = false;
+
+            foreach (string state in animStates)
+            {
+                if (_animator.GetCurrentAnimatorStateInfo(0).IsName(state))
+                {
+                    isRunningState = true;
+                }
+            }
+
+            if (!isRunningState)
+            {
+                // 공격을 수행하기 전, 적이 플레이어를 바라보고 있어야 한다.
+                Vector3 playerPos = new Vector3(_playerTransform.position.x, _enemy.transform.position.y, _playerTransform.position.z); // 플레이어의 위치, y 값(상하)은 무시한다.
+                Vector3 enemyPos = _enemy.transform.position; // 적의 위치
+
+                float angle = Vector3.Angle(_enemy.transform.forward, playerPos - enemyPos); // 플레이어와 적 간의 각도
+
+                if (angle > 15) // 그 각도가 약 좌우 각 15도 이상일 경우,
+                {
+                    // 플레이어를 바라보게 회전시킨다.
+                    Quaternion turnTo = Quaternion.LookRotation(playerPos - enemyPos);
+                    _enemy.transform.rotation = Quaternion.Slerp(_enemy.transform.rotation, turnTo, 0.01f);
+
+                    // 회전하는 동안에는 공격하지 않는다.
+                    return;
+                }
+            }
+
+
+
+
         }
 
         // 함수의 실행에 대기 시간을 적용하기 위한 코루틴 함수

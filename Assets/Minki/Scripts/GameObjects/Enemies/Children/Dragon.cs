@@ -73,12 +73,14 @@ namespace Enemy
         // 원거리 화염 공격(Skill1)의 첫 번째 이벤트 함수
         private void OnSkill1Event1()
         {
+            // 화염 효과를 재생한다.
             _fireParticle.Play();
         }
 
-        // 원거리 화염 공격(Attack02)의 두 번째 이벤트 함수
+        // 원거리 화염 공격(Skill1)의 두 번째 이벤트 함수
         private void OnSkill1Event2()
         {
+            // 화염 효과를 중지한다.
             _fireParticle.Stop();
         }
 

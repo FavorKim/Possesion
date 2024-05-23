@@ -14,7 +14,7 @@ namespace Enemy
         private ProjectilePool projectilePool; // 투사체를 구현하기 위한 오브젝트 풀링
         private Projectile projectile; // 투사체 게임 오브젝트
 
-        [SerializeField] private float shootPower = 1000.0f; // 투사체를 쏘는 힘의 값
+        [SerializeField] private float shootPower = 50.0f; // 투사체를 쏘는 힘의 값
 
         #endregion Fields
 
@@ -52,8 +52,8 @@ namespace Enemy
             AttackCoolTime = 100.0f;
             Skill1CoolTime = 100.0f;
             Skill2CoolTime = 0.0f;
-            AttackRange = 3.0f;
-            DetectRange = 5.0f;
+            AttackRange = 9.0f;
+            DetectRange = 10.0f;
 
             InitSkill(Skill1CoolTime);
         }
@@ -88,7 +88,7 @@ namespace Enemy
         // 원거리 뇌전 공격(Skill2)의 두 번째 이벤트 함수 (발사하는 애니메이션)
         private void OnSkill1Event2()
         {
-            StartCoroutine(projectile.Shoot());
+            projectile.Shoot();
         }
 
         #endregion Animation Events

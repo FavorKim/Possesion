@@ -1,5 +1,6 @@
 using BehaviourTree;
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace Enemy
 {
@@ -8,11 +9,13 @@ namespace Enemy
     {
         // 필드(Field)
         private readonly Animator _animator;
+        private readonly NavMeshAgent _navMeshAgent;
 
         // 생성자
         public BeingPossessed(Enemy enemy)
         {
             _animator = enemy.GetComponent<Animator>();
+            _navMeshAgent = enemy.GetComponent<NavMeshAgent>();
         }
 
         // 평가 함수
@@ -35,6 +38,9 @@ namespace Enemy
             _animator.SetBool("AI_Patrol_Sense", false);
             _animator.SetBool("AI_Chase", false);
             _animator.SetInteger("AttackIndex", 0);
+
+            // 네비게이션을 비활성화한다.
+            _navMeshAgent.enabled = false;
         }
     }
 }

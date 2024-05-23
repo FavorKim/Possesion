@@ -1,14 +1,32 @@
+using ObjectPool;
+using UnityEngine;
+
 namespace Enemy
 {
     // 거미 클래스
     public class Spider : Enemy
     {
+        #region Fields
+
+        // 필드(Fields)
+        [SerializeField] private Transform projectileTransform; // 투사체를 발사하는 위치
+
+        private ProjectilePool projectilePool; // 투사체를 구현하기 위한 오브젝트 풀링
+        private Projectile projectile; // 투사체 게임 오브젝트
+
+        [SerializeField] private float shootPower = 50.0f; // 투사체를 쏘는 힘의 값
+
+        #endregion Fields
+
         #region Awake()
 
         protected override void Awake()
         {
             // 스탯을 초기화한다.
             InitializeStats();
+
+            // 오브젝트 풀을 가져온다.
+            projectilePool = GetComponent<ProjectilePool>();
 
             base.Awake();
         }
@@ -35,7 +53,7 @@ namespace Enemy
             Skill1CoolTime = 100.0f;
             Skill2CoolTime = 100.0f;
             AttackRange = 3.0f;
-            DetectRange = 5.0f;
+            DetectRange = 10.0f;
 
             InitSkill(Skill1CoolTime, Skill2CoolTime);
         }
@@ -65,6 +83,18 @@ namespace Enemy
         #region Animation Events
 
         // 아래는 애니메이션(Animation) 클립에서 이벤트를 추가하여 호출하는 함수들이다.
+
+        // 원거리 뇌전 공격(Skill1)의 첫 번째 이벤트 함수 (기를 모으는 애니메이션)
+        private void OnSkill2Event1()
+        {
+            projectile = projectilePool.OnReadyToShoot(projectileTransform);
+        }
+
+        // 원거리 뇌전 공격(Skill2)의 두 번째 이벤트 함수 (발사하는 애니메이션)
+        private void OnSkill2Event2()
+        {
+            projectile.Shoot();
+        }
 
         #endregion Animation Events
     }

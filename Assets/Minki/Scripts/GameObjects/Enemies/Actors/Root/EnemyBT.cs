@@ -39,62 +39,76 @@ namespace Enemy
                              Sequence                               Selector
                         ┏━━━━━━━━┻━━━━━━━━┓            ┏━━━━━━━━━━━━━━━━┻━━━━━━━━━━━━━━━━┓
                 CheckIsPossessed → BeingPossessed  Sequence                          Selector
-                                                  ┏━━━━┻━━━━┓       ┏━━━━━━━━━━━━━━━━━━━━┻━━━━━━━━━━━━━━━━━━━┓
-                                             CheckIsDead → Die  Sequence                                 Selector
-                                                              ┏━━━━━┻━━━━━┓        ┏━━━━━━━━━━━━━━━━━━━━━━━━━╋━━━━━━━━━━━━━━━━━━━━━━━━━┓
-                                                         CheckGetHit → GetHit  Sequence                  Sequence                   Patrol
-                                                                           ┏━━━━━━━┻━━━━━━┓           ┏━━━━━━┻━━━━━━┓
-                                                                   CheckNearToAttack → Attack  CheckNearToChase → Chase
+                                                  ┏━━━━┻━━━━┓       ┏━━━━━━━━━━━━━━━━━━━━┻━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+                                             CheckIsDead → Die  Sequence                                                         Selector
+                                                              ┏━━━━━┻━━━━━┓                      ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╋━━━━━━━━━━━━━━━━━━━━━━━━━┓
+                                                         CheckGetHit → GetHit                Sequence                            Sequence                   Patrol
+                                                                           ┏━━━━━━━━━━━━━━━━━━━━━╋━━━━━━━━━━━━━━━┓            ┏━━━━━━┻━━━━━┓
+                                                                   CheckNearToAttack → CheckForwardToAttack → Attack  CheckNearToChase → Chase
+
+
+            아래와 같이 변경.
+
+													                Root
+													                  ┃
+												                  Selector
+					                ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┻━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+				                Selector                                                           Selector
+		                 ┏━━━━━━━━━━┻━━━━━━━━━━┓                          ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━┻━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+	                 Sequence              Sequence                   Sequence                                                  Selector
+	                 ┏━━━┻━━━━━┓        ┏━━━━━━┻━━━━┓            ┏━━━━━━━━┻━━━━━━━━┓            ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╋━━━━━━━━━━━━━┓
+                CheckIsDead → Die  CheckGetHit → GetHit  CheckIsPossessed → BeingPossessed  Sequence                            Sequence       Patrol
+														                  ┏━━━━━━━━━━━━━━━━━━━━━╋━━━━━━━━━━━━━━━┓            ┏━━━━━━┻━━━━━┓
+												                  CheckNearToAttack → CheckForwardToAttack → Attack  CheckNearToChase → Chase
+
+
 
             */
 
             // 0. 뿌리 노드(Selector)
             Node node = new Selector(new List<Node>
             {
-                // 1. 빙의 상태 여부 확인
-                new Sequence(new List<Node>()
-                {
-                   new CheckIsPossessed(_enemy), new BeingPossessed(_enemy) 
-                }),
-
                 new Selector(new List<Node>()
                 {
-                    // 2. 죽음 상태 여부 확인
+                    // 1. 죽음 상태 여부 확인
                     new Sequence(new List<Node>()
                     {
                         new CheckIsDead(_enemy), new Die(_enemy)
                     }),
 
+                    // 2. 피격 상태 여부 확인
+                    new Sequence(new List<Node>()
+                    {
+                        new CheckGetHit(_enemy), new GetHit(_enemy)
+                    })
+                }),
+
+                new Selector(new List<Node>()
+                {
+                    // 3. 빙의 상태 여부 확인
+                    new Sequence(new List<Node>()
+                    {
+                        new CheckIsPossessed(_enemy), new BeingPossessed(_enemy)
+                    }),
+
                     new Selector(new List<Node>()
                     {
-                        // 3. 피격 상태 여부 확인
+                        // 4. 공격 가능 상태 여부 확인
                         new Sequence(new List<Node>()
                         {
-                            new CheckGetHit(_enemy), new GetHit(_enemy)
+                            new CheckNearToAttack(_enemy), new CheckForwardToAttack(_enemy), new Attack(_enemy)
                         }),
 
-                        new Selector(new List<Node>()
+                        // 5. 추적 가능 상태 여부 확인
+                        new Sequence(new List<Node>()
                         {
-                            // 4. 공격 가능 상태 여부 확인
-                            new Sequence(new List<Node>()
-                            {
-                                new CheckNearToAttack(_enemy), new Attack(_enemy)
-                            }),
+                            new CheckNearToChase(_enemy), new Chase(_enemy)
+                        }),
 
-                            // 5. 추격 가능 상태 여부 확인
-                            new Sequence(new List<Node>()
-                            {
-                                new CheckNearToChase(_enemy), new Chase(_enemy)
-                            }),
-
-                            // 6. 순찰
-                            new Patrol(_enemy)
-                        })
-
+                        // 6. 순찰
+                        new Patrol(_enemy)
                     })
-
                 })
-
             });
 
             // 작성한 노드를 반환한다.

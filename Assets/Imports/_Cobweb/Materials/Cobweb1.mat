@@ -11,6 +11,7 @@ Material:
   m_Shader: {fileID: 210, guid: 0000000000000000f000000000000000, type: 0}
   m_ValidKeywords:
   - _ALPHABLEND_ON
+  - _EMISSION
   - _FADING_ON
   - _NORMALMAP
   m_InvalidKeywords: []
@@ -98,7 +99,7 @@ Material:
     - _DistortionStrength: 1
     - _DistortionStrengthScaled: 0.1
     - _DstBlend: 10
-    - _EmissionEnabled: 0
+    - _EmissionEnabled: 1
     - _FlipbookMode: 0
     - _Float0: 0.22
     - _Float1: 0
@@ -128,7 +129,7 @@ Material:
     - _CameraFadeParams: {r: 0, g: Infinity, b: 0, a: 0}
     - _Color: {r: 1, g: 1, b: 1, a: 0.1254902}
     - _Color0: {r: 0, g: 0, b: 0, a: 0.078431375}
-    - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}
     - _SoftParticleFadeParams: {r: 0, g: 6.6666665, b: 0, a: 0}
     - _TintColor: {r: 1, g: 1, b: 1, a: 0.043137256}
   m_BuildTextureStacks: []

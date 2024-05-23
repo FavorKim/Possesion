@@ -152,8 +152,6 @@ public abstract class BaseMonster : Monsters
                 stateMachine.ChangeState(MonsterState.IDLE); // 대기 상태로 변경한다.
                 state = MonsterState.IDLE;
             }
-
-            Debug.Log($"distance = {distance}, is_pjtAtk = {is_pjtAtk.ToString()}, state = {state.ToString()}");
         }
 
         // 그 외에는 (공격, 추적, 대기 상태 모두 불가능한 경우) 사망 상태로 변경한다.

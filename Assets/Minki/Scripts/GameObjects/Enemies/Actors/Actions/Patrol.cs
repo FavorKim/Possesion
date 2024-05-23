@@ -1,5 +1,6 @@
 using BehaviourTree;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Events;
@@ -14,7 +15,7 @@ namespace Enemy
         private readonly Animator _animator;
         private readonly NavMeshAgent _navMeshAgent;
 
-        private readonly Transform[] _patrolTransforms; // 순찰할 위치들
+        private readonly List<Transform> _patrolTransforms; // 순찰할 위치들
 
         private int _patrolIndex = 0; // 다음으로 이동할 순찰 위치의 변수
         private bool _isCorRunning = false; // 코루틴이 실행 중인지를 판별하는 변수
@@ -76,7 +77,7 @@ namespace Enemy
                 _animator.SetBool("AI_Chase", false);
 
                 // 다음 순찰 위치를 지정한다.
-                _patrolIndex = ++_patrolIndex % _patrolTransforms.Length;
+                _patrolIndex = ++_patrolIndex % _patrolTransforms.Count;
             };
 
             _patrolAction = () =>

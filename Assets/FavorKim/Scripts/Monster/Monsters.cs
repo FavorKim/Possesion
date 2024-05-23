@@ -91,7 +91,7 @@ public abstract class Monsters : MonoBehaviour, ITyped
     /// <summary>
     /// 몬스터가 피격했을 때 호출되는 함수입니다. 받은 대미지만큼 체력이 감소합니다.
     /// </summary>
-    public void GetDamage(int damage)
+    public virtual void GetDamage(int damage)
     {
         // 무적 상태가 아닐 경우,
         if (!isInvincible)

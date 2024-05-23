@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7747082537440704163}
   m_Layer: 0
   m_Name: Body Collider
-  m_TagString: Untagged
+  m_TagString: Monster
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -441,7 +441,7 @@ GameObject:
   - component: {fileID: 7183681169288268696}
   m_Layer: 0
   m_Name: SlimePBR
-  m_TagString: Untagged
+  m_TagString: Monster
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -534,14 +534,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58c3178cff7a1a54f9da7e54f5ff11b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  curHP: 0
-  maxHP: 0
+  curHP: 100
+  maxHP: 100
   HPSlider: {fileID: 0}
-  _patrolTransforms:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  _patrolTransforms: []
 --- !u!1 &7185446292400167854
 GameObject:
   m_ObjectHideFlags: 0

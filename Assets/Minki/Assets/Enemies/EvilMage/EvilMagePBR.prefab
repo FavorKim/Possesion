@@ -457,7 +457,7 @@ GameObject:
   - component: {fileID: 1689789149}
   m_Layer: 0
   m_Name: EvilMagePBR
-  m_TagString: Untagged
+  m_TagString: Monster
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -551,14 +551,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 480d8a447d73bf24bb2d835232a18511, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  curHP: 0
-  maxHP: 0
+  curHP: 100
+  maxHP: 100
   HPSlider: {fileID: 0}
-  _patrolTransforms:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  _patrolTransforms: []
   projectileTransform: {fileID: 52082747}
   shootPower: 1000
 --- !u!114 &1689789149
@@ -573,7 +569,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2da86f344671176478037b3570c5e47b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  poolPrefab: {fileID: 5790712788088932494, guid: 45ae1d62169051545afbc74d4d665209, type: 3}
+  poolPrefab: {fileID: 2097815613037247788, guid: 8f29df8c1a384bf43b3178687dae1e91, type: 3}
 --- !u!1 &1217098102103856
 GameObject:
   m_ObjectHideFlags: 0
@@ -2354,7 +2350,7 @@ GameObject:
   - component: {fileID: 6482863942336423668}
   m_Layer: 0
   m_Name: Body Collider
-  m_TagString: Untagged
+  m_TagString: Monster
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2400,7 +2396,7 @@ GameObject:
   - component: {fileID: 4582843600451559917}
   m_Layer: 0
   m_Name: Weapon Collider
-  m_TagString: Untagged
+  m_TagString: Obstacles
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
