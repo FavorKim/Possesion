@@ -4866,6 +4866,7 @@ GameObject:
   - component: {fileID: 404824}
   - component: {fileID: 19850766}
   - component: {fileID: 19933586}
+  - component: {fileID: 7107554224918106710}
   m_Layer: 0
   m_Name: TurtleSpinBlue
   m_TagString: Untagged
@@ -9668,6 +9669,20 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!114 &7107554224918106710
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 150486}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2910bd8bcd3b3c541b9e725423d9aebf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 20
+  myType: 5
 --- !u!1 &157674
 GameObject:
   m_ObjectHideFlags: 0
@@ -14489,6 +14504,7 @@ GameObject:
   - component: {fileID: 471350}
   - component: {fileID: 19805516}
   - component: {fileID: 19988024}
+  - component: {fileID: 6465706275768680383}
   m_Layer: 0
   m_Name: SpinLinger
   m_TagString: Untagged
@@ -19288,3 +19304,17 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!114 &6465706275768680383
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 177362}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2910bd8bcd3b3c541b9e725423d9aebf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 20
+  myType: 5

@@ -3,7 +3,11 @@ guid: c34b3e5182bcca1478d01122f6df33b2
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - HPSlider: {instanceID: 0}
+  - moveMaterial: {fileID: 13400000, guid: 7fccf4a70c68b284e8ae2a9f2c064ce4, type: 2}
+  - idleMaterial: {fileID: 13400000, guid: 6a9c0552fbf65bd43850ee4160c5f367, type: 2}
+  - player: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

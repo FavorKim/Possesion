@@ -17,8 +17,6 @@ public class Skeleton : BaseMonster
 
     #endregion Fields
 
-    
-
     #region Override Methods
 
     // 스킬 초기화 함수
@@ -38,21 +36,6 @@ public class Skeleton : BaseMonster
         InitSkill(skill1Cooltime, skill2Cooltime);
     }
 
-    // 공격 함수
-    public override void Attack()
-    {
-        StartCoroutine(NormalAttack());
-
-        IEnumerator NormalAttack()
-        {
-            animator.SetBool(hashAttack, true);
-
-            attack_curCooltime = attackCooltime;
-            yield return new WaitForSeconds(0.2f);
-            animator.SetBool(hashAttack, false);
-        }
-    }
-
     // 스킬 1 함수
     public override void Skill1()
     {
@@ -62,7 +45,9 @@ public class Skeleton : BaseMonster
 
         IEnumerator SlashAttack()
         {
-            agent.isStopped = true;
+            if (agent.isActiveAndEnabled)
+                agent.isStopped = true;
+
             animator.SetBool(hashSkill1, true);
             GameObject pd = Instantiate(projectile, spawnPosition.position, spawnPosition.rotation);
 
@@ -92,18 +77,20 @@ public class Skeleton : BaseMonster
 
     IEnumerator StabAttack()
     {
-        agent.isStopped = true;
+        if(agent.isActiveAndEnabled)
+            agent.isStopped = true;
 
         ParticleSystem ps = Instantiate(stabAttack, this.transform);
         ps.transform.position = spawnPosition.position;
         
         rb.AddRelativeForce(Vector3.forward * 20f, ForceMode.VelocityChange);
         yield return new WaitForSeconds(0.4f);
-        
+
+        Destroy(ps.gameObject);
         rb.velocity = Vector3.zero;
         rb.angularVelocity = Vector3.zero;
         skill2_curCooltime = skill2Cooltime;
-        Destroy(ps);
+        
         animator.SetBool(hashSkill2, false);
     }
 

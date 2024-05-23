@@ -1449,24 +1449,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e0e26d3323048e4ba46c890fd0241b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  curHP: 0
-  maxHP: 0
+  curHP: 50
+  maxHP: 50
   HPSlider: {fileID: 0}
   player: {fileID: 0}
   projectile: {fileID: 128572, guid: c03d0f63116deaa449465c9de4c1d138, type: 3}
   spawnPosition: {fileID: 3625261320191301173}
-  state: 0
-  shootSpeed: 800
-  stateMachine: {fileID: 0}
-  rb: {fileID: 0}
-  mstAttackCooltime: 2
-  mstSkill1Cooltime: 3
-  mstSkill2Cooltime: 3
-  traceDistance: 30
-  skillDistance: 10
-  attackDistance: 4
-  isDie: 0
-  isPlayer: 0
 --- !u!136 &356123124
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1474,7 +1462,7 @@ CapsuleCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1748489546896114}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 7fccf4a70c68b284e8ae2a9f2c064ce4, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.5
@@ -1495,7 +1483,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 80
   m_CollisionDetection: 0
 --- !u!1 &1781689967026810
 GameObject:
@@ -1900,7 +1888,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9108974195189788724}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.45, z: 0.96}
+  m_LocalPosition: {x: 0, y: 1.45, z: 1.2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

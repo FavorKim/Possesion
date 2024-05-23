@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 4237560656749904}
   - component: {fileID: 198161241624208410}
   - component: {fileID: 199519788172116490}
-  - component: {fileID: -2532513516826386026}
   m_Layer: 0
   m_Name: WindlinesStormy
   m_TagString: Untagged
@@ -3866,7 +3865,7 @@ ParticleSystem:
     quality: 0
     voxelSize: 0.5
     collisionMessages: 0
-    collidesWithDynamic: 1
+    collidesWithDynamic: 0
     interiorCollisions: 0
   TriggerModule:
     enabled: 0
@@ -4904,18 +4903,6 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
---- !u!114 &-2532513516826386026
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1284970568538890}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c2d1f5eb0a95d154bbf6d3b88bba0913, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1608092395288144
 GameObject:
   m_ObjectHideFlags: 0
@@ -4927,6 +4914,8 @@ GameObject:
   - component: {fileID: 4661795617479616}
   - component: {fileID: 198069187118942670}
   - component: {fileID: 199983689729217926}
+  - component: {fileID: 3971417103623708056}
+  - component: {fileID: 5355405751191617224}
   m_Layer: 0
   m_Name: SmokeWhiteSoft
   m_TagString: Untagged
@@ -8438,7 +8427,7 @@ ParticleSystem:
         m_NumAlphaKeys: 2
     range: {x: 0, y: 1}
   CollisionModule:
-    enabled: 0
+    enabled: 1
     serializedVersion: 4
     type: 1
     collisionMode: 0
@@ -8622,19 +8611,19 @@ ParticleSystem:
     quality: 0
     voxelSize: 0.5
     collisionMessages: 0
-    collidesWithDynamic: 1
+    collidesWithDynamic: 0
     interiorCollisions: 1
   TriggerModule:
-    enabled: 0
+    enabled: 1
     serializedVersion: 2
-    inside: 1
+    inside: 0
     outside: 0
-    enter: 0
+    enter: 2
     exit: 0
     colliderQueryMode: 0
     radiusScale: 1
     primitives:
-    - {fileID: 0}
+    - {fileID: 6669227444527320396, guid: 92a830e1b967d9b42a4965da5ac02e68, type: 3}
     - {fileID: 0}
     - {fileID: 0}
     - {fileID: 0}
@@ -9650,6 +9639,31 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!114 &3971417103623708056
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1608092395288144}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2d1f5eb0a95d154bbf6d3b88bba0913, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!65 &5355405751191617224
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1608092395288144}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 20, y: 5, z: 5}
+  m_Center: {x: 7, y: 0, z: 0}
 --- !u!1 &1782163045000172
 GameObject:
   m_ObjectHideFlags: 0

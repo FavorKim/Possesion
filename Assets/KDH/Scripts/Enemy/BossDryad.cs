@@ -30,7 +30,6 @@ public class BossDryad : MonoBehaviour, IDamagable
 
     public BossState state = BossState.IDLE;
 
-
     [SerializeField] bool EnfPhased = false;
 
     //public ParticleSystem rollAttack;
@@ -38,6 +37,7 @@ public class BossDryad : MonoBehaviour, IDamagable
 
     [SerializeField] public GameObject projectile;
     [SerializeField] public GameObject bullets;
+    [SerializeField] public GameObject instantMonster;
     [SerializeField] public GameObject windStorm;
 
     public Transform[] spawnPositions;
@@ -59,7 +59,20 @@ public class BossDryad : MonoBehaviour, IDamagable
 
     public bool isDie = false;
 
-    int i = 0;
+    int pattern = -1;
+
+    float[] pattern_Cooltime = { 3, 20, 15, 30 };
+    float[] pattern_CurCooltime = { 3, 20, 15, 30 };
+    /*
+     0 = 일반
+     1 = 전방탄막
+     2 = 몹 소환
+     3 = 회전공격
+     4 = 전방 바람
+     5 = 탄막비
+     6 = 강화회전
+     */
+
     #endregion
 
     void Awake()
@@ -75,73 +88,96 @@ public class BossDryad : MonoBehaviour, IDamagable
         stateMachine.AddState(BossState.PATTERN, new PartternState(this));
         stateMachine.AddState(BossState.ATTACK, new AttackState(this));
         stateMachine.AddState(BossState.DEAD, new DeadState(this));
-        stateMachine.InitState(state);
+        stateMachine.InitState(BossState.IDLE);
 
         agent.destination = playerTrf.position;
     }
+
 
 
     void Start()
     {
         // 체력 패널을 초기화(생성)한다.
         HP_HUD_Obj = Instantiate(Resources.Load<GameObject>("HP_HUD"), transform);
-        HPSlider = HP_HUD_Obj.GetComponentInChildren<UnityEngine.UI.Slider>();
+        HPSlider = HP_HUD_Obj.GetComponentInChildren<Slider>();
 
         // 슬라이더의 값을 (현재 체력 / 최대 체력)으로 한다.
         //HPSlider.value = curHP / maxHP;
 
+        StartCoroutine(CoolTimeCheck());
         StartCoroutine(BossPattern());
     }
 
-    protected virtual IEnumerator BossPattern()
+    IEnumerator CoolTimeCheck()
     {
         while (!isDie)
         {
-            if (Input.GetKeyDown("1"))
+            for (int i = 0; i < pattern_CurCooltime.Length; i++)
             {
-                i = 1;
-                stateMachine.ChangeState(BossState.PATTERN);
+                if (pattern_CurCooltime[i] > 0f)
+                {
+                    pattern_CurCooltime[i] -= Time.deltaTime;
+                }
             }
-            else if (Input.GetKeyDown("2"))
+
+            yield return new WaitForSeconds(0.01f);
+        }
+    }
+    IEnumerator BossPattern()
+    {
+        //진입하면 시작하면 됨.
+
+        float patternStart = 3.0f;
+        
+        while (!isDie)
+        {
+            if(patternStart > 0f)
+                patternStart -= Time.deltaTime;
+
+            if(patternStart <= 0f)
             {
-                i = 2;
-                stateMachine.ChangeState(BossState.PATTERN);
-            }
-            else if (Input.GetKeyDown("3"))
-            {
-                i = 3;
-                stateMachine.ChangeState(BossState.PATTERN);
-            }
-            else if (Input.GetKeyDown("4"))
-            {
-                stateMachine.ChangeState(BossState.ATTACK);
-            }
-            else if (Input.GetKeyDown("5"))
-            {
-                i = 5;
-                stateMachine.ChangeState(BossState.IDLE);
-            }
-            else if (Input.GetKeyDown("6"))
-            {
-                i = 6;
-                stateMachine.ChangeState(BossState.IDLE);
+                pattern = -1;
+                if (curHP <= maxHP/2)
+                    EnfPhased = true;
+                if(pattern_CurCooltime[3] <= 0f)
+                    pattern = 3;
+                else if (pattern_CurCooltime[2] <= 0f)
+                    pattern = 2;
+                else if (pattern_CurCooltime[1] <= 0f)
+                    pattern = 1;
+                else if (pattern_CurCooltime[0] <= 0f)
+                    pattern = 0;
+                
+                if(pattern > 0)
+                {
+                    patternStart = pattern_CurCooltime[0];
+                    stateMachine.ChangeState(BossState.PATTERN);
+                    state = BossState.PATTERN;
+                }
+                else if (pattern == 0)
+                {
+                    stateMachine.ChangeState(BossState.ATTACK);
+                    state = BossState.ATTACK;
+                }
             }
             else
             {
                 stateMachine.ChangeState(BossState.IDLE);
+                state = BossState.IDLE;
             }
 
             if (curHP <= 0)
             {
                 stateMachine.ChangeState(BossState.DEAD);
+                state = BossState.DEAD;
             }
             yield return new WaitForSeconds(0.01f);
         }
         /*stateMachine.ChangeState(MonsterState.DEAD);
         state = MonsterState.DEAD;*/
-    }
+}
 
-    private void Update()
+private void Update()
     {
         /*if (skill1_curCooltime > 0f)
         {
@@ -168,29 +204,17 @@ public class BossDryad : MonoBehaviour, IDamagable
 
         public override void Enter()
         {
-            // 데미지
-            if (owner.i == 5)
-            {
-                owner.animator.SetBool(owner.hashAttack, false);
-                owner.i = 0;
-            }
-
             //그로기
-            else if (owner.i == 6)
+            /*if (owner.i == 6)
             {
                 owner.animator.SetTrigger(owner.hashGroggy);
                 owner.i = 0;
-            }
-            else
-            {
-                owner.agent.isStopped = false;
-                owner.agent.SetDestination(owner.playerTrf.position);
-            }
-            //owner.animator.SetBool(owner.hashAttack, false);
+            }*/
+            owner.agent.isStopped = false;
+            owner.agent.SetDestination(owner.playerTrf.position);
         }
     }
-    
-    
+        
 
     class AttackState : BaseEnemyState
     {
@@ -198,7 +222,6 @@ public class BossDryad : MonoBehaviour, IDamagable
 
         public override void Enter()
         {
-            owner.agent.isStopped = true;
             owner.Attack();
         }
     }
@@ -208,23 +231,20 @@ public class BossDryad : MonoBehaviour, IDamagable
 
         public override void Enter()
         {
-            if (owner.i == 1)
+            switch (owner.pattern)
             {
-                owner.Skill1();
+                case 1:
+                    owner.Skill1();
+                    break;
+                case 2:
+                    owner.Skill2();
+                    break;
+                case 3:
+                    owner.Skill3();
+                    break;
             }
-            else if (owner.i == 2)
-            {
-                owner.Skill2();
-            }
-            else if (owner.i == 3)
-            {
-                owner.Skill3();
-            }
-
             owner.agent.isStopped = true;
-            owner.animator.SetBool(owner.hashAttack, false);
         }
-
     }
 
     class DeadState : BaseEnemyState
@@ -240,6 +260,7 @@ public class BossDryad : MonoBehaviour, IDamagable
     }
     
     #region Attack
+
     void Attack()
     {
         animator.SetBool(hashAttack, true);
@@ -262,19 +283,19 @@ public class BossDryad : MonoBehaviour, IDamagable
             pd1.GetComponent<Rigidbody>().AddForce(pd1.transform.forward * shootSpeed);
             pd1.GetComponent<Rigidbody>().AddForce(pd1.transform.up * 10.0f);
             yield return new WaitForSeconds(0.2f);
+
             pd2.transform.LookAt(playerTrf.localPosition);
             pd2.GetComponent<Rigidbody>().AddForce(pd2.transform.forward * shootSpeed);
             pd2.GetComponent<Rigidbody>().AddForce(pd2.transform.up * 10.0f);
-
             yield return new WaitForSeconds(0.2f);
         }
 
+        pattern_CurCooltime[0] = pattern_Cooltime[0];
         animator.SetBool(hashAttack, false);
         yield return new WaitForSeconds(1.0f);
     }
     #endregion
 
-    
     #region skill1
 
     void Skill1()
@@ -284,12 +305,14 @@ public class BossDryad : MonoBehaviour, IDamagable
 
     void Skill_1_Event()
     {
+        
         StartCoroutine(Skill_1_crt());
     }
 
     IEnumerator Skill_1_crt()
     {
         Quaternion q = Quaternion.Euler(new Vector3(0, 20, 0));
+        isInvincible = true;
         int percent = 0;
         if (EnfPhased)
         {
@@ -298,7 +321,7 @@ public class BossDryad : MonoBehaviour, IDamagable
 
         if (percent < 40)
         {
-            for (int k = 0; k < 3; k++)
+            for (int k = 0; k < 2; k++)
             {
                 for (int i = 0; i < 5; i++)
                 {
@@ -306,13 +329,13 @@ public class BossDryad : MonoBehaviour, IDamagable
                     float posX = Random.Range(-range, range);
                     float posY = Random.Range(-range, range);
 
-                    GameObject pd1 = Instantiate(projectile, spawnPositions[0].position + new Vector3(posX * 2f, 0, posY * 2f), Quaternion.LookRotation(gameObject.transform.forward) * q);
+                    GameObject pd1 = Instantiate(projectile, spawnPositions[0].position + new Vector3(-2.5f + i, 0,-1f + k*2), Quaternion.LookRotation(gameObject.transform.forward) * q); ;
 
                     pd1.GetComponent<Rigidbody>().AddForce(posX * spreadRange * pd1.transform.up);
                     pd1.GetComponent<Rigidbody>().AddForce(posY * spreadRange * pd1.transform.right);
                     pd1.GetComponent<Rigidbody>().AddForce(shootSpeed * Random.Range(0.5f, 1.8f) * pd1.transform.forward);
                 }
-                yield return new WaitForSeconds(0.1f);
+                yield return new WaitForSeconds(0.4f);
             }
             animator.SetInteger(hashSkill, 0);
         }
@@ -323,8 +346,12 @@ public class BossDryad : MonoBehaviour, IDamagable
 
             animator.SetInteger(hashSkill, 0);
             yield return new WaitForSeconds(5.0f);
+            GameManager.Instance.Player.isKnockBack = false;
             Destroy(pd);
-        }   
+        }
+        pattern_CurCooltime[1] = pattern_Cooltime[1];
+        yield return new WaitForSeconds(2.0f);
+        isInvincible = false;
     }
 
     #endregion
@@ -342,6 +369,7 @@ public class BossDryad : MonoBehaviour, IDamagable
 
     IEnumerator Skill_2_crt()
     {
+        isInvincible = true;
         int percent = 0;
         if (EnfPhased)
         {
@@ -350,8 +378,19 @@ public class BossDryad : MonoBehaviour, IDamagable
 
         if (percent < 70)
         {
-            // 몬스터를 소환해줘야 함... 이게 있어야 플레어가 보스에게 공격이 가능.
-            // 강화패턴을 쿨타임을 넣어줘야 하는가? 일단 해?
+            float posX = -1f;
+            float posY = -1f;
+            for (int k = 0; k < 2; k++)
+            {
+                for (int i = 0; i < 2; i++)
+                {
+                    GameObject pd = Instantiate(instantMonster, spawnPositions[0].position + new Vector3(posX + k * 2, 0, posY + i*2), Quaternion.identity) as GameObject;
+
+                    pd.GetComponent<Rigidbody>().AddForce((-posX - k * 2) * spreadRange * Vector3.forward);
+                    pd.GetComponent<Rigidbody>().AddForce((posY + i * 2) * spreadRange * Vector3.right);
+                    pd.GetComponent<Rigidbody>().AddForce(shootSpeed * Random.Range(0.8f, 1.2f) * Vector3.up);
+                }
+            }
         }
         else
         {
@@ -372,8 +411,10 @@ public class BossDryad : MonoBehaviour, IDamagable
                 yield return new WaitForSeconds(0.1f);
             }
         }
-
+        pattern_CurCooltime[2] = pattern_Cooltime[2];
         animator.SetInteger(hashSkill, 0);
+        yield return new WaitForSeconds(4.0f);
+        isInvincible = false;
     }
     #endregion
 
@@ -390,32 +431,33 @@ public class BossDryad : MonoBehaviour, IDamagable
 
     IEnumerator Skill_3_crt()
     {
+        isInvincible = true;
         Vector3[] vector3s = new Vector3[4];
 
-        vector3s[0] = new Vector3(2, 1, 0);
-        vector3s[1] = new Vector3(0, 1, -2);
-        vector3s[2] = new Vector3(-2, 1, 0);
-        vector3s[3] = new Vector3(0, 1, 2);
+        float height = 0.8f;
+        vector3s[0] = new Vector3(2, height, 0);
+        vector3s[1] = new Vector3(0, height, -2);
+        vector3s[2] = new Vector3(-2, height, 0);
+        vector3s[3] = new Vector3(0, height, 2);
 
         List<GameObject> pds = new List<GameObject>();
 
         if (EnfPhased)
         {
-            
             for (int i = 0; i < 8; i++)
             {
                 pds.Add(Instantiate(windStorm, gameObject.transform.position, gameObject.transform.rotation * Quaternion.Euler(new Vector3(0, i * 45, 0))));
             }
         }
 
-        for (int k = 0; k < 10; k++)
+        for (int k = 0; k < 15; k++)
         {
             for (int i = 0; i < 4; i++)
             {
                 GameObject pd = Instantiate(bullets, gameObject.transform.position + vector3s[i], gameObject.transform.rotation * Quaternion.Euler(new Vector3(0, i * 90, 0)));
-                pd.GetComponent<Rigidbody>().AddForce(pd.transform.forward * shootSpeed * 0.4f);
+                pd.GetComponent<Rigidbody>().AddForce(pd.transform.forward * 400f);
             }
-            yield return new WaitForSeconds(0.4f);
+            yield return new WaitForSeconds(0.2f);
         }
 
         if (EnfPhased)
@@ -425,8 +467,12 @@ public class BossDryad : MonoBehaviour, IDamagable
                 Destroy(pds[i]);
             }
         }
-        
         animator.SetInteger(hashSkill, 0);
+        pattern_CurCooltime[3] = pattern_Cooltime[3];
+
+        yield return new WaitForSeconds(4.0f);
+        GameManager.Instance.Player.isKnockBack = false;
+        isInvincible = false;
     }
     #endregion
 
@@ -443,9 +489,6 @@ public class BossDryad : MonoBehaviour, IDamagable
 
             // 감소한 체력을 체력 패널에 적용한다.
             HPSlider.value = curHP / maxHP;
-
-            // 체력이 0 이하일 경우(죽음), 그 몬스터를 비활성화한다.
-            
         }
     }
 }

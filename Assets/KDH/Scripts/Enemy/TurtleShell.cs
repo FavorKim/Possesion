@@ -33,12 +33,6 @@ public class TurtleShell : BaseMonster
         InitSkill(skill1Cooltime, skill2Cooltime);
     }
 
-    // 공격 함수
-    public override void Attack()
-    {
-        animator.SetBool(hashAttack, true);
-    }
-
     #region Skill1
     // 스킬 1 함수
     public override void Skill1()

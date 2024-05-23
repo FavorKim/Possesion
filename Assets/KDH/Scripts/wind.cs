@@ -4,14 +4,24 @@ using UnityEngine;
 
 public class wind : MonoBehaviour
 {
-    private void OnParticleCollision(GameObject other)
+    /*private void OnParticleCollision(GameObject other)
     {
-        Rigidbody body = other.GetComponent<Rigidbody>();
-        if (body)
+        if(other.gameObject.CompareTag("Player"))
         {
-            Vector3 direction = other.transform.position - transform.position;
-            direction = direction.normalized;
-            body.AddForce(direction * 5);
+            GameManager.Instance.Player.isKnockBack = true;
         }
+        else
+        {
+            GameManager.Instance.Player.isKnockBack = false;
+        }
+    }*/
+    private void OnTriggerEnter(Collider other)
+    {
+        GameManager.Instance.Player.isKnockBack = true;
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        GameManager.Instance.Player.isKnockBack = false;
     }
 }

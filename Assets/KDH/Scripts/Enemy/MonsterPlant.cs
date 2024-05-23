@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class MonsterPlant : BaseMonster
@@ -27,43 +28,51 @@ public class MonsterPlant : BaseMonster
         skill1Cooltime = 3.0f;
         skill2Cooltime = 3.0f;
 
-        traceDistance = 10f;
+        traceDistance = 20f;
         skillDistance = 10f;
         attackDistance = 2f;
 
         InitSkill(skill1Cooltime, skill2Cooltime);
     }
 
-    // 공격 함수
-    public override void Attack()
-    {
-        animator.SetBool(hashAttack, true);
-        attack_curCooltime = attackCooltime;
-    }
-
     // 스킬 1 함수
     public override void Skill1()
     {
+        StartCoroutine(ProjectileAttack());
+        
+    }
+    private IEnumerator ProjectileAttack()
+    {
+        if (agent.isActiveAndEnabled)
+            agent.isStopped = true;
+
         float distance;
+        animator.SetBool(hashAttack, true);
+        GameObject pd = Instantiate(projectile, spawnPosition.position, spawnPosition.rotation);
 
         if (!isPlayer)
         {
             distance = Vector3.Distance(playerTrf.position, enemyTrf.position);
+            pd.transform.LookAt(playerTrf.localPosition);
         }
         else
         {
-            distance = 3.0f;
+            distance = 30.0f;
+            pd.transform.LookAt(spawnPosition.position + new Vector3(0, 0, 10));
         }
 
-        GameObject pd = Instantiate(projectile, spawnPosition.position, Quaternion.identity) as GameObject;
-        pd.transform.LookAt(playerTrf.localPosition);
+        if (transform.parent != null)
+        {
+            pd.transform.LookAt(GameManager.Instance.Player.GetLookAt());
+        }
+        //pd.transform.LookAt(playerTrf.localPosition);
+        //addforce 위치 정해줘야 함.
         pd.GetComponent<Rigidbody>().AddForce(pd.transform.forward * shootSpeed);
         pd.GetComponent<Rigidbody>().AddForce(pd.transform.up * distance * 15.5f);
-
-        //여기서 스킬을 발사 해줘야 하거든?
         skill1_curCooltime = skill1Cooltime;
 
-        animator.SetBool(hashAttack, true);
+        yield return new WaitForSeconds(0.2f);
+        animator.SetBool(hashAttack, false);
     }
 
     // 스킬 2 함수

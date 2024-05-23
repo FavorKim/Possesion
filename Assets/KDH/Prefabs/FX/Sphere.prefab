@@ -111,10 +111,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c43a3c71d3107164cadf6aa6246240b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  monsters:
-  - {fileID: 5720992622551480665, guid: bd14c2c315ed3514fa0a2f5a84819f78, type: 3}
-  - {fileID: 581639284729682368, guid: 22b7621b258141346a177ed0edb02fa3, type: 3}
-  - {fileID: 8334643518506634372, guid: 86069c036532cb1488ba78fb059125f2, type: 3}
+  m_Spawn: {fileID: 581639284729682368, guid: 22b7621b258141346a177ed0edb02fa3, type: 3}
 --- !u!54 &5306606043272762248
 Rigidbody:
   m_ObjectHideFlags: 0

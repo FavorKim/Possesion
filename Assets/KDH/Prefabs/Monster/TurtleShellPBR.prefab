@@ -598,20 +598,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92886955cd99f2e42a346bc9fbfc1aeb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  curHP: 0
-  maxHP: 0
+  curHP: 50
+  maxHP: 50
   HPSlider: {fileID: 0}
   player: {fileID: 0}
-  state: 0
   rollAttack: {fileID: 19850766, guid: ba9bd4b65da160c4bb96afcc36706d6d, type: 3}
-  stateMachine: {fileID: 0}
-  mstATK: 10
-  mstSkill1Cooltime: 3
-  mstSkill2Cooltime: 3
-  traceDistance: 10
-  skillDistance: 10
-  attackDistance: 2
-  isDie: 0
 --- !u!136 &2837302226418138425
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -619,7 +610,7 @@ CapsuleCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1524411113276028}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 7fccf4a70c68b284e8ae2a9f2c064ce4, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.6

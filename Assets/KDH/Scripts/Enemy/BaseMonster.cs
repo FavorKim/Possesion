@@ -1,6 +1,9 @@
+using Enemy;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Rendering.Universal;
+using static UnityEngine.UI.GridLayoutGroup;
 
 public abstract class BaseMonster : Monsters
 {
@@ -11,6 +14,7 @@ public abstract class BaseMonster : Monsters
     protected NavMeshAgent agent; // 네비게이션(NavMesh)
     protected Animator animator; // 애니메이터(Animator)
     protected Rigidbody rb; // 리지드바디(Rigidbody)
+    protected Collider cd; // 콜라이더(Collider)
 
     #endregion Components
 
@@ -21,7 +25,6 @@ public abstract class BaseMonster : Monsters
     {
         IDLE, TRACE, ATTACK, DEAD
     }
-
     protected MonsterState state = MonsterState.IDLE; // 처음에는 IDLE 상태이다.
 
     // 유한 상태 기계 클래스
@@ -34,15 +37,12 @@ public abstract class BaseMonster : Monsters
     // 애니메이터의 해시(Hash), 각 하위 클래스에서 알맞게 추가 정의할 것.
     protected readonly int hashTrace = Animator.StringToHash("IsTrace");
     protected readonly int hashAttack = Animator.StringToHash("IsAttack");
+    protected readonly int hashDie = Animator.StringToHash("IsDie");
 
     // 플레이어 정보를 받아야 NevMesh를 따라 추적이 가능함.
     [SerializeField] private PlayerController player;
 
     #endregion Fields
-
-    #region Getter
-    public PlayerController GetPC() { return player; }
-    #endregion
 
     #region Skills / Stats
 
@@ -76,6 +76,7 @@ public abstract class BaseMonster : Monsters
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody>();
+        cd = GetComponent<Collider>();
 
         // 상태 기계를 초기화한다.
         stateMachine = gameObject.AddComponent<StateMachine>();
@@ -86,7 +87,7 @@ public abstract class BaseMonster : Monsters
         stateMachine.InitState(MonsterState.IDLE);
 
         // NavMesh를 초기화한다.
-        agent.destination = playerTrf.position;
+        //agent.destination = playerTrf.position;
 
         // 몬스터의 스킬을 초기화한다.
         InitSkills();
@@ -109,7 +110,6 @@ public abstract class BaseMonster : Monsters
             animator.SetFloat("FloatX", player.MoveDir.normalized.x);
             animator.SetFloat("FloatY", player.MoveDir.normalized.z);
         }
-
     }
 
     #endregion Life Cycles (Awake / Start / Update)
@@ -120,8 +120,10 @@ public abstract class BaseMonster : Monsters
     private IEnumerator CheckEnemyState()
     {
         // 죽지 않았거나, 빙의되지 않았다면 무한 반복한다.
-        while (!isDie && !isPlayer)
+        while (!isDie)
         {
+            //빙의 상태일땐 빙의가 해제될 때까지 텀을 걸어줘야 함.
+
             // isDie, isPlayer 체크
             isDie = (state == MonsterState.DEAD);
             isPlayer = (gameObject.transform.parent != null);
@@ -134,7 +136,7 @@ public abstract class BaseMonster : Monsters
             {
                 // 상태 기계의 상태를 DEAD로 바꾼다.
                 stateMachine.ChangeState(MonsterState.DEAD);
-
+                state = MonsterState.DEAD;
                 // 즉시 탈출한다.
                 yield break;
             }
@@ -162,6 +164,22 @@ public abstract class BaseMonster : Monsters
                 stateMachine.ChangeState(MonsterState.IDLE); // 대기 상태로 변경한다.
                 state = MonsterState.IDLE;
             }
+
+            if(isPlayer)
+            {
+                agent.enabled = false;
+            }
+            else
+            {
+                agent.enabled = true;
+            }
+            // 플레이어 상태이면 아닐 때까지 계속 무한루프
+            while (isPlayer)
+            {
+                yield return new WaitForSeconds(0.1f);
+                if (gameObject.transform.parent == null)
+                    isPlayer = false;
+            }
         }
 
         // 그 외에는 (공격, 추적, 대기 상태 모두 불가능한 경우) 사망 상태로 변경한다.
@@ -187,7 +205,11 @@ public abstract class BaseMonster : Monsters
         public override void Enter()
         {
             // 추적을 멈춘다.
-            owner.agent.isStopped = true;
+            if (owner.agent.isActiveAndEnabled)
+                owner.agent.isStopped = true;
+
+            owner.rb.velocity = Vector3.zero;
+            owner.rb.angularVelocity = Vector3.zero;
 
             // 추적 애니메이션과 공격 애니메이션을 중지한다.
             owner.animator.SetBool(owner.hashTrace, false);
@@ -202,6 +224,7 @@ public abstract class BaseMonster : Monsters
 
         public override void Enter()
         {
+
             // 캐릭터의 위치를 지정하여 추적을 시작한다.
             owner.agent.SetDestination(owner.playerTrf.position);
             owner.agent.isStopped = false;
@@ -220,7 +243,8 @@ public abstract class BaseMonster : Monsters
         public override void Enter()
         {
             // 추적을 멈춘다.
-            owner.agent.isStopped = true;
+            if (owner.agent.isActiveAndEnabled)
+                owner.agent.isStopped = true;
 
             // 몬스터(자신)와 플레이어의 거리를 계산한다.
             float distance = Vector3.Distance(owner.playerTrf.position, owner.enemyTrf.position);
@@ -248,8 +272,16 @@ public abstract class BaseMonster : Monsters
 
         public override void Enter()
         {
-            owner.agent.isStopped = true;
-            Debug.Log("Dead");
+            if (owner.agent.isActiveAndEnabled)
+                owner.agent.isStopped = true;
+
+            owner.animator.SetTrigger(owner.hashDie);
+            //owner.StartCoroutine(Die());
+        }
+        IEnumerator Die()
+        {
+            yield return new WaitForSeconds(2.0f);
+            owner.gameObject.SetActive(false);
         }
 
     }
@@ -281,4 +313,25 @@ public abstract class BaseMonster : Monsters
     }
 
     #endregion Abstract Methods
+
+    #region Override Methods
+
+    // 공격 함수
+    public override void Attack()
+    {
+        StartCoroutine(NormalAttack());
+
+        IEnumerator NormalAttack()
+        {
+            animator.SetBool(hashAttack, true);
+
+            attack_curCooltime = attackCooltime;
+            yield return new WaitForSeconds(0.2f);
+            animator.SetBool(hashAttack, false);
+        }
+    }
+
+    
+
+    #endregion
 }
