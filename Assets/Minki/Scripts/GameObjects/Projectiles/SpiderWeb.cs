@@ -5,7 +5,7 @@ public class SpiderWeb : Projectile
 {
     #region Components
 
-    // ÄÄÆ÷³ÍÆ®(Components)
+    // ì»´í¬ë„ŒíŠ¸(Components)
 
     // AudioSource
     private AudioSource audioSource;
@@ -17,7 +17,7 @@ public class SpiderWeb : Projectile
 
     #region Fields
 
-    // È¸¼ö Àü±îÁö Áßº¹ Å¸°İÀ» ¸·±â À§ÇÑ º¯¼ö
+    // íšŒìˆ˜ ì „ê¹Œì§€ ì¤‘ë³µ íƒ€ê²©ì„ ë§‰ê¸° ìœ„í•œ ë³€ìˆ˜
     private bool isAlreadyHit = false;
 
     #endregion Fields
@@ -28,7 +28,7 @@ public class SpiderWeb : Projectile
     {
         base.Awake();
 
-        // ÄÄÆ÷³ÍÆ®¸¦ ÃÊ±âÈ­ÇÑ´Ù.
+        // ì»´í¬ë„ŒíŠ¸ë¥¼ ì´ˆê¸°í™”í•œë‹¤.
         audioSource = GetComponent<AudioSource>();
     }
 
@@ -38,7 +38,7 @@ public class SpiderWeb : Projectile
 
     private void OnEnable()
     {
-        // Å¸°İ ¿©ºÎ¸¦ ÃÊ±âÈ­ÇÑ´Ù.
+        // íƒ€ê²© ì—¬ë¶€ë¥¼ ì´ˆê¸°í™”í•œë‹¤.
         isAlreadyHit = false;
     }
 
@@ -48,16 +48,16 @@ public class SpiderWeb : Projectile
 
     private void OnTriggerEnter(Collider other)
     {
-        // ÇÃ·¹ÀÌ¾î¿Í Ãæµ¹ÇÒ °æ¿ì,
+        // í”Œë ˆì´ì–´ì™€ ì¶©ëŒí•  ê²½ìš°,
         if (other.CompareTag("Player") && !isAlreadyHit)
         {
-            // Å¸°İÇß´Ù.
+            // íƒ€ê²©í–ˆë‹¤.
             isAlreadyHit = true;
 
-            // ¿òÁ÷ÀÓÀ» ¸ØÃá´Ù.
+            // ì›€ì§ì„ì„ ë©ˆì¶˜ë‹¤.
             _rigidbody.velocity = Vector3.zero;
 
-            // ÀÏÁ¤ ½Ã°£ ÈÄ, »èÁ¦ÇÑ´Ù.
+            // ì¼ì • ì‹œê°„ í›„, ì‚­ì œí•œë‹¤.
             StartCoroutine(DelayedDestroy());
         }
     }

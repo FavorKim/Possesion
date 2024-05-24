@@ -144,18 +144,18 @@ public class PlayerController : MonoBehaviour, IDamagable
 
     #region Method
     /// <summary>
-    /// ÇÃ·¹ÀÌ¾î¸¦ ³Ë¹é ÄÚ·çÆ¾À» ½ÃÀÛÇÕ´Ï´Ù.
+    /// í”Œë ˆì´ì–´ë¥¼ ë„‰ë°± ì½”ë£¨í‹´ì„ ì‹œì‘í•©ë‹ˆë‹¤.
     /// </summary>
-    /// <param name="user">³Ë¹é ±âÁØ À§Ä¡</param>
-    /// <param name="power">³Ë¹é ¼Óµµ</param>
-    /// <param name="duration">³Ë¹é Áö¼Ó ½Ã°£</param>
+    /// <param name="user">ë„‰ë°± ê¸°ì¤€ ìœ„ì¹˜</param>
+    /// <param name="power">ë„‰ë°± ì†ë„</param>
+    /// <param name="duration">ë„‰ë°± ì§€ì† ì‹œê°„</param>
     public void StartKnockBack(Transform user, float power, float duration)
     {
         knockbackDuration = duration;
         StartCoroutine(CorKnockBack(user, power));
     }
     /// <summary>
-    /// ÇÃ·¹ÀÌ¾î ³Ë¹é ÄÚ·çÆ¾À» ½Ã°£Á¦ÇÑ ¾øÀÌ ½ÃÀÛÇÕ´Ï´Ù.
+    /// í”Œë ˆì´ì–´ ë„‰ë°± ì½”ë£¨í‹´ì„ ì‹œê°„ì œí•œ ì—†ì´ ì‹œì‘í•©ë‹ˆë‹¤.
     /// </summary>
     /// <param name="user"></param>
     /// <param name="power"></param>
@@ -165,7 +165,7 @@ public class PlayerController : MonoBehaviour, IDamagable
         StartCoroutine(CorKnockBack(user, power));
     }
     /// <summary>
-    /// ³Ë¹é ÄÚ·çÆ¾À» Á¾·áÇÕ´Ï´Ù.
+    /// ë„‰ë°± ì½”ë£¨í‹´ì„ ì¢…ë£Œí•©ë‹ˆë‹¤.
     /// </summary>
     public void StopKnockBack()
     {

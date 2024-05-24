@@ -6,19 +6,19 @@ public class MonsterPlant : BaseMonster
 
     #region Fields
 
-    // MonsterPlant¸¸ÀÇ °ÔÀÓ ¿ÀºêÁ§Æ®(Projectile)
+    // MonsterPlantë§Œì˜ ê²Œì„ ì˜¤ë¸Œì íŠ¸(Projectile)
     [SerializeField] private GameObject projectile;
     [SerializeField] private Transform spawnPosition;
     private float shootSpeed = 800.0f;
 
-    // ¾Ö´Ï¸ŞÀÌÅÍÀÇ ÇØ½Ã(Hash)
+    // ì• ë‹ˆë©”ì´í„°ì˜ í•´ì‹œ(Hash)
     private readonly int hashSkill2 = Animator.StringToHash("IsSkill2");
 
     #endregion Fields
 
     #region Override Methods
 
-    // ½ºÅ³ ÃÊ±âÈ­ ÇÔ¼ö
+    // ìŠ¤í‚¬ ì´ˆê¸°í™” í•¨ìˆ˜
     protected override void InitSkills()
     {
         mstATK = 10.0f;
@@ -35,7 +35,7 @@ public class MonsterPlant : BaseMonster
         InitSkill(skill1Cooltime, skill2Cooltime);
     }
 
-    // ½ºÅ³ 1 ÇÔ¼ö
+    // ìŠ¤í‚¬ 1 í•¨ìˆ˜
     public override void Skill1()
     {
         StartCoroutine(ProjectileAttack());
@@ -66,7 +66,7 @@ public class MonsterPlant : BaseMonster
             pd.transform.LookAt(GameManager.Instance.Player.GetLookAt());
         }
         //pd.transform.LookAt(playerTrf.localPosition);
-        //addforce À§Ä¡ Á¤ÇØÁà¾ß ÇÔ.
+        //addforce ìœ„ì¹˜ ì •í•´ì¤˜ì•¼ í•¨.
         pd.GetComponent<Rigidbody>().AddForce(pd.transform.forward * shootSpeed);
         pd.GetComponent<Rigidbody>().AddForce(pd.transform.up * distance * 15.5f);
         skill1_curCooltime = skill1Cooltime;
@@ -75,7 +75,7 @@ public class MonsterPlant : BaseMonster
         animator.SetBool(hashAttack, false);
     }
 
-    // ½ºÅ³ 2 ÇÔ¼ö
+    // ìŠ¤í‚¬ 2 í•¨ìˆ˜
     public override void Skill2()
     {
         animator.SetTrigger(hashSkill2);

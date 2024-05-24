@@ -15,16 +15,16 @@ public class BossDryad : MonoBehaviour, IDamagable
         DEAD
     }
 
-    private bool isInvincible = false; // ¹«Àû ¿©ºÎ
+    private bool isInvincible = false; // ë¬´ì  ì—¬ë¶€
 
-    [SerializeField] private float curHP = 500f; // ¸ó½ºÅÍÀÇ ÇöÀç Ã¼·Â
-    [SerializeField] private float maxHP = 500f; // ¸ó½ºÅÍÀÇ ÃÖ´ë Ã¼·Â
+    [SerializeField] private float curHP = 500f; // ëª¬ìŠ¤í„°ì˜ í˜„ì¬ ì²´ë ¥
+    [SerializeField] private float maxHP = 500f; // ëª¬ìŠ¤í„°ì˜ ìµœëŒ€ ì²´ë ¥
 
-    protected Transform enemyTrf; // ¸ó½ºÅÍ(ÀÚ½Å)ÀÇ À§Ä¡(Transform)
-    protected Transform playerTrf; // ÇÃ·¹ÀÌ¾îÀÇ À§Ä¡(Transform)
-    protected NavMeshAgent agent; // ³×ºñ°ÔÀÌ¼Ç(NavMesh)
-    protected Animator animator; // ¾Ö´Ï¸ŞÀÌÅÍ(Animator)
-    protected Rigidbody rb; // ¸®Áöµå¹Ùµğ(Rigidbody)
+    protected Transform enemyTrf; // ëª¬ìŠ¤í„°(ìì‹ )ì˜ ìœ„ì¹˜(Transform)
+    protected Transform playerTrf; // í”Œë ˆì´ì–´ì˜ ìœ„ì¹˜(Transform)
+    protected NavMeshAgent agent; // ë„¤ë¹„ê²Œì´ì…˜(NavMesh)
+    protected Animator animator; // ì• ë‹ˆë©”ì´í„°(Animator)
+    protected Rigidbody rb; // ë¦¬ì§€ë“œë°”ë””(Rigidbody)
 
     [SerializeField] PlayerController player;
 
@@ -44,15 +44,15 @@ public class BossDryad : MonoBehaviour, IDamagable
     [SerializeField] public float shootSpeed = 800.0f;
     [SerializeField] public float spreadRange = 100.0f;
 
-    private GameObject HP_HUD_Obj; // ¸ó½ºÅÍÀÇ Ã¼·ÂÀ» ³ªÅ¸³»´Â ÆĞ³Î(Panel)
-    [SerializeField] private Slider HPSlider; // ÆĞ³Î ³»ÀÇ ½½¶óÀÌ´õ
+    private GameObject HP_HUD_Obj; // ëª¬ìŠ¤í„°ì˜ ì²´ë ¥ì„ ë‚˜íƒ€ë‚´ëŠ” íŒ¨ë„(Panel)
+    [SerializeField] private Slider HPSlider; // íŒ¨ë„ ë‚´ì˜ ìŠ¬ë¼ì´ë”
 
     readonly int hashAttack = Animator.StringToHash("IsAttack");
     readonly int hashSkill = Animator.StringToHash("animation");
     readonly int hashGroggy = Animator.StringToHash("IsGroggy");
     readonly int hashDie = Animator.StringToHash("IsDie");
 
-    #region ½ºÅ³ µîµî
+    #region ìŠ¤í‚¬ ë“±ë“±
     [SerializeField]
     float mstATK = 10.0f;
     float mstSPD = 10.0f;
@@ -64,13 +64,13 @@ public class BossDryad : MonoBehaviour, IDamagable
     float[] pattern_Cooltime = { 3, 20, 15, 30 };
     float[] pattern_CurCooltime = { 3, 20, 15, 30 };
     /*
-     0 = ÀÏ¹İ
-     1 = Àü¹æÅº¸·
-     2 = ¸÷ ¼ÒÈ¯
-     3 = È¸Àü°ø°İ
-     4 = Àü¹æ ¹Ù¶÷
-     5 = Åº¸·ºñ
-     6 = °­È­È¸Àü
+     0 = ì¼ë°˜
+     1 = ì „ë°©íƒ„ë§‰
+     2 = ëª¹ ì†Œí™˜
+     3 = íšŒì „ê³µê²©
+     4 = ì „ë°© ë°”ëŒ
+     5 = íƒ„ë§‰ë¹„
+     6 = ê°•í™”íšŒì „
      */
 
     #endregion
@@ -97,11 +97,11 @@ public class BossDryad : MonoBehaviour, IDamagable
 
     void Start()
     {
-        // Ã¼·Â ÆĞ³ÎÀ» ÃÊ±âÈ­(»ı¼º)ÇÑ´Ù.
+        // ì²´ë ¥ íŒ¨ë„ì„ ì´ˆê¸°í™”(ìƒì„±)í•œë‹¤.
         HP_HUD_Obj = Instantiate(Resources.Load<GameObject>("HP_HUD"), transform);
         HPSlider = HP_HUD_Obj.GetComponentInChildren<Slider>();
 
-        // ½½¶óÀÌ´õÀÇ °ªÀ» (ÇöÀç Ã¼·Â / ÃÖ´ë Ã¼·Â)À¸·Î ÇÑ´Ù.
+        // ìŠ¬ë¼ì´ë”ì˜ ê°’ì„ (í˜„ì¬ ì²´ë ¥ / ìµœëŒ€ ì²´ë ¥)ìœ¼ë¡œ í•œë‹¤.
         //HPSlider.value = curHP / maxHP;
 
         StartCoroutine(CoolTimeCheck());
@@ -125,7 +125,7 @@ public class BossDryad : MonoBehaviour, IDamagable
     }
     IEnumerator BossPattern()
     {
-        //ÁøÀÔÇÏ¸é ½ÃÀÛÇÏ¸é µÊ.
+        //ì§„ì…í•˜ë©´ ì‹œì‘í•˜ë©´ ë¨.
 
         float patternStart = 3.0f;
         
@@ -204,7 +204,7 @@ private void Update()
 
         public override void Enter()
         {
-            //±×·Î±â
+            //ê·¸ë¡œê¸°
             /*if (owner.i == 6)
             {
                 owner.animator.SetTrigger(owner.hashGroggy);
@@ -476,18 +476,18 @@ private void Update()
     }
     #endregion
 
-    // µ¥¹ÌÁö ¹Ş´Â°Å ±¸Çö
-    // ÆĞÅÏ µé¾î°¥ ¶§ ¹«Àû.
+    // ë°ë¯¸ì§€ ë°›ëŠ”ê±° êµ¬í˜„
+    // íŒ¨í„´ ë“¤ì–´ê°ˆ ë•Œ ë¬´ì .
 
     public void GetDamage(int damage)
     {
-        // ¹«Àû »óÅÂ°¡ ¾Æ´Ò °æ¿ì,
+        // ë¬´ì  ìƒíƒœê°€ ì•„ë‹ ê²½ìš°,
         if (!isInvincible)
         {
-            // ´ë¹ÌÁö¸¸Å­ Ã¼·ÂÀ» °¨¼Ò½ÃÅ²´Ù.
+            // ëŒ€ë¯¸ì§€ë§Œí¼ ì²´ë ¥ì„ ê°ì†Œì‹œí‚¨ë‹¤.
             curHP -= damage;
 
-            // °¨¼ÒÇÑ Ã¼·ÂÀ» Ã¼·Â ÆĞ³Î¿¡ Àû¿ëÇÑ´Ù.
+            // ê°ì†Œí•œ ì²´ë ¥ì„ ì²´ë ¥ íŒ¨ë„ì— ì ìš©í•œë‹¤.
             HPSlider.value = curHP / maxHP;
         }
     }
