@@ -268,6 +268,8 @@ public class PlayerController : MonoBehaviour, IDamagable
 
         anim.SetFloat("vecX", dir.x);
         anim.SetFloat("vecY", dir.y);
+
+
         //PlayerMove();
         //Debug.Log(heading);
     }
