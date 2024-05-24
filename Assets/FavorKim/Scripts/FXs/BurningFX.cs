@@ -6,6 +6,7 @@ public class BurningFX : MonoBehaviour
 {
     private void OnParticleSystemStopped()
     {
-        transform.parent.gameObject.SetActive(false);
+        Debug.Log(GetComponentInParent<Animator>());
+        GetComponentInParent<Animator>().SetTrigger("Break");
     }
 }

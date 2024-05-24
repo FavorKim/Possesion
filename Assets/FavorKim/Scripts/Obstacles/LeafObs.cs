@@ -7,7 +7,6 @@ public class LeafObs : Obstacles
     [SerializeField] GameObject fire;
     [SerializeField] GameObject cutter;
 
-
     private void Awake()
     {
         fire.SetActive(false);
@@ -27,5 +26,10 @@ public class LeafObs : Obstacles
                 fire.SetActive(true);
                 break;
         }
+    }
+
+    public void VineBreak()
+    {
+        gameObject.SetActive(false);
     }
 }
