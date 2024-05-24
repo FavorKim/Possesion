@@ -23,7 +23,6 @@ public class HatManager : MonoBehaviour
         hitParticle = Instantiate(hitParticlePref).GetComponent<ParticleSystem>();
         sfx = hitParticle.gameObject.GetComponent<AudioSource>();
         hitParticle.Stop();
-        DontDestroyOnLoad(gameObject);
     }
 
     public void ShootHat(Vector3 dir)

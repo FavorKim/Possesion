@@ -53,6 +53,7 @@ MonoBehaviour:
         - globalObjectIdString: GlobalObjectId_V1-2-f0987962162b1864a984df1b1f6093a1-1880866448-0
         - globalObjectIdString: GlobalObjectId_V1-2-f0987962162b1864a984df1b1f6093a1-7876423719962663646-7876423719280101428
         - globalObjectIdString: GlobalObjectId_V1-2-f0987962162b1864a984df1b1f6093a1-658836977-0
+        - globalObjectIdString: GlobalObjectId_V1-2-f0987962162b1864a984df1b1f6093a1-1765397208479606-1992043568
         values:
         - colorIndex: 7
           iconNameOrGuid: AvatarMask On Icon
@@ -124,3 +125,5 @@ MonoBehaviour:
           iconNameOrGuid: Settings Icon
         - colorIndex: 4
           iconNameOrGuid: Terrain Icon
+        - colorIndex: 2
+          iconNameOrGuid: CapsuleCollider Icon

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public abstract class Monsters : MonoBehaviour, IDamagable
@@ -10,11 +11,13 @@ public abstract class Monsters : MonoBehaviour, IDamagable
     [SerializeField] private float curHP; // 몬스터의 현재 체력
     [SerializeField] private float maxHP; // 몬스터의 최대 체력
     
+    
     private float invincibleTime = 1.0f; // 무적 시간
     protected bool isInvincible = false; // 무적 여부
 
     private GameObject HP_HUD_Obj; // 몬스터의 체력을 나타내는 패널(Panel)
     [SerializeField] private Slider HPSlider; // 패널 내의 슬라이더
+    Vector3 startPos;
 
     public Skill skill1 { get; private set; } // 몬스터의 스킬 1 (스킬(Skill) 클래스는 PlayerController에서 정의하고 있다.)
     public Skill skill2 { get; private set; } // 몬스터의 스킬 2
@@ -33,6 +36,7 @@ public abstract class Monsters : MonoBehaviour, IDamagable
 
         // 슬라이더의 값을 (현재 체력 / 최대 체력)으로 한다.
         HPSlider.value = curHP / maxHP;
+        startPos = transform.position;
     }
 
     #endregion Start()
@@ -96,6 +100,7 @@ public abstract class Monsters : MonoBehaviour, IDamagable
     /// </summary>
     public virtual void GetDamage(int damage)
     {
+        
         // 무적 상태가 아닐 경우,
         if (!isInvincible)
         {
@@ -114,47 +119,11 @@ public abstract class Monsters : MonoBehaviour, IDamagable
         }
     }
 
-    /*
-    /// <summary>
-    /// 피격했을 때 타입을 비교하는 함수입니다. 타입의 상성에 따라 받는 대미지가 변화합니다.
-    /// </summary>
-    public virtual void OnTypeAttacked(Obstacles attacker)
-    {
-        if (isInvincible) return;
-
-        // 공격자의 타입이 우위일 경우,
-        if ((int)attacker.type > (int)type)
-            // 받는 대미지가 2배가 된다.
-            GetDamage(attacker.Damage * 2);
-        // 타입이 동위일 경우,
-        else if ((int)attacker.type == (int)type)
-            // 받는 대미지가 1배가 된다.
-            GetDamage(attacker.Damage);
-        // 공격자의 타입이 열위일 경우,
-        else
-            // 받는 대미지가 절반이 된다.
-            GetDamage(attacker.Damage / 2);
-    } */
+    
 
     // 무적을 구현하는 코루틴 함수
     IEnumerator CorInvincible()
     {
-        //isInvincible = true;
-        //float org = invincibleTime;
-        //while (true)
-        //{
-        //    yield return null;
-        //    invincibleTime -= Time.deltaTime;
-        //    if (invincibleTime < 0)
-        //    {
-        //        isInvincible = false;
-        //        invincibleTime = org;
-        //        StopCoroutine(CorInvincible());
-        //        break;
-        //    }
-        //}
-
-        // → 간단하게 구현할 수 있다.
         isInvincible = true;
         yield return new WaitForSeconds(invincibleTime);
         isInvincible = false;
@@ -163,15 +132,31 @@ public abstract class Monsters : MonoBehaviour, IDamagable
     /// <summary>
     /// [플레이어 한정] 몬스터의 스킬을 스킬 UI에 등록합니다.
     /// </summary>
+    // ※ Player에서 빙의한 몬스터를 참조하여 스킬을 참조할 수 있게 하는 것이 더 적절해 보입니다.
+    //Confirmed
+    /*
     public void SetSkill()
     {
-        // ※ Player에서 빙의한 몬스터를 참조하여 스킬을 참조할 수 있게 하는 것이 더 적절해 보입니다.
-
         if (skill1 == null) return;
         SkillManager.SetSkill(skill1, 1);
         if (skill2 == null) return;
         SkillManager.SetSkill(skill2, 2);
     }
-    
+    */
+
+    // 튜토리얼일 때 리스폰
+    private void OnDisable()
+    {
+        if (SceneManager.GetActiveScene().name == "FavorKim")
+            Invoke("Respawn", 3);
+    }
+    void Respawn()
+    {
+        gameObject.SetActive(true);
+        curHP = maxHP;
+        HPSlider.value = curHP / maxHP;
+        transform.position = startPos;
+    }
+
     #endregion Custom Methods
 }

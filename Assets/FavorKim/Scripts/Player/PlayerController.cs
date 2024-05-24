@@ -108,9 +108,9 @@ public class PlayerController : MonoBehaviour, IDamagable
 
         invinFX = GetComponentInChildren<ParticleSystem>();
         invinFX.gameObject.SetActive(false);
-        OnDead += DeadCheck;
-        OnDead += SetHPUI;
-        OnDead += () => { SettingUIManager.Instance.PopUpGameOver(); };
+        OnDamaged += DeadCheck;
+        OnDamaged += SetHPUI;
+        //OnDamaged += () => { SettingUIManager.Instance.PopUpGameOver(); };
         camTransform = transform;
 
         t_fullHP.text = fullHP.ToString();
@@ -221,7 +221,7 @@ public class PlayerController : MonoBehaviour, IDamagable
         curHP -= dmg;
         anim.SetTrigger("Hit");
         StartCoroutine(CorInvincible());
-        OnDead();
+        OnDamaged();
     }
 
     void DeadCheck()
@@ -233,7 +233,7 @@ public class PlayerController : MonoBehaviour, IDamagable
             isInvincible = true;
             anim.SetBool("isDead", true);
             anim.SetTrigger("Dead");
-
+            SettingUIManager.Instance.PopUpGameOver();
         }
     }
 
@@ -321,7 +321,7 @@ public class PlayerController : MonoBehaviour, IDamagable
     }
 
 
-    event Action OnDead;
+    event Action OnDamaged;
 
     #endregion
 

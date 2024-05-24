@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem.Controls;
 
 public class Obstacles : MonoBehaviour, ITyped
 {
@@ -39,14 +40,21 @@ public class Obstacles : MonoBehaviour, ITyped
         other.GetComponent<Obstacles>()?.OnTypeAttacked(type);
 
         // 데미지를 계산할 필요가 있다면? 데미지 계산까지.
-        other.GetComponent<IDamagable>()?.GetDamage(Damage);
+        
+        if (other.transform.root.GetComponent<PlayerController>() == null && transform.root.GetComponent<PlayerController>() == null) return;
+
+        if (other.transform.root != transform.root)
+            other.GetComponent<IDamagable>()?.GetDamage(Damage);
     }
 
     // OnTriggerEnter()
     private void OnTriggerStay(Collider other)
     {
         other.GetComponent<Obstacles>()?.OnTypeAttacked(type);
-        other.GetComponent<IDamagable>()?.GetDamage(Damage);
+
+        if (other.transform.root.GetComponent<PlayerController>() == null && transform.root.GetComponent<PlayerController>() == null) return;
+        if (other.transform.root != transform.root)
+            other.GetComponent<IDamagable>()?.GetDamage(Damage);
     }
 
     #endregion Unity Events

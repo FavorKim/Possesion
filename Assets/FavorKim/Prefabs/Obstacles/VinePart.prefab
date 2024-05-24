@@ -48339,7 +48339,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de2d3128269dd2a47a7296139228b0f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 5
+  damage: 0
   myType: 0
   fire: {fileID: 3620337692643291582}
   cutter: {fileID: 2037770787166596730}
