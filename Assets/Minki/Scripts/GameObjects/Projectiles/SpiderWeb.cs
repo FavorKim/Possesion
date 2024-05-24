@@ -57,6 +57,8 @@ public class SpiderWeb : Projectile
             // 움직임을 멈춘다.
             _rigidbody.velocity = Vector3.zero;
 
+            transform.parent = other.transform;
+
             // 일정 시간 후, 삭제한다.
             StartCoroutine(DelayedDestroy());
         }

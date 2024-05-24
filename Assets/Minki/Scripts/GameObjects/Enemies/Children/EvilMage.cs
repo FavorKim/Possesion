@@ -104,7 +104,10 @@ namespace Enemy
         // 공격 중 피격했을 경우, 투사체를 삭제한다.
         private void OnCancelAttack()
         {
-            Destroy(projectile.gameObject);
+            if (projectile != null)
+            {
+                Destroy(projectile.gameObject);
+            }
         }
 
         #endregion Animation Events
