@@ -31,7 +31,7 @@ namespace Enemy
         {
             Name = "Dragon";
 
-            _attackSkillCount = 2;
+            AttackSkillCount = 2;
 
             HealthPoint = 100;
             MagicPoint = 100;
@@ -46,7 +46,7 @@ namespace Enemy
             AttackRange = 3.0f;
             DetectRange = 10.0f;
 
-            InitSkill(Skill1CoolTime, Skill2CoolTime);
+            InitSkill(Skill2CoolTime);
         }
 
         #endregion Initialize Methods
@@ -54,39 +54,6 @@ namespace Enemy
         #region Action Methods
 
         // 적(Enemy)의 공통된 행동 함수를 재정의한다.
-        public override void Patrol()
-        {
-            base.Patrol();
-
-            _fireParticle.Stop();
-
-            Debug.Log("Dragon's Patrol!");
-        }
-
-        public override void Chase()
-        {
-            base.Chase();
-
-            _fireParticle.Stop();
-
-            Debug.Log("Dragon's Chase!");
-        }
-
-        public override void AttackAI()
-        {
-            // 플레이어와의 거리가 1번 공격의 사정 범위보다 멀 경우, 2번 공격만 시전한다.
-            if (_navMeshAgent.remainingDistance > 3.0f)
-            {
-                Skill1();
-            }
-            else // 그 외에는 무작위로 공격한다.
-            {
-                base.AttackAI();
-            }
-
-            Debug.Log("Dragon's Attack!");
-        }
-
         public override void Attack()
         {
             base.Attack();
@@ -95,14 +62,6 @@ namespace Enemy
         public override void Skill1()
         {
             base.Skill1();
-
-            // 도트 대미지를 구현할 것인가?
-            // 상태 이상에 대해서 별도의 코드를 작성하는 것이 바람직해 보인다.
-        }
-
-        public override void Skill2()
-        {
-            // 세 번째 공격 스킬이 존재하지 않는다.
         }
 
         #endregion Action Methods
@@ -114,12 +73,14 @@ namespace Enemy
         // 원거리 화염 공격(Skill1)의 첫 번째 이벤트 함수
         private void OnSkill1Event1()
         {
+            // 화염 효과를 재생한다.
             _fireParticle.Play();
         }
 
-        // 원거리 화염 공격(Attack02)의 두 번째 이벤트 함수
+        // 원거리 화염 공격(Skill1)의 두 번째 이벤트 함수
         private void OnSkill1Event2()
         {
+            // 화염 효과를 중지한다.
             _fireParticle.Stop();
         }
 

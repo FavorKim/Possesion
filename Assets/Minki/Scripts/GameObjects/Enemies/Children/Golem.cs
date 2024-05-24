@@ -5,6 +5,13 @@ namespace Enemy
     // 골렘 클래스
     public class Golem : Enemy
     {
+        #region Fields
+
+        // 필드(Fields)
+        [SerializeField] private ParticleSystem _particle; // 공격 모션 중 근거리 범위 공격을 구현하기 위한 파티클 시스템
+
+        #endregion Fields
+
         #region Awake()
 
         protected override void Awake()
@@ -24,7 +31,7 @@ namespace Enemy
         {
             Name = "Golem";
 
-            _attackSkillCount = 2;
+            AttackSkillCount = 2;
 
             HealthPoint = 100;
             MagicPoint = 100;
@@ -37,8 +44,9 @@ namespace Enemy
             Skill1CoolTime = 100.0f;
             Skill2CoolTime = 0.0f;
             AttackRange = 3.0f;
+            DetectRange = 10.0f;
 
-            InitSkill(AttackCoolTime, Skill1CoolTime);
+            InitSkill(Skill1CoolTime);
         }
 
         #endregion Initialize Methods
@@ -46,27 +54,6 @@ namespace Enemy
         #region Action Methods
 
         // 적(Enemy)의 공통된 행동 함수를 재정의한다.
-        public override void Patrol()
-        {
-            base.Patrol();
-
-            Debug.Log("Golem's Patrol!");
-        }
-
-        public override void Chase()
-        {
-            base.Chase();
-
-            Debug.Log("Golem's Chase!");
-        }
-
-        public override void AttackAI()
-        {
-            base.AttackAI();
-
-            Debug.Log("Golem's Attack!");
-        }
-
         public override void Attack()
         {
             base.Attack();
@@ -77,16 +64,17 @@ namespace Enemy
             base.Skill1();
         }
 
-        public override void Skill2()
-        {
-            // 세 번째 공격 스킬이 존재하지 않는다.
-        }
-
         #endregion Action Methods
 
         #region Animation Events
 
         // 아래는 애니메이션(Animation) 클립에서 이벤트를 추가하여 호출하는 함수들이다.
+
+        // 근거리 범위 공격 (Skill1)의 이벤트 함수
+        private void OnSkill1Event()
+        {
+            _particle.Play();
+        }
 
         #endregion Animation Events
     }

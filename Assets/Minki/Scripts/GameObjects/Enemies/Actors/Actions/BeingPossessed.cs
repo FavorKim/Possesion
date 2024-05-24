@@ -1,17 +1,21 @@
 using BehaviourTree;
+using UnityEngine;
+using UnityEngine.AI;
 
 namespace Enemy
 {
     // 적이 플레이어에게 빙의되었을 때의 상태를 구현하는 클래스
     public class BeingPossessed : Node
     {
-        // 적(Enemy) 클래스
-        private Enemy _enemy;
+        // 필드(Field)
+        private readonly Animator _animator;
+        private readonly NavMeshAgent _navMeshAgent;
 
         // 생성자
         public BeingPossessed(Enemy enemy)
         {
-            _enemy = enemy;
+            _animator = enemy.GetComponent<Animator>();
+            _navMeshAgent = enemy.GetComponent<NavMeshAgent>();
         }
 
         // 평가 함수
@@ -27,8 +31,16 @@ namespace Enemy
         // 빙의 상태를 담당하는 함수
         public void DoBeingPossessed()
         {
-            // 빙의 함수를 실행한다.
-            _enemy.BeingPossessed();
+            // 모든 애니메이션을 초기화하고, 빙의에 대응하는 애니메이션을 활성화한다.
+            _animator.SetBool("IsPossessed", true);
+
+            _animator.SetBool("AI_Patrol_Move", false);
+            _animator.SetBool("AI_Patrol_Sense", false);
+            _animator.SetBool("AI_Chase", false);
+            _animator.SetInteger("AttackIndex", 0);
+
+            // 네비게이션을 비활성화한다.
+            _navMeshAgent.enabled = false;
         }
     }
 }

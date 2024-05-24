@@ -6,20 +6,15 @@ namespace Enemy
     // 마법사 클래스
     public class EvilMage : Enemy
     {
-        #region Components
-
-        // 투사체를 발사하는 위치
-        [SerializeField] private Transform projectileTransform;
-
-        #endregion Components
-
         #region Fields
 
         // 필드(Fields)
+        [SerializeField] private Transform projectileTransform; // 투사체를 발사하는 위치
+
         private ProjectilePool projectilePool; // 투사체를 구현하기 위한 오브젝트 풀링
         private Projectile projectile; // 투사체 게임 오브젝트
 
-        [SerializeField] private float shootPower = 1000.0f; // 투사체를 쏘는 힘의 값
+        [SerializeField] private float shootPower = 50.0f; // 투사체를 쏘는 힘의 값
 
         #endregion Fields
 
@@ -45,7 +40,7 @@ namespace Enemy
         {
             Name = "EvilMage";
 
-            _attackSkillCount = 2;
+            AttackSkillCount = 2;
 
             HealthPoint = 100;
             MagicPoint = 100;
@@ -57,10 +52,10 @@ namespace Enemy
             AttackCoolTime = 100.0f;
             Skill1CoolTime = 100.0f;
             Skill2CoolTime = 0.0f;
-            AttackRange = 3.0f;
-            DetectRange = 5.0f;
+            AttackRange = 9.0f;
+            DetectRange = 10.0f;
 
-            InitSkill(AttackCoolTime, Skill1CoolTime);
+            InitSkill(Skill1CoolTime);
         }
 
         #endregion Initialize Methods
@@ -68,27 +63,6 @@ namespace Enemy
         #region Action Methods
 
         // 적(Enemy)의 공통된 행동 함수를 재정의한다.
-        public override void Patrol()
-        {
-            base.Patrol();
-
-            Debug.Log("EvilMage's Patrol!");
-        }
-
-        public override void Chase()
-        {
-            base.Chase();
-
-            Debug.Log("EvilMage's Chase!");
-        }
-
-        public override void AttackAI()
-        {
-            base.AttackAI();
-
-            Debug.Log("EvilMage's Attack!");
-        }
-
         public override void Attack()
         {
             base.Attack();
@@ -97,11 +71,6 @@ namespace Enemy
         public override void Skill1()
         {
             base.Skill1();
-        }
-
-        public override void Skill2()
-        {
-            // 세 번째 공격 스킬이 존재하지 않는다.
         }
 
         #endregion Action Methods
@@ -119,7 +88,7 @@ namespace Enemy
         // 원거리 뇌전 공격(Skill2)의 두 번째 이벤트 함수 (발사하는 애니메이션)
         private void OnSkill1Event2()
         {
-            StartCoroutine(projectile.Shoot());
+            projectile.Shoot();
         }
 
         #endregion Animation Events

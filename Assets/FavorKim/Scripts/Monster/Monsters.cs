@@ -11,7 +11,7 @@ public abstract class Monsters : MonoBehaviour, IDamagable
     [SerializeField] private float maxHP; // 몬스터의 최대 체력
     
     private float invincibleTime = 1.0f; // 무적 시간
-    private bool isInvincible = false; // 무적 여부
+    protected bool isInvincible = false; // 무적 여부
 
     private GameObject HP_HUD_Obj; // 몬스터의 체력을 나타내는 패널(Panel)
     [SerializeField] private Slider HPSlider; // 패널 내의 슬라이더
@@ -89,7 +89,7 @@ public abstract class Monsters : MonoBehaviour, IDamagable
     /// <summary>
     /// 몬스터가 피격했을 때 호출되는 함수입니다. 받은 대미지만큼 체력이 감소합니다.
     /// </summary>
-    public void GetDamage(int damage)
+    public virtual void GetDamage(int damage)
     {
         // 무적 상태가 아닐 경우,
         if (!isInvincible)

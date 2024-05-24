@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7747082537440704163}
   m_Layer: 0
   m_Name: Body Collider
-  m_TagString: Untagged
+  m_TagString: Monster
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -441,7 +441,7 @@ GameObject:
   - component: {fileID: 7183681169288268696}
   m_Layer: 0
   m_Name: SlimePBR
-  m_TagString: Untagged
+  m_TagString: Monster
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -473,7 +473,7 @@ Animator:
   m_GameObject: {fileID: 7185303502546423426}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 84c24e29d2b1df84ba59de5c880a7320, type: 3}
-  m_Controller: {fileID: 9100000, guid: 013d0399009f5f14a8d2d72e1380d4ed, type: 2}
+  m_Controller: {fileID: 9100000, guid: 6f51f2d0ba5758349bdedb19b9987d56, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 1
@@ -534,14 +534,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58c3178cff7a1a54f9da7e54f5ff11b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  curHP: 0
-  maxHP: 0
+  curHP: 100
+  maxHP: 100
   HPSlider: {fileID: 0}
-  patrolTransforms:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  _patrolTransforms: []
 --- !u!1 &7185446292400167854
 GameObject:
   m_ObjectHideFlags: 0

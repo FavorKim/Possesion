@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Events;
@@ -14,29 +15,28 @@ namespace Enemy
 
         // 컴포넌트(Components)
         private Animator _animator; // 적 자신의 애니메이터(Animator)
-        protected NavMeshAgent _navMeshAgent; // 플레이어를 추적하기 위한 네비게이션(NavMesh)
-
-        [SerializeField] private Transform[] patrolTransforms; // 순찰하는 위치들(Transform)
-        public Transform _playerTransform { get; private set; } // 플레이어의 위치(Transform)
+        private NavMeshAgent _navMeshAgent; // 플레이어를 추적하기 위한 네비게이션(NavMesh)
 
         #endregion Components
 
         #region Fields
 
         // 필드(Fields)
+        //[SerializeField] private Transform[] _patrolTransforms; // 순찰하는 위치들(Transform)
+        //public Transform[] PatrolTransforms { get { return _patrolTransforms; } }
 
-        // 애니메이터를 AI용, 빙의용으로 2개 생성하여 교환할 수 있도록 수정할 것.
+        [SerializeField] private List<Transform> _patrolTransforms; // 순찰하는 위치들
+        public List<Transform> PatrolTransforms { get { return _patrolTransforms; } }
 
-        private int _patrolIndex = 0; // 순찰할 때 현재 이동할 위치의 순서
+        private Transform _playerTransform;
 
-        public bool IsPossessed { get; private set; } // 빙의 상태를 판별하는 변수
-        public bool IsGetHit { get; private set; } // 피격을 판별하는 변수
-        public bool IsDead { get; private set; } // 죽음을 판별하는 변수
+        public bool IsPossessed { get; set; } // 빙의 상태를 판별하는 변수
+        public bool IsGetHit { get; set; } // 피격을 판별하는 변수
 
         #region Enemy Stats
 
         // 필드(변수); 적의 스탯 정보
-        protected int _attackSkillCount; // 공격 기술 개수
+        public int AttackSkillCount { get; protected set; } // 공격 기술 개수
 
         public string Name { get; protected set; } // Name; 이름
         
@@ -61,14 +61,6 @@ namespace Enemy
 
         #endregion Fields
 
-        #region Delegates
-
-        // 대리자
-        private UnityAction _unityAction;
-        private bool isCorRunning = false; // 코루틴의 중복 실행을 방지하기 위한 변수
-
-        #endregion Delegates
-
         #region Awake()
 
         protected override void Awake()
@@ -80,12 +72,16 @@ namespace Enemy
             _animator = GetComponent<Animator>();
             _navMeshAgent = GetComponent<NavMeshAgent>();
 
-            // 현재 Scene에서 "PlayerController" 스크립트를 가진 게임 오브젝트(= 플레이어)를 찾는다.
-            _playerTransform = FindObjectOfType<PlayerController>().GetComponent<Transform>();
-
             // NavMeshAgent의 속성 값을 조절한다.
             _navMeshAgent.speed = MoveSpeed; // 추적 속도를 이동 속도로 지정한다.
             _navMeshAgent.stoppingDistance = AttackRange; // 정지 거리를 공격 범위로 지정한다.
+
+            // 보스 기믹 전용, 순찰 지점이 따로 없이 바로 캐릭터에게 돌진한다.
+            if (_patrolTransforms.Count == 0)
+            {
+                _playerTransform = FindObjectOfType<PlayerController>().transform;
+                _patrolTransforms.Add(_playerTransform);
+            }
         }
 
         #endregion Awake()
@@ -93,59 +89,27 @@ namespace Enemy
         #region Collision Events
 
         // 플레이어에게 피격(충돌) 시의 처리 함수
-        private void OnCollisionEnter(Collision collision)
+        private void OnTriggerEnter(Collider other)
         {
-            // 플레이어의 모자와 충돌했을 경우,
-            if (collision.collider.CompareTag("Hat"))
+            // 플레이어가 던진 모자에 맞았을 경우,
+            if (other.CompareTag("Hat"))
             {
                 // 빙의 상태가 된다.
                 IsPossessed = true;
             }
         }
 
-        private void OnTriggerEnter(Collider other)
+        private void OnTriggerStay(Collider other)
         {
-            if (other.CompareTag("Hat"))
+            // 공격(장애물, 몬스터의 공격 등)에 맞았을 경우, 무적 상태가 아니라면
+            if (other.GetComponent<Obstacles>() && !isInvincible)
             {
+                // 피격 상태가 된다.
                 IsGetHit = true;
-                IsPossessed = true;
             }
         }
 
         #endregion Collision Events
-
-        #region Coroutines
-
-        // 일부 함수에 대해, 대기 시간을 포함한 함수를 호출하기 위한 코루틴 함수
-        private IEnumerator SetDelay(float time, UnityAction unityAction, bool isCallFirst)
-        {
-            // 코루틴을 시작한다.
-            isCorRunning = true;
-
-            // 함수를 먼저 호출할 경우,
-            if (isCallFirst)
-            {
-                // 전달받은 대리자(UnityAction)를 호출한다.
-                unityAction.Invoke();
-
-                // 받은 시간만큼 대기한다.
-                yield return new WaitForSeconds(time);
-            }
-            // 대기 시간을 먼저 취할 경우,
-            else
-            {
-                // 받은 시간만큼 대기한다.
-                yield return new WaitForSeconds(time);
-
-                // 전달받은 대리자를 호출한다.
-                unityAction.Invoke();
-            }
-
-            // 코루틴을 종료한다.
-            isCorRunning = false;
-        }
-
-        #endregion Coroutines
 
         #region Abstract Methods
 
@@ -157,191 +121,31 @@ namespace Enemy
         #region Action Methods
 
         // 적의 행동을 다루는 함수들, 부모 클래스에서 공통된 속성을 지정하고, 자식 클래스에서 각 특성에 맞게 추가한다.
-
-        // 빙의를 담당하는 함수
-        public virtual void BeingPossessed()
-        {
-            // 모든 애니메이션을 초기화하고, 빙의에 대응하는 애니메이션을 활성화한다.
-            _animator.SetBool("IsPossessed", true);
-            _animator.SetBool("AI_Patrol_Move", false);
-            _animator.SetBool("AI_Patrol_Sense", false);
-            _animator.SetBool("AI_Chase", false);
-            _animator.SetInteger("AI_AttackIndex", 0);
-
-            // Debug.Log("Enemy's BeingPossessed() is Called.");
-        }
-
-        // 피격을 담당하는 함수
-        public virtual void GetHit()
-        {
-            // 피격 애니메이션을 재생한다.
-            _animator.SetTrigger("GetHit");
-
-            // 계속 피격되지 않도록 한다.
-            IsGetHit = false;
-
-            // Debug.Log("Enemy's GetHit() is Called.");
-        }
-
-        // 죽음을 담당하는 함수
-        public virtual void Die()
-        {
-            // 죽음 애니메이션을 재생한다.
-            _animator.SetTrigger("Die");
-
-            // 게임 오브젝트를 비활성화한다. 단, 죽음 애니메이션이 끝난 후 호출해야 하므로 일정 시간 여유를 둔다.
-            StartCoroutine(SetDelay(3.0f, () => gameObject.SetActive(false), isCallFirst: false)); // 약 3.0초 후 호출한다.
-
-            // Debug.Log("Enemy's Die() is Called.");
-        }
-
-        // 순찰을 구현하는 함수
-        public virtual void Patrol()
-        {
-            // 순찰의 종류
-            
-            // 1. 가만히 서서 주변을 탐색한다.
-            UnityAction sense = () =>
-            {
-                // 주변을 탐색하는 애니메이션을 재생한다.
-                _animator.SetBool("AI_Patrol_Sense", true);
-                _animator.SetBool("AI_Patrol_Move", false);
-                _animator.SetBool("AI_Chase", false);
-
-                // 다음 순찰 위치를 지정한다.
-                _patrolIndex = ++_patrolIndex % patrolTransforms.Length;
-            };
-
-            // 2. 일정 구역을 돌아다닌다.
-            UnityAction patrol = () =>
-            {
-                // 돌아다니는 애니메이션을 재생한다.
-                _animator.SetBool("AI_Patrol_Move", true);
-                _animator.SetBool("AI_Patrol_Sense", false);
-                _animator.SetBool("AI_Chase", false);
-
-                // 정해진 순찰 구역으로 이동한다.
-                _navMeshAgent.SetDestination(patrolTransforms[_patrolIndex].position);
-            };
-
-            // 기본적으로, (그리고 주변을 둘러보는 함수가 실행 중이지 않을 때,)
-            if (!isCorRunning)
-            {
-                // 일정 구역을 돌아다닌다.
-                patrol.Invoke();
-            }
-
-            // 순찰 목적지까지 이동했다면,
-            if (!_navMeshAgent.pathPending && _navMeshAgent.remainingDistance <= _navMeshAgent.stoppingDistance && !isCorRunning)
-            {
-                // 잠시 주변을 둘러본다. (약 5.0초간)
-                StartCoroutine(SetDelay(5.0f, sense, isCallFirst: true));
-            }
-        }
-
-        // 추적을 구현하는 함수
-        public virtual void Chase()
-        {
-            // 추적 애니메이션을 재생한다.
-            _animator.SetBool("AI_Chase", true);
-            _animator.SetInteger("AI_AttackIndex", 0);
-
-            // 플레이어를 추적한다.
-            if (_animator.GetCurrentAnimatorStateInfo(0).IsName("RunFWD")) // 공격 모션에 대한 후딜레이를 적용한다.
-            {
-                _navMeshAgent.isStopped = false;
-                _navMeshAgent.SetDestination(_playerTransform.position);
-            }
-
-            // Debug.Log("Enemy's Chase() is Called.");
-        }
-
-        // 공격을 구현하는 함수
-        public virtual void AttackAI()
-        {
-            // !! 중요 !!
-            // 공격을 수행하기 전, 적이 플레이어를 바라보고 있어야 한다. 현재는 플레이어 근처에 있다면 방향에 상관 없이 공격을 수행하고 있다.
-
-            // 추적을 멈춘다.
-            _navMeshAgent.isStopped = true;
-
-            // 공격 스킬을 바꿀 주기
-            float changeTime = 1.0f;
-
-            // 소지한 공격 스킬 중 무작위로 하나를 고른다.
-            int curAttackIndex = Random.Range(1, _attackSkillCount + 1);
-
-            switch (curAttackIndex)
-            {
-                case 0:
-                    _unityAction = null;
-                    break;
-                case 1:
-                    _unityAction = Attack;
-                    break;
-                case 2:
-                    _unityAction = Skill1;
-                    break;
-                case 3:
-                    _unityAction = Skill2;
-                    break;
-                default:
-                    _unityAction = null;
-                    break;
-            }
-
-            // 코루틴을 사용하여, 일정 주기마다 스킬을 달리하여 공격한다.
-            if (!isCorRunning)
-            {
-                StartCoroutine(SetDelay(changeTime, _unityAction, isCallFirst: true));
-            }
-
-            // Debug.Log("Enemy's Attack() is Called.");
-        }
-
         public override void Attack()
         {
-            if (IsPossessed)
-            {
-                _animator.SetTrigger("Player_Attack");
-            }
-            else
-            {
-                _animator.SetInteger("AI_AttackIndex", 1);
-            }
+            _animator.SetInteger("AttackIndex", 0);
+            _animator.SetTrigger("Attack");
         }
 
         public override void Skill1()
         {
-            if (IsPossessed)
-            {
-                _animator.SetTrigger("Player_Skill1");
-            }
-            else
-            {
-                _animator.SetInteger("AI_AttackIndex", 2);
-            }
+            _animator.SetInteger("AttackIndex", 1);
+            _animator.SetTrigger("Attack");
         }
 
         public override void Skill2()
         {
-            if (IsPossessed)
-            {
-                _animator.SetTrigger("Player_Skill2");
-            }
-            else
-            {
-                _animator.SetInteger("AI_AttackIndex", 3);
-            }
+            _animator.SetInteger("AttackIndex", 2);
+            _animator.SetTrigger("Attack");
         }
-        /*
-        public override void OnTypeAttacked(ITyped.Type attacker)
+
+        public override void GetDamage(int damage)
         {
-            base.OnTypeAttacked(attacker);
+            base.GetDamage(damage);
 
             IsGetHit = true;
         }
-        */
+
         #endregion Action Methods
     }
 }

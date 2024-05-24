@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-//½Ì±ÛÅæ Á¦³×¸¯ Å¬·¡½º. ½Ì±ÛÅæÀ¸·Î »ç¿ëÇÒ Å¬·¡½º¿¡¼­ »ó¼Ó¹Ş¾Æ¼­ »ç¿ë. ´Ù¸¥ ¾ÀÀ¸·Î ³Ñ¾î°¡¸é À¯ÁöµÇÁö ¾ÊÀ½.
+//ì‹±ê¸€í†¤ ì œë„¤ë¦­ í´ë˜ìŠ¤. ì‹±ê¸€í†¤ìœ¼ë¡œ ì‚¬ìš©í•  í´ë˜ìŠ¤ì—ì„œ ìƒì†ë°›ì•„ì„œ ì‚¬ìš©. ë‹¤ë¥¸ ì”¬ìœ¼ë¡œ ë„˜ì–´ê°€ë©´ ìœ ì§€ë˜ì§€ ì•ŠìŒ.
 public class SceneSingleton<T> : MonoBehaviour where T : MonoBehaviour
 {
     static T instance;

@@ -14,7 +14,7 @@ public class Player
      bool isFire = false;
      bool isZoom = false;
      Vector2 mouseDeltaPos = Vector2.zero;
-     float senst;//Ä«¸Ş¶ó °¨µµ
+     float senst;//ì¹´ë©”ë¼ ê°ë„
      int controlWeaponIndex;
 
      CharacterController cc;
@@ -76,8 +76,8 @@ public class Player
          {
              if (!onTank)
              {
-                 MoveOrder();//ÀÌµ¿  
-                 RotateOrder();//Ä³¸¯ÅÍ ¹× ÃÑ±â È¸Àü
+                 MoveOrder();//ì´ë™  
+                 RotateOrder();//ìºë¦­í„° ë° ì´ê¸° íšŒì „
              }
          }
          else if (onPlay)
@@ -89,7 +89,7 @@ public class Player
      {
          if (isActive)
          {
-             CamRotate();//Ä«¸Ş¶ó È¸Àü
+             CamRotate();//ì¹´ë©”ë¼ íšŒì „
          }
      }
      private void MoveOrder()
@@ -160,9 +160,9 @@ public class Player
          mouseDeltaPos = new Vector2(Random.Range(-recoli, recoli), Random.Range(recoli, recoli * 3)) * 0.12f;
      }
 
-     void OnMove(InputValue inputValue)//WASD Á¶ÀÛ
+     void OnMove(InputValue inputValue)//WASD ì¡°ì‘
      {
-         moveVectorTarget = inputValue.Get<Vector2>();//ÀÎÇ² º¤ÅÍ ¹Ş¾Æ¿È
+         moveVectorTarget = inputValue.Get<Vector2>();//ì¸í’‹ ë²¡í„° ë°›ì•„ì˜´
          //moveVectorTarget = inputMovement;
          //Debug.Log(inputMovement);
      }
@@ -175,7 +175,7 @@ public class Player
 
      void OnAim(InputValue inputValue)
      {
-         mouseDeltaPos = inputValue.Get<Vector2>();//ÀÎÇ² º¤ÅÍ ¹Ş¾Æ¿È        
+         mouseDeltaPos = inputValue.Get<Vector2>();//ì¸í’‹ ë²¡í„° ë°›ì•„ì˜´        
      }
 
 
@@ -186,13 +186,13 @@ public class Player
  */
 }
 
-public class PlayerCombatData//ÂüÁ¶¿ë µ¥ÀÌÅÍ Å¬·¡½º
+public class PlayerCombatData//ì°¸ì¡°ìš© ë°ì´í„° í´ë˜ìŠ¤
 {
-    public float playerMaxHp;//ÃÖ´ë Ã¼·Â
-    public float playerCurHp;//ÇöÀç Ã¼·Â
-    public string controlWeaponName;//»ç¿ëÁßÀÎ ¹«±â ÀÌ¸§
-    public int controlWeaponIndex;//»ç¿ëÁßÀÎ ¹«±â ÀÎµ¦½º
-    public int cwMaxMag;//»ç¿ëÁßÀÎ ¹«±â ÃÖ´ë ÀåÅº·®
-    public int cwCurMag;//»ç¿ëÁßÀÎ ¹«±â ÇöÀç ÀåÅº·®
-    public int killCount;//Å³¼ö
+    public float playerMaxHp;//ìµœëŒ€ ì²´ë ¥
+    public float playerCurHp;//í˜„ì¬ ì²´ë ¥
+    public string controlWeaponName;//ì‚¬ìš©ì¤‘ì¸ ë¬´ê¸° ì´ë¦„
+    public int controlWeaponIndex;//ì‚¬ìš©ì¤‘ì¸ ë¬´ê¸° ì¸ë±ìŠ¤
+    public int cwMaxMag;//ì‚¬ìš©ì¤‘ì¸ ë¬´ê¸° ìµœëŒ€ ì¥íƒ„ëŸ‰
+    public int cwCurMag;//ì‚¬ìš©ì¤‘ì¸ ë¬´ê¸° í˜„ì¬ ì¥íƒ„ëŸ‰
+    public int killCount;//í‚¬ìˆ˜
 }
