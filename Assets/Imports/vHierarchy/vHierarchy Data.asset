@@ -40,37 +40,34 @@ MonoBehaviour:
         - globalObjectIdString: GlobalObjectId_V1-2-16ba1214661df554393870711c6e43bf-7370800870475251245-0
         - globalObjectIdString: GlobalObjectId_V1-2-16ba1214661df554393870711c6e43bf-2266157265114488493-347832437
         - globalObjectIdString: GlobalObjectId_V1-2-16ba1214661df554393870711c6e43bf-6324755551727523830-3795595302692633646
-        values:
-        - colorIndex: 8
-          iconNameOrGuid: 
-        - colorIndex: 8
-          iconNameOrGuid: 
-        - colorIndex: 8
-          iconNameOrGuid: 
-        - colorIndex: 8
-          iconNameOrGuid: 
-        - colorIndex: 9
-          iconNameOrGuid: 
-        - colorIndex: 9
-          iconNameOrGuid: 
-        - colorIndex: 9
-          iconNameOrGuid: 
-        - colorIndex: 2
-          iconNameOrGuid: 
-        - colorIndex: 2
         - globalObjectIdString: GlobalObjectId_V1-1-f3de68db836e7e34fbab84dbde9b09eb-1594767147126006-0
         - globalObjectIdString: GlobalObjectId_V1-1-f3de68db836e7e34fbab84dbde9b09eb-822360466297939709-0
-        - globalObjectIdString: GlobalObjectId_V1-1-f3de68db836e7e34fbab84dbde9b09eb-6899856444487427719-0
         - globalObjectIdString: GlobalObjectId_V1-1-f3de68db836e7e34fbab84dbde9b09eb-1193745591585432-4893400622809984823
         values:
+        - colorIndex: 8
+          iconNameOrGuid: 
+        - colorIndex: 8
+          iconNameOrGuid: 
+        - colorIndex: 8
+          iconNameOrGuid: 
+        - colorIndex: 8
+          iconNameOrGuid: 
+        - colorIndex: 9
+          iconNameOrGuid: 
+        - colorIndex: 9
+          iconNameOrGuid: 
+        - colorIndex: 9
+          iconNameOrGuid: 
+        - colorIndex: 2
+          iconNameOrGuid: 
+        - colorIndex: 2
+          iconNameOrGuid: 
         - colorIndex: 2
           iconNameOrGuid: AvatarMask On Icon
         - colorIndex: 4
           iconNameOrGuid: SphereCollider Icon
         - colorIndex: 6
           iconNameOrGuid: Favorite
-        - colorIndex: 6
-          iconNameOrGuid: 
     - goDatas_byGlobalId:
         keys:
         - globalObjectIdString: GlobalObjectId_V1-1-3323d1b4b4cbbcd47897294d83f3a891-1201003157251696-0
