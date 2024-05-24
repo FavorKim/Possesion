@@ -3554,7 +3554,7 @@ ParticleSystem:
         m_NumAlphaKeys: 2
     range: {x: 0, y: 1}
   CollisionModule:
-    enabled: 0
+    enabled: 1
     serializedVersion: 4
     type: 1
     collisionMode: 0
@@ -4791,7 +4791,6 @@ GameObject:
   - component: {fileID: 490660}
   - component: {fileID: 19857498}
   - component: {fileID: 19960938}
-  - component: {fileID: 1538390217544334260}
   m_Layer: 10
   m_Name: Sparks
   m_TagString: Untagged
@@ -9627,20 +9626,6 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
---- !u!114 &1538390217544334260
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 147140}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2910bd8bcd3b3c541b9e725423d9aebf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damage: 15
-  myType: 0
 --- !u!1 &160086
 GameObject:
   m_ObjectHideFlags: 0
@@ -13246,7 +13231,7 @@ ParticleSystem:
         m_NumAlphaKeys: 2
     range: {x: 0, y: 1}
   CollisionModule:
-    enabled: 0
+    enabled: 1
     serializedVersion: 4
     type: 1
     collisionMode: 0
@@ -13433,7 +13418,7 @@ ParticleSystem:
     collidesWithDynamic: 0
     interiorCollisions: 1
   TriggerModule:
-    enabled: 0
+    enabled: 1
     serializedVersion: 2
     inside: 1
     outside: 0
@@ -18220,7 +18205,7 @@ ParticleSystem:
         m_NumAlphaKeys: 2
     range: {x: 0, y: 1}
   CollisionModule:
-    enabled: 0
+    enabled: 1
     serializedVersion: 4
     type: 1
     collisionMode: 0
@@ -18407,11 +18392,11 @@ ParticleSystem:
     collidesWithDynamic: 0
     interiorCollisions: 1
   TriggerModule:
-    enabled: 0
+    enabled: 1
     serializedVersion: 2
-    inside: 1
+    inside: 0
     outside: 0
-    enter: 0
+    enter: 2
     exit: 0
     colliderQueryMode: 0
     radiusScale: 1
@@ -19457,7 +19442,6 @@ GameObject:
   - component: {fileID: 431214}
   - component: {fileID: 19892804}
   - component: {fileID: 19943386}
-  - component: {fileID: 6878797853759765869}
   m_Layer: 10
   m_Name: Sphere
   m_TagString: Untagged
@@ -24234,17 +24218,3 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
---- !u!114 &6878797853759765869
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 191778}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2910bd8bcd3b3c541b9e725423d9aebf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damage: 15
-  myType: 0

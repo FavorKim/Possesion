@@ -49,7 +49,8 @@ public class TurtleShell : BaseMonster
 
     private IEnumerator RollingAttack()
     {
-        agent.isStopped = true;
+        if (agent.isActiveAndEnabled)
+            agent.isStopped = true;
         ParticleSystem ps = Instantiate(rollAttack, this.transform); //, Quaternion.identity
         rb.AddRelativeForce(Vector3.forward * 20f, ForceMode.VelocityChange);
         yield return new WaitForSeconds(0.8f);

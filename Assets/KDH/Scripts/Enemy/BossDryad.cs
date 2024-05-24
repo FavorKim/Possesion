@@ -7,6 +7,7 @@ using UnityEngine.UI;
 
 public class BossDryad : MonoBehaviour, IDamagable
 {
+    #region Boss Status
     public enum BossState
     {
         IDLE,
@@ -15,10 +16,33 @@ public class BossDryad : MonoBehaviour, IDamagable
         DEAD
     }
 
-    private bool isInvincible = false; // 무적 여부
+    public BossState state = BossState.IDLE;
 
     [SerializeField] private float curHP = 500f; // 몬스터의 현재 체력
     [SerializeField] private float maxHP = 500f; // 몬스터의 최대 체력
+    [SerializeField] public float shootSpeed = 800.0f; // 발사 속도
+    [SerializeField] public float spreadRange = 100.0f; // 뿌리는 범위
+
+    [SerializeField] bool EnfPhased = false;
+    private bool isInvincible = false; // 무적 여부
+    private bool isDie = false;
+    private int pattern = -1;
+
+    float[] pattern_Cooltime = { 3, 20, 15, 30 };
+    float[] pattern_CurCooltime = { 3, 20, 15, 30 };
+
+    [SerializeField] float traceDistance = 50f;
+    /*
+     패턴 표
+     0 = 일반         4 = 전방 바람
+     1 = 전방탄막     5 = 탄막비
+     2 = 몹 소환      6 = 강화회전
+     3 = 회전공격
+    */
+
+    #endregion
+
+    #region Load Componant
 
     protected Transform enemyTrf; // 몬스터(자신)의 위치(Transform)
     protected Transform playerTrf; // 플레이어의 위치(Transform)
@@ -27,51 +51,31 @@ public class BossDryad : MonoBehaviour, IDamagable
     protected Rigidbody rb; // 리지드바디(Rigidbody)
 
     [SerializeField] PlayerController player;
-
-    public BossState state = BossState.IDLE;
-
-    [SerializeField] bool EnfPhased = false;
-
-    //public ParticleSystem rollAttack;
-    public StateMachine stateMachine;
-
     [SerializeField] public GameObject projectile;
     [SerializeField] public GameObject bullets;
     [SerializeField] public GameObject instantMonster;
     [SerializeField] public GameObject windStorm;
+    [SerializeField] public GameObject vineObject;
+    public Transform[] spawnPositions; // 탄막 발사 위치
 
-    public Transform[] spawnPositions;
-    [SerializeField] public float shootSpeed = 800.0f;
-    [SerializeField] public float spreadRange = 100.0f;
+    public StateMachine stateMachine;
 
-    private GameObject HP_HUD_Obj; // 몬스터의 체력을 나타내는 패널(Panel)
-    [SerializeField] private Slider HPSlider; // 패널 내의 슬라이더
+    Slider bossHPSlider;
+    #endregion
+
+    #region Animator
 
     readonly int hashAttack = Animator.StringToHash("IsAttack");
     readonly int hashSkill = Animator.StringToHash("animation");
+    readonly int hashPhaseChange = Animator.StringToHash("IsPhaseChange");
     readonly int hashGroggy = Animator.StringToHash("IsGroggy");
     readonly int hashDie = Animator.StringToHash("IsDie");
 
-    #region 스킬 등등
-    [SerializeField]
-    float mstATK = 10.0f;
-    float mstSPD = 10.0f;
+    #endregion
 
-    public bool isDie = false;
-
-    int pattern = -1;
-
-    float[] pattern_Cooltime = { 3, 20, 15, 30 };
-    float[] pattern_CurCooltime = { 3, 20, 15, 30 };
-    /*
-     0 = 일반
-     1 = 전방탄막
-     2 = 몹 소환
-     3 = 회전공격
-     4 = 전방 바람
-     5 = 탄막비
-     6 = 강화회전
-     */
+    #region Getter
+    public float GetHP() { return curHP; }
+    public float GetMaxHP() { return curHP; }
 
     #endregion
 
@@ -83,6 +87,8 @@ public class BossDryad : MonoBehaviour, IDamagable
         enemyTrf = GetComponent<Transform>();
         animator = GetComponent<Animator>();
         stateMachine = gameObject.AddComponent<StateMachine>();
+        bossHPSlider = gameObject.GetComponentInChildren<Slider>();
+        bossHPSlider.gameObject.SetActive(false);
 
         stateMachine.AddState(BossState.IDLE, new IdleState(this));
         stateMachine.AddState(BossState.PATTERN, new PartternState(this));
@@ -93,17 +99,8 @@ public class BossDryad : MonoBehaviour, IDamagable
         agent.destination = playerTrf.position;
     }
 
-
-
     void Start()
     {
-        // 체력 패널을 초기화(생성)한다.
-        HP_HUD_Obj = Instantiate(Resources.Load<GameObject>("HP_HUD"), transform);
-        HPSlider = HP_HUD_Obj.GetComponentInChildren<Slider>();
-
-        // 슬라이더의 값을 (현재 체력 / 최대 체력)으로 한다.
-        //HPSlider.value = curHP / maxHP;
-
         StartCoroutine(CoolTimeCheck());
         StartCoroutine(BossPattern());
     }
@@ -123,23 +120,41 @@ public class BossDryad : MonoBehaviour, IDamagable
             yield return new WaitForSeconds(0.01f);
         }
     }
+
     IEnumerator BossPattern()
     {
-        //진입하면 시작하면 됨.
-
         float patternStart = 3.0f;
+        bool boolStart = false;
+
+        while(!boolStart)
+        {
+            float distance = Vector3.Distance(playerTrf.position, enemyTrf.position);
+            if (distance >= traceDistance)
+            {
+                yield return new WaitForSeconds(0.01f);
+            }
+            else
+            {
+                bossHPSlider.gameObject.SetActive(true);
+                stateMachine.ChangeState(BossState.IDLE);
+                state = BossState.IDLE;
+                boolStart = true;
+            }
+        }
         
+
         while (!isDie)
         {
-            if(patternStart > 0f)
+            if (patternStart > 0f)
                 patternStart -= Time.deltaTime;
 
-            if(patternStart <= 0f)
+            if (patternStart <= 0f)
             {
                 pattern = -1;
-                if (curHP <= maxHP/2)
+                if (curHP <= maxHP / 2)
                     EnfPhased = true;
-                if(pattern_CurCooltime[3] <= 0f)
+                
+                if (pattern_CurCooltime[3] <= 0f)
                     pattern = 3;
                 else if (pattern_CurCooltime[2] <= 0f)
                     pattern = 2;
@@ -147,8 +162,8 @@ public class BossDryad : MonoBehaviour, IDamagable
                     pattern = 1;
                 else if (pattern_CurCooltime[0] <= 0f)
                     pattern = 0;
-                
-                if(pattern > 0)
+
+                if (pattern > 0)
                 {
                     patternStart = pattern_CurCooltime[0];
                     stateMachine.ChangeState(BossState.PATTERN);
@@ -162,8 +177,11 @@ public class BossDryad : MonoBehaviour, IDamagable
             }
             else
             {
-                stateMachine.ChangeState(BossState.IDLE);
-                state = BossState.IDLE;
+                if(state != BossState.IDLE)
+                {
+                    stateMachine.ChangeState(BossState.IDLE);
+                    state = BossState.IDLE;
+                }
             }
 
             if (curHP <= 0)
@@ -173,22 +191,14 @@ public class BossDryad : MonoBehaviour, IDamagable
             }
             yield return new WaitForSeconds(0.01f);
         }
-        /*stateMachine.ChangeState(MonsterState.DEAD);
-        state = MonsterState.DEAD;*/
-}
-
-private void Update()
-    {
-        /*if (skill1_curCooltime > 0f)
-        {
-            skill1_curCooltime -= Time.deltaTime;
-        }
-        if (skill2_curCooltime > 0f)
-        {
-            skill2_curCooltime -= Time.deltaTime;
-        }*/
     }
-    
+
+    private void Update()
+    {
+        //playerTrf = player.transform;
+    }
+
+    #region State Pattern
     class BaseEnemyState : BaseState
     {
         protected BossDryad owner;
@@ -197,24 +207,24 @@ private void Update()
             this.owner = owner;
         }
     }
-    
+
     class IdleState : BaseEnemyState
     {
         public IdleState(BossDryad owner) : base(owner) { }
 
         public override void Enter()
         {
+            owner.agent.isStopped = false;
+            owner.agent.SetDestination(owner.playerTrf.position);
+            
             //그로기
             /*if (owner.i == 6)
             {
                 owner.animator.SetTrigger(owner.hashGroggy);
                 owner.i = 0;
             }*/
-            owner.agent.isStopped = false;
-            owner.agent.SetDestination(owner.playerTrf.position);
         }
     }
-        
 
     class AttackState : BaseEnemyState
     {
@@ -222,15 +232,19 @@ private void Update()
 
         public override void Enter()
         {
+            owner.agent.isStopped = true;
             owner.Attack();
         }
     }
+
     class PartternState : BaseEnemyState
     {
         public PartternState(BossDryad owner) : base(owner) { }
 
         public override void Enter()
         {
+            owner.agent.isStopped = true;
+
             switch (owner.pattern)
             {
                 case 1:
@@ -242,8 +256,11 @@ private void Update()
                 case 3:
                     owner.Skill3();
                     break;
+                case 4:
+                    owner.Skill4();
+                    break;
             }
-            owner.agent.isStopped = true;
+            
         }
     }
 
@@ -258,7 +275,9 @@ private void Update()
             owner.isDie = true;
         }
     }
-    
+
+    #endregion 
+
     #region Attack
 
     void Attack()
@@ -271,10 +290,6 @@ private void Update()
     }
     IEnumerator Attack_crt()
     {
-        float distance;
-
-        distance = Vector3.Distance(playerTrf.position, enemyTrf.position);
-
         for (int i = 0; i < 2; i++)
         {
             GameObject pd1 = Instantiate(bullets, spawnPositions[0].position, Quaternion.identity);
@@ -476,19 +491,42 @@ private void Update()
     }
     #endregion
 
-    // 데미지 받는거 구현
-    // 패턴 들어갈 때 무적.
+    #region Skill4_PhaseChange
+    public void Skill4()
+    {
+        animator.SetTrigger(hashPhaseChange);
+        StartCoroutine(Skill_4_crt());
+        
+    }
+    IEnumerator Skill_4_crt()
+    {
+        yield return new WaitForSeconds(1.0f);
+        vineObject.SetActive(true);
+        yield return new WaitForSeconds(1.5f);
 
+        isInvincible = false;
+        curHP -= 1;
+    }
+
+    #endregion
     public void GetDamage(int damage)
     {
         // 무적 상태가 아닐 경우,
         if (!isInvincible)
         {
-            // 대미지만큼 체력을 감소시킨다.
-            curHP -= damage;
+            if (curHP - damage < maxHP / 2 && !EnfPhased)
+            {
+                pattern = 4;
+                stateMachine.ChangeState(BossState.PATTERN);
+                state = BossState.PATTERN;
+                isInvincible = true;
+            }
 
-            // 감소한 체력을 체력 패널에 적용한다.
-            HPSlider.value = curHP / maxHP;
+            // 대미지만큼 체력을 감소시킨다.
+            if (curHP > damage)
+                curHP -= damage;
+            else
+                curHP = 0;
         }
     }
 }

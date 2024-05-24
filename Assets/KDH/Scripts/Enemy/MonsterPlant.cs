@@ -68,7 +68,7 @@ public class MonsterPlant : BaseMonster
         //pd.transform.LookAt(playerTrf.localPosition);
         //addforce 위치 정해줘야 함.
         pd.GetComponent<Rigidbody>().AddForce(pd.transform.forward * shootSpeed);
-        pd.GetComponent<Rigidbody>().AddForce(pd.transform.up * distance * 15.5f);
+        pd.GetComponent<Rigidbody>().AddForce(pd.transform.up * distance * 5f);
         skill1_curCooltime = skill1Cooltime;
 
         yield return new WaitForSeconds(0.2f);

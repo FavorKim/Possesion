@@ -15,6 +15,7 @@ MonoBehaviour:
   sceneDatas_byGuid:
     keys:
     - f0987962162b1864a984df1b1f6093a1
+    - 16ba1214661df554393870711c6e43bf
     values:
     - goDatas_byGlobalId:
         keys:
@@ -22,3 +23,33 @@ MonoBehaviour:
         values:
         - colorIndex: 7
           iconNameOrGuid: AvatarMask On Icon
+    - goDatas_byGlobalId:
+        keys:
+        - globalObjectIdString: GlobalObjectId_V1-2-16ba1214661df554393870711c6e43bf-8046749092728265768-0
+        - globalObjectIdString: GlobalObjectId_V1-2-16ba1214661df554393870711c6e43bf-1575231915838507370-0
+        - globalObjectIdString: GlobalObjectId_V1-2-16ba1214661df554393870711c6e43bf-4921880282957487450-4921880283707121669
+        - globalObjectIdString: GlobalObjectId_V1-2-16ba1214661df554393870711c6e43bf-1430057967-0
+        - globalObjectIdString: GlobalObjectId_V1-2-16ba1214661df554393870711c6e43bf-215376387217051560-948464099
+        - globalObjectIdString: GlobalObjectId_V1-2-16ba1214661df554393870711c6e43bf-1212759750134724800-0
+        - globalObjectIdString: GlobalObjectId_V1-2-16ba1214661df554393870711c6e43bf-7370800870475251245-0
+        - globalObjectIdString: GlobalObjectId_V1-2-16ba1214661df554393870711c6e43bf-2266157265114488493-347832437
+        - globalObjectIdString: GlobalObjectId_V1-2-16ba1214661df554393870711c6e43bf-6324755551727523830-3795595302692633646
+        values:
+        - colorIndex: 8
+          iconNameOrGuid: 
+        - colorIndex: 8
+          iconNameOrGuid: 
+        - colorIndex: 8
+          iconNameOrGuid: 
+        - colorIndex: 8
+          iconNameOrGuid: 
+        - colorIndex: 9
+          iconNameOrGuid: 
+        - colorIndex: 9
+          iconNameOrGuid: 
+        - colorIndex: 9
+          iconNameOrGuid: 
+        - colorIndex: 2
+          iconNameOrGuid: 
+        - colorIndex: 2
+          iconNameOrGuid: 
