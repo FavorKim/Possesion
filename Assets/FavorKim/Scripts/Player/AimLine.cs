@@ -29,7 +29,7 @@ public class AimLine : MonoBehaviour
     {
         lookat = player.GetLookAt();
         //transform.LookAt(lookat);
-        lR.SetPosition(1, point.transform.position);
+        lR.SetPosition(1, lookat.transform.position);
         lR.SetPosition(0, transform.position);
     }
 

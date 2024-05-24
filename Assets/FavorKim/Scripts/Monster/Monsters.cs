@@ -11,7 +11,6 @@ public abstract class Monsters : MonoBehaviour, IDamagable
     [SerializeField] private float curHP; // 몬스터의 현재 체력
     [SerializeField] private float maxHP; // 몬스터의 최대 체력
     
-    
     private float invincibleTime = 1.0f; // 무적 시간
     protected bool isInvincible = false; // 무적 여부
 
