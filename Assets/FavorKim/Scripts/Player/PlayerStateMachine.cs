@@ -1,3 +1,4 @@
+using Enemy;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -198,13 +199,19 @@ public class PossessState : PlayerState
         durationGauge = player.GetDurationGauge();
     }
     Slider durationGauge;
+    float playerOrgJumpForce;
 
     public override void Enter()
     {
-        /*
-        애니메이션 호출
+
+        playerOrgJumpForce = orgJumpForce;
+        if(mon is Slime)
+        {
+            orgJumpForce += 10;
+            jumpForce += 10;
+        }
+
         
-        */
         GameObject hatImg = player.GetHatManager().GetHatImg();
         hatImg.SetActive(true);
         
@@ -292,13 +299,6 @@ public class PossessState : PlayerState
 
         mon.GetDamage((int)(mon.GetHP() / 10.0f));
 
-        // if(mon.transform.parent==null)
-
-        // 임시로 오브젝트를 비활성화했지만, 몬스터가 죽었을 때의 행동을 호출할 것임
-        //mon.gameObject.SetActive(false);
-
-        // 빙의 해제 시 무조건 죽이지는 말자.
-        //mon.Dead();
         player.CameraTransform = player.transform;
 
         FXManager.Instance.PlayFX("PoExit", player.transform.position);
@@ -307,6 +307,9 @@ public class PossessState : PlayerState
         GameManager.Instance.SetCameraLookAt(player.GetPlayerFoward());
 
         durationGauge.gameObject.SetActive(false);
+
+        orgJumpForce = playerOrgJumpForce;
+        jumpForce = playerOrgJumpForce;
     }
 
     void SetDuration()
