@@ -1,8 +1,6 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.Events;
 
 namespace Enemy
 {
@@ -22,13 +20,10 @@ namespace Enemy
         #region Fields
 
         // 필드(Fields)
-        //[SerializeField] private Transform[] _patrolTransforms; // 순찰하는 위치들(Transform)
-        //public Transform[] PatrolTransforms { get { return _patrolTransforms; } }
-
         [SerializeField] private List<Transform> _patrolTransforms; // 순찰하는 위치들
         public List<Transform> PatrolTransforms { get { return _patrolTransforms; } }
 
-        private Transform _playerTransform;
+        protected Transform _playerTransform; // 플레이어의 위치
 
         public bool IsPossessed { get; set; } // 빙의 상태를 판별하는 변수
         public bool IsGetHit { get; set; } // 피격을 판별하는 변수
@@ -74,7 +69,7 @@ namespace Enemy
 
             // NavMeshAgent의 속성 값을 조절한다.
             _navMeshAgent.speed = MoveSpeed; // 추적 속도를 이동 속도로 지정한다.
-            _navMeshAgent.stoppingDistance = AttackRange; // 정지 거리를 공격 범위로 지정한다.
+            _navMeshAgent.stoppingDistance = AttackRange - 0.1f; // 정지 거리를 공격 범위로 지정한다.
 
             // 보스 기믹 전용, 순찰 지점이 따로 없이 바로 캐릭터에게 돌진한다.
             if (_patrolTransforms.Count == 0)
@@ -123,18 +118,21 @@ namespace Enemy
         // 적의 행동을 다루는 함수들, 부모 클래스에서 공통된 속성을 지정하고, 자식 클래스에서 각 특성에 맞게 추가한다.
         public override void Attack()
         {
+            _animator.SetBool("AI_Chase", true);
             _animator.SetInteger("AttackIndex", 0);
             _animator.SetTrigger("Attack");
         }
 
         public override void Skill1()
         {
+            _animator.SetBool("AI_Chase", true);
             _animator.SetInteger("AttackIndex", 1);
             _animator.SetTrigger("Attack");
         }
 
         public override void Skill2()
         {
+            _animator.SetBool("AI_Chase", true);
             _animator.SetInteger("AttackIndex", 2);
             _animator.SetTrigger("Attack");
         }

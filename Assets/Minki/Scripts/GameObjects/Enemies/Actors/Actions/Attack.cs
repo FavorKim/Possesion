@@ -72,48 +72,8 @@ namespace Enemy
             // 코루틴을 사용하여, 일정 주기마다 스킬을 달리하여 공격한다.
             if (!_isCorRunning)
             {
-                _enemy.StartCoroutine(SetDelay(1.0f, _attackAction));
+                _enemy.StartCoroutine(SetDelay(2.0f, _attackAction));
             }
-
-
-
-
-
-
-            // 공격 모션에 대한 후딜레이를 적용한다.
-            string[] animStates = { "Attack", "Skill 01", "Skill 02" };
-            bool isRunningState = false;
-
-            foreach (string state in animStates)
-            {
-                if (_animator.GetCurrentAnimatorStateInfo(0).IsName(state))
-                {
-                    isRunningState = true;
-                }
-            }
-
-            if (!isRunningState)
-            {
-                // 공격을 수행하기 전, 적이 플레이어를 바라보고 있어야 한다.
-                Vector3 playerPos = new Vector3(_playerTransform.position.x, _enemy.transform.position.y, _playerTransform.position.z); // 플레이어의 위치, y 값(상하)은 무시한다.
-                Vector3 enemyPos = _enemy.transform.position; // 적의 위치
-
-                float angle = Vector3.Angle(_enemy.transform.forward, playerPos - enemyPos); // 플레이어와 적 간의 각도
-
-                if (angle > 15) // 그 각도가 약 좌우 각 15도 이상일 경우,
-                {
-                    // 플레이어를 바라보게 회전시킨다.
-                    Quaternion turnTo = Quaternion.LookRotation(playerPos - enemyPos);
-                    _enemy.transform.rotation = Quaternion.Slerp(_enemy.transform.rotation, turnTo, 0.01f);
-
-                    // 회전하는 동안에는 공격하지 않는다.
-                    return;
-                }
-            }
-
-
-
-
         }
 
         // 함수의 실행에 대기 시간을 적용하기 위한 코루틴 함수

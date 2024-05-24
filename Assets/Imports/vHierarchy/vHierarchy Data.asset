@@ -15,6 +15,13 @@ MonoBehaviour:
   sceneDatas_byGuid:
     keys:
     - f0987962162b1864a984df1b1f6093a1
+    - f3de68db836e7e34fbab84dbde9b09eb
+    - 3323d1b4b4cbbcd47897294d83f3a891
+    - bfe485cfc6266884097e94106e0f9289
+    - b2bbc735fd84c314da365056195917e9
+    - f27d3ad46050fb84ea04907d93c1dc3f
+    - 3b3558a64b740234c8e651a21d9930e1
+    - a4f134c9c80352a4cb2f237af89211e7
     values:
     - goDatas_byGlobalId:
         keys:
@@ -22,3 +29,117 @@ MonoBehaviour:
         values:
         - colorIndex: 7
           iconNameOrGuid: AvatarMask On Icon
+    - goDatas_byGlobalId:
+        keys:
+        - globalObjectIdString: GlobalObjectId_V1-1-f3de68db836e7e34fbab84dbde9b09eb-1594767147126006-0
+        - globalObjectIdString: GlobalObjectId_V1-1-f3de68db836e7e34fbab84dbde9b09eb-822360466297939709-0
+        - globalObjectIdString: GlobalObjectId_V1-1-f3de68db836e7e34fbab84dbde9b09eb-6899856444487427719-0
+        - globalObjectIdString: GlobalObjectId_V1-1-f3de68db836e7e34fbab84dbde9b09eb-1193745591585432-4893400622809984823
+        values:
+        - colorIndex: 2
+          iconNameOrGuid: AvatarMask On Icon
+        - colorIndex: 4
+          iconNameOrGuid: SphereCollider Icon
+        - colorIndex: 6
+          iconNameOrGuid: Favorite
+        - colorIndex: 6
+          iconNameOrGuid: 
+    - goDatas_byGlobalId:
+        keys:
+        - globalObjectIdString: GlobalObjectId_V1-1-3323d1b4b4cbbcd47897294d83f3a891-1201003157251696-0
+        - globalObjectIdString: GlobalObjectId_V1-1-3323d1b4b4cbbcd47897294d83f3a891-4150510292106393172-0
+        - globalObjectIdString: GlobalObjectId_V1-1-3323d1b4b4cbbcd47897294d83f3a891-52082746-0
+        - globalObjectIdString: GlobalObjectId_V1-1-3323d1b4b4cbbcd47897294d83f3a891-3064146201440360441-0
+        values:
+        - colorIndex: 2
+          iconNameOrGuid: AvatarMask On Icon
+        - colorIndex: 4
+          iconNameOrGuid: CapsuleCollider Icon
+        - colorIndex: 6
+          iconNameOrGuid: Favorite
+        - colorIndex: 4
+          iconNameOrGuid: CapsuleCollider Icon
+    - goDatas_byGlobalId:
+        keys:
+        - globalObjectIdString: GlobalObjectId_V1-1-bfe485cfc6266884097e94106e0f9289-1706760125350986-0
+        - globalObjectIdString: GlobalObjectId_V1-1-bfe485cfc6266884097e94106e0f9289-677641470-0
+        - globalObjectIdString: GlobalObjectId_V1-1-bfe485cfc6266884097e94106e0f9289-10885502-0
+        - globalObjectIdString: GlobalObjectId_V1-1-bfe485cfc6266884097e94106e0f9289-1611705324-0
+        - globalObjectIdString: GlobalObjectId_V1-1-bfe485cfc6266884097e94106e0f9289-1324446350-0
+        - globalObjectIdString: GlobalObjectId_V1-1-bfe485cfc6266884097e94106e0f9289-195466-7629118059644470396
+        values:
+        - colorIndex: 2
+          iconNameOrGuid: AvatarMask On Icon
+        - colorIndex: 4
+          iconNameOrGuid: BoxCollider Icon
+        - colorIndex: 4
+          iconNameOrGuid: BoxCollider Icon
+        - colorIndex: 4
+          iconNameOrGuid: BoxCollider Icon
+        - colorIndex: 6
+          iconNameOrGuid: Favorite
+        - colorIndex: 6
+          iconNameOrGuid: 
+    - goDatas_byGlobalId:
+        keys:
+        - globalObjectIdString: GlobalObjectId_V1-1-b2bbc735fd84c314da365056195917e9-1765397208479606-0
+        - globalObjectIdString: GlobalObjectId_V1-1-b2bbc735fd84c314da365056195917e9-8076688710024438985-0
+        - globalObjectIdString: GlobalObjectId_V1-1-b2bbc735fd84c314da365056195917e9-346691596025749060-0
+        values:
+        - colorIndex: 2
+          iconNameOrGuid: AvatarMask On Icon
+        - colorIndex: 4
+          iconNameOrGuid: BoxCollider Icon
+        - colorIndex: 4
+          iconNameOrGuid: CapsuleCollider Icon
+    - goDatas_byGlobalId:
+        keys:
+        - globalObjectIdString: GlobalObjectId_V1-1-f27d3ad46050fb84ea04907d93c1dc3f-6185129395811604844-0
+        - globalObjectIdString: GlobalObjectId_V1-1-f27d3ad46050fb84ea04907d93c1dc3f-7185303502546423426-0
+        values:
+        - colorIndex: 4
+          iconNameOrGuid: SphereCollider Icon
+        - colorIndex: 2
+          iconNameOrGuid: AvatarMask On Icon
+    - goDatas_byGlobalId:
+        keys:
+        - globalObjectIdString: GlobalObjectId_V1-1-3b3558a64b740234c8e651a21d9930e1-8931069890357319490-0
+        - globalObjectIdString: GlobalObjectId_V1-1-3b3558a64b740234c8e651a21d9930e1-1557585983417840-0
+        - globalObjectIdString: GlobalObjectId_V1-1-3b3558a64b740234c8e651a21d9930e1-6355508064323546221-0
+        values:
+        - colorIndex: 4
+          iconNameOrGuid: CapsuleCollider Icon
+        - colorIndex: 2
+          iconNameOrGuid: AvatarMask On Icon
+        - colorIndex: 6
+          iconNameOrGuid: Favorite
+    - goDatas_byGlobalId:
+        keys:
+        - globalObjectIdString: GlobalObjectId_V1-2-a4f134c9c80352a4cb2f237af89211e7-804285294-0
+        - globalObjectIdString: GlobalObjectId_V1-2-a4f134c9c80352a4cb2f237af89211e7-1167101268-0
+        - globalObjectIdString: GlobalObjectId_V1-2-a4f134c9c80352a4cb2f237af89211e7-126131204-0
+        - globalObjectIdString: GlobalObjectId_V1-2-a4f134c9c80352a4cb2f237af89211e7-2062175154-0
+        - globalObjectIdString: GlobalObjectId_V1-2-a4f134c9c80352a4cb2f237af89211e7-79343639-0
+        - globalObjectIdString: GlobalObjectId_V1-2-a4f134c9c80352a4cb2f237af89211e7-569736820-0
+        - globalObjectIdString: GlobalObjectId_V1-2-a4f134c9c80352a4cb2f237af89211e7-464002445-0
+        - globalObjectIdString: GlobalObjectId_V1-2-a4f134c9c80352a4cb2f237af89211e7-922438454-0
+        - globalObjectIdString: GlobalObjectId_V1-2-a4f134c9c80352a4cb2f237af89211e7-1996804096-0
+        values:
+        - colorIndex: 2
+          iconNameOrGuid: 
+        - colorIndex: 9
+          iconNameOrGuid: 
+        - colorIndex: 7
+          iconNameOrGuid: 
+        - colorIndex: 6
+          iconNameOrGuid: 
+        - colorIndex: 5
+          iconNameOrGuid: 
+        - colorIndex: 6
+          iconNameOrGuid: 
+        - colorIndex: 6
+          iconNameOrGuid: 
+        - colorIndex: 6
+          iconNameOrGuid: 
+        - colorIndex: 6
+          iconNameOrGuid: 
