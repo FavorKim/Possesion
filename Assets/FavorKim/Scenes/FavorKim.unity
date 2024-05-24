@@ -73332,6 +73332,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1511762223, guid: b2bbc735fd84c314da365056195917e9, type: 3}
+      propertyPath: curHP
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 1511762223, guid: b2bbc735fd84c314da365056195917e9, type: 3}
+      propertyPath: maxHP
+      value: 100
+      objectReference: {fileID: 0}
     - target: {fileID: 1765397208479606, guid: b2bbc735fd84c314da365056195917e9, type: 3}
       propertyPath: m_Name
       value: OrcPBR
@@ -73342,7 +73350,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4240512476921092, guid: b2bbc735fd84c314da365056195917e9, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 88.97
+      value: 24.9
       objectReference: {fileID: 0}
     - target: {fileID: 4240512476921092, guid: b2bbc735fd84c314da365056195917e9, type: 3}
       propertyPath: m_LocalPosition.y
@@ -73350,7 +73358,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4240512476921092, guid: b2bbc735fd84c314da365056195917e9, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 903.78
+      value: 992.6
       objectReference: {fileID: 0}
     - target: {fileID: 4240512476921092, guid: b2bbc735fd84c314da365056195917e9, type: 3}
       propertyPath: m_LocalRotation.w

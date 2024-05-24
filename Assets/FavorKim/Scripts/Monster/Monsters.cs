@@ -154,6 +154,8 @@ public abstract class Monsters : MonoBehaviour, IDamagable
         gameObject.SetActive(true);
         curHP = maxHP;
         HPSlider.value = curHP / maxHP;
+        transform.parent = null;
+        isInvincible = false;
         transform.position = startPos;
     }
 
