@@ -1906,8 +1906,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 726c8fea47764f547a724dec21af298f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  curHP: 100
-  maxHP: 100
+  curHP: 10
+  maxHP: 10
   HPSlider: {fileID: 0}
   _patrolTransforms: []
 --- !u!1 &1802723691041012
@@ -2413,6 +2413,7 @@ GameObject:
   m_Component:
   - component: {fileID: 387870447098787745}
   - component: {fileID: 4707916523020392126}
+  - component: {fileID: 6979462101498906316}
   m_Layer: 0
   m_Name: Weapon Collider
   m_TagString: Obstacles
@@ -2448,3 +2449,17 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.85, y: 0.4, z: 0.5}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &6979462101498906316
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8076688710024438985}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2910bd8bcd3b3c541b9e725423d9aebf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 10
+  myType: 0

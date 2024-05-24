@@ -49,9 +49,9 @@ namespace Enemy
             AttackDamage = 100;
             Skiil1Damage = 100;
             Skill2Damage = 100;
-            AttackCoolTime = 100.0f;
-            Skill1CoolTime = 100.0f;
-            Skill2CoolTime = 100.0f;
+            AttackCoolTime = 1.0f;
+            Skill1CoolTime = 1.0f;
+            Skill2CoolTime = 1.0f;
             AttackRange = 5.0f;
             DetectRange = 10.0f;
 

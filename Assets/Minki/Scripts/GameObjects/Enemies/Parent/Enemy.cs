@@ -91,16 +91,19 @@ namespace Enemy
             {
                 // 빙의 상태가 된다.
                 IsPossessed = true;
+
+                // 애니메이터를 재시작한다.
+                _animator.Rebind();
             }
         }
 
         private void OnTriggerStay(Collider other)
         {
-            // 공격(장애물, 몬스터의 공격 등)에 맞았을 경우, 무적 상태가 아니라면
-            if (other.GetComponent<Obstacles>() && !isInvincible)
+            // 공격자가 몬스터가 아닐 경우에 한해, 무적 상태가 아니라면,
+            if (!other.transform.root.GetComponent<Monsters>() && other.GetComponent<Obstacles>() && !isInvincible)
             {
                 // 피격 상태가 된다.
-                IsGetHit = true;
+                GetDamage(other.GetComponent<Obstacles>().Damage);
             }
         }
 
@@ -137,10 +140,12 @@ namespace Enemy
             _animator.SetTrigger("Attack");
         }
 
+        // 피격되었을 때, 대미지를 계산하는 함수
         public override void GetDamage(int damage)
         {
             base.GetDamage(damage);
 
+            // 피격 상태가 된다.
             IsGetHit = true;
         }
 

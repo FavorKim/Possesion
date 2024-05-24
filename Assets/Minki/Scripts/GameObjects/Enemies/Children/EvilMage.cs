@@ -49,9 +49,9 @@ namespace Enemy
             AttackDamage = 100;
             Skiil1Damage = 100;
             Skill2Damage = 0;
-            AttackCoolTime = 100.0f;
-            Skill1CoolTime = 100.0f;
-            Skill2CoolTime = 0.0f;
+            AttackCoolTime = 1.0f;
+            Skill1CoolTime = 1.0f;
+            Skill2CoolTime = 1.0f;
             AttackRange = 19.0f;
             DetectRange = 20.0f;
 
@@ -98,7 +98,13 @@ namespace Enemy
         // 원거리 뇌전 공격(Skill2)의 두 번째 이벤트 함수 (발사하는 애니메이션)
         private void OnSkill1Event2()
         {
-            projectile.Shoot();
+            projectile?.Shoot();
+        }
+
+        // 공격 중 피격했을 경우, 투사체를 삭제한다.
+        private void OnCancelAttack()
+        {
+            Destroy(projectile.gameObject);
         }
 
         #endregion Animation Events

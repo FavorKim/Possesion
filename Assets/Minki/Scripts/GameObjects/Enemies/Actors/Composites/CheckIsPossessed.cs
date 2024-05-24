@@ -24,7 +24,7 @@ namespace Enemy
         public override NodeState Evaluate()
         {
             // 빙의 상태일 경우 성공 상태를, 아닐 경우 빙의 애니메이션을 해제하고, 실패 상태를 반환한다.
-            if (_enemy.IsPossessed)
+            if (_enemy.IsPossessed && _enemy.transform.root.GetComponent<PlayerController>())
             {
                 state = NodeState.SUCCESS;
             }

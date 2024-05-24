@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: -8668143623664995598}
   - component: {fileID: -1859818410088678208}
   - component: {fileID: -6203003384793472333}
+  - component: {fileID: 8984408594418951840}
   m_Layer: 0
   m_Name: EvilMage Projectile
   m_TagString: Obstacles
@@ -79,3 +80,17 @@ MonoBehaviour:
   _missile: {fileID: 19883296, guid: f6b06a8ab4f9fa24a99f72d190e30884, type: 3}
   _explosion: {fileID: 19893612, guid: 4c9f6a55f49715c4491b76c72e26ae03, type: 3}
   _muzzle: {fileID: 19815088, guid: f320c19ef2a95b94ba22b414b39beefa, type: 3}
+--- !u!114 &8984408594418951840
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2097815613037247788}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2910bd8bcd3b3c541b9e725423d9aebf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 10
+  myType: 2

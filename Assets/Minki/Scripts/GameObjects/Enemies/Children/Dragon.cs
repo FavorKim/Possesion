@@ -9,6 +9,7 @@ namespace Enemy
 
         // 필드(Fields)
         [SerializeField] private ParticleSystem _fireParticle; // 공격 모션 중 원거리 화염 공격을 구현하기 위한 파티클 시스템
+        [SerializeField] private SphereCollider _sphereCollider; // 몸통을 감싸는 충돌체
 
         #endregion Fields
 
@@ -92,6 +93,12 @@ namespace Enemy
         {
             // 화염 효과를 중지한다.
             _fireParticle.Stop();
+        }
+
+        private void OnCancelAttack()
+        {
+            _fireParticle.Stop();
+            _sphereCollider.isTrigger = false;
         }
 
         #endregion Animation Events
