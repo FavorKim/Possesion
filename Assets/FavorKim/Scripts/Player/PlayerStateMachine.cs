@@ -1,3 +1,4 @@
+using Enemy;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -16,7 +17,7 @@ public class PlayerStateMachine
         //OnAttack += curState.Attack;
         //OnThrowHat += curState.Skill1;
     }
-    private PlayerState curState; // ÎÖ∏Îßê
+    private PlayerState curState; // ≥Î∏ª
     private PlayerController player;
     private Dictionary<string, PlayerState> states = new Dictionary<string, PlayerState>();
 
@@ -26,7 +27,7 @@ public class PlayerStateMachine
 
     public void StateUpdate()
     {
-        // ÎÖ∏ÎßêÎ¨¥Î∏å
+        // ≥Î∏ªπ´∫Í
         curState.Move();
 
         curState.StateUpdate();
@@ -73,6 +74,7 @@ public abstract class PlayerState : IState
         gravityScale = player.GetGravityScale();
         jumpForce = player.GetJumpForce();
         anim = player.GetComponent<Animator>();
+        orgJumpForce = jumpForce;
         //isGround = player.isGround;
     }
 
@@ -89,7 +91,8 @@ public abstract class PlayerState : IState
 
     protected bool isGround => player.isGround;
 
-
+    protected float orgJumpForce;
+    protected bool isJumping = false;
 
     public virtual void Move()
     {
@@ -101,9 +104,21 @@ public abstract class PlayerState : IState
         stateCC.Move(moveDir);
     }
 
-    public abstract void StateUpdate();
+    public virtual void StateUpdate() 
+    {
+        stateCC.SimpleMove(-player.transform.up * gravityScale * Time.deltaTime);
+        if (isJumping)
+        {
+            NormJump();
+        }
+    }
 
-    public abstract void Jump();
+    public virtual void Jump() 
+    {
+        if (!isGround) return;
+        anim.SetTrigger("Jump");
+        isJumping = true;
+    }
     public abstract void Attack();
     public abstract void Skill1();
     public abstract void Skill2();
@@ -111,14 +126,23 @@ public abstract class PlayerState : IState
 
     public abstract void Enter();
     public abstract void Exit();
+
+    void NormJump()
+    {
+        stateCC.Move(player.transform.up * jumpForce * Time.deltaTime);
+        jumpForce -= Time.deltaTime * jumpForce;
+        if (jumpForce < 10)
+        {
+            jumpForce = orgJumpForce;
+            isJumping = false;
+        }
+    }
 }
 
 public class NormalState : PlayerState
 {
     public NormalState(PlayerController controller) : base(controller) { orgJumpForce = jumpForce; }
 
-    float orgJumpForce;
-    bool isJumping = false;
     public override void Enter()
     {
         SkillManager.ResetSkill();
@@ -127,22 +151,16 @@ public class NormalState : PlayerState
     public override void Move()
     {
         base.Move();
-        if (isJumping)
-        {
-            NormJump();
-        }
     }
 
     public override void StateUpdate()
     {
-        stateCC.SimpleMove(-player.transform.up * gravityScale * Time.deltaTime);
+        base.StateUpdate();
     }
 
     public override void Jump()
     {
-        if (!isGround) return;
-        anim.SetTrigger("Jump");
-        isJumping = true;
+        base.Jump();
     }
 
     public override void Attack()
@@ -170,17 +188,6 @@ public class NormalState : PlayerState
 
     }
 
-    void NormJump()
-    {
-
-        stateCC.Move(player.transform.up * jumpForce * Time.deltaTime);
-        jumpForce -= Time.deltaTime * jumpForce;
-        if (jumpForce < 10)
-        {
-            jumpForce = orgJumpForce;
-            isJumping = false;
-        }
-    }
 }
 
 
@@ -192,12 +199,22 @@ public class PossessState : PlayerState
         durationGauge = player.GetDurationGauge();
     }
     Slider durationGauge;
+    float playerOrgJumpForce;
 
     public override void Enter()
     {
-        /*
-        Ïï†ÎãàÎ©îÏù¥ÏÖò Ìò∏Ï∂ú
-        */
+
+        playerOrgJumpForce = orgJumpForce;
+        if(mon is Slime)
+        {
+            orgJumpForce += 10;
+            jumpForce += 10;
+        }
+
+        
+        GameObject hatImg = player.GetHatManager().GetHatImg();
+        hatImg.SetActive(true);
+        
 
         player.CameraTransform = mon.transform;
         GameManager.Instance.SetCameraFollow(player.CameraTransform);
@@ -238,6 +255,8 @@ public class PossessState : PlayerState
 
     public override void StateUpdate()
     {
+        base.StateUpdate();
+
         if (mon.GetHP() <= 0) 
             player.SetState("Normal");
         if (mon.skill1 != null)
@@ -252,7 +271,8 @@ public class PossessState : PlayerState
 
     public override void Jump()
     {
-        // mon.Jump();
+        base.Jump();
+        Debug.Log("poJump");
     }
     public override void Attack()
     {
@@ -279,13 +299,6 @@ public class PossessState : PlayerState
 
         mon.GetDamage((int)(mon.GetHP() / 10.0f));
 
-        // if(mon.transform.parent==null)
-
-        // ÏûÑÏãúÎ°ú Ïò§Î∏åÏ†ùÌä∏Î•º ÎπÑÌôúÏÑ±ÌôîÌñàÏßÄÎßå, Î™¨Ïä§ÌÑ∞Í∞Ä Ï£ΩÏóàÏùÑ ÎïåÏùò ÌñâÎèôÏùÑ Ìò∏Ï∂úÌï† Í≤ÉÏûÑ
-        //mon.gameObject.SetActive(false);
-
-        // ÎπôÏùò Ìï¥Ï†ú Ïãú Î¨¥Ï°∞Í±¥ Ï£ΩÏù¥ÏßÄÎäî ÎßêÏûê.
-        //mon.Dead();
         player.CameraTransform = player.transform;
 
         FXManager.Instance.PlayFX("PoExit", player.transform.position);
@@ -294,6 +307,9 @@ public class PossessState : PlayerState
         GameManager.Instance.SetCameraLookAt(player.GetPlayerFoward());
 
         durationGauge.gameObject.SetActive(false);
+
+        orgJumpForce = playerOrgJumpForce;
+        jumpForce = playerOrgJumpForce;
     }
 
     void SetDuration()
@@ -320,37 +336,37 @@ public interface IState
 
 
 /*
-Î™¨Ïä§ÌÑ∞Ïùò ÏûêÏú® ÌñâÎèô Ìå®ÌÑ¥
+∏ÛΩ∫≈Õ¿« ¿⁄¿≤ «‡µø ∆–≈œ
 
 
-Ï∫êÎ¶≠ÌÑ∞Í∞Ä ÏóÜÏùå - Patrol 
+ƒ≥∏Ø≈Õ∞° æ¯¿Ω - Patrol 
 
-Ï∫êÎ¶≠ÌÑ∞Î•º Ï∞æÏùå - Trace 
+ƒ≥∏Ø≈Õ∏¶ √£¿Ω - Trace 
 
-Í≥µÍ≤©Î≤îÏúÑ ÎÇ¥ - Attack 
+∞¯∞›π¸¿ß ≥ª - Attack 
 
-Î™¨Ïä§ÌÑ∞Í∞Ä ÌïÑÎìú ÏïàÏóêÏÑú Í≥µÍ≤©ÏùÑ Ìï† Îïå ÌïòÎÇò Îßå Ïì¥Îã§? 
-ÌîåÎ†àÏù¥Ïñ¥ ÏûÖÏû•ÏóêÏÑú Î™¨Ïä§ÌÑ∞Î°ú Î≥ÄÏã†ÌñàÏùÑ Îïå Ïñ¥Îñ§ Ïä§ÌÇ¨ÏùÑ Ïì∏ Ïàò ÏûàÎäîÏßÄ Î™®Î¶Ñ << 
-ÌîåÎ†àÏù¥Ïñ¥Í∞Ä Î™¨Ïä§ÌÑ∞Îûë Ïã∏Ïö∞Î©¥ÏÑú
+∏ÛΩ∫≈Õ∞° « µÂ æ»ø°º≠ ∞¯∞›¿ª «“ ∂ß «œ≥™ ∏∏ æ¥¥Ÿ? 
+«√∑π¿ÃæÓ ¿‘¿Âø°º≠ ∏ÛΩ∫≈Õ∑Œ ∫ØΩ≈«ﬂ¿ª ∂ß æÓ∂≤ Ω∫≈≥¿ª æµ ºˆ ¿÷¥¬¡ˆ ∏∏ß << 
+«√∑π¿ÃæÓ∞° ∏ÛΩ∫≈Õ∂˚ ΩŒøÏ∏Èº≠
 
 
-ÏïÑ ÏñòÎäî Ïù¥Îü∞Ïù¥Îü∞ Ïä§ÌÇ¨ÏùÑ Ïì∞ÎäîÍµ¨ÎÇò Í∑∏Îü¨Î©¥? Ïù¥Îü¥Îïå ÏñòÎ°ú Î≥ÄÏã†ÌïòÎ©¥ Ïù¥Î†áÍ≤å Ïã∏Ïö∏ Ïàò ÏûàÍ≤†Íµ¨ÎÇò.
+æ∆ æÍ¥¬ ¿Ã∑±¿Ã∑± Ω∫≈≥¿ª æ≤¥¬±∏≥™ ±◊∑Ø∏È? ¿Ã∑≤∂ß æÍ∑Œ ∫ØΩ≈«œ∏È ¿Ã∑∏∞‘ ΩŒøÔ ºˆ ¿÷∞⁄±∏≥™.
 
-Ìà¨ÏÇ¨Ï≤¥Î•º Î∞úÏÇ¨ÌïòÎ†§Î©¥ ÌîÑÎ¶¨ÌåπÏù¥ ÏûàÏñ¥ÏïºÏßÄ. 
-Ìà¨ÏÇ¨Ï≤¥ Í¥ÄÎ¶¨ÏûêÎ•º ÎßåÎì†Îã§.
-Î™¨Ïä§ÌÑ∞ÎèÑ Ìà¨ÏÇ¨Ï≤¥ Í¥ÄÎ¶¨ÏûêÌïúÌÖåÏÑú ÌîÑÎ¶¨ÌåπÏùÑ ÏñªÍ≥†
-ÌîåÎ†àÏù¥Ïñ¥ÎèÑ Ìà¨ÏÇ¨Ï≤¥ Í¥ÄÎ¶¨ÏûêÌïúÌÖåÏÑú ÌîÑÎ¶¨ÌåπÏùÑ ÏñªÍ≥†
+≈ıªÁ√º∏¶ πﬂªÁ«œ∑¡∏È «¡∏Æ∆’¿Ã ¿÷æÓæﬂ¡ˆ. 
+≈ıªÁ√º ∞¸∏Æ¿⁄∏¶ ∏∏µÁ¥Ÿ.
+∏ÛΩ∫≈Õµµ ≈ıªÁ√º ∞¸∏Æ¿⁄«—≈◊º≠ «¡∏Æ∆’¿ª æÚ∞Ì
+«√∑π¿ÃæÓµµ ≈ıªÁ√º ∞¸∏Æ¿⁄«—≈◊º≠ «¡∏Æ∆’¿ª æÚ∞Ì
 
  bullet Manager
-Ìà¨ÏÇ¨Ï≤¥ Í¥ÄÎ¶¨ÏûêÎäî Ïó¨Îü¨ Î™¨Ïä§ÌÑ∞Ïùò Ìà¨ÏÇ¨Ï≤¥Î•º Í∞ñÍ≥†ÏûàÍ≥†
-Í∑∏Í±∏ Î∞õÏïÑÏò®Îã§.
+≈ıªÁ√º ∞¸∏Æ¿⁄¥¬ ø©∑Ø ∏ÛΩ∫≈Õ¿« ≈ıªÁ√º∏¶ ∞Æ∞Ì¿÷∞Ì
+±◊∞… πﬁæ∆ø¬¥Ÿ.
 
-Î™¨Ïä§ÌÑ∞ Î≥ÑÎ°ú Îã¨ÎùºÏßÄÎäî Í≥µÍ≤© Ï°∞Í±¥ Î™¨Ïä§ÌÑ∞ ÎßàÎã§ Îã§Î•º Ïàò ÏûàÍ≥†
-ÌïÑÏöîÌïòÎã§Î©¥ ÎÑ£ÎäîÍ≤å ÎßûÎäîÎç∞
-Íµ≥Ïù¥ Ïã∂ÏúºÎ©¥ Ïïà ÎÑ£Ïñ¥ÎèÑ.
+∏ÛΩ∫≈Õ ∫∞∑Œ ¥ﬁ∂Û¡ˆ¥¬ ∞¯∞› ¡∂∞« ∏ÛΩ∫≈Õ ∏∂¥Ÿ ¥Ÿ∏¶ ºˆ ¿÷∞Ì
+« ø‰«œ¥Ÿ∏È ≥÷¥¬∞‘ ∏¬¥¬µ•
+±ª¿Ã ΩÕ¿∏∏È æ» ≥÷æÓµµ.
  
 
- Î≥¥Ïä§Í∞Ä ÏÜåÌôòÌå®ÌÑ¥Ïù¥ ÏûàÎã§ Í∑∏Îü¨Î©¥
-Î≥¥Ïä§Í∞Ä Í±∞Îäî Í∏∞ÎØπÏùÑ ÏÜåÌôòÌå®ÌÑ¥ÏóêÏÑú ÎÇòÏò§Îäî Î™¨Ïä§ÌÑ∞Îì§Î°ú ÏàòÌñâÏù¥ Í∞ÄÎä•Ìï¥Ïïº.
+ ∫∏Ω∫∞° º“»Ø∆–≈œ¿Ã ¿÷¥Ÿ ±◊∑Ø∏È
+∫∏Ω∫∞° ∞≈¥¬ ±‚πÕ¿ª º“»Ø∆–≈œø°º≠ ≥™ø¿¥¬ ∏ÛΩ∫≈ÕµÈ∑Œ ºˆ«‡¿Ã ∞°¥…«ÿæﬂ.
 
  */

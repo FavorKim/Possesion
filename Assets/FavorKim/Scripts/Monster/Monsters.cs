@@ -58,6 +58,11 @@ public abstract class Monsters : MonoBehaviour, IDamagable
     /// 몬스터의 두 번째 스킬을 구현하는 함수입니다. (Virtual; 임의)
     /// </summary>
     public virtual void Skill2() { }
+    
+    public virtual void Jump()
+    {
+
+    }
 
     #endregion Virtual Methods
 

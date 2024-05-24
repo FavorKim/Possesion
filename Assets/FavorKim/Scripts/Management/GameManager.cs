@@ -1,8 +1,10 @@
 using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -12,11 +14,13 @@ public class GameManager : MonoBehaviour
     PlayerController player;
     [SerializeField] CinemachineFreeLook tpsCam;
     public PlayerController Player { get { return player; } }
+    public CinemachineFreeLook TpsCam { get { return tpsCam; } }
 
 
 
     private void Awake()
     {
+        DontDestroyOnLoad(this);
         Cursor.lockState = CursorLockMode.Locked;
         player = FindAnyObjectByType<PlayerController>();
     }
@@ -25,15 +29,10 @@ public class GameManager : MonoBehaviour
     {
         if (instance == null)
         {
-            instance = FindObjectOfType(typeof(GameManager)).GetComponent<GameManager>();
-            if (instance == null)
-            {
-                GameObject obj = new GameObject("GameManager");
-                obj.AddComponent<GameManager>();
-                instance = obj.GetComponent<GameManager>();
-                DontDestroyOnLoad(obj);
-            }
+            instance = this;
         }
+        else
+            DestroyImmediate(gameObject);
     }
 
     //public void GetDamage(Obstacles obs, GameObject dest)
@@ -68,4 +67,6 @@ public class GameManager : MonoBehaviour
     {
         tpsCam.LookAt = dest;
     }
+
+   
 }

@@ -1,4 +1,5 @@
 using DG.Tweening;
+using Enemy;
 using System;
 using System.Collections;
 using TMPro;
@@ -23,7 +24,7 @@ public class PlayerController : MonoBehaviour, IDamagable
 
     private Transform camTransform;
     [SerializeField] Transform playerFoward;
-    [SerializeField]private Transform lookAtTransform;
+    [SerializeField] private Transform lookAtTransform;
     [SerializeField] HatManager hatM;
 
     [SerializeField] TextMeshProUGUI t_fullHP;
@@ -60,9 +61,12 @@ public class PlayerController : MonoBehaviour, IDamagable
 
     [SerializeField] float duration;
 
-    [SerializeField] float sensitivity;
+    float targetSens = 5.0f;
+    [SerializeField] float sensitivity = 10.0f;
 
     [SerializeField] float invincibleTime;
+
+    float knockbackDuration;
 
     #endregion
 
@@ -70,7 +74,6 @@ public class PlayerController : MonoBehaviour, IDamagable
     [SerializeField] public bool isGround { get; private set; }
     bool isDead = false;
     bool isInvincible = false;
-    public bool isKnockBack = false;
 
 
     //Dictionary<string, GameObject> outFits = new Dictionary<string, GameObject>();
@@ -81,13 +84,16 @@ public class PlayerController : MonoBehaviour, IDamagable
     public CharacterController GetCC() { return CC; }
     public Animator GetAnimator() { return anim; }
     public Slider GetDurationGauge() { return durationGauge; }
-    public Transform CameraTransform { get { return camTransform; } set {  camTransform = value; } }
-    public Transform GetPlayerFoward()  { return playerFoward; }
+    public Transform CameraTransform { get { return camTransform; } set { camTransform = value; } }
+    public Transform GetPlayerFoward() { return playerFoward; }
     public Transform GetLookAt() { return lookAtTransform; }
+    public HatManager GetHatManager() { return hatM; }
     public float GetMoveSpeed() { return moveSpeed; }
     public float GetGravityScale() { return gravityScale; }
     public float GetJumpForce() { return jumpForce; }
     public float GetDuration() { return duration; }
+
+    public float Sensitivity {  get { return targetSens; } set { sensitivity = value; } }
     #endregion
 
     #region LifeCycle
@@ -100,15 +106,16 @@ public class PlayerController : MonoBehaviour, IDamagable
         sM = new SkillManager(skill1Gauge, skill2Gauge);
 
         invinFX = GetComponentInChildren<ParticleSystem>();
-        invinFX.Stop();
+        invinFX.gameObject.SetActive(false);
         OnDead += DeadCheck;
         OnDead += SetHPUI;
+        OnDead += () => { SettingUIManager.Instance.PopUpGameOver(); };
         camTransform = transform;
 
         t_fullHP.text = fullHP.ToString();
 
         lookAtTransform = Instantiate(new GameObject("LookAt"), Camera.main.transform).transform;
-        lookAtTransform.localPosition = new Vector3(0, 0, 56f);
+        lookAtTransform.localPosition = new Vector3(0, 20.0f, 56f);
 
     }
 
@@ -117,9 +124,9 @@ public class PlayerController : MonoBehaviour, IDamagable
         if (isDead) return;
         state.StateUpdate();
         SetHPUI();
-
-        playerFoward.position = camTransform.position + new Vector3(0, 1.0f, 0);
+        playerFoward.position = camTransform.position + new Vector3(0, 1.0f, 0f);
         PlayerMove();
+        LookAtPlayer(camTransform);
     }
 
     private void FixedUpdate()
@@ -129,13 +136,46 @@ public class PlayerController : MonoBehaviour, IDamagable
 
     private void LateUpdate()
     {
-        if (isKnockBack)
-            CC.Move((transform.position - tempKnockBackdirect.position).normalized * Time.deltaTime * tempKnockBack);
+        //if (Input.GetKeyDown(KeyCode.Y))
+        //    StartCoroutine(CorKnockBack(tempKnockBackdirect, 5, tempKnockBack));
     }
 
     #endregion
 
     #region Method
+    /// <summary>
+    /// ÇÃ·¹ÀÌ¾î¸¦ ³Ë¹é ÄÚ·çÆ¾À» ½ÃÀÛÇÕ´Ï´Ù.
+    /// </summary>
+    /// <param name="user">³Ë¹é ±âÁØ À§Ä¡</param>
+    /// <param name="power">³Ë¹é ¼Óµµ</param>
+    /// <param name="duration">³Ë¹é Áö¼Ó ½Ã°£</param>
+    public void StartKnockBack(Transform user, float power, float duration)
+    {
+        knockbackDuration = duration;
+        StartCoroutine(CorKnockBack(user, power));
+    }
+    /// <summary>
+    /// ÇÃ·¹ÀÌ¾î ³Ë¹é ÄÚ·çÆ¾À» ½Ã°£Á¦ÇÑ ¾øÀÌ ½ÃÀÛÇÕ´Ï´Ù.
+    /// </summary>
+    /// <param name="user"></param>
+    /// <param name="power"></param>
+    public void StartKnockBack(Transform user, float power)
+    {
+        knockbackDuration = float.MaxValue;
+        StartCoroutine(CorKnockBack(user, power));
+    }
+    /// <summary>
+    /// ³Ë¹é ÄÚ·çÆ¾À» Á¾·áÇÕ´Ï´Ù.
+    /// </summary>
+    public void StopKnockBack()
+    {
+        knockbackDuration = 0;
+    }
+
+    void KnockBack(Transform knockBackUser, float power)
+    {
+        CC.Move((transform.position - knockBackUser.position).normalized * Time.deltaTime * power);
+    }
 
     void PlayerMove()
     {
@@ -149,8 +189,6 @@ public class PlayerController : MonoBehaviour, IDamagable
         MoveDir = camTransform.TransformDirection(new Vector3(dir.x, 0, dir.y));
         MoveDir *= moveSpeed * Time.deltaTime;
     }
-
-
 
     void SetHPUI()
     {
@@ -224,6 +262,7 @@ public class PlayerController : MonoBehaviour, IDamagable
 
     void OnMove(InputValue val)
     {
+        if (isDead) return;
 
         dir = val.Get<Vector2>();
 
@@ -246,12 +285,17 @@ public class PlayerController : MonoBehaviour, IDamagable
         //Debug.Log(heading);
     }
 
-    void OnJump(InputValue val) { if (val.isPressed) state.StateOnJump(); }
+    void OnJump(InputValue val) {
+        if (isDead) return;
+        if (val.isPressed) state.StateOnJump(); }
 
-    void OnAttack(InputValue val) { if (val.isPressed) state.StateOnAttack(); KnockBack(transform.forward, 2, 50); }
+    void OnAttack(InputValue val) {
+        if (isDead) return;
+        if (val.isPressed) state.StateOnAttack(); KnockBack(transform.forward, 2, 50); }
 
     void OnThrowHat(InputValue val)
     {
+        if (isDead) return;
         if (val.isPressed)
         {
             state.StateOnHat();
@@ -260,6 +304,7 @@ public class PlayerController : MonoBehaviour, IDamagable
 
     void OnSkill1(InputValue val)
     {
+        if (isDead) return;
         if (val.isPressed)
         {
             state.StateOnSkill1();
@@ -268,22 +313,19 @@ public class PlayerController : MonoBehaviour, IDamagable
 
     void OnSkill2(InputValue val)
     {
+        if (isDead) return;
         if (val.isPressed)
         { state.StateOnSkill2(); }
     }
 
-    void OnCursor(InputValue val)
-    {
-        Vector2 delta = val.Get<Vector2>();
-        //float deltaX = delta.x;
-        //transform.Rotate(new Vector3(0, delta.x, delta.y) * sensitivity * Time.deltaTime);
+    //void OnCursor(InputValue val)
+    //{
+    //    Vector2 delta = val.Get<Vector2>();
+    //    //float deltaX = delta.x;
+    //    //transform.Rotate(new Vector3(0, delta.x, delta.y) * sensitivity * Time.deltaTime);
 
-        if (!isDead && Input.GetMouseButton(1))
-        {
-            LookAtPlayer(camTransform);
-        }
-        // ì‚°ë‚˜ë¹„ ë•Œ ì¼ë˜ ì‰ì´ë” ê·¸ëž˜í”„ ëŒê³ ì™€ì„œ ì¡°ì¤€ì„ ìœ¼ë¡œ ë§Œë“¤ë©´ ì¢‹ì„ ê²ƒ
-    }
+    //    LookAtPlayer(camTransform);
+    //}
 
     public void LookAtPlayer(Transform dest)
     {
@@ -300,11 +342,23 @@ public class PlayerController : MonoBehaviour, IDamagable
     IEnumerator CorInvincible()
     {
         isInvincible = true;
+        invinFX.gameObject.SetActive(true);
         invinFX.Play();
         yield return new WaitForSeconds(invincibleTime);
-        invinFX.Stop();
+        invinFX.gameObject.SetActive(false);
         isInvincible = false;
     }
+
+    IEnumerator CorKnockBack(Transform dest, float power)
+    {
+        while (knockbackDuration > 0)
+        {
+            knockbackDuration -= Time.deltaTime;
+            KnockBack(dest, power);
+            yield return null;
+        }
+    }
+
 }
 
 public class Skill
