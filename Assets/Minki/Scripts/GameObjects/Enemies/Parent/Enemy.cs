@@ -71,10 +71,10 @@ namespace Enemy
             _navMeshAgent.speed = MoveSpeed; // 추적 속도를 이동 속도로 지정한다.
             _navMeshAgent.stoppingDistance = AttackRange - 0.1f; // 정지 거리를 공격 범위로 지정한다.
 
+            _playerTransform = FindObjectOfType<PlayerController>().transform;
             // 보스 기믹 전용, 순찰 지점이 따로 없이 바로 캐릭터에게 돌진한다.
             if (_patrolTransforms.Count == 0)
             {
-                _playerTransform = FindObjectOfType<PlayerController>().transform;
                 _patrolTransforms.Add(_playerTransform);
             }
         }
@@ -143,10 +143,12 @@ namespace Enemy
         // 피격되었을 때, 대미지를 계산하는 함수
         public override void GetDamage(int damage)
         {
+            if(!isInvincible)
+                IsGetHit = true;
             base.GetDamage(damage);
 
             // 피격 상태가 된다.
-            IsGetHit = true;
+            //IsGetHit = true;
         }
 
         #endregion Action Methods
