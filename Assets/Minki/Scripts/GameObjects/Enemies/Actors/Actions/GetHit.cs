@@ -31,7 +31,7 @@ namespace Enemy
         private void DoGetHit()
         {
             // 빙의 상태를 해제한다.
-            _enemy.IsPossessed = false;
+            // _enemy.IsPossessed = false;
 
             // 피격 애니메이션을 재생한다.
             _animator.SetTrigger("GetHit");

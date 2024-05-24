@@ -34,7 +34,6 @@ namespace Enemy
                     isRunningState = true;
                 }
             }
-
             // 공격하고 있지 않을 때,
             if (!isRunningState)
             {
@@ -44,11 +43,12 @@ namespace Enemy
 
                 float angle = Vector3.Angle(_enemy.transform.forward, playerPos - enemyPos); // 플레이어와 적 간의 각도
 
+
                 if (angle > 10) // 그 각도가 약 좌우 각 10도 이상일 경우, (바라보고 있지 않다면)
                 {
                     // 플레이어를 바라보게 회전시킨다.
                     Quaternion turnTo = Quaternion.LookRotation(playerPos - enemyPos);
-                    _enemy.transform.rotation = Quaternion.Slerp(_enemy.transform.rotation, turnTo, 0.01f);
+                    _enemy.transform.rotation = Quaternion.Slerp(_enemy.transform.rotation, turnTo, 2 * Time.deltaTime);
 
                     // 10도 미만일 때까지 계속한다. (RUNNING)
                     state = NodeState.RUNNING;

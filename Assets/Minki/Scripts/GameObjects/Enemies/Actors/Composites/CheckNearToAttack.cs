@@ -1,5 +1,6 @@
 using BehaviourTree;
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace Enemy
 {
@@ -21,8 +22,12 @@ namespace Enemy
 
         public override NodeState Evaluate()
         {
+            // 거리 계산 시 y축(상하)는 계산하지 않는다.
+            Vector3 enemyTransform = new Vector3(_enemy.transform.position.x, 0, _enemy.transform.position.z);
+            Vector3 playerTransform = new Vector3(_playerTransform.position.x, 0, _playerTransform.position.z);
+
             // 적과 플레이어 사이의 거리
-            float distance = Vector3.Distance(_enemy.transform.position, _playerTransform.position);
+            float distance = Vector3.Distance(enemyTransform, playerTransform);
 
             // 거리가 공격 범위 안일 경우,
             if (distance <= _enemy.AttackRange)

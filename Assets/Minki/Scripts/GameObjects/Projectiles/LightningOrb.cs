@@ -64,7 +64,7 @@ public class LightningOrb : Projectile
             isAlreadyHit = true;
 
             // 움직임을 멈춘다.
-            _rigidbody.velocity = Vector3.zero;
+            // _rigidbody.velocity = Vector3.zero;
 
             //// 터지는 효과를 재생한다.
             _missile.Stop();

@@ -37,7 +37,7 @@ namespace Enemy
             _animator.SetBool("AI_Patrol_Move", false);
             _animator.SetBool("AI_Patrol_Sense", false);
             _animator.SetBool("AI_Chase", false);
-            _animator.SetInteger("AttackIndex", 0);
+            //_animator.SetInteger("AttackIndex", 0);
 
             // 네비게이션을 비활성화한다.
             _navMeshAgent.enabled = false;

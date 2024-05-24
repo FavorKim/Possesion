@@ -49,11 +49,11 @@ namespace Enemy
             AttackDamage = 100;
             Skiil1Damage = 100;
             Skill2Damage = 0;
-            AttackCoolTime = 100.0f;
-            Skill1CoolTime = 100.0f;
-            Skill2CoolTime = 0.0f;
-            AttackRange = 9.0f;
-            DetectRange = 10.0f;
+            AttackCoolTime = 1.0f;
+            Skill1CoolTime = 1.0f;
+            Skill2CoolTime = 1.0f;
+            AttackRange = 19.0f;
+            DetectRange = 20.0f;
 
             InitSkill(Skill1CoolTime);
         }
@@ -65,7 +65,17 @@ namespace Enemy
         // 적(Enemy)의 공통된 행동 함수를 재정의한다.
         public override void Attack()
         {
-            base.Attack();
+            // 거리가 충분하지 않을 경우, Skill1을 사용하게 한다.
+            float distance = Vector3.Distance(transform.position, _playerTransform.position);
+
+            if (distance > 3.0f)
+            {
+                Skill1();
+            }
+            else
+            {
+                base.Attack();
+            }
         }
 
         public override void Skill1()
@@ -88,7 +98,16 @@ namespace Enemy
         // 원거리 뇌전 공격(Skill2)의 두 번째 이벤트 함수 (발사하는 애니메이션)
         private void OnSkill1Event2()
         {
-            projectile.Shoot();
+            projectile?.Shoot();
+        }
+
+        // 공격 중 피격했을 경우, 투사체를 삭제한다.
+        private void OnCancelAttack()
+        {
+            if (projectile != null)
+            {
+                Destroy(projectile.gameObject);
+            }
         }
 
         #endregion Animation Events

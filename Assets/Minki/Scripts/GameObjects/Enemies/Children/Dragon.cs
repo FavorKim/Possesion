@@ -9,6 +9,7 @@ namespace Enemy
 
         // 필드(Fields)
         [SerializeField] private ParticleSystem _fireParticle; // 공격 모션 중 원거리 화염 공격을 구현하기 위한 파티클 시스템
+        [SerializeField] private SphereCollider _sphereCollider; // 몸통을 감싸는 충돌체
 
         #endregion Fields
 
@@ -43,7 +44,7 @@ namespace Enemy
             AttackCoolTime = 1.0f;
             Skill1CoolTime = 1.0f;
             Skill2CoolTime = 1.0f;
-            AttackRange = 3.0f;
+            AttackRange = 5.0f;
             DetectRange = 10.0f;
 
             InitSkill(Skill2CoolTime);
@@ -56,7 +57,17 @@ namespace Enemy
         // 적(Enemy)의 공통된 행동 함수를 재정의한다.
         public override void Attack()
         {
-            base.Attack();
+            // 거리가 충분하지 않을 경우, Skill1을 사용하게 한다.
+            float distance = Vector3.Distance(transform.position, _playerTransform.position);
+
+            if (distance > 3.0f)
+            {
+                Skill1();
+            }
+            else
+            {
+                base.Attack();
+            }
         }
 
         public override void Skill1()
@@ -82,6 +93,12 @@ namespace Enemy
         {
             // 화염 효과를 중지한다.
             _fireParticle.Stop();
+        }
+
+        private void OnCancelAttack()
+        {
+            _fireParticle.Stop();
+            _sphereCollider.isTrigger = false;
         }
 
         #endregion Animation Events

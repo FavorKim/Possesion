@@ -1476,6 +1476,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3221979521035552130}
   - component: {fileID: 2509135372167061675}
+  - component: {fileID: 2519779175610817473}
   m_Layer: 0
   m_Name: Body Collider
   m_TagString: Monster
@@ -1512,3 +1513,17 @@ CapsuleCollider:
   m_Height: 1.7
   m_Direction: 0
   m_Center: {x: -0.3, y: 0, z: 0}
+--- !u!114 &2519779175610817473
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8931069890357319490}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2910bd8bcd3b3c541b9e725423d9aebf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 10
+  myType: 0
