@@ -96,7 +96,7 @@ namespace Enemy
                 _animator.Rebind();
             }
         }
-
+        /*
         private void OnTriggerStay(Collider other)
         {
             // 공격자가 몬스터가 아닐 경우에 한해, 무적 상태가 아니라면,
@@ -106,7 +106,7 @@ namespace Enemy
                 GetDamage(other.GetComponent<Obstacles>().Damage);
             }
         }
-
+        */
         #endregion Collision Events
 
         #region Abstract Methods

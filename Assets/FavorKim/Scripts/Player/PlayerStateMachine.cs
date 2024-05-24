@@ -220,7 +220,15 @@ public class PossessState : PlayerState
         GameManager.Instance.SetCameraFollow(player.CameraTransform);
         GameManager.Instance.SetCameraLookAt(player.GetPlayerFoward());
 
-        mon.SetSkill();
+        //mon.SetSkill();
+        if (mon.skill1 != null)
+            SkillManager.SetSkill(mon.skill1, 1);
+        else
+            SkillManager.socket1.gameObject.SetActive(false);
+        if (mon.skill2 != null)
+            SkillManager.SetSkill(mon.skill2, 2);
+        else
+            SkillManager.socket2.gameObject.SetActive(false);
 
         durationGauge.gameObject.SetActive(true);
         durationGauge.value = 1;

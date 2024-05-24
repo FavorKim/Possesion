@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class PopupPanel : MonoBehaviour
 {
+    
     private void OnEnable()
     {
         Cursor.lockState = CursorLockMode.None;

@@ -48240,6 +48240,7 @@ GameObject:
   - component: {fileID: 6873960593121006202}
   - component: {fileID: 6873960593121006203}
   - component: {fileID: 2344563929749386268}
+  - component: {fileID: 1433018998831919439}
   m_Layer: 0
   m_Name: VinePart
   m_TagString: Obstacles
@@ -48359,3 +48360,16 @@ NavMeshObstacle:
   m_CarveOnlyStationary: 1
   m_Center: {x: 0.066, y: 0.776, z: 0.143}
   m_TimeToStationary: 0.5
+--- !u!65 &1433018998831919439
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6873960593121006201}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 3.28, y: 1.97, z: 2.06}
+  m_Center: {x: 0.0664165, y: 0.77571464, z: -0.045509476}

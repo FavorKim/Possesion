@@ -16,6 +16,11 @@ public class SettingUIManager : MonoBehaviour
 
     public CanvasGroup Retry { get { return retry; } }
 
+    private void Awake()
+    {
+        instance = this;
+    }
+
     public void SetFullScreenMode(Toggle isToggle)
     {
         isFull = isToggle;
