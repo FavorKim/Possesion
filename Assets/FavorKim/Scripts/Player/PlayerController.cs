@@ -74,6 +74,7 @@ public class PlayerController : MonoBehaviour, IDamagable
     [SerializeField] public bool isGround { get; private set; }
     bool isDead = false;
     bool isInvincible = false;
+    public bool isKnockBack = false;
 
 
     //Dictionary<string, GameObject> outFits = new Dictionary<string, GameObject>();
@@ -136,40 +137,25 @@ public class PlayerController : MonoBehaviour, IDamagable
 
     private void LateUpdate()
     {
-        //if (Input.GetKeyDown(KeyCode.Y))
-        //    StartCoroutine(CorKnockBack(tempKnockBackdirect, 5, tempKnockBack));
+        if (isKnockBack)
+            KnockBack(tempKnockBackdirect,tempKnockBack);
     }
 
     #endregion
 
     #region Method
+   
+
     /// <summary>
-    /// 플레이어를 넉백 코루틴을 시작합니다.
+    /// 넉백 시작 (넉백 종료는 isKnockBack - False)
     /// </summary>
-    /// <param name="user">넉백 기준 위치</param>
-    /// <param name="power">넉백 속도</param>
-    /// <param name="duration">넉백 지속 시간</param>
-    public void StartKnockBack(Transform user, float power, float duration)
+    /// <param name="user">멀어질 대상(Transform)</param>
+    /// <param name="power">넉백 힘</param>
+    public void SetKnockBack(Transform user, float power)
     {
-        knockbackDuration = duration;
-        StartCoroutine(CorKnockBack(user, power));
-    }
-    /// <summary>
-    /// 플레이어 넉백 코루틴을 시간제한 없이 시작합니다.
-    /// </summary>
-    /// <param name="user"></param>
-    /// <param name="power"></param>
-    public void StartKnockBack(Transform user, float power)
-    {
-        knockbackDuration = float.MaxValue;
-        StartCoroutine(CorKnockBack(user, power));
-    }
-    /// <summary>
-    /// 넉백 코루틴을 종료합니다.
-    /// </summary>
-    public void StopKnockBack()
-    {
-        knockbackDuration = 0;
+        tempKnockBackdirect = user;
+        tempKnockBack = power;
+        isKnockBack = true;
     }
 
     void KnockBack(Transform knockBackUser, float power)
@@ -349,15 +335,7 @@ public class PlayerController : MonoBehaviour, IDamagable
         isInvincible = false;
     }
 
-    IEnumerator CorKnockBack(Transform dest, float power)
-    {
-        while (knockbackDuration > 0)
-        {
-            knockbackDuration -= Time.deltaTime;
-            KnockBack(dest, power);
-            yield return null;
-        }
-    }
+    
 
 }
 

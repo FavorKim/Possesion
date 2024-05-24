@@ -18,6 +18,7 @@ public class wind : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         GameManager.Instance.Player.isKnockBack = true;
+        //GameManager.Instance.Player.SetKnockBack(멀어질 대상(Transform) ,)
     }
 
     private void OnTriggerExit(Collider other)
