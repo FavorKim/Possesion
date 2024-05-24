@@ -98,7 +98,7 @@ namespace Enemy
                 IsPossessed = true;
             }
         }
-
+        /*
         private void OnTriggerStay(Collider other)
         {
             // 공격(장애물, 몬스터의 공격 등)에 맞았을 경우, 무적 상태가 아니라면
@@ -108,7 +108,7 @@ namespace Enemy
                 IsGetHit = true;
             }
         }
-
+        */
         #endregion Collision Events
 
         #region Abstract Methods
