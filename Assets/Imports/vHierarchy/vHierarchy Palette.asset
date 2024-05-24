@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 61290d425f1c94a8cbfb56f754ca6757, type: 3}
+  m_Script: {fileID: 11500000, guid: 23f34cd4e728e0e47a8ab2cb51a45693, type: 3}
   m_Name: vHierarchy Palette
   m_EditorClassIdentifier: 
   colors:

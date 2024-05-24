@@ -16,16 +16,6 @@ public class SettingUIManager : MonoBehaviour
 
     public CanvasGroup Retry { get { return retry; } }
 
-
-    private void Start()
-    {
-        if (instance != null)
-            DestroyImmediate(instance.gameObject);
-
-        instance = this;
-        DontDestroyOnLoad(gameObject);
-    }
-
     public void SetFullScreenMode(Toggle isToggle)
     {
         isFull = isToggle;
@@ -43,7 +33,6 @@ public class SettingUIManager : MonoBehaviour
             case 2:
                 Screen.SetResolution(1280, 720, isFull);
                 break;
-
         }
     }
 

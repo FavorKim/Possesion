@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3a9752b0c8e144801967e6897679604b, type: 3}
+  m_Script: {fileID: 11500000, guid: 5d0e525b4159544498c52d5e2df0a45f, type: 3}
   m_Name: vHierarchy Data
   m_EditorClassIdentifier: 
   sceneDatas_byGuid:
@@ -17,5 +17,8 @@ MonoBehaviour:
     - f0987962162b1864a984df1b1f6093a1
     values:
     - goDatas_byGlobalId:
-        keys: []
-        values: []
+        keys:
+        - globalObjectIdString: GlobalObjectId_V1-2-f0987962162b1864a984df1b1f6093a1-919132147663292768-0
+        values:
+        - colorIndex: 7
+          iconNameOrGuid: AvatarMask On Icon
