@@ -16,7 +16,7 @@ public class SpawnMonster : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         int rand = Random.Range(0, spawnManagerInstance.s_manager.Count);
-        BaseMonster m1 = spawnManagerInstance.s_manager[rand].Dequeue();
+        Monsters m1 = spawnManagerInstance.s_manager[rand].Dequeue();
         m1.transform.position = gameObject.transform.position;
         m1.gameObject.SetActive(true);
     }

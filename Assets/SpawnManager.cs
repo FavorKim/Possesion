@@ -6,18 +6,19 @@ public class SpawnManager : Singleton<SpawnManager>
 {
     [SerializeField]
     private Monsters[] m_Spawn;
+
     [SerializeField]
-    public List<Queue<BaseMonster>> s_manager = new List<Queue<BaseMonster>>();
+    public List<Queue<Monsters>> s_manager = new List<Queue<Monsters>>();
 
     private void Awake()
     {
         foreach(var i in m_Spawn)
         {
-            Queue<BaseMonster> s1 = new Queue<BaseMonster>();
+            Queue<Monsters> s1 = new Queue<Monsters>();
 
             for (int k = 0; k < 10; k++)
             {
-                BaseMonster m1 = Instantiate(i) as BaseMonster;
+                Monsters m1 = Instantiate(i);
                 m1.gameObject.SetActive(false);
                 s1.Enqueue(m1);
             }

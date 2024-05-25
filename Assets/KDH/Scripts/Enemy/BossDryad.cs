@@ -24,6 +24,7 @@ public class BossDryad : MonoBehaviour, IDamagable
     [SerializeField] public float spreadRange = 100.0f; // 뿌리는 범위
 
     [SerializeField] bool EnfPhased = false;
+    private float invincibleTime = 1.0f;
     private bool isInvincible = false; // 무적 여부
     private bool isDie = false;
     private int pattern = -1;
@@ -327,7 +328,6 @@ public class BossDryad : MonoBehaviour, IDamagable
     IEnumerator Skill_1_crt()
     {
         Quaternion q = Quaternion.Euler(new Vector3(0, 20, 0));
-        isInvincible = true;
         int percent = 0;
         if (EnfPhased)
         {
@@ -366,7 +366,6 @@ public class BossDryad : MonoBehaviour, IDamagable
         }
         pattern_CurCooltime[1] = pattern_Cooltime[1];
         yield return new WaitForSeconds(2.0f);
-        isInvincible = false;
     }
 
     #endregion
@@ -384,7 +383,6 @@ public class BossDryad : MonoBehaviour, IDamagable
 
     IEnumerator Skill_2_crt()
     {
-        isInvincible = true;
         int percent = 0;
         if (EnfPhased)
         {
@@ -395,17 +393,16 @@ public class BossDryad : MonoBehaviour, IDamagable
         {
             float posX = -1f;
             float posY = -1f;
-            for (int k = 0; k < 2; k++)
+            
+            for (int i = 0; i < 2; i++)
             {
-                for (int i = 0; i < 2; i++)
-                {
-                    GameObject pd = Instantiate(instantMonster, spawnPositions[0].position + new Vector3(posX + k * 2, 0, posY + i*2), Quaternion.identity) as GameObject;
+                GameObject pd = Instantiate(instantMonster, spawnPositions[0].position + new Vector3(posX, 0, posY + i*2), Quaternion.identity);
 
-                    pd.GetComponent<Rigidbody>().AddForce((-posX - k * 2) * spreadRange * Vector3.forward);
-                    pd.GetComponent<Rigidbody>().AddForce((posY + i * 2) * spreadRange * Vector3.right);
-                    pd.GetComponent<Rigidbody>().AddForce(shootSpeed * Random.Range(0.8f, 1.2f) * Vector3.up);
-                }
+                pd.GetComponent<Rigidbody>().AddForce(posX * spreadRange * Vector3.forward);
+                pd.GetComponent<Rigidbody>().AddForce((posY + i * 2) * spreadRange * Vector3.right);
+                pd.GetComponent<Rigidbody>().AddForce(shootSpeed * Random.Range(0.8f, 1.2f) * Vector3.up);
             }
+            
         }
         else
         {
@@ -429,7 +426,6 @@ public class BossDryad : MonoBehaviour, IDamagable
         pattern_CurCooltime[2] = pattern_Cooltime[2];
         animator.SetInteger(hashSkill, 0);
         yield return new WaitForSeconds(4.0f);
-        isInvincible = false;
     }
     #endregion
 
@@ -446,7 +442,6 @@ public class BossDryad : MonoBehaviour, IDamagable
 
     IEnumerator Skill_3_crt()
     {
-        isInvincible = true;
         Vector3[] vector3s = new Vector3[4];
 
         float height = 0.8f;
@@ -487,7 +482,6 @@ public class BossDryad : MonoBehaviour, IDamagable
 
         yield return new WaitForSeconds(4.0f);
         GameManager.Instance.Player.isKnockBack = false;
-        isInvincible = false;
     }
     #endregion
 
@@ -519,7 +513,6 @@ public class BossDryad : MonoBehaviour, IDamagable
                 pattern = 4;
                 stateMachine.ChangeState(BossState.PATTERN);
                 state = BossState.PATTERN;
-                isInvincible = true;
             }
 
             // 대미지만큼 체력을 감소시킨다.
@@ -527,6 +520,15 @@ public class BossDryad : MonoBehaviour, IDamagable
                 curHP -= damage;
             else
                 curHP = 0;
+
+            StartCoroutine(CorInvincible());
         }
+    }
+
+    IEnumerator CorInvincible()
+    {
+        isInvincible = true;
+        yield return new WaitForSeconds(invincibleTime);
+        isInvincible = false;
     }
 }
