@@ -92,6 +92,8 @@ namespace Enemy
                 // 빙의 상태가 된다.
                 IsPossessed = true;
 
+                GetDamage(0);
+
                 // 애니메이터를 재시작한다.
                 _animator.Rebind();
             }
