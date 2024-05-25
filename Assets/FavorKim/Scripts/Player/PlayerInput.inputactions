@@ -60,13 +60,13 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Cursor",
-                    "type": "Value",
-                    "id": "309248d6-2702-4ffb-8ded-ffcd43495f35",
-                    "expectedControlType": "Delta",
+                    "name": "Aim",
+                    "type": "Button",
+                    "id": "0de85e16-6b18-4866-9ec3-b55abddf9fd0",
+                    "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": true
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -182,12 +182,12 @@
                 },
                 {
                     "name": "",
-                    "id": "c69dd2ed-9524-4688-b4cd-982779e99d6c",
-                    "path": "<Mouse>/delta",
+                    "id": "c085cb68-ab91-4b67-ac67-b86df54087c6",
+                    "path": "<Mouse>/rightButton",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Cursor",
+                    "action": "Aim",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
