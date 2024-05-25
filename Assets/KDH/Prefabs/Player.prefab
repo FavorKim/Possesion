@@ -13961,7 +13961,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6324755551727523830}
-  m_LocalRotation: {x: -0, y: 0.7768683, z: -0, w: 0.6296632}
+  m_LocalRotation: {x: 0, y: 0.7768658, z: 0, w: 0.6296663}
   m_LocalPosition: {x: 0, y: 0, z: 65.1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -14075,6 +14075,7 @@ MonoBehaviour:
   duration: 9999
   sensitivity: 10
   invincibleTime: 1
+  rotateSpeed: 10
   isKnockBack: 0
 --- !u!114 &751529194427225907
 MonoBehaviour:

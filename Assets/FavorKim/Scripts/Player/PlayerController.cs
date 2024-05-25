@@ -67,7 +67,7 @@ public class PlayerController : MonoBehaviour, IDamagable
     [SerializeField] float invincibleTime;
 
     float knockbackDuration;
-
+    [SerializeField] float rotateSpeed = 5;
     #endregion
 
 
@@ -128,7 +128,8 @@ public class PlayerController : MonoBehaviour, IDamagable
         SetHPUI();
         playerFoward.position = camTransform.position + new Vector3(0, 1.0f, 0f);
         PlayerMove();
-        LookAtPlayer(camTransform);
+        if (Input.GetMouseButton(1))
+            LookAtPlayer(camTransform);
     }
 
     private void FixedUpdate()
@@ -166,17 +167,16 @@ public class PlayerController : MonoBehaviour, IDamagable
 
     void PlayerMove()
     {
-        /*
-        heading = Camera.main.transform.localRotation * Vector3.forward;
-        heading.y = 0;
-        heading = heading.normalized;
-        MoveDir = heading * dir.y * Time.deltaTime * moveSpeed;
-        MoveDir += Quaternion.Euler(0, 90, 0) * heading * dir.x * Time.deltaTime * moveSpeed;
-        */
-        MoveDir = camTransform.TransformDirection(new Vector3(dir.x, 0, dir.y));
+        MoveDir = dir.y * Camera.main.transform.forward + dir.x * Camera.main.transform.right;
+        MoveDir = new Vector3(MoveDir.x, 0, MoveDir.z);
+        MoveDir.Normalize();
         MoveDir *= moveSpeed * Time.deltaTime;
-    }
 
+        if (MoveDir != Vector3.zero)
+        {
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(MoveDir), rotateSpeed * Time.deltaTime);
+        }
+    }
 
     void SetHPUI()
     {
@@ -253,8 +253,9 @@ public class PlayerController : MonoBehaviour, IDamagable
         if (isDead) return;
 
         dir = val.Get<Vector2>();
-
-        MoveDir = camTransform.TransformDirection(new Vector3(dir.x, 0, dir.y));
+        MoveDir = dir.y * Camera.main.transform.forward + dir.x * Camera.main.transform.right;
+        MoveDir = new Vector3(MoveDir.x, 0, MoveDir.z);
+        MoveDir.Normalize();
         MoveDir *= moveSpeed * Time.deltaTime;
         if (MoveDir != Vector3.zero)
         {
@@ -264,15 +265,6 @@ public class PlayerController : MonoBehaviour, IDamagable
         {
             anim.SetBool("isRun", false);
         }
-
-
-
-        anim.SetFloat("vecX", dir.x);
-        anim.SetFloat("vecY", dir.y);
-
-
-        //PlayerMove();
-        //Debug.Log(heading);
     }
 
     void OnJump(InputValue val) {
