@@ -128,8 +128,7 @@ public class PlayerController : MonoBehaviour, IDamagable
         SetHPUI();
         playerFoward.position = camTransform.position + new Vector3(0, 1.0f, 0f);
         PlayerMove();
-        if (Input.GetMouseButton(1))
-            LookAtPlayer(camTransform);
+        LookAtPlayer(camTransform);
     }
 
     private void FixedUpdate()
@@ -311,9 +310,18 @@ public class PlayerController : MonoBehaviour, IDamagable
 
     public void LookAtPlayer(Transform dest)
     {
-        dest.LookAt(lookAtTransform);
-        dest.eulerAngles = new Vector3(0, dest.eulerAngles.y, 0);
-        heading = Camera.main.transform.localRotation * Vector3.forward;
+        if (Input.GetMouseButton(1))
+        {
+            anim.SetBool("Aim", true);
+            dest.LookAt(lookAtTransform);
+            dest.eulerAngles = new Vector3(0, dest.eulerAngles.y, 0);
+            heading = Camera.main.transform.localRotation * Vector3.forward;
+        }
+        else
+        {
+            anim.SetBool("Aim", false);
+        }
+
     }
 
 
