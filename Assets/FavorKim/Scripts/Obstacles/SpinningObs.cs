@@ -20,11 +20,10 @@ public class SpinningObs : Obstacles
     }
     IEnumerator CorSlowDown()
     {
-        while (anim.speed > 0.05f)
+        while (anim.speed > 0.1f)
         {
-            yield return new WaitForSeconds(0.2f);
-            anim.speed *= 0.9f;
-            Debug.Log("slow");
+            yield return new WaitForSeconds(0.05f);
+            anim.speed *= 0.99f;
         }
     }
 

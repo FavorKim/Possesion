@@ -13857,7 +13857,7 @@ MonoBehaviour:
   rayDist: 0.3
   fullHP: 100
   curHP: 100
-  duration: 9999
+  duration: 20
   sensitivity: 10
   invincibleTime: 1
   rotateSpeed: 10
