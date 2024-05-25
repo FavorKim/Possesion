@@ -9666,7 +9666,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 10
-  myType: 0
+  myType: 5
 --- !u!1 &191554
 GameObject:
   m_ObjectHideFlags: 0

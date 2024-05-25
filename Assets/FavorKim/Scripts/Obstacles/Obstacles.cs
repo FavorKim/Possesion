@@ -38,10 +38,11 @@ public class Obstacles : MonoBehaviour, ITyped
     private void OnParticleCollision(GameObject other)
     {
         // 데미지 계산 x 상호작용만.
-        other.GetComponent<Obstacles>()?.OnTypeAttacked(type);
+        if (other.GetComponent<ParticleSystem>() != null || other.GetComponentInParent<IDamagable>() == null)
+            other.GetComponent<Obstacles>()?.OnTypeAttacked(type);
 
         // 데미지를 계산할 필요가 있다면? 데미지 계산까지.
-        if (other.transform.root.GetComponent<PlayerController>() != null || transform.root.GetComponent<PlayerController>() != null)
+        else if (other.transform.root.GetComponent<PlayerController>() != null || transform.root.GetComponent<PlayerController>() != null)
         {
             if (other.transform.root != transform.root)
                 other.GetComponentInParent<IDamagable>()?.GetDamage(Damage);
