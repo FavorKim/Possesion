@@ -177,6 +177,7 @@ public class PlayerController : MonoBehaviour, IDamagable
         MoveDir *= moveSpeed * Time.deltaTime;
     }
 
+
     void SetHPUI()
     {
         t_curHP.text = curHP.ToString();
