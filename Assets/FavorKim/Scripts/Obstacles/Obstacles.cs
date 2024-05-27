@@ -37,6 +37,8 @@ public class Obstacles : MonoBehaviour, ITyped
     // OnParticleCollision()
     private void OnParticleCollision(GameObject other)
     {
+        if (transform.parent == null)
+            other.GetComponentInParent<IDamagable>()?.GetDamage(Damage);
         // 데미지 계산 x 상호작용만.
         if (other.GetComponent<ParticleSystem>() != null || other.GetComponentInParent<IDamagable>() == null)
             other.GetComponent<Obstacles>()?.OnTypeAttacked(type);
@@ -53,11 +55,15 @@ public class Obstacles : MonoBehaviour, ITyped
     private void OnTriggerStay(Collider other)
     {
         other.gameObject.GetComponent<Obstacles>()?.OnTypeAttacked(type);
+        if(transform.parent==null)
+            other.GetComponentInParent<IDamagable>()?.GetDamage(Damage);
 
         if (other.transform.root.GetComponent<PlayerController>() != null || transform.root.GetComponent<PlayerController>() != null)
         {
             if (other.transform.root != transform.root)
+            {
                 other.GetComponentInParent<IDamagable>()?.GetDamage(Damage);
+            }
         }
     }
     #endregion Unity Events
