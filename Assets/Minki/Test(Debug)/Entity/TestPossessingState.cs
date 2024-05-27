@@ -1,140 +1,114 @@
-//using Enemy;
-//using UnityEngine;
+using UnityEngine;
 
-//public class TestPossessingState : TestPlayerState
-//{
-//    public TestPossessingState(TestPlayer controller) : base(controller)
-//    {
-//        durationGauge = player.GetDurationGauge();
-//    }
+public class TestPossessingState : TestPlayerState
+{
+    private TestMonster monster;
 
-//    Slider durationGauge;
-//    float playerOrgJumpForce;
+    public TestPossessingState(TestPlayer playerController) : base(playerController) { }
 
-//    public override void Enter()
-//    {
+    public override void Enter()
+    {
+        playerOutfit.SetActive(false);
 
-//        playerOrgJumpForce = orgJumpForce;
-//        if (mon is Slime)
-//        {
-//            orgJumpForce += 10;
-//            jumpForce += 10;
-//        }
+        GameObject hatImg = playerController.GetHatManager().GetHatImg();
+        hatImg.SetActive(true);
 
+        if (monster.Skill01 != null)
+        {
+            SkillManager.SetSkill(monster.Skill01, 1);
+        }
+        else
+        {
+            SkillManager.socket1.gameObject.SetActive(false);
+        }
 
-//        GameObject hatImg = player.GetHatManager().GetHatImg();
-//        hatImg.SetActive(true);
+        if (monster.Skill02 != null)
+        {
+            SkillManager.SetSkill(monster.Skill02, 2);
+        }    
+        else
+        {
+            SkillManager.socket2.gameObject.SetActive(false);
+        }
 
+        playerController.DurationGauge.gameObject.SetActive(true);
+        playerController.DurationGauge.value = 1;
+    }
 
-//        player.CameraTransform = mon.transform;
-//        GameManager.Instance.SetCameraFollow(player.CameraTransform);
-//        GameManager.Instance.SetCameraLookAt(player.GetPlayerFoward());
+    public override void Execute()
+    {
+        base.Execute();
+    }
 
-//        //mon.SetSkill();
-//        if (mon.skill1 != null)
-//            SkillManager.SetSkill(mon.skill1, 1);
-//        else
-//            SkillManager.socket1.gameObject.SetActive(false);
-//        if (mon.skill2 != null)
-//            SkillManager.SetSkill(mon.skill2, 2);
-//        else
-//            SkillManager.socket2.gameObject.SetActive(false);
+    public override void Exit()
+    {
+        // 몬스터를 자식에서 해제시킨다.
+        monster.transform.parent = null;
 
-//        durationGauge.gameObject.SetActive(true);
-//        durationGauge.value = 1;
-//    }
+        // 빙의 상태일 때만 사용하는 UI를 해제한다.
+        playerController.DurationGauge.gameObject.SetActive(false);
+    }
 
+    public override void Move()
+    {
+        base.Move();
+    }
 
-//    public void GetMonster(Monsters _mon)
-//    {
-//        mon = _mon;
+    public override void Jump()
+    {
+        base.Jump();
+    }
 
-//        player.GetCC().Move(mon.transform.position - player.transform.position);
+    public override void Shift()
+    {
+        // 빙의하지 않은 상태로 전환한다.
+        playerController.SetState("Normal");
+    }
 
+    public override void Attack()
+    {
+        monster.Attack();
+    }
 
-//        _mon.transform.parent = player.transform;
-//        _mon.transform.localPosition = Vector3.zero;
-//        _mon.transform.localEulerAngles = Vector3.zero;
-//        if (_mon.GetComponent<Rigidbody>() != null)
-//        {
-//            _mon.GetComponent<Rigidbody>().velocity = Vector3.zero;
-//            _mon.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
-//            //_mon.GetComponent<Rigidbody>().isKinematic = true;
-//        }
+    public override void Skill01()
+    {
+        monster.Skill01?.UseSkill();
+    }
 
-//        Enter();
-//    }
+    public override void Skill02()
+    {
+        monster.Skill02?.UseSkill();
+    }
 
-
-//    public override void Move()
-//    {
-//        base.Move();
-//    }
-
-//    public override void StateUpdate()
-//    {
-//        base.StateUpdate();
-
-//        if (mon.GetHP() <= 0)
-//            player.SetState("Normal");
-//        if (mon.skill1 != null)
-//            mon.skill1.SetCurCD();
-//        if (mon.skill2 != null)
-//            mon.skill2.SetCurCD();
-//        SetDuration();
-
-//        //player.transform.position = mon.transform.position;
-//        //mon.transform.localPosition = Vector3.zero;
-//    }
-
-//    public override void Jump()
-//    {
-//        base.Jump();
-//        Debug.Log("poJump");
-//    }
-//    public override void Attack()
-//    {
-//        mon.Attack();
-//    }
-//    public override void Skill01()
-//    {
-//        mon.skill1?.UseSkill();
-//    }
-//    public override void Skill02()
-//    {
-//        mon.skill2?.UseSkill();
-//    }
-
-//    public override void Shift()
-//    {
-//        player.SetState("Normal");
-//    }
-
-//    public override void Exit()
-//    {
-//        mon.transform.parent = null;
-//        player.GetCC().Move(mon.transform.position - player.transform.position);
-
-//        mon.GetDamage((int)(mon.GetHP() / 10.0f));
-
-//        player.CameraTransform = player.transform;
-
-//        FXManager.Instance.PlayFX("PoExit", player.transform.position);
-
-//        GameManager.Instance.SetCameraFollow(player.CameraTransform);
-//        GameManager.Instance.SetCameraLookAt(player.GetPlayerFoward());
-
-//        durationGauge.gameObject.SetActive(false);
-
-//        orgJumpForce = playerOrgJumpForce;
-//        jumpForce = playerOrgJumpForce;
-//    }
-
-//    void SetDuration()
-//    {
-//        durationGauge.value -= Time.deltaTime / player.GetDuration();
-//        if (durationGauge.value <= 0) Shift();
-//    }
+    
 
 
-//}
+
+    public override void StateUpdate()
+    {
+        base.UpdateState();
+
+        if (mon.GetHP() <= 0)
+            player.SetState("Normal");
+        if (mon.skill1 != null)
+            mon.skill1.SetCurCD();
+        if (mon.skill2 != null)
+            mon.skill2.SetCurCD();
+        SetDuration();
+    }
+
+
+
+    public void GetMonster(TestMonster monster)
+    {
+        this.monster = monster;
+
+        monster.transform.SetParent(playerController.transform);
+        monster.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
+
+        playerController.MoveSpeed = monster.MoveSpeed;
+        playerController.JumpPower = monster.JumpPower;
+
+        Enter();
+    }
+}
