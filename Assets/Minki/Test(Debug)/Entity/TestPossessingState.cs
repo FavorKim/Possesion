@@ -1,4 +1,4 @@
-using UnityEngine;
+//using UnityEngine;
 
 public class TestPossessingState : TestPlayerState
 {
@@ -8,107 +8,58 @@ public class TestPossessingState : TestPlayerState
 
     public override void Enter()
     {
-        playerOutfit.SetActive(false);
+//        playerOutfit.SetActive(false);
 
-        GameObject hatImg = playerController.GetHatManager().GetHatImg();
-        hatImg.SetActive(true);
+//        GameObject hatImg = playerController.GetHatManager().GetHatImg();
+//        hatImg.SetActive(true);
 
-        if (monster.Skill01 != null)
-        {
-            SkillManager.SetSkill(monster.Skill01, 1);
-        }
-        else
-        {
-            SkillManager.socket1.gameObject.SetActive(false);
-        }
+//        if (monster.Skill01 != null)
+//        {
+//            SkillManager.SetSkill(monster.Skill01, 1);
+//        }
+//        else
+//        {
+//            SkillManager.socket1.gameObject.SetActive(false);
+//        }
 
-        if (monster.Skill02 != null)
-        {
-            SkillManager.SetSkill(monster.Skill02, 2);
-        }    
-        else
-        {
-            SkillManager.socket2.gameObject.SetActive(false);
-        }
+//        if (monster.Skill02 != null)
+//        {
+//            SkillManager.SetSkill(monster.Skill02, 2);
+//        }    
+//        else
+//        {
+//            SkillManager.socket2.gameObject.SetActive(false);
+//        }
 
-        playerController.DurationGauge.gameObject.SetActive(true);
-        playerController.DurationGauge.value = 1;
+//        playerController.DurationGauge.gameObject.SetActive(true);
+//        playerController.DurationGauge.value = 1;
     }
 
     public override void Execute()
     {
-        base.Execute();
+//        base.Execute();
     }
 
     public override void Exit()
     {
-        // ¸ó½ºÅÍ¸¦ ÀÚ½Ä¿¡¼­ ÇØÁ¦½ÃÅ²´Ù.
-        monster.transform.parent = null;
+//        // ëª¬ìŠ¤í„°ë¥¼ ìì‹ì—ì„œ í•´ì œì‹œí‚¨ë‹¤.
+//        monster.transform.parent = null;
 
-        // ºùÀÇ »óÅÂÀÏ ¶§¸¸ »ç¿ëÇÏ´Â UI¸¦ ÇØÁ¦ÇÑ´Ù.
-        playerController.DurationGauge.gameObject.SetActive(false);
+//        // ë¹™ì˜ ìƒíƒœì¼ ë•Œë§Œ ì‚¬ìš©í•˜ëŠ” UIë¥¼ í•´ì œí•œë‹¤.
+//        playerController.DurationGauge.gameObject.SetActive(false);
     }
-
-    public override void Move()
-    {
-        base.Move();
-    }
-
-    public override void Jump()
-    {
-        base.Jump();
-    }
-
-    public override void Shift()
-    {
-        // ºùÀÇÇÏÁö ¾ÊÀº »óÅÂ·Î ÀüÈ¯ÇÑ´Ù.
-        playerController.SetState("Normal");
-    }
-
-    public override void Attack()
-    {
-        monster.Attack();
-    }
-
-    public override void Skill01()
-    {
-        monster.Skill01?.UseSkill();
-    }
-
-    public override void Skill02()
-    {
-        monster.Skill02?.UseSkill();
-    }
-
-    
-
-
-
-    public override void StateUpdate()
-    {
-        base.UpdateState();
-
-        if (mon.GetHP() <= 0)
-            player.SetState("Normal");
-        if (mon.skill1 != null)
-            mon.skill1.SetCurCD();
-        if (mon.skill2 != null)
-            mon.skill2.SetCurCD();
-        SetDuration();
-    }
-
 
 
     public void GetMonster(TestMonster monster)
     {
-        this.monster = monster;
+//        this.monster = monster;
 
-        monster.transform.SetParent(playerController.transform);
-        monster.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
+//        monster.transform.SetParent(playerController.transform);
+//        monster.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
 
-        playerController.MoveSpeed = monster.MoveSpeed;
-        playerController.JumpPower = monster.JumpPower;
+//        playerController.MoveSpeed = monster.MoveSpeed;
+//        playerController.JumpPower = monster.JumpPower;
 
-        Enter();
+//        Enter();
     }
 }

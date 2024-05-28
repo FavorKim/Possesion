@@ -13,12 +13,13 @@ public abstract class Entity : MonoBehaviour
     public float MaxHealthPoint { get; set; } // 최대 체력
 
     public float MoveSpeed { get; set; } // 이동 속도
+    public float RotateSpeed { get; set; } // 회전(몸을 돌리는) 속도
     public float JumpPower { get; set; } // 점프 강도
 
     public int AttackDamage { get; set; } // 기본 공격력
     public float AttackCoolTime { get; set; } // 기본 공격 재사용 대기 시간
 
-    public Skill Skill01 { get; set; } // 스킬 1
+    protected Skill Skill01 { get; set; } // 스킬 1
     public int Skiil01Damage { get; set; } // 스킬1 공격력
     public float Skill01CoolTime { get; set; } // 스킬1 재사용 대기 시간
 
@@ -30,22 +31,6 @@ public abstract class Entity : MonoBehaviour
     public float DetectRange { get; set; } // 플레이어 탐지 범위
 
     #endregion Fields
-
-    #region Methods
-
-    public abstract void UseAttack();
-
-    public abstract void UseSkill01();
-    public abstract void UseSkill02();
-
-    public void GetDamage()
-    {
-        // 피격 관련 함수를 정의한다.
-    }
-
-
-
-    #endregion Methods
 }
 
 // 플레이어 클래스
@@ -59,6 +44,9 @@ public class TestPlayer : Entity
     #endregion Components
 
     #region Fields
+
+    private Entity possessingMonster; // 몬스터 클래스; 빙의 상태의 몬스터에 접근하기 위한 변수
+    private TestMonster b;
 
     [SerializeField] private Slider durationGauge;
     public Slider DurationGauge { get { return durationGauge; } }
@@ -77,6 +65,9 @@ public class TestPlayer : Entity
     {
         // 상태를 갱신한다.
         playerStateMachine.UpdateState();
+
+        // 플레이어를 이동시킨다.
+        characterController.Move(moveVector * Time.deltaTime);
     }
 
     #endregion Life Cycle Methods
@@ -107,35 +98,92 @@ public class TestPlayer : Entity
     #region Move (Arrows / WASD)
 
     // 플레이어를 비추는 카메라; 시네머신(Cinemachine)이 부착된 메인 카메라를 지정한다.
-    [SerializeField] private Transform cameraTransform;
+    protected Transform cameraTransform;
 
-    // 이동의 속도
-    [SerializeField] private float moveSpeed;
-    // 회전의 속도
-    [SerializeField] private float rotateSpeed;
+    // 방향 키의 입력 값
+    protected Vector2 inputVector;
+    // 실제 이동 벡터; 아래의 점프 함수에도 적용받는다.
+    protected Vector3 moveVector;
 
-    // 상태 클래스에서 필요한 변수를 참조하기 위한 함수
-    public void GetMoveFieldRefs(Transform playerTransform, Transform cameraTransform, ref float moveSpeed, ref float rotateSpeed)
+    // 인풋 시스템(Input System)으로 값을 입력 받아, 저장하는 함수
+    private void OnMove(InputValue inputValue)
     {
-        playerTransform = transform;
-        cameraTransform = this.cameraTransform;
-        moveSpeed = this.moveSpeed;
-        rotateSpeed = this.rotateSpeed;
+        // 인풋 시스템의 함수는 입력이 들어오거나 나가는 순간에만 호출되므로, 입력 값을 받는 작업만 수행한다.
+
+        // 입력 받은 값을 Vector2로 변환하여 저장한다.
+        inputVector = inputValue.Get<Vector2>();
+    }
+
+    // 캐릭터의 이동을 구현하는 함수
+    public virtual void Move()
+    {
+        // 저장한 입력 값을 카메라의 시야를 기준으로 하여 Vector3로 변환한다. 또한, 값을 정규화하여 대각선으로의 이동을 정상화한다.
+        Vector3 vector = Vector3.Normalize(inputVector.x * cameraTransform.right + inputVector.y * cameraTransform.forward) * MoveSpeed;
+
+        // 카메라의 시야는 위, 아래를 향할 수 있으나, 캐릭터는 그 방향으로는 움직이지 않아야 한다.
+        vector.y = 0f;
+
+        // 이동하고 있는지를 판별한다.
+        bool isMove = (vector != Vector3.zero);
+
+        // 이동하는 것이라면,
+        if (isMove)
+        {
+            // 플레이어를 그 방향으로 회전시킨다. (이 코드는 조건을 걸지 않을 경우, 입력 값이 없을 때 항상 원점으로 회전하기 때문에 조건문이 필요하다.)
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(vector), RotateSpeed * Time.deltaTime);
+        }
+
+        // 적절한 애니메이션을 재생한다.
+        animator.SetBool("isRun", isMove); // bool 매개변수를 사용할 경우
+        // animator.SetFloat("MoveSpeed", moveVector.normalized.magnitude); // float 매개변수를 사용할 경우; Blend Tree를 활용할 수 있다.
+
+        // y 값을 제외한 나머지 값을 이동 벡터에 저장해 둔다.
+        moveVector = new Vector3(vector.x, moveVector.y, vector.z);
     }
 
     #endregion Move (Arrows / WASD)
 
     #region Jump (Space)
 
-    // 점프의 강도
-    [SerializeField] private float jumpPower;
-    // 중력 가속도; 기본 값은 -9.81f
-    [SerializeField] private float gravityScale = Physics.gravity.y;
+    // 점프의 유무
+    private bool isJumping = false;
 
-    public void GetJumpFieldRefs(ref float jumpPower, ref float gravityScale)
+    // 중력 가속도
+    private float gravityScale = Physics.gravity.y;
+
+    // 인풋 시스템(Input System)으로 값을 입력 받아, 점프를 수행하는 함수
+    private void OnJump(InputValue inputValue)
     {
-        jumpPower = this.jumpPower;
-        gravityScale = this.gravityScale;
+        // 플레이어가 땅에 닿아 있을 때만,
+        if (isGrounded)
+        {
+            // 점프한다.
+            isJumping = true;
+        }
+    }
+
+    // 플레이어의 점프를 구현하는 함수
+    public virtual void Jump()
+    {
+        // 땅에 닿아 있는지를 확인한다.
+        CheckIsGrounded();
+
+        // 점프 키를 눌렀다면
+        if (isJumping)
+        {
+            // 위로 점프한다.
+            moveVector.y = Mathf.Sqrt(JumpPower * -2.0f * gravityScale);
+
+            // 연속으로 점프할 수 없다.
+            isJumping = false;
+        }
+
+        // 캐릭터가 공중에 있을 경우,
+        if (!isGrounded)
+        {
+            // 아래로 점점 떨어진다.
+            moveVector.y += gravityScale * Time.deltaTime;
+        }
     }
 
     #endregion Jump (Space)
@@ -146,7 +194,7 @@ public class TestPlayer : Entity
     {
         if (inputValue.isPressed)
         {
-            playerStateMachine.StateOnHat();
+            // playerStateMachine.StateOnHat();
         }
     }
 
@@ -158,7 +206,7 @@ public class TestPlayer : Entity
     {
         if (inputValue.isPressed)
         {
-            playerStateMachine.StateOnAttack();
+            // UseAttack();
         }
     }
 
@@ -170,7 +218,7 @@ public class TestPlayer : Entity
     {
         if (inputValue.isPressed)
         {
-            playerStateMachine.StateOnSkill01();
+            // UseSkill01();
         }
     }
 
@@ -178,13 +226,14 @@ public class TestPlayer : Entity
     {
         if (inputValue.isPressed)
         {
-            playerStateMachine.StateOnSkill02();
+            // UseSkill02();
         }
     }
 
     #endregion Skills (Q / E)
 
     #endregion Input System Methods
+
 
     #region Knockback, 필요 없지 않아?
 
@@ -209,23 +258,28 @@ public class TestPlayer : Entity
 
     #endregion ThrowHat
 
-    #region Is Grounded
+    #region isGrounded
 
-    public bool IsGrounded { get; private set; } = false;
+    /* 
+        캐릭터 컨트롤러(Character Controller) 컴포넌트의 isGrounded 프로퍼티가 매우 부정확한 이유로,
+        레이캐스트(Raycast)를 사용하여 땅을 닿아 있는지를 확인하는 함수를 구현한다.
+    */
+
+    private bool isGrounded = false;
 
     private void CheckIsGrounded()
     {
         if (Physics.Raycast(transform.position, Vector3.down, 0.3f))
         {
-            IsGrounded = true;
+            isGrounded = true;
         }
         else
         {
-            IsGrounded = false;
+            isGrounded = false;
         }
     }
 
-    #endregion Is Grounded
+    #endregion isGrounded
 
     #region Throw Hat
 
@@ -278,6 +332,13 @@ public class TestPlayer : Entity
     #endregion Get Hit
 
     #endregion Custom Methods
+
+    #region Abstract Methods
+
+    // 빙의 상태의 몬스터에 접근하여, 그 공격이나 스킬을 사용한다.
+
+
+    #endregion Abstract Methods
 }
 
 // 몬스터 클래스
@@ -285,4 +346,3 @@ public class TestMonster : Entity
 {
 
 }
-

@@ -4,44 +4,22 @@ public class TestNormalState : TestPlayerState
 {
     public TestNormalState(TestPlayer playerController) : base(playerController) { }
 
-    // ºùÀÇÇÏÁö ¾ÊÀº »óÅÂ·Î ÁøÀÔ ½Ã,
+    // ë¹™ì˜í•˜ì§€ ì•Šì€ ìƒíƒœë¡œ ì§„ì… ì‹œ,
     public override void Enter()
     {
-        // ½ºÅ³À» ÃÊ±âÈ­ÇÑ´Ù.
+        // ìŠ¤í‚¬ì„ ì´ˆê¸°í™”í•œë‹¤.
         SkillManager.ResetSkill();
-
-        playerController.MoveSpeed = moveSpeed;
-        playerController.JumpPower = jumpPower;
-    }
-
-    public override void Exit()
-    {
-        playerOutfit.SetActive(false);
     }
 
     public override void Execute()
     {
-        base.Execute();
+
     }
 
-    public override void Move()
+    public override void Exit()
     {
-        base.Move();
+
     }
 
-    public override void Jump()
-    {
-        base.Jump();
-    }
 
-    public override void Shift()
-    {
-        playerController.GetComponent<Animator>().SetTrigger("Shift");
-    }
-
-    public override void Attack() { }
-
-    public override void Skill01() { }
-
-    public override void Skill02() { }
 }

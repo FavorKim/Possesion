@@ -32,40 +32,6 @@ public class TestStateMachine
         currentState = states["Normal"];
     }
 
-    #region StateOn Methods
-
-    public void StateOnMove()
-    {
-        currentState.Move();
-    }
-
-    public void StateOnJump()
-    {
-        currentState.Jump();
-    }
-
-    public void StateOnHat()
-    {
-        currentState.Shift();
-    }
-
-    public void StateOnAttack()
-    {
-        currentState.Attack();
-    }
-
-    public void StateOnSkill01()
-    {
-        currentState.Skill01();
-    }
-
-    public void StateOnSkill02()
-    {
-        currentState.Skill02();
-    }
-
-    #endregion StateOn Methods
-
     #region UpdateState / ChangeState
 
     // 주기적으로 갱신(호출)하는 함수
