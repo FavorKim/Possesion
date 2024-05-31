@@ -8,7 +8,7 @@ interface IPlayerState
 
 public abstract class TestPlayerState : IPlayerState
 {
-    private TestPlayer playerController;
+    protected TestPlayer playerController;
 
     // 생성자 (Constructor)
     public TestPlayerState(TestPlayer playerController)

@@ -342,63 +342,63 @@ public class PlayerController : MonoBehaviour, IDamagable
 
 }
 
-public class Skill
-{
-    public Skill(float maxCD, Action effect)
-    {
-        this.effect = effect;
-        this.maxCD = maxCD;
-    }
+//public class Skill
+//{
+//    public Skill(float maxCD, Action effect)
+//    {
+//        this.effect = effect;
+//        this.maxCD = maxCD;
+//    }
 
-    public Slider gauge;
+//    public Slider gauge;
 
-    float maxCD;
-    float curCD;
+//    float maxCD;
+//    float curCD;
 
-    public bool CanUse() { return curCD > maxCD; }
+//    public bool CanUse() { return curCD > maxCD; }
 
-    Action effect;
+//    Action effect;
 
-    public void UseSkill()
-    {
-        if (!CanUse()) return;
-        effect();
-        SetCurCDto0();
-    }
+//    public void UseSkill()
+//    {
+//        if (!CanUse()) return;
+//        effect();
+//        SetCurCDto0();
+//    }
 
-    public void SetCurCDto0()
-    {
-        curCD = 0;
-    }
+//    public void SetCurCDto0()
+//    {
+//        curCD = 0;
+//    }
 
-    public void SetCurCD() { curCD += Time.deltaTime; gauge.value = curCD / maxCD; }
-}
+//    public void SetCurCD() { curCD += Time.deltaTime; gauge.value = curCD / maxCD; }
+//}
 
-public class SkillManager
-{
-    public SkillManager(Slider socket1, Slider socket2)
-    {
-        SkillManager.socket1 = socket1;
-        SkillManager.socket2 = socket2;
-    }
-    public static Slider socket1;
-    public static Slider socket2;
+//public class SkillManager
+//{
+//    public SkillManager(Slider socket1, Slider socket2)
+//    {
+//        SkillManager.socket1 = socket1;
+//        SkillManager.socket2 = socket2;
+//    }
+//    public static Slider socket1;
+//    public static Slider socket2;
 
-    public static void SetSkill(Skill skill, int socket)
-    {
-        socket1.gameObject.SetActive(true);
-        socket2.gameObject.SetActive(true);
+//    public static void SetSkill(Skill skill, int socket)
+//    {
+//        socket1.gameObject.SetActive(true);
+//        socket2.gameObject.SetActive(true);
 
-        if (socket == 1)
-            skill.gauge = socket1;
-        else if (socket == 2)
-            skill.gauge = socket2;
+//        if (socket == 1)
+//            skill.gauge = socket1;
+//        else if (socket == 2)
+//            skill.gauge = socket2;
 
-        skill.SetCurCDto0();
-    }
-    public static void ResetSkill()
-    {
-        socket1.gameObject.SetActive(false);
-        socket2.gameObject.SetActive(false);
-    }
-}
+//        skill.SetCurCDto0();
+//    }
+//    public static void ResetSkill()
+//    {
+//        socket1.gameObject.SetActive(false);
+//        socket2.gameObject.SetActive(false);
+//    }
+//}

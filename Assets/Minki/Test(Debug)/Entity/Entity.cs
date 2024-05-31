@@ -16,16 +16,9 @@ public abstract class Entity : MonoBehaviour
     public float RotateSpeed { get; set; } // 회전(몸을 돌리는) 속도
     public float JumpPower { get; set; } // 점프 강도
 
-    public int AttackDamage { get; set; } // 기본 공격력
-    public float AttackCoolTime { get; set; } // 기본 공격 재사용 대기 시간
-
-    protected Skill Skill01 { get; set; } // 스킬 1
-    public int Skiil01Damage { get; set; } // 스킬1 공격력
-    public float Skill01CoolTime { get; set; } // 스킬1 재사용 대기 시간
-
+    public Skill Skill00 { get; set; } // 기본 공격
+    public Skill Skill01 { get; set; } // 스킬 1
     public Skill Skill02 { get; set; } // 스킬 2
-    public int Skill02Damage { get; set; } // 스킬2 공격력
-    public float Skill02CoolTime { get; set; } // 스킬2 재사용 대기 시간
 
     public float AttackRange { get; set; } // 공격 범위
     public float DetectRange { get; set; } // 플레이어 탐지 범위
@@ -45,11 +38,16 @@ public class TestPlayer : Entity
 
     #region Fields
 
-    private Entity possessingMonster; // 몬스터 클래스; 빙의 상태의 몬스터에 접근하기 위한 변수
-    private TestMonster b;
+    // 몬스터 클래스; 빙의 상태의 몬스터에 접근하기 위한 변수
+    private Entity possessingMonster;
 
+    // 빙의를 유지할 수 있는 시간
     [SerializeField] private Slider durationGauge;
     public Slider DurationGauge { get { return durationGauge; } }
+
+    // 스킬의 재사용 대기시간을 UI로 보여준다.
+    [SerializeField] private Slider skill01CoolTimeGauge;
+    [SerializeField] private Slider skill02CoolTimeGauge;
 
     #endregion Fields
 
@@ -59,6 +57,8 @@ public class TestPlayer : Entity
     {
         characterController = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
+
+        playerStateMachine = new TestStateMachine(this);
     }
 
     private void Update()
@@ -80,10 +80,9 @@ public class TestPlayer : Entity
     [SerializeField] private GameObject playerOutfit; // 플레이어의 캐릭터 모델
     public GameObject PlayerOutfit { get { return playerOutfit; } }
 
-    public void SetState(string name)
+    public void SetState(TestPlayer player)
     {
-        playerStateMachine.ChangeState(name);
-        
+        playerStateMachine.ChangeState(player);
     }
 
     public void SetState(TestMonster monster)
@@ -190,12 +189,19 @@ public class TestPlayer : Entity
 
     #region Throw Hat (Left Shift)
 
+    private HatManager hatManager;
+
     private void OnThrowHat(InputValue inputValue)
     {
         if (inputValue.isPressed)
         {
-            // playerStateMachine.StateOnHat();
+            ThrowHat();
         }
+    }
+
+    private void ThrowHat()
+    {
+        hatManager.ShootHat(transform.forward);
     }
 
     #endregion Throw Hat (Left Shift)
@@ -206,7 +212,7 @@ public class TestPlayer : Entity
     {
         if (inputValue.isPressed)
         {
-            // UseAttack();
+            Skill00?.UseSkill();
         }
     }
 
@@ -218,7 +224,7 @@ public class TestPlayer : Entity
     {
         if (inputValue.isPressed)
         {
-            // UseSkill01();
+            Skill01?.UseSkill();
         }
     }
 
@@ -226,7 +232,7 @@ public class TestPlayer : Entity
     {
         if (inputValue.isPressed)
         {
-            // UseSkill02();
+            Skill02?.UseSkill();
         }
     }
 
@@ -281,17 +287,6 @@ public class TestPlayer : Entity
 
     #endregion isGrounded
 
-    #region Throw Hat
-
-    private HatManager hatManager;
-
-    private void ThrowHat()
-    {
-        hatManager.ShootHat(transform.forward);
-    }
-
-    #endregion Throw Hat
-
     #region Get Hit
 
     private float invincibleTime = 2.0f; // 무적 지속 시간
@@ -306,10 +301,10 @@ public class TestPlayer : Entity
     {
         if (IsInvincible || IsDead || dmg == 0) return;
 
-        if (playerStateMachine.IsPossessing())
-        {
-            return;
-        }
+        //if (playerStateMachine.IsPossessing())
+        //{
+        //    return;
+        //}
 
         CurrentHealthPoint -= dmg;
         animator.SetTrigger("Hit");
@@ -332,13 +327,6 @@ public class TestPlayer : Entity
     #endregion Get Hit
 
     #endregion Custom Methods
-
-    #region Abstract Methods
-
-    // 빙의 상태의 몬스터에 접근하여, 그 공격이나 스킬을 사용한다.
-
-
-    #endregion Abstract Methods
 }
 
 // 몬스터 클래스
