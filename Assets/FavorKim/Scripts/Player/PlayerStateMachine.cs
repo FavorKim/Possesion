@@ -194,6 +194,7 @@ public class NormalState : PlayerState
 
 public class PossessState : PlayerState
 {
+
     public PossessState(PlayerController controller) : base(controller)
     {
         durationGauge = player.GetDurationGauge();
@@ -288,6 +289,7 @@ public class PossessState : PlayerState
     }
     public override void Skill1()
     {
+
         mon.skill1?.UseSkill();
     }
     public override void Skill2()

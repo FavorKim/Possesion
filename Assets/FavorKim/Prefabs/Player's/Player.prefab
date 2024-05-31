@@ -13746,7 +13746,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6218677843572986262}
-  m_LocalRotation: {x: -0, y: -0.71139675, z: -0, w: -0.7027907}
+  m_LocalRotation: {x: -0, y: -0.7113948, z: 0, w: -0.7027927}
   m_LocalPosition: {x: 19.81, y: 0.443, z: 991.04}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -14400,7 +14400,7 @@ GameObject:
   - component: {fileID: 6524668426060229253}
   - component: {fileID: 6524668426060229250}
   - component: {fileID: 6524668426060229251}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: AimLine
   m_TagString: Untagged
   m_Icon: {fileID: 0}
