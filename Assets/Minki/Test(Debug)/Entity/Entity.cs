@@ -22,6 +22,7 @@ public abstract class Entity : MonoBehaviour
     [SerializeField] protected float rotateSpeed; // 회전(몸을 돌리는) 속도
     [SerializeField] protected float jumpPower; // 점프 강도
 
+    // TODO: ref, out, in의 참조 전달의 유효가 어디까지인지를 알 필요가 있어 보인다.
     public void GetSpeeds(out float moveSP, out float rotateSP, out float jumpSP)
     {
         moveSP = moveSpeed;
@@ -346,7 +347,7 @@ public class TestPlayer : Entity
 
     #endregion isGrounded
 
-    #region Get Hit (OnTriggerEnter)
+    #region Get Hit (OnTriggerStay)
 
     // 몬스터, 장애물 등에 피격했을 때의 함수를 구현한다.
 
@@ -388,7 +389,7 @@ public class TestPlayer : Entity
         invincibleFX.gameObject.SetActive(false);
     }
 
-    #endregion Get Hit (OnTriggerEnter)
+    #endregion Get Hit (OnTriggerStay)
 
     #endregion Custom Methods
 }
