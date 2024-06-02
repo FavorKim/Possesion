@@ -1,6 +1,7 @@
 using Enemy;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class PlayerStateMachine
@@ -194,15 +195,22 @@ public class NormalState : PlayerState
 
 public class PossessState : PlayerState
 {
+
     public PossessState(PlayerController controller) : base(controller)
     {
         durationGauge = player.GetDurationGauge();
     }
     Slider durationGauge;
     float playerOrgJumpForce;
-
+    bool isFirst = true;
+    
     public override void Enter()
     {
+        if (isFirst && SceneManager.GetActiveScene().name == "FavorKim")
+        {
+            player.GetPossessUI().SetActive(true);
+            isFirst = false;
+        }
 
         playerOrgJumpForce = orgJumpForce;
         if(mon is Slime)
@@ -288,6 +296,7 @@ public class PossessState : PlayerState
     }
     public override void Skill1()
     {
+
         mon.skill1?.UseSkill();
     }
     public override void Skill2()

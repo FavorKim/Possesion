@@ -60,6 +60,9 @@ MonoBehaviour:
         - globalObjectIdString: GlobalObjectId_V1-2-f0987962162b1864a984df1b1f6093a1-7160820962549403335-7160820962615997610
         - globalObjectIdString: GlobalObjectId_V1-2-f0987962162b1864a984df1b1f6093a1-1425931776-0
         - globalObjectIdString: GlobalObjectId_V1-2-f0987962162b1864a984df1b1f6093a1-658836977-0
+        - globalObjectIdString: GlobalObjectId_V1-2-f0987962162b1864a984df1b1f6093a1-9539993-0
+        - globalObjectIdString: GlobalObjectId_V1-2-f0987962162b1864a984df1b1f6093a1-1672254886-0
+        - globalObjectIdString: GlobalObjectId_V1-2-f0987962162b1864a984df1b1f6093a1-1699979568-0
         values:
         - colorIndex: 7
           iconNameOrGuid: AvatarMask On Icon
@@ -112,7 +115,7 @@ MonoBehaviour:
         - colorIndex: 5
           iconNameOrGuid: BoxCollider Icon
         - colorIndex: 5
-          iconNameOrGuid: 
+          iconNameOrGuid: Folder Icon
         - colorIndex: 5
           iconNameOrGuid: 
         - colorIndex: 5
@@ -129,6 +132,12 @@ MonoBehaviour:
           iconNameOrGuid: 
         - colorIndex: 5
           iconNameOrGuid: Folder Icon
+        - colorIndex: 4
+          iconNameOrGuid: 
+        - colorIndex: 5
+          iconNameOrGuid: 
+        - colorIndex: 3
+          iconNameOrGuid: Canvas Icon
         - colorIndex: 4
           iconNameOrGuid: 
     - goDatas_byGlobalId:
