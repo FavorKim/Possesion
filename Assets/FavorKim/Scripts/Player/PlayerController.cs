@@ -37,6 +37,7 @@ public class PlayerController : MonoBehaviour, IDamagable
     [SerializeField] Slider durationGauge;
 
     [SerializeField] GameObject playerOF;
+    [SerializeField] GameObject possessUI;
 
     SkillManager sM;
 
@@ -88,6 +89,7 @@ public class PlayerController : MonoBehaviour, IDamagable
     public Transform CameraTransform { get { return camTransform; } set { camTransform = value; } }
     public Transform GetPlayerFoward() { return playerFoward; }
     public Transform GetLookAt() { return lookAtTransform; }
+    public GameObject GetPossessUI() { return possessUI; }
     public Vector2 Dir {  get { return dir; }  }
     public HatManager GetHatManager() { return hatM; }
     public float GetMoveSpeed() { return moveSpeed; }
@@ -280,7 +282,7 @@ public class PlayerController : MonoBehaviour, IDamagable
 
     void OnAttack(InputValue val) {
         if (isDead) return;
-        if (val.isPressed) state.StateOnAttack(); KnockBack(transform.forward, 2, 50); }
+        if (val.isPressed) state.StateOnAttack(); }
 
     void OnThrowHat(InputValue val)
     {

@@ -38,7 +38,9 @@ public abstract class Monsters : MonoBehaviour, IDamagable
         startPos = transform.position;
         var marker = Instantiate(Resources.Load<GameObject>("Marker_Red"));
         marker.transform.parent = this.gameObject.transform;
-        marker.transform.localPosition = Vector3.zero;
+        //marker.transform.localPosition = Vector3.zero;
+        marker.transform.localPosition = new Vector3(0, 60, 0);
+        marker.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
     }
 
     #endregion Start()

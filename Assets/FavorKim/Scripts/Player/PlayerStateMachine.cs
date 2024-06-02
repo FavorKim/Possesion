@@ -1,6 +1,7 @@
 using Enemy;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class PlayerStateMachine
@@ -201,9 +202,15 @@ public class PossessState : PlayerState
     }
     Slider durationGauge;
     float playerOrgJumpForce;
-
+    bool isFirst = true;
+    
     public override void Enter()
     {
+        if (isFirst && SceneManager.GetActiveScene().name == "FavorKim")
+        {
+            player.GetPossessUI().SetActive(true);
+            isFirst = false;
+        }
 
         playerOrgJumpForce = orgJumpForce;
         if(mon is Slime)
