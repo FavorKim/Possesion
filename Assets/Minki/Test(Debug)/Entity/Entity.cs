@@ -9,19 +9,49 @@ public abstract class Entity : MonoBehaviour
 {
     #region Fields
 
-    public float CurrentHealthPoint { get; set; } // 현재 체력
-    public float MaxHealthPoint { get; set; } // 최대 체력
+    #region HealthPoint
 
-    public float MoveSpeed { get; set; } // 이동 속도
-    public float RotateSpeed { get; set; } // 회전(몸을 돌리는) 속도
-    public float JumpPower { get; set; } // 점프 강도
+    protected float currentHealthPoint; // 현재 체력
+    [SerializeField] protected float maxHealthPoint; // 최대 체력
 
-    public Skill Skill00 { get; set; } // 기본 공격
-    public Skill Skill01 { get; set; } // 스킬 1
-    public Skill Skill02 { get; set; } // 스킬 2
+    #endregion HealthPoint
 
-    public float AttackRange { get; set; } // 공격 범위
-    public float DetectRange { get; set; } // 플레이어 탐지 범위
+    #region Speed
+
+    [SerializeField] protected float moveSpeed; // 이동 속도
+    [SerializeField] protected float rotateSpeed; // 회전(몸을 돌리는) 속도
+    [SerializeField] protected float jumpPower; // 점프 강도
+
+    public void GetSpeeds(out float moveSP, out float rotateSP, out float jumpSP)
+    {
+        moveSP = moveSpeed;
+        rotateSP = rotateSpeed;
+        jumpSP = jumpPower;
+    }
+
+    public void SetSpeeds(in float moveSP, in float rotateSP, in float jumpSP)
+    {
+        moveSpeed = moveSP;
+        rotateSpeed = rotateSP;
+        jumpPower = jumpSP;
+    }
+
+    #endregion Speed
+
+    #region Skill
+
+    protected Skill skill00; // 기본 공격
+    protected Skill skill01; // 스킬 1
+    protected Skill skill02; // 스킬 2
+
+    public void GetSkills(out Skill sk00, out Skill sk01, out Skill sk02)
+    {
+        sk00 = skill00;
+        sk01 = skill01;
+        sk02 = skill02;
+    }
+
+    #endregion Skill
 
     #endregion Fields
 }
@@ -59,6 +89,9 @@ public class TestPlayer : Entity
         animator = GetComponent<Animator>();
 
         playerStateMachine = new TestStateMachine(this);
+
+        // 첫 시작 시 스탯을 초기화한다.
+        InitializeStatus();
     }
 
     private void Update()
@@ -73,6 +106,17 @@ public class TestPlayer : Entity
     #endregion Life Cycle Methods
 
     #region Custom Methods
+
+    #region Initialize Status
+
+    // 각종 스탯을 초기화한다.
+    private void InitializeStatus()
+    {
+        // 처음에는 최대 체력으로 시작한다.
+        currentHealthPoint = maxHealthPoint;
+    }
+
+    #endregion Initialize Status
 
     #region State Machine
 
@@ -94,7 +138,11 @@ public class TestPlayer : Entity
 
     #region Input System Methods
 
+    // Input System으로 입력을 받아, 이동 / 공격 등의 행동을 취한다.
+
     #region Move (Arrows / WASD)
+
+    // 플레이어의 이동을 구현한다. 여기에서는 이동의 방향만 저장하고, 실제 이동은 아래의 점프 유무까지 포함하여 Update문에서 실행한다.
 
     // 플레이어를 비추는 카메라; 시네머신(Cinemachine)이 부착된 메인 카메라를 지정한다.
     protected Transform cameraTransform;
@@ -117,7 +165,7 @@ public class TestPlayer : Entity
     public virtual void Move()
     {
         // 저장한 입력 값을 카메라의 시야를 기준으로 하여 Vector3로 변환한다. 또한, 값을 정규화하여 대각선으로의 이동을 정상화한다.
-        Vector3 vector = Vector3.Normalize(inputVector.x * cameraTransform.right + inputVector.y * cameraTransform.forward) * MoveSpeed;
+        Vector3 vector = Vector3.Normalize(inputVector.x * cameraTransform.right + inputVector.y * cameraTransform.forward) * moveSpeed;
 
         // 카메라의 시야는 위, 아래를 향할 수 있으나, 캐릭터는 그 방향으로는 움직이지 않아야 한다.
         vector.y = 0f;
@@ -129,7 +177,7 @@ public class TestPlayer : Entity
         if (isMove)
         {
             // 플레이어를 그 방향으로 회전시킨다. (이 코드는 조건을 걸지 않을 경우, 입력 값이 없을 때 항상 원점으로 회전하기 때문에 조건문이 필요하다.)
-            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(vector), RotateSpeed * Time.deltaTime);
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(vector), rotateSpeed * Time.deltaTime);
         }
 
         // 적절한 애니메이션을 재생한다.
@@ -143,6 +191,8 @@ public class TestPlayer : Entity
     #endregion Move (Arrows / WASD)
 
     #region Jump (Space)
+
+    // 플레이어의 점프를 구현한다.
 
     // 점프의 유무
     private bool isJumping = false;
@@ -171,7 +221,7 @@ public class TestPlayer : Entity
         if (isJumping)
         {
             // 위로 점프한다.
-            moveVector.y = Mathf.Sqrt(JumpPower * -2.0f * gravityScale);
+            moveVector.y = Mathf.Sqrt(jumpPower * -2.0f * gravityScale);
 
             // 연속으로 점프할 수 없다.
             isJumping = false;
@@ -189,6 +239,9 @@ public class TestPlayer : Entity
 
     #region Throw Hat (Left Shift)
 
+    // 플레이어가 모자를 던진다. 던진 모자에 몬스터가 피격할 경우, 플레이어는 그 몬스터에 빙의한다.
+
+    // 모자에 대한 기능은 HatManager 클래스에서 정의한다.
     private HatManager hatManager;
 
     private void OnThrowHat(InputValue inputValue)
@@ -208,11 +261,13 @@ public class TestPlayer : Entity
 
     #region Attack (Left Ctrl)
 
+    // 플레이어의 일반 공격(Skill00으로 정의)을 구현한다. 플레이어 자체는 공격이나 스킬을 가지고 있지 않고, 몬스터에 빙의하여 그 기술을 사용한다.
+
     private void OnAttack(InputValue inputValue)
     {
         if (inputValue.isPressed)
         {
-            Skill00?.UseSkill();
+            skill00?.UseSkill();
         }
     }
 
@@ -220,11 +275,13 @@ public class TestPlayer : Entity
 
     #region Skills (Q / E)
 
+    // 플레이어의 스킬(Skill01, 02, …으로 정의)을 구현한다.
+
     private void OnSkill01(InputValue inputValue)
     {
         if (inputValue.isPressed)
         {
-            Skill01?.UseSkill();
+            skill01?.UseSkill();
         }
     }
 
@@ -232,14 +289,13 @@ public class TestPlayer : Entity
     {
         if (inputValue.isPressed)
         {
-            Skill02?.UseSkill();
+            skill02?.UseSkill();
         }
     }
 
     #endregion Skills (Q / E)
 
     #endregion Input System Methods
-
 
     #region Knockback, 필요 없지 않아?
 
@@ -262,7 +318,7 @@ public class TestPlayer : Entity
     //    transform.DOMove((dir + transform.position).normalized * length, duration);
     //}
 
-    #endregion ThrowHat
+    #endregion Knockback, 필요 없지 않아?
 
     #region isGrounded
 
@@ -271,10 +327,13 @@ public class TestPlayer : Entity
         레이캐스트(Raycast)를 사용하여 땅을 닿아 있는지를 확인하는 함수를 구현한다.
     */
 
+    // 땅에 닿아 있는지를 판별하는 변수
     private bool isGrounded = false;
 
+    // 땅에 닿아 있는지를 판별하는 함수
     private void CheckIsGrounded()
     {
+        // 캐릭터의 아래로 짧게 레이(Ray)를 쏘아, 충돌할 경우 판별 변수를 참으로 한다.
         if (Physics.Raycast(transform.position, Vector3.down, 0.3f))
         {
             isGrounded = true;
@@ -287,44 +346,49 @@ public class TestPlayer : Entity
 
     #endregion isGrounded
 
-    #region Get Hit
+    #region Get Hit (OnTriggerEnter)
 
+    // 몬스터, 장애물 등에 피격했을 때의 함수를 구현한다.
+
+    // 무적 상태를 표현하는 파티클 시스템
+    [SerializeField] private ParticleSystem invincibleFX;
+
+    private bool isInvincible = false; // 무적 상태 여부
     private float invincibleTime = 2.0f; // 무적 지속 시간
-    public bool IsInvincible { get; private set; } = false; // 무적 상태 여부
-    public bool IsDead { get; private set; } = false; // 사망 상태 여부
 
-    [SerializeField] private ParticleSystem invinFX; // 무적 상태를 표현하는 파티클 시스템
-
-    private event Action OnDamaged;
-
-    private void GetDamage(int dmg)
+    // 트리거의 충돌로 피격을 구현한다.
+    private void OnTriggerStay(Collider other)
     {
-        if (IsInvincible || IsDead || dmg == 0) return;
+        // 충돌한 오브젝트가 대미지를 가하는 것일 경우, 무적 상태가 아니라면
+        if (other.GetComponent<Obstacles>() && !isInvincible)
+        {
+            // 공격력만큼 대미지를 입는다.
+            currentHealthPoint -= other.GetComponent<Obstacles>().Damage;
 
-        //if (playerStateMachine.IsPossessing())
-        //{
-        //    return;
-        //}
+            // 피격 애니메이션을 재생한다.
+            animator.SetTrigger("Hit");
 
-        CurrentHealthPoint -= dmg;
-        animator.SetTrigger("Hit");
-        StartCoroutine(CorInvincible());
-        OnDamaged();
+            // 무적 상태에 돌입한다.
+            StartCoroutine(CorInvincible());
+        }
     }
 
     private IEnumerator CorInvincible()
     {
-        IsInvincible = true;
-        invinFX.gameObject.SetActive(true);
-        invinFX.Play();
+        // 무적 상태에 돌입하여, 무적 파티클 시스템을 활성화한다.
+        isInvincible = true;
+        invincibleFX.gameObject.SetActive(true);
+        invincibleFX.Play();
 
+        // 무적 지속 시간만큼 기다린다.
         yield return new WaitForSeconds(invincibleTime);
 
-        invinFX.gameObject.SetActive(false);
-        IsInvincible = false;
+        // 무적 상태를 해제하여, 무적 파티클 시스템을 비활성화한다.
+        isInvincible = false;
+        invincibleFX.gameObject.SetActive(false);
     }
 
-    #endregion Get Hit
+    #endregion Get Hit (OnTriggerEnter)
 
     #endregion Custom Methods
 }
@@ -332,5 +396,6 @@ public class TestPlayer : Entity
 // 몬스터 클래스
 public class TestMonster : Entity
 {
-
+    [SerializeField] private float attackRange;// 공격 범위
+    [SerializeField] private float detectRange; // 플레이어 탐지 범위
 }
