@@ -6,12 +6,12 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/FavorKim/Scenes/MainScene.unity
+    guid: 51ef9fc5a7a430846a3d7654b5e936b3
+  - enabled: 1
     path: Assets/FavorKim/Scenes/FavorKim.unity
     guid: f0987962162b1864a984df1b1f6093a1
   - enabled: 1
     path: Assets/KDH/Scenes/BossScene.unity
     guid: 16ba1214661df554393870711c6e43bf
-  - enabled: 1
-    path: Assets/FavorKim/Scenes/MainScene.unity
-    guid: 51ef9fc5a7a430846a3d7654b5e936b3
   m_configObjects: {}
