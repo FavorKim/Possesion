@@ -10401,6 +10401,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 6524668426060229251, guid: c4ed94547e74136478aa71a28ffe83be, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 13cbd9455622f5740b8cf8e4066a2c1c, type: 2}
     - target: {fileID: 6703324510465215276, guid: c4ed94547e74136478aa71a28ffe83be, type: 3}
       propertyPath: m_RootOrder
       value: 15
@@ -14405,7 +14409,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 19959
+    m_Bits: 24055
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
