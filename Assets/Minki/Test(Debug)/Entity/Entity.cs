@@ -30,7 +30,7 @@ public abstract class Entity : MonoBehaviour
         jumpSP = jumpPower;
     }
 
-    public void SetSpeeds(in float moveSP, in float rotateSP, in float jumpSP)
+    public void SetSpeeds(float moveSP, float rotateSP, float jumpSP)
     {
         moveSpeed = moveSP;
         rotateSpeed = rotateSP;
@@ -52,6 +52,13 @@ public abstract class Entity : MonoBehaviour
         sk02 = skill02;
     }
 
+    public void SetSkills(Skill sk00, Skill sk01, Skill sk02)
+    {
+        skill00 = sk00;
+        skill01 = sk01;
+        skill02 = sk02;
+    }
+
     #endregion Skill
 
     #endregion Fields
@@ -70,7 +77,7 @@ public class TestPlayer : Entity
     #region Fields
 
     // 몬스터 클래스; 빙의 상태의 몬스터에 접근하기 위한 변수
-    private Entity possessingMonster;
+    private Entity possessingMonster; // 사용하지 않아도 될 것으로 보임.
 
     // 빙의를 유지할 수 있는 시간
     [SerializeField] private Slider durationGauge;
@@ -125,11 +132,13 @@ public class TestPlayer : Entity
     [SerializeField] private GameObject playerOutfit; // 플레이어의 캐릭터 모델
     public GameObject PlayerOutfit { get { return playerOutfit; } }
 
+    // 빙의가 해제될 때의 상태 변화 함수
     public void SetState(TestPlayer player)
     {
         playerStateMachine.ChangeState(player);
     }
 
+    // 빙의할 때의 상태 변화 함수
     public void SetState(TestMonster monster)
     {
         playerStateMachine.ChangeState(monster);
@@ -242,20 +251,46 @@ public class TestPlayer : Entity
 
     // 플레이어가 모자를 던진다. 던진 모자에 몬스터가 피격할 경우, 플레이어는 그 몬스터에 빙의한다.
 
-    // 모자에 대한 기능은 HatManager 클래스에서 정의한다.
-    private HatManager hatManager;
+    // 모자의 기본 위치
+    [SerializeField] private Transform hatTransform;
+    // 던지는 모자에 대한 게임 오브젝트
+    [SerializeField] private GameObject throwingHat;
+    // 착용하는 모자에 대한 게임 오브젝트
+    [SerializeField] private GameObject wearingHat;
 
+    // 빙의를 해제할 때의 효과
+    [SerializeField] private ParticleSystem poExitParticle;
+    public ParticleSystem GetPoExitParticle() { return poExitParticle; }
+
+    // 인풋 시스템(Input System)으로 값을 입력 받아, 모자를 던지는 함수를 호출한다.
     private void OnThrowHat(InputValue inputValue)
     {
         if (inputValue.isPressed)
         {
-            ThrowHat();
+           ThrowHat();
         }
     }
 
-    private void ThrowHat()
+    public void ThrowHat()
     {
-        hatManager.ShootHat(transform.forward);
+        // 비활성화 상태일 때만 던진다. (날아가는 중에는 활성화 상태이다.)
+
+        if (!throwingHat.activeSelf)
+        {
+            // 위치를 초기화한다. (모자의 기본 위치로 배치한다.)
+            throwingHat.transform.SetParent(hatTransform);
+            throwingHat.transform.SetPositionAndRotation(Vector3.zero, Quaternion.identity);
+
+            // 각 모자를 활성화, 비활성화한다.
+            SetActiveHats(wears: false, throws: true);
+        }
+    }
+
+    // 모자의 활성화를 결정하는 함수
+    public void SetActiveHats(bool wears, bool throws)
+    {
+        wearingHat.SetActive(wears);
+        throwingHat.SetActive(throws);
     }
 
     #endregion Throw Hat (Left Shift)

@@ -4,16 +4,6 @@ public class TestPossessingState : TestPlayerState
 {
     #region Fields
 
-    // 플레이어의 스탯
-    private float moveSpeed;
-    private float rotateSpeed;
-    private float jumpPower;
-
-    private Skill skill00;
-    private Skill skill01;
-    private Skill skill02;
-
-
     // 빙의한 몬스터
     private TestMonster possessingMonster;
 
@@ -25,12 +15,13 @@ public class TestPossessingState : TestPlayerState
     private Skill pM_skill01;
     private Skill pM_skill02;
 
+    private ParticleSystem poExitParticle;
+
     #endregion Fields
 
     public TestPossessingState(TestPlayer playerController) : base(playerController)
     {
-        playerController.GetSpeeds(out moveSpeed, out rotateSpeed, out jumpPower);
-        playerController.GetSkills(out skill00, out skill01, out skill02);
+        poExitParticle = playerController.GetPoExitParticle();
     }
 
     public override void Enter()
@@ -40,9 +31,7 @@ public class TestPossessingState : TestPlayerState
 
         // 몬스터의 스탯을 적용한다.
         playerController.SetSpeeds(pM_moveSpeed, pM_rotateSpeed, pM_jumpPower);
-        skill00 = pM_skill00;
-        skill01 = pM_skill01;
-        skill02 = pM_skill02;
+        playerController.SetSkills(pM_skill00, pM_skill01, pM_skill02);
 
         // 플레이어의 빙의 지속 가능 시간을 나타낸다.
         playerController.DurationGauge.gameObject.SetActive(true);
@@ -56,6 +45,9 @@ public class TestPossessingState : TestPlayerState
 
     public override void Exit()
     {
+        // 효과를 재생한다.
+        poExitParticle.Play();
+
         // 몬스터를 자식에서 해제시킨다.
         possessingMonster.transform.parent = null;
 

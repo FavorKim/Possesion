@@ -81,11 +81,11 @@ public abstract class Monsters : MonoBehaviour, IDamagable
         switch (skillCount)
         {
             case 1:
-                skill1 = new Skill(coolTimes[0], Skill1);
+                //skill1 = new Skill(coolTimes[0], Skill1);
                 break;
             case 2:
-                skill1 = new Skill(coolTimes[0], Skill1);
-                skill2 = new Skill(coolTimes[1], Skill2);
+                //skill1 = new Skill(coolTimes[0], Skill1);
+                //skill2 = new Skill(coolTimes[1], Skill2);
                 break;
             default:
                 Debug.Log("입력한 매개변수의 개수가 올바르지 않습니다.");

@@ -195,7 +195,7 @@ public class PlayerController : MonoBehaviour, IDamagable
 
     public void ThrowHat()
     {
-        hatM.ShootHat(lookAtTransform.position);
+        hatM.ThrowHat(lookAtTransform.position);
     }
 
     public void SetState(string name)

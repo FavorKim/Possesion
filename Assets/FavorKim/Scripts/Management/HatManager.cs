@@ -1,15 +1,13 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+// 모자에 부착하여, 관련한 함수들을 정의하는 매니저 클래스
 public class HatManager : MonoBehaviour
 {
-    [SerializeField]GameObject hatPref;
+    [SerializeField] GameObject hatPref; // 던지는 모자
     [SerializeField] Transform hatTransform;
     GameObject hat;
-    [SerializeField] GameObject hatImg;
+    [SerializeField] GameObject hatImg; // 기본적으로 착용하는 모자
     [SerializeField] GameObject hitParticlePref;
-    //GameObject hitParticle;
     ParticleSystem hitParticle;
     [SerializeField]AudioSource sfx;
 
@@ -25,7 +23,7 @@ public class HatManager : MonoBehaviour
         hitParticle.Stop();
     }
 
-    public void ShootHat(Vector3 dir)
+    public void ThrowHat(Vector3 dir)
     {
         if (hat.activeSelf) return;
 
