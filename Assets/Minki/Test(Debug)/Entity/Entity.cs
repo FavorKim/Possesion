@@ -267,10 +267,19 @@ public class TestPlayer : Entity
     {
         if (inputValue.isPressed)
         {
-           ThrowHat();
+            // 현재 상태에 따라 취할 행동이 다르다.
+            if (playerStateMachine.currentState is TestNormalState)
+            {
+                ThrowHat();
+            }
+            else if (playerStateMachine.currentState is TestPossessingState)
+            {
+                ReleasePossession();
+            }
         }
     }
 
+    // 모자를 던지는 함수
     public void ThrowHat()
     {
         // 비활성화 상태일 때만 던진다. (날아가는 중에는 활성화 상태이다.)
@@ -284,6 +293,12 @@ public class TestPlayer : Entity
             // 각 모자를 활성화, 비활성화한다.
             SetActiveHats(wears: false, throws: true);
         }
+    }
+
+    // 빙의를 해제하는 함수
+    public void ReleasePossession()
+    {
+        SetState(this);
     }
 
     // 모자의 활성화를 결정하는 함수
