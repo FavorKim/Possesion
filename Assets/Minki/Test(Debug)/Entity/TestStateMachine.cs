@@ -6,7 +6,7 @@ public class TestStateMachine
     #region Fields
 
     // 플레이어의 현재 상태를 다루는 클래스
-    private TestPlayerState currentState;
+    public TestPlayerState currentState;
 
     // 상태 목록을 가지는 Dictionary
     private Dictionary<string, TestPlayerState> states = new Dictionary<string, TestPlayerState>();
