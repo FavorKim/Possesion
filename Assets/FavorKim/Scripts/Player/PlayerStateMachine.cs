@@ -246,7 +246,7 @@ public class PossessState : PlayerState
     public void GetMonster(Monsters _mon)
     {
         mon = _mon;
-        FaceUIController.Instance.GetPossessedMonster(mon);
+        //FaceUIController.Instance.GetPossessedMonster(mon);
         player.GetCC().Move(mon.transform.position - player.transform.position);
 
 
