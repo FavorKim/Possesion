@@ -36,6 +36,11 @@ public abstract class Monsters : MonoBehaviour, IDamagable
         // 슬라이더의 값을 (현재 체력 / 최대 체력)으로 한다.
         HPSlider.value = curHP / maxHP;
         startPos = transform.position;
+        var marker = Instantiate(Resources.Load<GameObject>("Marker_Red"));
+        marker.transform.parent = this.gameObject.transform;
+        //marker.transform.localPosition = Vector3.zero;
+        marker.transform.localPosition = new Vector3(0, 36, 0);
+        marker.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
     }
 
     #endregion Start()
@@ -160,4 +165,6 @@ public abstract class Monsters : MonoBehaviour, IDamagable
     }
 
     #endregion Custom Methods
+
+
 }

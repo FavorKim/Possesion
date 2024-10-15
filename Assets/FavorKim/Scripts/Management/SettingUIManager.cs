@@ -21,17 +21,16 @@ public class SettingUIManager : MonoBehaviour
         instance = this;
     }
 
-    public void SetFullScreenMode(Toggle isToggle)
+    public void SetFullScreenMode(bool isToggle)
     {
         isFull = isToggle.isOn;
         Debug.Log(isFull);
         Screen.fullScreen = isFull;
     }
 
-    public void SetResolution(TMP_Dropdown val)
+    public void SetResolution(int val)
     {
-        Debug.Log(val.value);
-        switch (val.value)
+        switch (val)
         {
             case 0:
                 Screen.SetResolution(1920, 1080, isFull);
