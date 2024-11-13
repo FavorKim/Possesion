@@ -783,7 +783,7 @@ GameObject:
   - component: {fileID: 1039123305412558121}
   - component: {fileID: 3590812831476968076}
   - component: {fileID: 1039123305412558120}
-  - component: {fileID: 1765194829209223406}
+  - component: {fileID: 8045225274278654360}
   m_Layer: 0
   m_Name: SpiderPBR
   m_TagString: Untagged
@@ -882,34 +882,23 @@ MonoBehaviour:
   curHP: 0
   maxHP: 0
   HPSlider: {fileID: 0}
-  patrolTransforms:
-  - {fileID: 0}
-  - {fileID: 0}
---- !u!114 &1765194829209223406
-MonoBehaviour:
+  _patrolTransforms: []
+  projectileTransform: {fileID: 0}
+  shootPower: 50
+--- !u!136 &8045225274278654360
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1039836431952036025}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
   m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bcdf6c616326c4aaeb610b335fbb67fe, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  useDefaultBackgroundColor: 0
-  backgroundColor:
-    serializedVersion: 2
-    rgba: 4278190080
-  useDefaultTextColor: 0
-  textColor:
-    serializedVersion: 2
-    rgba: 4281597782
-  font: {fileID: 0}
-  fontSize: 12
-  fontStyle: 1
-  alignment: 0
-  textDropShadow: 0
+  m_Radius: 0.5
+  m_Height: 1
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.42, z: 0}
 --- !u!1 &1039841287220731483
 GameObject:
   m_ObjectHideFlags: 0
@@ -1455,7 +1444,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2512287766517459147}
-  - component: {fileID: 3222757056119295458}
   m_Layer: 0
   m_Name: Body Collider
   m_TagString: Untagged
@@ -1478,17 +1466,3 @@ Transform:
   m_Father: {fileID: 1043538038321314553}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!136 &3222757056119295458
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8474153385163110923}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 1.7
-  m_Direction: 0
-  m_Center: {x: -0.3, y: 0, z: 0}

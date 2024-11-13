@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LeafObs : Obstacles
+public class LeafObs : InteractableObstacles
 {
     [SerializeField] GameObject fire;
     [SerializeField] GameObject cutter;
@@ -11,18 +11,18 @@ public class LeafObs : Obstacles
     {
         fire.SetActive(false);
         cutter.SetActive(false);
-        myType = ITyped.Type.LEAF;
+        myType = ITypeInteractable.Type.LEAF;
     }
 
-    public override void OnTypeAttacked(ITyped.Type attackedType)
+    public override void Interact(ITypeInteractable.Type attackedType)
     {
         switch (attackedType)
         {
-            case ITyped.Type.CUTTER:
+            case ITypeInteractable.Type.CUTTER:
                 cutter.SetActive(true);
                 break;
 
-            case ITyped.Type.FIRE:
+            case ITypeInteractable.Type.FIRE:
                 fire.SetActive(true);
                 break;
         }

@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 2388803112688866278}
   - component: {fileID: 1249596872151706194}
   - component: {fileID: 1866417406236134791}
+  - component: {fileID: 1549324850335586386}
   m_Layer: 0
   m_Name: VinePart
   m_TagString: Obstacles
@@ -115,7 +116,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de2d3128269dd2a47a7296139228b0f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 5
   myType: 0
   fire: {fileID: 3620337692643291582}
   cutter: {fileID: 2037770787166596730}
@@ -169,6 +169,19 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1549324850335586386
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1169994150167604449}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b06eb85ebbfb2c4c8e6aaeadb59b441, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 20
 --- !u!1 &2036194826445469674
 GameObject:
   m_ObjectHideFlags: 0

@@ -9555,7 +9555,8 @@ GameObject:
   - component: {fileID: 5790712788085530420}
   - component: {fileID: 5790712788329592497}
   - component: {fileID: 5790712788329592496}
-  - component: {fileID: -7000420496613149725}
+  - component: {fileID: 3282358318539413913}
+  - component: {fileID: 8596521311787310729}
   m_Layer: 0
   m_Name: MageSkill
   m_TagString: Untagged
@@ -14497,7 +14498,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shootPower: 100
---- !u!114 &-7000420496613149725
+--- !u!114 &3282358318539413913
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -14509,8 +14510,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2910bd8bcd3b3c541b9e725423d9aebf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 20
   myType: 2
+--- !u!114 &8596521311787310729
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5790712788088932494}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b06eb85ebbfb2c4c8e6aaeadb59b441, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 20
 --- !u!1 &5790712788088951670
 GameObject:
   m_ObjectHideFlags: 0

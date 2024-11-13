@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TeslaCoil : Obstacles
+public class TeslaCoil : InteractableObstacles
 {
     ParticleSystem onFX;
     public CoilWall wall;
@@ -14,9 +14,9 @@ public class TeslaCoil : Obstacles
         onFX = GetComponentInChildren<ParticleSystem>();
     }
 
-    public override void OnTypeAttacked(ITyped.Type type)
+    public override void Interact(ITypeInteractable.Type type)
     {
-        if (type == ITyped.Type.THUNDER)
+        if (type == ITypeInteractable.Type.THUNDER)
         {
             onFX.Play();
             wall.CoilWallOpen();

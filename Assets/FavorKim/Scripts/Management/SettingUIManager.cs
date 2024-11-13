@@ -23,7 +23,7 @@ public class SettingUIManager : MonoBehaviour
 
     public void SetFullScreenMode(bool isToggle)
     {
-        isFull = isToggle.isOn;
+        isFull = isToggle;
         Debug.Log(isFull);
         Screen.fullScreen = isFull;
     }

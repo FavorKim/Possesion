@@ -30,53 +30,8 @@ Transform:
   m_Children:
   - {fileID: 6428711772543045771}
   m_Father: {fileID: 6428631308562518320}
-  m_RootOrder: 7
-  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
---- !u!1 &5930858418898478045
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1456364757395130518}
-  - component: {fileID: 6123481907531336514}
-  m_Layer: 0
-  m_Name: Body Collider
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1456364757395130518
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5930858418898478045}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 6428631308562518320}
   m_RootOrder: 6
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!135 &6123481907531336514
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5930858418898478045}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.78
-  m_Center: {x: -0.2, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
 --- !u!1 &6422188736173857910
 GameObject:
   m_ObjectHideFlags: 0
@@ -10397,7 +10352,6 @@ Transform:
   - {fileID: 6424646506482047020}
   - {fileID: 6424838498362015798}
   - {fileID: 6428509800162483504}
-  - {fileID: 1456364757395130518}
   - {fileID: 6213272001139511414}
   m_Father: {fileID: 6428885234857900630}
   m_RootOrder: 2
@@ -15317,7 +15271,7 @@ GameObject:
   - component: {fileID: 6424165189126524915}
   - component: {fileID: 6424165189279900477}
   - component: {fileID: 6424165189279900416}
-  - component: {fileID: 6374154778663601113}
+  - component: {fileID: 5577039236867546671}
   m_Layer: 0
   m_Name: DragonPBR
   m_TagString: Untagged
@@ -15416,37 +15370,22 @@ MonoBehaviour:
   curHP: 100
   maxHP: 100
   HPSlider: {fileID: 0}
-  patrolTransforms:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  _patrolTransforms: []
   _fireParticle: {fileID: 6621996949935261227}
---- !u!114 &6374154778663601113
-MonoBehaviour:
+  _sphereCollider: {fileID: 0}
+--- !u!135 &5577039236867546671
+SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6422856947012897238}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
   m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bcdf6c616326c4aaeb610b335fbb67fe, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  useDefaultBackgroundColor: 0
-  backgroundColor:
-    serializedVersion: 2
-    rgba: 4278190080
-  useDefaultTextColor: 0
-  textColor:
-    serializedVersion: 2
-    rgba: 4281597782
-  font: {fileID: 0}
-  fontSize: 12
-  fontStyle: 1
-  alignment: 3
-  textDropShadow: 0
+  serializedVersion: 2
+  m_Radius: 0.78
+  m_Center: {x: -0.2, y: 1.35, z: 0}
 --- !u!1 &6422877000673176696
 GameObject:
   m_ObjectHideFlags: 0

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpinningObs : Obstacles
+public class SpinningObs : InteractableObstacles
 {
     Animator anim;
 
@@ -11,9 +11,9 @@ public class SpinningObs : Obstacles
         anim = GetComponent<Animator>();
     }
 
-    public override void OnTypeAttacked(ITyped.Type attackedType)
+    public override void Interact(ITypeInteractable.Type attackedType)
     {
-        if(attackedType == ITyped.Type.WEB)
+        if(attackedType == ITypeInteractable.Type.WEB)
         {
             StartCoroutine(CorSlowDown());
         }

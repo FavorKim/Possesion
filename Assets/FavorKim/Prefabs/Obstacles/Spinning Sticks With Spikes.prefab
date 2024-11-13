@@ -112,7 +112,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2910bd8bcd3b3c541b9e725423d9aebf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 40
   myType: 0
 --- !u!1 &916934365375452163
 GameObject:
@@ -126,7 +125,7 @@ GameObject:
   - component: {fileID: 34044332530879830}
   - component: {fileID: 916934365375452162}
   - component: {fileID: 916934365375452189}
-  - component: {fileID: 916934365375452188}
+  - component: {fileID: 1114819618299442106}
   m_Layer: 0
   m_Name: Spinning Sticks With Spikes
   m_TagString: Untagged
@@ -199,9 +198,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 064b8090d2cabfe4c84f78f3b2d5c50a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 0
   myType: 0
---- !u!114 &916934365375452188
+--- !u!114 &1114819618299442106
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -210,22 +208,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 916934365375452163}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bcdf6c616326c4aaeb610b335fbb67fe, type: 3}
+  m_Script: {fileID: 11500000, guid: 9b06eb85ebbfb2c4c8e6aaeadb59b441, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  useDefaultBackgroundColor: 0
-  backgroundColor:
-    serializedVersion: 2
-    rgba: 4278190080
-  useDefaultTextColor: 0
-  textColor:
-    serializedVersion: 2
-    rgba: 4278190335
-  font: {fileID: 0}
-  fontSize: 12
-  fontStyle: 1
-  alignment: 0
-  textDropShadow: 0
+  damage: 50
 --- !u!1 &6501541904820773062
 GameObject:
   m_ObjectHideFlags: 0
@@ -338,7 +324,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2910bd8bcd3b3c541b9e725423d9aebf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 40
   myType: 0
 --- !u!1 &6971155134902825225
 GameObject:
@@ -536,5 +521,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2910bd8bcd3b3c541b9e725423d9aebf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 40
   myType: 0

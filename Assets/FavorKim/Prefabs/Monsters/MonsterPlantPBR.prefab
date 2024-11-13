@@ -1327,7 +1327,6 @@ GameObject:
   - component: {fileID: 1231029114912116714}
   - component: {fileID: 6805064448365410119}
   - component: {fileID: 7934285700225009958}
-  - component: {fileID: 7934285700225009961}
   m_Layer: 0
   m_Name: MonsterPlantPBR
   m_TagString: Monster
@@ -1444,31 +1443,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &7934285700225009961
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6806702870387860545}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bcdf6c616326c4aaeb610b335fbb67fe, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  useDefaultBackgroundColor: 0
-  backgroundColor:
-    serializedVersion: 2
-    rgba: 4278190080
-  useDefaultTextColor: 0
-  textColor:
-    serializedVersion: 2
-    rgba: 4281597782
-  font: {fileID: 0}
-  fontSize: 12
-  fontStyle: 1
-  alignment: 3
-  textDropShadow: 0
 --- !u!1 &6806722667449287327
 GameObject:
   m_ObjectHideFlags: 0
